@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>83228240748-uc3lhia2bfu0rg5usr78388hc2veeruj.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.83228240748-uc3lhia2bfu0rg5usr78388hc2veeruj</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCGdHrCZCYrYGcnbhpcR4F7wsW1oWbnnh0</string>
+	<key>GCM_SENDER_ID</key>
+	<string>83228240748</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.app.trendsee</string>
+	<key>PROJECT_ID</key>
+	<string>trendoapp-android</string>
+	<key>STORAGE_BUCKET</key>
+	<string>trendoapp-android.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:83228240748:ios:7e269967b6fed80f996149</string>
+	<key>DATABASE_URL</key>
+	<string>https://trendoapp-android.firebaseio.com</string>
+</dict>
+</plist>

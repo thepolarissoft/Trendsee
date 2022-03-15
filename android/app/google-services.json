@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "83228240748",
+    "firebase_url": "https://trendoapp-android.firebaseio.com",
+    "project_id": "trendoapp-android",
+    "storage_bucket": "trendoapp-android.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:83228240748:android:c693416e5be0fea9996149",
+        "android_client_info": {
+          "package_name": "com.trendsee"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "83228240748-5qg7gdmsvbcdvbrgcq13989b24353iri.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC2dvRXHVM-w0QQ8tT3XYXnpu916yzsQy8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "83228240748-5qg7gdmsvbcdvbrgcq13989b24353iri.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
