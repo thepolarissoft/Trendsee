@@ -273,6 +273,6 @@ class AppMessages {
   static const String open_text = "Open";
   static const String closed_text = "Closed";
   static const String sorry_text = "Sorry";
-
-
+  static const String business_users_text = "Business Users";
+  static const String approved_text = "Approved";
 }

@@ -39,6 +39,7 @@ import 'package:trendoapp/api/requests/get_my_check_ins_request.dart';
 import 'package:trendoapp/api/requests/get_notifications_list_request.dart';
 import 'package:trendoapp/api/requests/get_profile_request.dart';
 import 'package:trendoapp/api/requests/get_search_by_business_request.dart';
+import 'package:trendoapp/api/requests/get_user_by_id_token_request.dart';
 import 'package:trendoapp/api/requests/graph_click_request.dart';
 import 'package:trendoapp/api/requests/graph_like_request.dart';
 import 'package:trendoapp/api/requests/graph_view_request.dart';
@@ -1752,6 +1753,41 @@ class ApiManager {
                   completer.complete(BusinessCityResponse.fromJson(
                       json.decode(response.body))),
                   // Baseresponse(json.decode(response.body))),
+                }
+              else if (AccessToken()
+                      .checkTokenExpiry(context: context, response: response) ==
+                  true)
+                {
+                  completer.completeError(ExceptionHelper()
+                      .handleExceptions(ExceptionType.TokenExpiredException)),
+                }
+              else
+                {
+                  completer.completeError(ExceptionHelper()
+                      .handleExceptions(ExceptionType.HttpException)),
+                }
+            })
+        .catchError((error) {
+      print("Api MAnager error-> $error");
+      completer.completeError(
+        Exception(error),
+      );
+    });
+    return completer.future;
+  }
+
+  Future<ProfileResponse> getUserByIdToken(int userId) {
+    Completer<ProfileResponse> completer = new Completer();
+    GetUserByIdTokenRequest getUserByIdTokenRequest =
+        GetUserByIdTokenRequest(userId);
+    Api(context: context)
+        .request(getUserByIdTokenRequest)
+        .then((response) => {
+              print("RESPONSE-> $response"),
+              if (response.statusCode == 200)
+                {
+                  completer.complete(
+                      ProfileResponse.fromJson(json.decode(response.body))),
                 }
               else if (AccessToken()
                       .checkTokenExpiry(context: context, response: response) ==

@@ -33,8 +33,7 @@ class _TimelineScreenState extends State<TimelineScreen> {
   void initState() {
     NotificationUtils().saveUserTokenForNotification(context);
     Provider.of<FilterProvider>(context, listen: false)
-        .selectedMetropolitanCityInfo
-         = "";
+        .selectedMetropolitanCityInfo = "";
     super.initState();
   }
 
@@ -115,6 +114,7 @@ class _TimelineScreenState extends State<TimelineScreen> {
                           height: 24,
                           width: 24,
                         ),
+                        label: "",
                         // ignore: deprecated_member_use
                         // title: Text(""),
                       ),
@@ -129,6 +129,7 @@ class _TimelineScreenState extends State<TimelineScreen> {
                             width: 24,
                           ),
                         ),
+                        label: "",
                         // ignore: deprecated_member_use
                         // title: Text(""),
                       ),
@@ -143,6 +144,7 @@ class _TimelineScreenState extends State<TimelineScreen> {
                             width: 24,
                           ),
                         ),
+                        label: "",
                         // ignore: deprecated_member_use
                         // title: Text(""),
                       ),
@@ -154,6 +156,7 @@ class _TimelineScreenState extends State<TimelineScreen> {
                           height: 24,
                           width: 24,
                         ),
+                        label: "",
                         // ignore: deprecated_member_use
                         // title: Text(""),
                       ),

@@ -2,7 +2,7 @@ class ApiUrls {
   static const String base_url = "http://18.191.193.64/";
   static const String user_register_url = base_url + "api/register";
   static const String send_otp_url = base_url + "api/send_otp";
-  static const String verify_otp_url = base_url + "api/verify_otp";
+  static const String verify_otp_url = base_url + "api/verify_otp_new";
   static const String signin_url = base_url + "api/signin";
   static const String profile_url = base_url + "api/profile";
   static const String logout_url = base_url + "api/logout";
@@ -68,6 +68,8 @@ class ApiUrls {
   static const String add_business_time_url =
       base_url + "api/add_business_time";
   static const String search_by_city_url = base_url + "api/search_by_city";
+  static const String user_by_id_with_token_url =
+      "$base_url/user_by_id_with_token";
 
   static const String terms_service_url = "https://trendsee.app/terms/";
   static const String privacy_policy_url = "https://trendsee.app/privacy/";

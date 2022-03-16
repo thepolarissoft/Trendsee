@@ -4,6 +4,7 @@ import 'package:trendoapp/data/models/update_business_latlong_response.dart';
 import 'package:trendoapp/presentation/screens/businessUser/add_edit_business_hours_screen.dart';
 import 'package:trendoapp/presentation/screens/businessUser/homeTabs/business_profile_screen.dart';
 import 'package:trendoapp/presentation/screens/businessUser/homeTabs/business_timeline_screen.dart';
+import 'package:trendoapp/presentation/screens/businessUser/multiple_business_user_list_screen.dart';
 import 'package:trendoapp/presentation/screens/common/app_launcher_screen.dart';
 import 'package:trendoapp/presentation/screens/common/forgot_password_screen.dart';
 import 'package:trendoapp/presentation/screens/common/map_screen.dart';
@@ -31,8 +32,6 @@ import 'package:trendoapp/presentation/screens/standardUser/select_location_for_
 
 class AppRouter {
   Route onGenerateRoute(RouteSettings routeSettings) {
-    var args = routeSettings.arguments as TempLocationsArgs;
-
     switch (routeSettings.name) {
       case AppRoutes.init_route_name:
         return MaterialPageRoute(builder: (_) => AppLauncherScreen());
@@ -109,6 +108,7 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => MediaScreen());
         break;
       case AppRoutes.map_route_name:
+        var args = routeSettings.arguments as TempLocationsArgs;
         return MaterialPageRoute(
           builder: (_) => MapScreen(
             isTemp: args.isTemp,
@@ -156,6 +156,13 @@ class AppRouter {
       //     ),
       //   );
       // break;
+      case AppRoutes.multiple_business_user_list_route_name:
+        var args = routeSettings.arguments as MultipleBusinessUserListArgs;
+        return MaterialPageRoute(
+            builder: (_) => MultipleBusinessUserListSreen(
+                  args: args,
+                ));
+        break;
       default:
         return null;
     }

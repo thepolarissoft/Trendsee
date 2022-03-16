@@ -41,5 +41,6 @@ class AppRoutes {
   static const String notifications_route_name = "/notifications";
   // static const String add_more_locations_route_name = "/addMoreLocations";
   static const String add_edit_business_hours_route_name = "/addBusinessHours";
-
+  static const String multiple_business_user_list_route_name =
+      "/multipleBusinessUserList";
 }

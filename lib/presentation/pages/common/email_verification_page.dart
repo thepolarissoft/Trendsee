@@ -125,7 +125,7 @@ class _EmailVerificationPageState extends State<EmailVerificationPage> {
                                   if (otp != null && widget.email != null) {
                                     Provider.of<VerifyOtpProvider>(context,
                                             listen: false)
-                                        .verifyOtp(context, widget.email, otp);
+                                        .verifyOtpNew(context, widget.email, otp);
                                   } else {
                                     GlobalView().showToast(
                                         AppToastMessages.empty_value_message);

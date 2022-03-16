@@ -233,6 +233,32 @@ class ProfileProvider extends ChangeNotifier {
       notifyListeners();
     });
   }
+
+  void getUserByIdToken(BuildContext context, int userId) async {
+    isLoading = true;
+    notifyListeners();
+    ApiManager(context).getUserByIdToken(userId).then((response) {
+      profileResponse = response;
+      print("STATUS CODE-> ${profileResponse.statuscode}");
+      print("MSG-> ${profileResponse.msg}");
+      if (profileResponse != null) {
+        isLoading = false;
+        if (profileResponse.statuscode == 200) {}
+      }
+      notifyListeners();
+    }).catchError((onError) {
+      isLoading = false;
+      print("ONERROR->> ${onError.toString()}");
+      ShowAlertView(
+        context: context,
+        onCallBack: () {
+          getUserByIdToken(context, userId);
+        },
+        exception: onError,
+      ).showAlertDialog();
+      notifyListeners();
+    });
+  }
 }
 
 
