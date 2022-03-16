@@ -69,7 +69,7 @@ class ApiUrls {
       base_url + "api/add_business_time";
   static const String search_by_city_url = base_url + "api/search_by_city";
   static const String user_by_id_with_token_url =
-      "$base_url/user_by_id_with_token";
+      "${base_url}api/user_by_id_with_token";
 
   static const String terms_service_url = "https://trendsee.app/terms/";
   static const String privacy_policy_url = "https://trendsee.app/privacy/";

@@ -67,6 +67,8 @@ class _AppLauncherScreenState extends State<AppLauncherScreen> {
   }
 
   void setNavigation() {
+    print(
+        "KEY USER TYPE-> ${StorageUtils.readIntValue(StorageUtils.keyUserType)}");
     print("KEY TOKEN-> ${StorageUtils.readStringValue(StorageUtils.keyToken)}");
     print(
         "TOKEN LENGTH-> ${StorageUtils.readStringValue(StorageUtils.keyToken).length}");

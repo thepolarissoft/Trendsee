@@ -29,10 +29,9 @@ class _BusinessTimelineScreenState extends State<BusinessTimelineScreen> {
 
   @override
   void initState() {
-          NotificationUtils().saveUserTokenForNotification(context);
+    NotificationUtils().saveUserTokenForNotification(context);
 
     super.initState();
-    
   }
 
   @override
@@ -68,27 +67,29 @@ class _BusinessTimelineScreenState extends State<BusinessTimelineScreen> {
                 child: BottomNavigationBar(
                   items: [
                     BottomNavigationBarItem(
-                      icon: Image.asset(
-                        selectedIndex == 0
-                            ? AppImages.ic_tab_home_filled
-                            : AppImages.ic_tab_home,
-                        height: 24,
-                        width: 24,
-                      ),
-                      // ignore: deprecated_member_use
-                      // title: Text(""),
-                    ),
+                        icon: Image.asset(
+                          selectedIndex == 0
+                              ? AppImages.ic_tab_home_filled
+                              : AppImages.ic_tab_home,
+                          height: 24,
+                          width: 24,
+                        ),
+                        label: ""
+                        // ignore: deprecated_member_use
+                        // title: Text(""),
+                        ),
                     BottomNavigationBarItem(
-                      icon: Image.asset(
-                        selectedIndex == 1
-                            ? AppImages.ic_tab_more_filled
-                            : AppImages.ic_tab_more,
-                        height: 24,
-                        width: 24,
-                      ),
-                      // ignore: deprecated_member_use
-                      // title: Text(""),
-                    ),
+                        icon: Image.asset(
+                          selectedIndex == 1
+                              ? AppImages.ic_tab_more_filled
+                              : AppImages.ic_tab_more,
+                          height: 24,
+                          width: 24,
+                        ),
+                        label: ""
+                        // ignore: deprecated_member_use
+                        // title: Text(""),
+                        ),
                   ],
                   selectedItemColor: BaseColor.btn_gradient_end_color1,
                   type: BottomNavigationBarType.fixed,

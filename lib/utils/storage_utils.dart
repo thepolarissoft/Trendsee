@@ -37,7 +37,7 @@ class StorageUtils {
   }
 
   static int readIntValue(String key) {
-    return getStorage.read(key) ?? "";
+    return getStorage.read(key) ?? 0;
   }
 
   static void removeKey(String key) async {

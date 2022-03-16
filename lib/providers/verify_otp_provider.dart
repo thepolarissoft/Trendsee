@@ -8,6 +8,7 @@ import 'package:trendoapp/constants/app_messages.dart';
 import 'package:trendoapp/constants/app_routes.dart';
 import 'package:trendoapp/constants/app_toast_messages.dart';
 import 'package:trendoapp/data/models/base_response.dart';
+import 'package:trendoapp/data/models/profile_response.dart';
 import 'package:trendoapp/data/models/verified_otp_response.dart';
 import 'package:trendoapp/global/view/global_view.dart';
 import 'package:trendoapp/global/view/show_alert_view.dart';
@@ -20,6 +21,7 @@ class VerifyOtpProvider extends ChangeNotifier {
   bool isLoading = false;
   VerifiedOtpResponse verifiedOtpResponse;
   Baseresponse baseresponse;
+  ProfileResponse profileResponse;
 
   // void verifyOtp(BuildContext context, String email, String otp) {
   //   isLoading = true;
@@ -205,6 +207,47 @@ class VerifyOtpProvider extends ChangeNotifier {
               },
               exception: onError)
           .showAlertDialog();
+      notifyListeners();
+    });
+  }
+
+  void getUserByIdToken(BuildContext context, int userId) async {
+    isLoading = true;
+    notifyListeners();
+    ApiManager(context).getUserByIdToken(userId).then((response) {
+      profileResponse = response;
+      print("STATUS CODE-> ${profileResponse.statuscode}");
+      print("MSG-> ${profileResponse.msg}");
+      if (profileResponse != null) {
+        isLoading = false;
+        if (profileResponse.statuscode == 200) {
+          StorageUtils.writeIntValue(
+              StorageUtils.keyUserType, profileResponse.user.userType);
+          StorageUtils.writeStringValue(
+              StorageUtils.keyToken, profileResponse.token);
+          AccessToken().setTokenValue(
+              StorageUtils.readStringValue(StorageUtils.keyToken));
+          PreferenceUtils.setStringValue(
+              PreferenceUtils.keyBusinessUserProfileObject,
+              json.encode(profileResponse.user));
+          PreferenceUtils.setIntValue(
+              PreferenceUtils.keyUserId, profileResponse.user.id);
+          Navigator.pushNamed(context, AppRoutes.business_timeline_route_name);
+        } else {
+          GlobalView().showToast(profileResponse.msg);
+        }
+      }
+      notifyListeners();
+    }).catchError((onError) {
+      isLoading = false;
+      print("ONERROR->> ${onError.toString()}");
+      ShowAlertView(
+        context: context,
+        onCallBack: () {
+          getUserByIdToken(context, userId);
+        },
+        exception: onError,
+      ).showAlertDialog();
       notifyListeners();
     });
   }

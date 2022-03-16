@@ -1,13 +1,16 @@
 // ignore_for_file: must_be_immutable
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 import 'package:trendoapp/constants/app_images.dart';
 import 'package:trendoapp/constants/app_messages.dart';
 import 'package:trendoapp/constants/app_text_style.dart';
 import 'package:trendoapp/constants/base_color.dart';
 import 'package:trendoapp/constants/device_size.dart';
+import 'package:trendoapp/data/models/verified_otp_response.dart';
 import 'package:trendoapp/data/models/verified_user_response.dart';
 import 'package:trendoapp/global/view/global_view.dart';
+import 'package:trendoapp/providers/verify_otp_provider.dart';
 import 'package:trendoapp/utils/dialog_utils.dart';
 import 'package:trendoapp/utils/storage_utils.dart';
 
@@ -100,26 +103,17 @@ class MultipleBusinessUserListSreen extends StatelessWidget {
                                         if (args.listBusinessUsers[index]
                                                 .isApproved ==
                                             1) {
-                                          // StorageUtils.writeStringValue(
-                                          //     StorageUtils.keyToken,
-                                          //     args.listBusinessUsers[index].token);
-                                          // AccessToken().setTokenValue(
-                                          //     StorageUtils.readStringValue(
-                                          //         StorageUtils.keyToken));
-                                          // PreferenceUtils.setStringValue(
-                                          //     PreferenceUtils
-                                          //         .keyBusinessUserProfileObject,
-                                          //     json.encode(verifiedOtpResponse
-                                          //         .businessUsers[0]));
-                                          // PreferenceUtils.setIntValue(
-                                          //     PreferenceUtils.keyUserId,
-                                          //     verifiedOtpResponse
-                                          //         .businessUsers[0].id);
-                                          // Navigator.pushNamed(
-                                          //     context,
-                                          //     AppRoutes
-                                          //         .business_timeline_route_name);
-                                        } else {}
+                                          Provider.of<VerifyOtpProvider>(
+                                                  context,
+                                                  listen: false)
+                                              .getUserByIdToken(
+                                                  context,
+                                                  args.listBusinessUsers[index]
+                                                      .id);
+                                        } else {
+                                          GlobalView().showToast(AppMessages
+                                              .approval_user_message);
+                                        }
                                       },
                                       child: Card(
                                         child: Padding(
@@ -213,16 +207,16 @@ class MultipleBusinessUserListSreen extends StatelessWidget {
                         //     context, AppMessages.logout_title),
                       ],
                     ),
-                    // Positioned(
-                    //   child: Visibility(
-                    //     visible:
-                    //         Provider.of<BusinessListProvider>(context).isLoading,
-                    //     child: Container(
-                    //       // color: Colors.red,
-                    //       child: GlobalView().loaderView(),
-                    //     ),
-                    //   ),
-                    // ),
+                    Positioned(
+                      child: Visibility(
+                        visible:
+                            Provider.of<VerifyOtpProvider>(context).isLoading,
+                        child: Container(
+                          // color: Colors.red,
+                          child: GlobalView().loaderView(),
+                        ),
+                      ),
+                    ),
                   ],
                 ),
                 // );

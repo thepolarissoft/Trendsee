@@ -16,10 +16,13 @@ class ProfileResponse extends Baseresponse {
   //   int statuscode,
   //   this.user,
   // }) : super(status: status, msg: msg, statuscode: statuscode);
-  
+  String tokenType;
+  String token;
   VerifiedUserResponse user;
 
   ProfileResponse.fromJson(Map<String, dynamic> json) : super(json) {
+    tokenType = json["token_type"] == null ? null : json["token_type"];
+    token = json["token"] == null ? null : json["token"];
     user = json["user"] == null
         ? null
         : VerifiedUserResponse.fromJson(json["user"]);
