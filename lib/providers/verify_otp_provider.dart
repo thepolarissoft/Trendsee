@@ -110,7 +110,7 @@ class VerifyOtpProvider extends ChangeNotifier {
   void verifyOtpNew(BuildContext context, String email, String otp) {
     isLoading = true;
     notifyListeners();
-    ApiManager(context).verifyOTP(email, otp).then((response) {
+    ApiManager(context).verifyOTP(email, otp).then((response) async {
       verifiedOtpResponse = response;
       print("verifiedOtpResponse CODE-> ${verifiedOtpResponse.statuscode}");
       print("verifiedOtpResponse msg-> ${verifiedOtpResponse.msg}");
@@ -135,22 +135,26 @@ class VerifyOtpProvider extends ChangeNotifier {
           } else if (verifiedOtpResponse.businessUsers != null) {
             print(verifiedOtpResponse.businessUsers.toString());
             isLoading = false;
-            if (verifiedOtpResponse.businessUsers.isNotEmpty &&
+            if (verifiedOtpResponse.businessUsers != null &&
+                verifiedOtpResponse.businessUsers.isNotEmpty &&
                 verifiedOtpResponse.businessUsers.length == 1) {
               if (verifiedOtpResponse.businessUsers[0].isApproved == 0) {
                 Navigator.pushNamed(context, AppRoutes.signin_route_name);
               } else if (verifiedOtpResponse.businessUsers[0].isApproved == 1) {
-                StorageUtils.writeStringValue(
-                    StorageUtils.keyToken, verifiedOtpResponse.token);
-                AccessToken().setTokenValue(
-                    StorageUtils.readStringValue(StorageUtils.keyToken));
-                PreferenceUtils.setStringValue(
-                    PreferenceUtils.keyBusinessUserProfileObject,
-                    json.encode(verifiedOtpResponse.businessUsers[0]));
-                PreferenceUtils.setIntValue(PreferenceUtils.keyUserId,
-                    verifiedOtpResponse.businessUsers[0].id);
-                Navigator.pushNamed(
-                    context, AppRoutes.business_timeline_route_name);
+                log("Verified Token ${verifiedOtpResponse.token}");
+                getUserByIdToken(
+                    context, verifiedOtpResponse.businessUsers[0].id);
+                // StorageUtils.writeStringValue(
+                //     StorageUtils.keyToken, verifiedOtpResponse.token);
+                // AccessToken().setTokenValue(
+                //     StorageUtils.readStringValue(StorageUtils.keyToken));
+                // PreferenceUtils.setStringValue(
+                //     PreferenceUtils.keyBusinessUserProfileObject,
+                //     json.encode(verifiedOtpResponse.businessUsers[0]));
+                // PreferenceUtils.setIntValue(PreferenceUtils.keyUserId,
+                //     verifiedOtpResponse.businessUsers[0].id);
+                // Navigator.pushNamed(
+                //     context, AppRoutes.business_timeline_route_name);
               }
             } else {
               Navigator.pushNamed(

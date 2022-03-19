@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:trendoapp/api/common/i_http_request.dart';
 import 'package:trendoapp/constants/api_urls.dart';
 import 'package:trendoapp/utils/feet_to_miles_utils.dart';
@@ -20,7 +22,7 @@ class GetHomeFeedRequest implements IHttpRequest {
 
   @override
   Map<String, dynamic> get headers {
-    // log("IHttpRequest.defaultHeader-->> ${IHttpRequest.defaultHeader}");
+    log("IHttpRequest.defaultHeader-->> ${IHttpRequest.defaultHeader}");
     return IHttpRequest.defaultHeader;
   }
 
