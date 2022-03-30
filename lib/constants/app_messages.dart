@@ -48,6 +48,7 @@ class AppMessages {
   static const String title_other_phone_number = "Phone Number";
   static const String title_city = "Business City Name";
   static const String hint_business_name = "Business Name";
+  static const String hint_business_location = "Business Location";
   static const String hint_business_phone_number = "Business Phone Number";
   static const String hint_metropolitan_area = "Metropolitan Area";
   static const String hint_city_name = "Business City";
@@ -65,6 +66,7 @@ class AppMessages {
   static const String homeSubTitle = "Browse Reviews / check-ins feeds";
   static const String add_new_checkin_title = "Add New Check-in";
   static const String title_location = "Location";
+  static const String title_name = "Name";
   static const String title_category = "Category";
   static const String title_your_review = "Your Review";
   static const String hint_select_location = "Select Location";

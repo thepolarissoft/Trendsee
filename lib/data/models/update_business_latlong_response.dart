@@ -31,11 +31,13 @@ class LatLongInfo {
     this.id,
     this.latitude,
     this.longitude,
+    this.locationName,
     this.isDefault,
   });
   int id;
   String latitude;
   String longitude;
+  String locationName;
   int isDefault;
 
   factory LatLongInfo.fromJson(Map<String, dynamic> json) => LatLongInfo(
@@ -46,6 +48,8 @@ class LatLongInfo {
         longitude: json["longitude"] == null
             ? null
             : double.parse(json["longitude"]).toStringAsFixed(5),
+        locationName:
+            json["location_name"] == null ? null : json["location_name"],
         isDefault: json["is_default"] == null ? null : json["is_default"],
       );
 }

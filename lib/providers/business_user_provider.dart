@@ -860,16 +860,17 @@ class BusinessUserProvider extends ChangeNotifier {
   }
 
   void addBusinessLatlong(
-    BuildContext context,
-    String latitude,
-    String longitude,
-    int isDefault,
-    int businessLocationId,
-  ) {
+      BuildContext context,
+      String latitude,
+      String longitude,
+      int isDefault,
+      int businessLocationId,
+      String locationName) {
     isLoading = true;
     notifyListeners();
     ApiManager(context)
-        .addBusinessLatlong(latitude, longitude, isDefault, businessLocationId)
+        .addBusinessLatlong(
+            latitude, longitude, isDefault, businessLocationId, locationName)
         .then((response) {
       print("response-> $response");
       businessLatlongResponse = response;
@@ -893,8 +894,8 @@ class BusinessUserProvider extends ChangeNotifier {
       ShowAlertView(
         context: context,
         onCallBack: () {
-          addBusinessLatlong(
-              context, latitude, longitude, isDefault, businessLocationId);
+          addBusinessLatlong(context, latitude, longitude, isDefault,
+              businessLocationId, locationName);
         },
         exception: onError,
       ).showAlertDialog();
@@ -946,7 +947,7 @@ class BusinessUserProvider extends ChangeNotifier {
         if (listLatLong[i].id == id) {
           listLatLong[i].isDefault = 1;
           addBusinessLatlong(context, listLatLong[i].latitude,
-              listLatLong[i].longitude, 1, listLatLong[i].id);
+              listLatLong[i].longitude, 1, listLatLong[i].id, "");
         } else {
           listLatLong[i].isDefault = 0;
           // addBusinessLatlong(context, listLatLong[i].latitude,

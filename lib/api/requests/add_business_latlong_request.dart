@@ -32,6 +32,7 @@ class AddBusinessLatlongRequest implements IHttpRequest {
     map["is_default"] = addBusinessLatlongRequestBody.isDefault.toString();
     map["business_location_id"] =
         addBusinessLatlongRequestBody.businessLocationId.toString();
+    map["location_name"] = addBusinessLatlongRequestBody.locationName;
     this.body = jsonEncode(map);
     print("addBusinessLatlongRequestBody-> $body");
   }

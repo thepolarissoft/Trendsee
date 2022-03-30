@@ -158,607 +158,6 @@ class _BusinessUserRegistrationPageState
     // emailTextEditingController.text = "uwtest303@gmail.com";
   }
 
-  void _onImageButtonPressed(String imageType, ImageSource source,
-      {BuildContext context}) async {
-    try {
-      final ImagePicker _picker = new ImagePicker();
-      final pickedFile = await _picker.getImage(
-        source: source,
-        // maxWidth: maxWidth,
-        // maxHeight: maxHeight,
-        imageQuality: 50,
-      );
-
-      String type = imageType == AppMessages.profile_text
-          ? AppMessages.profile_text.toLowerCase()
-          : AppMessages.media_text.toLowerCase();
-      print("TYPE-> $type");
-      print("source--> $source");
-
-      if (widget.isEditable == false) {
-        _imageFile = pickedFile;
-        // Future<Uint8List> imageUrl = _imageFile.readAsBytes();
-        Provider.of<BusinessUserProvider>(context, listen: false)
-            .addToBusinessUserImagesList(_imageFile.path);
-        print("_imageFile-->> ${_imageFile.path.toString()}");
-        File file = File(_imageFile.path);
-        String ext = p.extension(file.path);
-        String fileName = DateTime.now().millisecondsSinceEpoch.toString();
-        print("fileName===-->> $fileName");
-        // FileRequests().uploadImageToS3(file, fileName, ext);
-        Provider.of<BusinessUserProvider>(context, listen: false)
-            .getImageUrl(context, file, fileName, ext);
-      } else {
-        if (type == AppMessages.media_text.toLowerCase()) {
-          PickedFile mediaFile;
-          mediaFile = pickedFile;
-          Provider.of<BusinessUserProvider>(context, listen: false)
-              .addToBusinessUserImagesList(mediaFile.path);
-          print("mediaFile-->> ${mediaFile.path.toString()}");
-          File file = File(mediaFile.path);
-          String ext = p.extension(file.path);
-          String fileName = DateTime.now().millisecondsSinceEpoch.toString();
-          print("fileName===-->> $fileName");
-          Provider.of<BusinessUserProvider>(context, listen: false)
-              .getImageUrl(context, file, fileName, ext);
-        } else {
-          _imageFile = pickedFile;
-          print("_imageFile-->> ${_imageFile.path.toString()}");
-          imageFileBody = File(_imageFile.path);
-          print("imageFileBody->> $imageFileBody");
-          Provider.of<BusinessUserProvider>(context, listen: false)
-              .setStandardUserImage(imageFileBody);
-        }
-      }
-      // }
-    } catch (e) {
-      pickImageError = e;
-    }
-  }
-
-  void _showPicker(context, String type) {
-    showModalBottomSheet(
-        context: context,
-        builder: (BuildContext bc) {
-          return SafeArea(
-            child: Container(
-              child: new Wrap(
-                children: <Widget>[
-                  new ListTile(
-                      leading: new Icon(Icons.photo_library),
-                      title: new Text('Photo Library'),
-                      onTap: () {
-                        _onImageButtonPressed(type, ImageSource.gallery,
-                            context: context);
-                        Navigator.of(context).pop();
-                      }),
-                  // new ListTile(
-                  //   leading: new Icon(Icons.photo_camera),
-                  //   title: new Text('Camera'),
-                  //   onTap: () {
-                  //     _onImageButtonPressed(ImageSource.camera,
-                  //         context: context);
-                  //     Navigator.of(context).pop();
-                  //   },
-                  // ),
-                ],
-              ),
-            ),
-          );
-        });
-  }
-
-  void registerOnlineBusiness() {
-    // String url = businessWebsiteTextEditingController.text;
-    // if (!url.startsWith("http")) {
-    //   url = "http://" + url;
-    // }
-    // print("Url-> $url");
-    if (Provider.of<BusinessUserProvider>(context, listen: false)
-            .isAgeCheckBoxValue &&
-        Provider.of<BusinessUserProvider>(context, listen: false)
-            .isPrivacyCheckBoxValue) {
-      if (businessNameTextEditingController.text.isNotEmpty &&
-          businessPhoneNumberTextEditingController.text.isNotEmpty &&
-          ownerFirstNameTextEditingController.text.isNotEmpty &&
-          lastNameTextEditingController.text.isNotEmpty &&
-          userNameTextEditingController.text.isNotEmpty &&
-          emailTextEditingController.text.isNotEmpty &&
-          otherPhoneTextEditingController.text.isNotEmpty &&
-          businessWebsiteTextEditingController.text.isNotEmpty) {
-        if (ValidationUtils()
-                .isUrlValidate(businessWebsiteTextEditingController.text) &&
-            ValidationUtils()
-                .isEmailValidate(emailTextEditingController.text) &&
-            businessPhoneNumberTextEditingController.text.length == 10 &&
-            otherPhoneTextEditingController.text.length == 10 &&
-            Provider.of<BusinessUserProvider>(context, listen: false)
-                .listBusinessUserImages
-                .isNotEmpty) {
-          Provider.of<BusinessUserProvider>(context, listen: false)
-              .businessUserRegister(
-            context,
-            ownerFirstNameTextEditingController.text,
-            lastNameTextEditingController.text,
-            userNameTextEditingController.text,
-            emailTextEditingController.text,
-            businessNameTextEditingController.text,
-            "",
-            businessPhoneNumberTextEditingController.text,
-            "",
-            "",
-            "",
-            "",
-            otherPhoneTextEditingController.text,
-            2,
-            Provider.of<BusinessUserProvider>(context, listen: false)
-                        .isAgeCheckBoxValue ==
-                    true
-                ? 1
-                : 0,
-            Provider.of<BusinessUserProvider>(context, listen: false)
-                        .isPrivacyCheckBoxValue ==
-                    true
-                ? 1
-                : 0,
-            Provider.of<CategoriesListProvider>(context, listen: false)
-                .listSelectedCategoryId
-                .join(','),
-            Provider.of<BusinessUserProvider>(context, listen: false)
-                .listImageUrl
-                .join(','),
-            0,
-            0,
-            businessWebsiteTextEditingController.text,
-            Provider.of<BusinessUserProvider>(context, listen: false)
-                        .selectedBusiness ==
-                    AppMessages.online_text
-                ? 1
-                : 0,
-            Provider.of<BusinessUserProvider>(context, listen: false)
-                        .selectedBusiness ==
-                    AppMessages.mobile_text
-                ? 1
-                : 0,
-          );
-        } else if (!ValidationUtils()
-            .isUrlValidate(businessWebsiteTextEditingController.text)) {
-          GlobalView().showToast(AppToastMessages.valid_website_message);
-        } else if (businessPhoneNumberTextEditingController.text.length != 10 ||
-            otherPhoneTextEditingController.text.length != 10) {
-          GlobalView().showToast(AppToastMessages.valid_phoneno_message);
-        } else if (Provider.of<BusinessUserProvider>(context, listen: false)
-            .listImageUrl
-            .isEmpty) {
-          GlobalView().showToast(AppToastMessages.image_selection);
-        } else if (!ValidationUtils()
-            .isEmailValidate(emailTextEditingController.text)) {
-          GlobalView().showToast(AppToastMessages.valid_email_message);
-        }
-      } else {
-        GlobalView().showToast(AppToastMessages.empty_value_message);
-      }
-    }
-  }
-
-  void registerOfflineBusiness() {
-    // print("VAlue-> ${searchCityTextField.textField.controller.text}");
-    var provider = Provider.of<BusinessUserProvider>(context, listen: false);
-    if (provider.selectedMetropolitanAreaInfo != null) {
-      if (provider.selectedMetropolitanAreaInfo.name !=
-          searchMetropolitanAreaTextField.textField.controller.text) {
-        provider.setAreaCityResponseNull();
-      }
-    }
-    if (provider.isAgeCheckBoxValue && provider.isPrivacyCheckBoxValue) {
-      if (businessNameTextEditingController.text.isNotEmpty &&
-          businessPhoneNumberTextEditingController.text.isNotEmpty &&
-          // searchMetropolitanAreaTextField
-          //     .textField.controller.text.isNotEmpty &&
-          cityTextEditingController.text.isNotEmpty&&
-          // searchCityTextField.textField.controller.text.isNotEmpty &&
-          businessAddressTextEditingController.text.isNotEmpty &&
-          ownerFirstNameTextEditingController.text.isNotEmpty &&
-          lastNameTextEditingController.text.isNotEmpty &&
-          userNameTextEditingController.text.isNotEmpty &&
-          emailTextEditingController.text.isNotEmpty &&
-          otherPhoneTextEditingController.text.isNotEmpty &&
-          businessWebsiteTextEditingController.text.isNotEmpty) {
-        if (ValidationUtils()
-                .isUrlValidate(businessWebsiteTextEditingController.text) &&
-            ValidationUtils()
-                .isEmailValidate(emailTextEditingController.text) &&
-            businessPhoneNumberTextEditingController.text.length == 10 &&
-            otherPhoneTextEditingController.text.length == 10 &&
-            provider.listBusinessUserImages.isNotEmpty &&
-            businessGPSCoordinatesTextEditingController.text != "0.00.0") {
-          provider.businessUserRegister(
-            context,
-            ownerFirstNameTextEditingController.text,
-            lastNameTextEditingController.text,
-            userNameTextEditingController.text,
-            emailTextEditingController.text,
-            businessNameTextEditingController.text,
-            businessAddressTextEditingController.text,
-            businessPhoneNumberTextEditingController.text,
-            _latitude.toString(),
-            _longitude.toString(),
-            // Provider.of<BusinessUserProvider>(context, listen: false)
-            //     .selectedMetroCityInfo
-            //     .name,
-            // Provider.of<BusinessUserProvider>(context, listen: false)
-            //     .selectedMetropolitanAreaInfo
-            //     .name,
-            //  searchCityTextField != null &&
-            //         searchCityTextField.textField.controller.text != null
-            //     ? searchCityTextField.textField.controller.text
-            //     : "",
-            cityTextEditingController.text,
-            searchMetropolitanAreaTextField.textField.controller.text,
-            otherPhoneTextEditingController.text,
-            2,
-            provider.isAgeCheckBoxValue == true ? 1 : 0,
-            provider.isPrivacyCheckBoxValue == true ? 1 : 0,
-            Provider.of<CategoriesListProvider>(context, listen: false)
-                .listSelectedCategoryId
-                .join(','),
-            provider.listImageUrl.join(','),
-            provider.selectedMetropolitanAreaInfo != null
-                ? provider.selectedMetropolitanAreaInfo.id
-                // : metropolitanAreaTextEditingController.text,
-                : 0,
-            // searchMetropolitanAreaTextField
-            //     .textField.controller.text,
-            searchCityTextField != null &&
-                    searchCityTextField.textField.controller.text.isNotEmpty
-                ? provider.selectedMetroCityInfo != null
-                    ? provider.selectedMetroCityInfo.id
-                    : 0
-                : 0,
-            // searchCityTextField.textField.controller.text,
-            businessWebsiteTextEditingController.text,
-            Provider.of<BusinessUserProvider>(context, listen: false)
-                        .selectedBusiness ==
-                    AppMessages.online_text
-                ? 1
-                : 0,
-            Provider.of<BusinessUserProvider>(context, listen: false)
-                        .selectedBusiness ==
-                    AppMessages.mobile_text
-                ? 1
-                : 0,
-          );
-        } else if (!ValidationUtils()
-            .isUrlValidate(businessWebsiteTextEditingController.text)) {
-          GlobalView().showToast(AppToastMessages.valid_website_message);
-        } else if (businessGPSCoordinatesTextEditingController.text.isEmpty) {
-          GlobalView().showToast(AppToastMessages.select_location_message);
-        } else if (businessPhoneNumberTextEditingController.text.length != 10 ||
-            otherPhoneTextEditingController.text.length != 10) {
-          GlobalView().showToast(AppToastMessages.valid_phoneno_message);
-        } else if (Provider.of<BusinessUserProvider>(context, listen: false)
-            .listImageUrl
-            .isEmpty) {
-          GlobalView().showToast(AppToastMessages.image_selection);
-        } else if (!ValidationUtils()
-            .isEmailValidate(emailTextEditingController.text)) {
-          GlobalView().showToast(AppToastMessages.valid_email_message);
-        }
-      } else {
-        GlobalView().showToast(AppToastMessages.empty_value_message);
-      }
-    }
-  }
-
-  void onClickRegisterBtn({BuildContext context}) {
-    if (Provider.of<BusinessUserProvider>(context, listen: false)
-                .selectedBusiness ==
-            AppMessages.online_text ||
-        Provider.of<BusinessUserProvider>(context, listen: false)
-                .selectedBusiness ==
-            AppMessages.mobile_text) {
-      registerOnlineBusiness();
-    } else {
-      registerOfflineBusiness();
-    }
-  }
-
-  void updateOfflineBusinessData() {
-    if (businessNameTextEditingController.text.isNotEmpty &&
-        businessPhoneNumberTextEditingController.text.isNotEmpty &&
-        // cityTextEditingController.text.isNotEmpty &&
-        // metropolitanAreaTextEditingController.text.isNotEmpty &&
-        businessAddressTextEditingController.text.isNotEmpty &&
-        ownerFirstNameTextEditingController.text.isNotEmpty &&
-        lastNameTextEditingController.text.isNotEmpty &&
-        userNameTextEditingController.text.isNotEmpty &&
-        emailTextEditingController.text.isNotEmpty &&
-        otherPhoneTextEditingController.text.isNotEmpty) {
-      if (ValidationUtils()
-              .isUrlValidate(businessWebsiteTextEditingController.text) &&
-          ValidationUtils().isEmailValidate(emailTextEditingController.text) &&
-          businessPhoneNumberTextEditingController.text.length == 10 &&
-          otherPhoneTextEditingController.text.length == 10 &&
-          Provider.of<BusinessUserProvider>(context, listen: false)
-              .listImageUrl
-              .isNotEmpty &&
-          businessGPSCoordinatesTextEditingController.text != "0.00.0") {
-        Provider.of<BusinessUserProvider>(context, listen: false)
-            .businessUserUpdateProfile(
-          context,
-          ownerFirstNameTextEditingController.text,
-          lastNameTextEditingController.text,
-          userNameTextEditingController.text,
-          emailTextEditingController.text,
-          businessNameTextEditingController.text,
-          businessAddressTextEditingController.text,
-          businessPhoneNumberTextEditingController.text,
-          _latitude.toStringAsFixed(5),
-          _longitude.toStringAsFixed(5),
-          otherPhoneTextEditingController.text,
-          Provider.of<CategoriesListProvider>(context, listen: false)
-              .listSelectedCategoryId
-              .join(','),
-          Provider.of<BusinessUserProvider>(context, listen: false)
-              .listImageUrl
-              .join(','),
-          Provider.of<BusinessUserProvider>(context, listen: false)
-              .selectedMetropolitanAreaInfo
-              .id,
-          Provider.of<BusinessUserProvider>(context, listen: false)
-              .selectedMetroCityInfo
-              .id,
-          cityTextEditingController.text,
-          businessWebsiteTextEditingController.text,
-          0,
-          0,
-          Provider.of<BusinessUserProvider>(context, listen: false).userImage ==
-                  null
-              ? File("")
-              : Provider.of<BusinessUserProvider>(context, listen: false)
-                  .userImage,
-        );
-      } else if (!ValidationUtils()
-          .isUrlValidate(businessWebsiteTextEditingController.text)) {
-        GlobalView().showToast(AppToastMessages.valid_website_message);
-      } else if (businessGPSCoordinatesTextEditingController.text.isEmpty) {
-        GlobalView().showToast(AppToastMessages.select_location_message);
-      } else if (businessPhoneNumberTextEditingController.text.length != 10 ||
-          otherPhoneTextEditingController.text.length != 10) {
-        GlobalView().showToast(AppToastMessages.valid_phoneno_message);
-      } else if (Provider.of<BusinessUserProvider>(context, listen: false)
-          .listImageUrl
-          .isEmpty) {
-        GlobalView().showToast(AppToastMessages.image_selection);
-      } else if (!ValidationUtils()
-          .isEmailValidate(emailTextEditingController.text)) {
-        GlobalView().showToast(AppToastMessages.valid_email_message);
-      }
-    } else {
-      GlobalView().showToast(AppToastMessages.empty_value_message);
-    }
-  }
-
-  void updateOnlineBusinessData() {
-    if (businessNameTextEditingController.text.isNotEmpty &&
-        businessPhoneNumberTextEditingController.text.isNotEmpty &&
-        ownerFirstNameTextEditingController.text.isNotEmpty &&
-        lastNameTextEditingController.text.isNotEmpty &&
-        userNameTextEditingController.text.isNotEmpty &&
-        emailTextEditingController.text.isNotEmpty &&
-        otherPhoneTextEditingController.text.isNotEmpty) {
-      if (ValidationUtils()
-              .isUrlValidate(businessWebsiteTextEditingController.text) &&
-          ValidationUtils().isEmailValidate(emailTextEditingController.text) &&
-          businessPhoneNumberTextEditingController.text.length == 10 &&
-          otherPhoneTextEditingController.text.length == 10 &&
-          Provider.of<BusinessUserProvider>(context, listen: false)
-              .listImageUrl
-              .isNotEmpty) {
-        Provider.of<BusinessUserProvider>(context, listen: false)
-            .businessUserUpdateProfile(
-          context,
-          ownerFirstNameTextEditingController.text,
-          lastNameTextEditingController.text,
-          userNameTextEditingController.text,
-          emailTextEditingController.text,
-          businessNameTextEditingController.text,
-          "",
-          businessPhoneNumberTextEditingController.text,
-          "",
-          "",
-          otherPhoneTextEditingController.text,
-          Provider.of<CategoriesListProvider>(context, listen: false)
-              .listSelectedCategoryId
-              .join(','),
-          Provider.of<BusinessUserProvider>(context, listen: false)
-              .listImageUrl
-              .join(','),
-          0,
-          0,
-          cityTextEditingController.text,
-          businessWebsiteTextEditingController.text,
-          1,
-          Provider.of<BusinessUserProvider>(context, listen: false)
-                      .selectedBusiness ==
-                  AppMessages.mobile_text
-              ? 1
-              : 0,
-          Provider.of<BusinessUserProvider>(context, listen: false).userImage ==
-                  null
-              ? File("")
-              : Provider.of<BusinessUserProvider>(context, listen: false)
-                  .userImage,
-        );
-      } else if (!ValidationUtils()
-          .isUrlValidate(businessWebsiteTextEditingController.text)) {
-        GlobalView().showToast(AppToastMessages.valid_website_message);
-      } else if (businessGPSCoordinatesTextEditingController.text.isEmpty) {
-        GlobalView().showToast(AppToastMessages.select_location_message);
-      } else if (businessPhoneNumberTextEditingController.text.length != 10 ||
-          otherPhoneTextEditingController.text.length != 10) {
-        GlobalView().showToast(AppToastMessages.valid_phoneno_message);
-      } else if (Provider.of<BusinessUserProvider>(context, listen: false)
-          .listImageUrl
-          .isEmpty) {
-        GlobalView().showToast(AppToastMessages.image_selection);
-      } else if (!ValidationUtils()
-          .isEmailValidate(emailTextEditingController.text)) {
-        GlobalView().showToast(AppToastMessages.valid_email_message);
-      }
-    } else {
-      GlobalView().showToast(AppToastMessages.empty_value_message);
-    }
-  }
-
-  void onClickUpdateProfileBtn({BuildContext context}) {
-    if (Provider.of<BusinessUserProvider>(context, listen: false)
-                .selectedBusiness ==
-            AppMessages.mobile_text ||
-        Provider.of<BusinessUserProvider>(context, listen: false)
-                .selectedBusiness ==
-            AppMessages.online_text) {
-      updateOnlineBusinessData();
-    } else {
-      updateOfflineBusinessData();
-    }
-  }
-
-  void setRegisterData() {
-    var provider = Provider.of<BusinessUserProvider>(context, listen: false);
-    if (provider.centerLatitude == null && provider.centerLongitude == null) {
-      businessGPSCoordinatesTextEditingController.text.isEmpty;
-    } else {
-      businessGPSCoordinatesTextEditingController.text =
-          provider.centerLatitude.toStringAsFixed(5) +
-              "/" +
-              provider.centerLongitude.toStringAsFixed(5);
-      var parts = businessGPSCoordinatesTextEditingController.text.split("/");
-      _latitude = double.parse(parts[0]);
-      _longitude = double.parse(parts[1]);
-
-      print("_latitude===> $_latitude");
-    }
-  }
-
-  void setProfileData() async {
-    // if (Provider.of<BusinessUserProvider>(context, listen: false)
-    //         .editProfileResponse !=
-    //     null) {
-    //   businessUserResponse =
-    //       Provider.of<BusinessUserProvider>(context, listen: false)
-    //           .editProfileResponse;
-    var provider = Provider.of<BusinessUserProvider>(context, listen: false);
-    provider.getBusinessUserProfile(context);
-
-    String model = await PreferenceUtils.getObject(
-        PreferenceUtils.keyBusinessUserProfileObject);
-
-    businessUserResponse = BusinessUserResponse.fromJson(json.decode(model));
-
-    setState(() {});
-    print("isMobile-> ${businessUserResponse.isMobile}");
-    if (businessUserResponse.isMobile == 1) {
-      provider.setBusinessTypeValue(AppMessages.mobile_text);
-    } else {
-      if (businessUserResponse.isOnline == 1) {
-        provider.setBusinessTypeValue(AppMessages.online_text);
-      } else {
-        provider.setBusinessTypeValue(AppMessages.physical_text);
-      }
-    }
-    print("IS ONLINE->> ${businessUserResponse.isOnline}");
-    print("MEDIA length-->> ${businessUserResponse.businessMedia.length}");
-    _latitude = double.parse(businessUserResponse.latitude);
-    _longitude = double.parse(businessUserResponse.latitude);
-    // businessCategoryTextEditingController.text =
-    //     businessUserResponse.category.name;
-    businessNameTextEditingController.text = businessUserResponse.businessName;
-    businessPhoneNumberTextEditingController.text =
-        businessUserResponse.businessPhone;
-    businessAddressTextEditingController.text =
-        businessUserResponse.businessAddress;
-    print("businessUserResponse->  ${businessUserResponse.toJson()}");
-    print("City Name-> ${businessUserResponse.cityName}");
-    cityTextEditingController.text = businessUserResponse.cityName;
-    businessWebsiteTextEditingController.text =
-        businessUserResponse.businessWebsite;
-    businessGPSCoordinatesTextEditingController.text =
-        double.parse(businessUserResponse.latitude).toStringAsFixed(5) +
-            " / " +
-            double.parse(businessUserResponse.longitude).toStringAsFixed(5);
-    ownerFirstNameTextEditingController.text = businessUserResponse.firstName;
-    lastNameTextEditingController.text = businessUserResponse.lastName;
-    userNameTextEditingController.text = businessUserResponse.username;
-    emailTextEditingController.text = businessUserResponse.email;
-    otherPhoneTextEditingController.text = businessUserResponse.contact;
-    if (businessUserResponse.metropolitanArea != null) {
-      // metropolitanAreaTextEditingController.text =
-      searchMetropolitanAreaTextField.textField.controller.text =
-          businessUserResponse.metropolitanArea.name ?? "";
-    }
-    // if (businessUserResponse.city != null) {
-    //   searchCityTextField.textField.controller.text =
-    //       businessUserResponse.city.name;
-    // }
-    //  Provider.of<Category>(context, listen: false)
-    // businessCategoryTextEditingController.text =
-    //     businessUserResponse.category.name;
-    if (businessUserResponse.businessMedia.isNotEmpty) {
-      List<String> list = [];
-      for (var i = 0; i < businessUserResponse.businessMedia.length; i++) {
-        list.add(businessUserResponse.businessMedia[i].media);
-        print("MEDIA NAME->> ${businessUserResponse.businessMedia[i].media}");
-      }
-      Provider.of<BusinessUserProvider>(context, listen: false)
-          .addArrayToBusinessUserImagesList(list);
-    }
-    // listMediaImages.add()
-    // }
-  }
-
-  void onClickCategoryView() {
-    var provider = Provider.of<BusinessUserProvider>(context, listen: false);
-    if (widget.isEditable &&
-        provider.businessUserProfileResponse.user.isApproved == 1) {
-      DialogUtils.displayDialogCallBack(
-              context,
-              "",
-              AppMessages.change_category_text,
-              AppMessages.change_category_message_text,
-              AppMessages.change_category_sub_message_text,
-              AppMessages.cancel_text,
-              AppMessages.contact_text)
-          .then((value) {
-        if (value == AppMessages.contact_text) {
-          UrlLauncher().openEmail(
-              ApiUrls.admin_trendsee_email, AppMessages.change_category_text);
-        }
-      });
-    } else {
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (_) => CategorySelectionScreen(
-                    userType: 1,
-                  ))).then(onCallBack);
-    }
-  }
-
-  FutureOr onCallBack(dynamic value) {
-    var catProvider =
-        Provider.of<CategoriesListProvider>(context, listen: false);
-    businessCategoryTextEditingController.text =
-        CategoryUtils().getCategoryName(catProvider.listSelectedCategories);
-    if (widget.isEditable) {
-      setProfileData();
-    }
-    // var provider = Provider.of<CategoriesListProvider>(context, listen: false);
-    // businessCategoryTextEditingController.text =
-    //     CategoryUtils().getCategoryName(provider.listSelectedCategories);
-    print("Value-> $value");
-  }
-
   @override
   Widget build(BuildContext context) {
     // print("BUILD CALLED");
@@ -800,6 +199,7 @@ class _BusinessUserRegistrationPageState
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16),
                 child: SingleChildScrollView(
+                  physics: AlwaysScrollableScrollPhysics(),
                   child: Center(
                     child: Padding(
                       padding: EdgeInsets.symmetric(
@@ -2398,4 +1798,605 @@ class _BusinessUserRegistrationPageState
           ),
         ),
       );
+
+  void _onImageButtonPressed(String imageType, ImageSource source,
+      {BuildContext context}) async {
+    try {
+      final ImagePicker _picker = new ImagePicker();
+      final pickedFile = await _picker.getImage(
+        source: source,
+        // maxWidth: maxWidth,
+        // maxHeight: maxHeight,
+        imageQuality: 50,
+      );
+
+      String type = imageType == AppMessages.profile_text
+          ? AppMessages.profile_text.toLowerCase()
+          : AppMessages.media_text.toLowerCase();
+      print("TYPE-> $type");
+      print("source--> $source");
+
+      if (widget.isEditable == false) {
+        _imageFile = pickedFile;
+        // Future<Uint8List> imageUrl = _imageFile.readAsBytes();
+        Provider.of<BusinessUserProvider>(context, listen: false)
+            .addToBusinessUserImagesList(_imageFile.path);
+        print("_imageFile-->> ${_imageFile.path.toString()}");
+        File file = File(_imageFile.path);
+        String ext = p.extension(file.path);
+        String fileName = DateTime.now().millisecondsSinceEpoch.toString();
+        print("fileName===-->> $fileName");
+        // FileRequests().uploadImageToS3(file, fileName, ext);
+        Provider.of<BusinessUserProvider>(context, listen: false)
+            .getImageUrl(context, file, fileName, ext);
+      } else {
+        if (type == AppMessages.media_text.toLowerCase()) {
+          PickedFile mediaFile;
+          mediaFile = pickedFile;
+          Provider.of<BusinessUserProvider>(context, listen: false)
+              .addToBusinessUserImagesList(mediaFile.path);
+          print("mediaFile-->> ${mediaFile.path.toString()}");
+          File file = File(mediaFile.path);
+          String ext = p.extension(file.path);
+          String fileName = DateTime.now().millisecondsSinceEpoch.toString();
+          print("fileName===-->> $fileName");
+          Provider.of<BusinessUserProvider>(context, listen: false)
+              .getImageUrl(context, file, fileName, ext);
+        } else {
+          _imageFile = pickedFile;
+          print("_imageFile-->> ${_imageFile.path.toString()}");
+          imageFileBody = File(_imageFile.path);
+          print("imageFileBody->> $imageFileBody");
+          Provider.of<BusinessUserProvider>(context, listen: false)
+              .setStandardUserImage(imageFileBody);
+        }
+      }
+      // }
+    } catch (e) {
+      pickImageError = e;
+    }
+  }
+
+  void _showPicker(context, String type) {
+    showModalBottomSheet(
+        context: context,
+        builder: (BuildContext bc) {
+          return SafeArea(
+            child: Container(
+              child: new Wrap(
+                children: <Widget>[
+                  new ListTile(
+                      leading: new Icon(Icons.photo_library),
+                      title: new Text('Photo Library'),
+                      onTap: () {
+                        _onImageButtonPressed(type, ImageSource.gallery,
+                            context: context);
+                        Navigator.of(context).pop();
+                      }),
+                  // new ListTile(
+                  //   leading: new Icon(Icons.photo_camera),
+                  //   title: new Text('Camera'),
+                  //   onTap: () {
+                  //     _onImageButtonPressed(ImageSource.camera,
+                  //         context: context);
+                  //     Navigator.of(context).pop();
+                  //   },
+                  // ),
+                ],
+              ),
+            ),
+          );
+        });
+  }
+
+  void registerOnlineBusiness() {
+    // String url = businessWebsiteTextEditingController.text;
+    // if (!url.startsWith("http")) {
+    //   url = "http://" + url;
+    // }
+    // print("Url-> $url");
+    if (Provider.of<BusinessUserProvider>(context, listen: false)
+            .isAgeCheckBoxValue &&
+        Provider.of<BusinessUserProvider>(context, listen: false)
+            .isPrivacyCheckBoxValue) {
+      if (businessNameTextEditingController.text.isNotEmpty &&
+          businessPhoneNumberTextEditingController.text.isNotEmpty &&
+          ownerFirstNameTextEditingController.text.isNotEmpty &&
+          lastNameTextEditingController.text.isNotEmpty &&
+          userNameTextEditingController.text.isNotEmpty &&
+          emailTextEditingController.text.isNotEmpty &&
+          otherPhoneTextEditingController.text.isNotEmpty &&
+          businessWebsiteTextEditingController.text.isNotEmpty) {
+        if (ValidationUtils()
+                .isUrlValidate(businessWebsiteTextEditingController.text) &&
+            ValidationUtils()
+                .isEmailValidate(emailTextEditingController.text) &&
+            businessPhoneNumberTextEditingController.text.length == 10 &&
+            otherPhoneTextEditingController.text.length == 10 &&
+            Provider.of<BusinessUserProvider>(context, listen: false)
+                .listBusinessUserImages
+                .isNotEmpty) {
+          Provider.of<BusinessUserProvider>(context, listen: false)
+              .businessUserRegister(
+            context,
+            ownerFirstNameTextEditingController.text,
+            lastNameTextEditingController.text,
+            userNameTextEditingController.text,
+            emailTextEditingController.text,
+            businessNameTextEditingController.text,
+            "",
+            businessPhoneNumberTextEditingController.text,
+            "",
+            "",
+            "",
+            "",
+            otherPhoneTextEditingController.text,
+            2,
+            Provider.of<BusinessUserProvider>(context, listen: false)
+                        .isAgeCheckBoxValue ==
+                    true
+                ? 1
+                : 0,
+            Provider.of<BusinessUserProvider>(context, listen: false)
+                        .isPrivacyCheckBoxValue ==
+                    true
+                ? 1
+                : 0,
+            Provider.of<CategoriesListProvider>(context, listen: false)
+                .listSelectedCategoryId
+                .join(','),
+            Provider.of<BusinessUserProvider>(context, listen: false)
+                .listImageUrl
+                .join(','),
+            0,
+            0,
+            businessWebsiteTextEditingController.text,
+            Provider.of<BusinessUserProvider>(context, listen: false)
+                        .selectedBusiness ==
+                    AppMessages.online_text
+                ? 1
+                : 0,
+            Provider.of<BusinessUserProvider>(context, listen: false)
+                        .selectedBusiness ==
+                    AppMessages.mobile_text
+                ? 1
+                : 0,
+          );
+        } else if (!ValidationUtils()
+            .isUrlValidate(businessWebsiteTextEditingController.text)) {
+          GlobalView().showToast(AppToastMessages.valid_website_message);
+        } else if (businessPhoneNumberTextEditingController.text.length != 10 ||
+            otherPhoneTextEditingController.text.length != 10) {
+          GlobalView().showToast(AppToastMessages.valid_phoneno_message);
+        } else if (Provider.of<BusinessUserProvider>(context, listen: false)
+            .listImageUrl
+            .isEmpty) {
+          GlobalView().showToast(AppToastMessages.image_selection);
+        } else if (!ValidationUtils()
+            .isEmailValidate(emailTextEditingController.text)) {
+          GlobalView().showToast(AppToastMessages.valid_email_message);
+        }
+      } else {
+        GlobalView().showToast(AppToastMessages.empty_value_message);
+      }
+    }
+  }
+
+  void registerOfflineBusiness() {
+    // print("VAlue-> ${searchCityTextField.textField.controller.text}");
+    var provider = Provider.of<BusinessUserProvider>(context, listen: false);
+    if (provider.selectedMetropolitanAreaInfo != null) {
+      if (provider.selectedMetropolitanAreaInfo.name !=
+          searchMetropolitanAreaTextField.textField.controller.text) {
+        provider.setAreaCityResponseNull();
+      }
+    }
+    if (provider.isAgeCheckBoxValue && provider.isPrivacyCheckBoxValue) {
+      if (businessNameTextEditingController.text.isNotEmpty &&
+          businessPhoneNumberTextEditingController.text.isNotEmpty &&
+          // searchMetropolitanAreaTextField
+          //     .textField.controller.text.isNotEmpty &&
+          cityTextEditingController.text.isNotEmpty &&
+          // searchCityTextField.textField.controller.text.isNotEmpty &&
+          businessAddressTextEditingController.text.isNotEmpty &&
+          ownerFirstNameTextEditingController.text.isNotEmpty &&
+          lastNameTextEditingController.text.isNotEmpty &&
+          userNameTextEditingController.text.isNotEmpty &&
+          emailTextEditingController.text.isNotEmpty &&
+          otherPhoneTextEditingController.text.isNotEmpty &&
+          businessWebsiteTextEditingController.text.isNotEmpty) {
+        if (ValidationUtils()
+                .isUrlValidate(businessWebsiteTextEditingController.text) &&
+            ValidationUtils()
+                .isEmailValidate(emailTextEditingController.text) &&
+            businessPhoneNumberTextEditingController.text.length == 10 &&
+            otherPhoneTextEditingController.text.length == 10 &&
+            provider.listBusinessUserImages.isNotEmpty &&
+            businessGPSCoordinatesTextEditingController.text != "0.00.0") {
+          provider.businessUserRegister(
+            context,
+            ownerFirstNameTextEditingController.text,
+            lastNameTextEditingController.text,
+            userNameTextEditingController.text,
+            emailTextEditingController.text,
+            businessNameTextEditingController.text,
+            businessAddressTextEditingController.text,
+            businessPhoneNumberTextEditingController.text,
+            _latitude.toString(),
+            _longitude.toString(),
+            // Provider.of<BusinessUserProvider>(context, listen: false)
+            //     .selectedMetroCityInfo
+            //     .name,
+            // Provider.of<BusinessUserProvider>(context, listen: false)
+            //     .selectedMetropolitanAreaInfo
+            //     .name,
+            //  searchCityTextField != null &&
+            //         searchCityTextField.textField.controller.text != null
+            //     ? searchCityTextField.textField.controller.text
+            //     : "",
+            cityTextEditingController.text,
+            searchMetropolitanAreaTextField.textField.controller.text,
+            otherPhoneTextEditingController.text,
+            2,
+            provider.isAgeCheckBoxValue == true ? 1 : 0,
+            provider.isPrivacyCheckBoxValue == true ? 1 : 0,
+            Provider.of<CategoriesListProvider>(context, listen: false)
+                .listSelectedCategoryId
+                .join(','),
+            provider.listImageUrl.join(','),
+            provider.selectedMetropolitanAreaInfo != null
+                ? provider.selectedMetropolitanAreaInfo.id
+                // : metropolitanAreaTextEditingController.text,
+                : 0,
+            // searchMetropolitanAreaTextField
+            //     .textField.controller.text,
+            searchCityTextField != null &&
+                    searchCityTextField.textField.controller.text.isNotEmpty
+                ? provider.selectedMetroCityInfo != null
+                    ? provider.selectedMetroCityInfo.id
+                    : 0
+                : 0,
+            // searchCityTextField.textField.controller.text,
+            businessWebsiteTextEditingController.text,
+            Provider.of<BusinessUserProvider>(context, listen: false)
+                        .selectedBusiness ==
+                    AppMessages.online_text
+                ? 1
+                : 0,
+            Provider.of<BusinessUserProvider>(context, listen: false)
+                        .selectedBusiness ==
+                    AppMessages.mobile_text
+                ? 1
+                : 0,
+          );
+        } else if (!ValidationUtils()
+            .isUrlValidate(businessWebsiteTextEditingController.text)) {
+          GlobalView().showToast(AppToastMessages.valid_website_message);
+        } else if (businessGPSCoordinatesTextEditingController.text.isEmpty) {
+          GlobalView().showToast(AppToastMessages.select_location_message);
+        } else if (businessPhoneNumberTextEditingController.text.length != 10 ||
+            otherPhoneTextEditingController.text.length != 10) {
+          GlobalView().showToast(AppToastMessages.valid_phoneno_message);
+        } else if (Provider.of<BusinessUserProvider>(context, listen: false)
+            .listImageUrl
+            .isEmpty) {
+          GlobalView().showToast(AppToastMessages.image_selection);
+        } else if (!ValidationUtils()
+            .isEmailValidate(emailTextEditingController.text)) {
+          GlobalView().showToast(AppToastMessages.valid_email_message);
+        }
+      } else {
+        GlobalView().showToast(AppToastMessages.empty_value_message);
+      }
+    }
+  }
+
+  void onClickRegisterBtn({BuildContext context}) {
+    if (Provider.of<BusinessUserProvider>(context, listen: false)
+                .selectedBusiness ==
+            AppMessages.online_text ||
+        Provider.of<BusinessUserProvider>(context, listen: false)
+                .selectedBusiness ==
+            AppMessages.mobile_text) {
+      registerOnlineBusiness();
+    } else {
+      registerOfflineBusiness();
+    }
+  }
+
+  void updateOfflineBusinessData() {
+    if (businessNameTextEditingController.text.isNotEmpty &&
+        businessPhoneNumberTextEditingController.text.isNotEmpty &&
+        // cityTextEditingController.text.isNotEmpty &&
+        // metropolitanAreaTextEditingController.text.isNotEmpty &&
+        businessAddressTextEditingController.text.isNotEmpty &&
+        ownerFirstNameTextEditingController.text.isNotEmpty &&
+        lastNameTextEditingController.text.isNotEmpty &&
+        userNameTextEditingController.text.isNotEmpty &&
+        emailTextEditingController.text.isNotEmpty &&
+        otherPhoneTextEditingController.text.isNotEmpty) {
+      if (ValidationUtils()
+              .isUrlValidate(businessWebsiteTextEditingController.text) &&
+          ValidationUtils().isEmailValidate(emailTextEditingController.text) &&
+          businessPhoneNumberTextEditingController.text.length == 10 &&
+          otherPhoneTextEditingController.text.length == 10 &&
+          Provider.of<BusinessUserProvider>(context, listen: false)
+              .listImageUrl
+              .isNotEmpty &&
+          businessGPSCoordinatesTextEditingController.text != "0.00.0") {
+        Provider.of<BusinessUserProvider>(context, listen: false)
+            .businessUserUpdateProfile(
+          context,
+          ownerFirstNameTextEditingController.text,
+          lastNameTextEditingController.text,
+          userNameTextEditingController.text,
+          emailTextEditingController.text,
+          businessNameTextEditingController.text,
+          businessAddressTextEditingController.text,
+          businessPhoneNumberTextEditingController.text,
+          _latitude.toStringAsFixed(5),
+          _longitude.toStringAsFixed(5),
+          otherPhoneTextEditingController.text,
+          Provider.of<CategoriesListProvider>(context, listen: false)
+              .listSelectedCategoryId
+              .join(','),
+          Provider.of<BusinessUserProvider>(context, listen: false)
+              .listImageUrl
+              .join(','),
+          Provider.of<BusinessUserProvider>(context, listen: false)
+              .selectedMetropolitanAreaInfo
+              .id,
+          Provider.of<BusinessUserProvider>(context, listen: false)
+              .selectedMetroCityInfo
+              .id,
+          cityTextEditingController.text,
+          businessWebsiteTextEditingController.text,
+          0,
+          0,
+          Provider.of<BusinessUserProvider>(context, listen: false).userImage ==
+                  null
+              ? File("")
+              : Provider.of<BusinessUserProvider>(context, listen: false)
+                  .userImage,
+        );
+      } else if (!ValidationUtils()
+          .isUrlValidate(businessWebsiteTextEditingController.text)) {
+        GlobalView().showToast(AppToastMessages.valid_website_message);
+      } else if (businessGPSCoordinatesTextEditingController.text.isEmpty) {
+        GlobalView().showToast(AppToastMessages.select_location_message);
+      } else if (businessPhoneNumberTextEditingController.text.length != 10 ||
+          otherPhoneTextEditingController.text.length != 10) {
+        GlobalView().showToast(AppToastMessages.valid_phoneno_message);
+      } else if (Provider.of<BusinessUserProvider>(context, listen: false)
+          .listImageUrl
+          .isEmpty) {
+        GlobalView().showToast(AppToastMessages.image_selection);
+      } else if (!ValidationUtils()
+          .isEmailValidate(emailTextEditingController.text)) {
+        GlobalView().showToast(AppToastMessages.valid_email_message);
+      }
+    } else {
+      GlobalView().showToast(AppToastMessages.empty_value_message);
+    }
+  }
+
+  void updateOnlineBusinessData() {
+    if (businessNameTextEditingController.text.isNotEmpty &&
+        businessPhoneNumberTextEditingController.text.isNotEmpty &&
+        ownerFirstNameTextEditingController.text.isNotEmpty &&
+        lastNameTextEditingController.text.isNotEmpty &&
+        userNameTextEditingController.text.isNotEmpty &&
+        emailTextEditingController.text.isNotEmpty &&
+        otherPhoneTextEditingController.text.isNotEmpty) {
+      if (ValidationUtils()
+              .isUrlValidate(businessWebsiteTextEditingController.text) &&
+          ValidationUtils().isEmailValidate(emailTextEditingController.text) &&
+          businessPhoneNumberTextEditingController.text.length == 10 &&
+          otherPhoneTextEditingController.text.length == 10 &&
+          Provider.of<BusinessUserProvider>(context, listen: false)
+              .listImageUrl
+              .isNotEmpty) {
+        Provider.of<BusinessUserProvider>(context, listen: false)
+            .businessUserUpdateProfile(
+          context,
+          ownerFirstNameTextEditingController.text,
+          lastNameTextEditingController.text,
+          userNameTextEditingController.text,
+          emailTextEditingController.text,
+          businessNameTextEditingController.text,
+          "",
+          businessPhoneNumberTextEditingController.text,
+          "",
+          "",
+          otherPhoneTextEditingController.text,
+          Provider.of<CategoriesListProvider>(context, listen: false)
+              .listSelectedCategoryId
+              .join(','),
+          Provider.of<BusinessUserProvider>(context, listen: false)
+              .listImageUrl
+              .join(','),
+          0,
+          0,
+          cityTextEditingController.text,
+          businessWebsiteTextEditingController.text,
+          1,
+          Provider.of<BusinessUserProvider>(context, listen: false)
+                      .selectedBusiness ==
+                  AppMessages.mobile_text
+              ? 1
+              : 0,
+          Provider.of<BusinessUserProvider>(context, listen: false).userImage ==
+                  null
+              ? File("")
+              : Provider.of<BusinessUserProvider>(context, listen: false)
+                  .userImage,
+        );
+      } else if (!ValidationUtils()
+          .isUrlValidate(businessWebsiteTextEditingController.text)) {
+        GlobalView().showToast(AppToastMessages.valid_website_message);
+      } else if (businessGPSCoordinatesTextEditingController.text.isEmpty) {
+        GlobalView().showToast(AppToastMessages.select_location_message);
+      } else if (businessPhoneNumberTextEditingController.text.length != 10 ||
+          otherPhoneTextEditingController.text.length != 10) {
+        GlobalView().showToast(AppToastMessages.valid_phoneno_message);
+      } else if (Provider.of<BusinessUserProvider>(context, listen: false)
+          .listImageUrl
+          .isEmpty) {
+        GlobalView().showToast(AppToastMessages.image_selection);
+      } else if (!ValidationUtils()
+          .isEmailValidate(emailTextEditingController.text)) {
+        GlobalView().showToast(AppToastMessages.valid_email_message);
+      }
+    } else {
+      GlobalView().showToast(AppToastMessages.empty_value_message);
+    }
+  }
+
+  void onClickUpdateProfileBtn({BuildContext context}) {
+    if (Provider.of<BusinessUserProvider>(context, listen: false)
+                .selectedBusiness ==
+            AppMessages.mobile_text ||
+        Provider.of<BusinessUserProvider>(context, listen: false)
+                .selectedBusiness ==
+            AppMessages.online_text) {
+      updateOnlineBusinessData();
+    } else {
+      updateOfflineBusinessData();
+    }
+  }
+
+  void setRegisterData() {
+    var provider = Provider.of<BusinessUserProvider>(context, listen: false);
+    if (provider.centerLatitude == null && provider.centerLongitude == null) {
+      businessGPSCoordinatesTextEditingController.text.isEmpty;
+    } else {
+      businessGPSCoordinatesTextEditingController.text =
+          provider.centerLatitude.toStringAsFixed(5) +
+              "/" +
+              provider.centerLongitude.toStringAsFixed(5);
+      var parts = businessGPSCoordinatesTextEditingController.text.split("/");
+      _latitude = double.parse(parts[0]);
+      _longitude = double.parse(parts[1]);
+
+      print("_latitude===> $_latitude");
+    }
+  }
+
+  void setProfileData() async {
+    // if (Provider.of<BusinessUserProvider>(context, listen: false)
+    //         .editProfileResponse !=
+    //     null) {
+    //   businessUserResponse =
+    //       Provider.of<BusinessUserProvider>(context, listen: false)
+    //           .editProfileResponse;
+    var provider = Provider.of<BusinessUserProvider>(context, listen: false);
+    provider.getBusinessUserProfile(context);
+
+    String model = await PreferenceUtils.getObject(
+        PreferenceUtils.keyBusinessUserProfileObject);
+
+    businessUserResponse = BusinessUserResponse.fromJson(json.decode(model));
+
+    setState(() {});
+    print("isMobile-> ${businessUserResponse.isMobile}");
+    if (businessUserResponse.isMobile == 1) {
+      provider.setBusinessTypeValue(AppMessages.mobile_text);
+    } else {
+      if (businessUserResponse.isOnline == 1) {
+        provider.setBusinessTypeValue(AppMessages.online_text);
+      } else {
+        provider.setBusinessTypeValue(AppMessages.physical_text);
+      }
+    }
+    print("IS ONLINE->> ${businessUserResponse.isOnline}");
+    print("MEDIA length-->> ${businessUserResponse.businessMedia.length}");
+    _latitude = double.parse(businessUserResponse.latitude);
+    _longitude = double.parse(businessUserResponse.latitude);
+    // businessCategoryTextEditingController.text =
+    //     businessUserResponse.category.name;
+    businessNameTextEditingController.text = businessUserResponse.businessName;
+    businessPhoneNumberTextEditingController.text =
+        businessUserResponse.businessPhone;
+    businessAddressTextEditingController.text =
+        businessUserResponse.businessAddress;
+    print("businessUserResponse->  ${businessUserResponse.toJson()}");
+    print("City Name-> ${businessUserResponse.cityName}");
+    cityTextEditingController.text = businessUserResponse.cityName;
+    businessWebsiteTextEditingController.text =
+        businessUserResponse.businessWebsite;
+    businessGPSCoordinatesTextEditingController.text =
+        double.parse(businessUserResponse.latitude).toStringAsFixed(5) +
+            " / " +
+            double.parse(businessUserResponse.longitude).toStringAsFixed(5);
+    ownerFirstNameTextEditingController.text = businessUserResponse.firstName;
+    lastNameTextEditingController.text = businessUserResponse.lastName;
+    userNameTextEditingController.text = businessUserResponse.username;
+    emailTextEditingController.text = businessUserResponse.email;
+    otherPhoneTextEditingController.text = businessUserResponse.contact;
+    if (businessUserResponse.metropolitanArea != null) {
+      // metropolitanAreaTextEditingController.text =
+      searchMetropolitanAreaTextField.textField.controller.text =
+          businessUserResponse.metropolitanArea.name ?? "";
+    }
+    // if (businessUserResponse.city != null) {
+    //   searchCityTextField.textField.controller.text =
+    //       businessUserResponse.city.name;
+    // }
+    //  Provider.of<Category>(context, listen: false)
+    // businessCategoryTextEditingController.text =
+    //     businessUserResponse.category.name;
+    if (businessUserResponse.businessMedia.isNotEmpty) {
+      List<String> list = [];
+      for (var i = 0; i < businessUserResponse.businessMedia.length; i++) {
+        list.add(businessUserResponse.businessMedia[i].media);
+        print("MEDIA NAME->> ${businessUserResponse.businessMedia[i].media}");
+      }
+      Provider.of<BusinessUserProvider>(context, listen: false)
+          .addArrayToBusinessUserImagesList(list);
+    }
+    // listMediaImages.add()
+    // }
+  }
+
+  void onClickCategoryView() {
+    var provider = Provider.of<BusinessUserProvider>(context, listen: false);
+    if (widget.isEditable &&
+        provider.businessUserProfileResponse.user.isApproved == 1) {
+      DialogUtils.displayDialogCallBack(
+              context,
+              "",
+              AppMessages.change_category_text,
+              AppMessages.change_category_message_text,
+              AppMessages.change_category_sub_message_text,
+              AppMessages.cancel_text,
+              AppMessages.contact_text)
+          .then((value) {
+        if (value == AppMessages.contact_text) {
+          UrlLauncher().openEmail(
+              ApiUrls.admin_trendsee_email, AppMessages.change_category_text);
+        }
+      });
+    } else {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (_) => CategorySelectionScreen(
+                    userType: 1,
+                  ))).then(onCallBack);
+    }
+  }
+
+  FutureOr onCallBack(dynamic value) {
+    var catProvider =
+        Provider.of<CategoriesListProvider>(context, listen: false);
+    businessCategoryTextEditingController.text =
+        CategoryUtils().getCategoryName(catProvider.listSelectedCategories);
+    if (widget.isEditable) {
+      setProfileData();
+    }
+    // var provider = Provider.of<CategoriesListProvider>(context, listen: false);
+    // businessCategoryTextEditingController.text =
+    //     CategoryUtils().getCategoryName(provider.listSelectedCategories);
+    print("Value-> $value");
+  }
 }

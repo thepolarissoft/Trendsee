@@ -8,6 +8,7 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:trendoapp/constants/app_images.dart';
 import 'package:trendoapp/constants/app_messages.dart';
+import 'package:trendoapp/constants/app_text_style.dart';
 import 'package:trendoapp/constants/base_color.dart';
 import 'package:trendoapp/global/view/global_view.dart';
 import 'package:trendoapp/providers/business_user_provider.dart';
@@ -29,6 +30,102 @@ class _MapScreenState extends State<MapScreen> {
   BitmapDescriptor pinLocationIcon;
   Position position;
   LatLng lastMapPosition;
+  TextEditingController locationController = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    print("IS temp-> ${widget.isTemp}");
+    setCustomMapPin();
+    _cameraPosition = CameraPosition(target: LatLng(0, 0), zoom: 14);
+    getCurrentLocation();
+    return GestureDetector(
+      onTap: () {
+        FocusScope.of(context).unfocus();
+      },
+      child: Container(
+        color: BaseColor.pure_white_color,
+        child: SafeArea(
+          top: widget.isTemp ? true : false,
+          bottom: false,
+          child: Scaffold(
+            backgroundColor: BaseColor.pure_white_color,
+            body: Column(
+              children: [
+                Padding(
+                  padding:
+                      EdgeInsets.only(left: 16, right: 16, top: 10, bottom: 2),
+                  child: Container(
+                    padding: EdgeInsets.symmetric(vertical: 5),
+                    alignment: Alignment.centerLeft,
+                    child: GlobalView().textViewWithCenterAlign(
+                        AppMessages.hint_business_location,
+                        AppTextStyle.inter_font_family,
+                        AppTextStyle.normal_font_weight,
+                        BaseColor.black_color.withOpacity(0.5),
+                        11),
+                  ),
+                ),
+                Visibility(
+                    visible: widget.isTemp ? true : false,
+                    child: Padding(
+                      padding: EdgeInsets.only(
+                          left: 16, right: 16, top: 6, bottom: 16),
+                      child: GlobalView().textFieldView(
+                          AppImages.ic_location,
+                          locationController,
+                          AppMessages.title_location +
+                              " " +
+                              AppMessages.title_name,
+                          TextAlign.start),
+                    )),
+                Expanded(
+                  child: Stack(
+                    children: [
+                      GoogleMap(
+                        myLocationEnabled: true,
+                        initialCameraPosition: _cameraPosition,
+                        onMapCreated: (GoogleMapController controller) {
+                          _controller = (controller);
+                          _controller.animateCamera(
+                              CameraUpdate.newCameraPosition(_cameraPosition));
+                          print("_cameraPosition-> $_cameraPosition");
+                        },
+                        onCameraMove: _onCameraMove,
+                      ),
+                      Positioned(
+                        child: Center(
+                          child: Center(
+                              child: Image.asset(
+                            AppImages.ic_location_marker,
+                            height: 65,
+                            width: 65,
+                          )),
+                        ),
+                      ),
+                      Positioned(
+                          bottom: 30,
+                          left: 60,
+                          right: 60,
+                          child: Consumer<BusinessUserProvider>(
+                              builder: (_, user, child) {
+                            return GestureDetector(
+                              onTap: () {
+                                onClick();
+                              },
+                              child: GlobalView().buttonFilled(
+                                  context, AppMessages.select_location_title),
+                            );
+                          })),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
 
   Future getCurrentLocation() async {
     LocationPermission permission = await Geolocator.checkPermission();
@@ -106,69 +203,26 @@ class _MapScreenState extends State<MapScreen> {
       if (isAvailableData == true) {
         GlobalView().showToast("Location is Available!");
       } else {
-        Provider.of<BusinessUserProvider>(context, listen: false)
-            .addBusinessLatlong(
-                context,
-                lastMapPosition.latitude.toStringAsFixed(5),
-                lastMapPosition.longitude.toStringAsFixed(5),
-                0,
-                0);
+        if (locationController.text.isEmpty) {
+          GlobalView().showToast("Please enter location name!");
+        } else {
+          Provider.of<BusinessUserProvider>(context, listen: false)
+              .addBusinessLatlong(
+                  context,
+                  lastMapPosition.latitude.toStringAsFixed(5),
+                  lastMapPosition.longitude.toStringAsFixed(5),
+                  0,
+                  0,
+                  locationController.text);
+          Navigator.of(context).pop();
+        }
       }
     } else {
       Provider.of<BusinessUserProvider>(context, listen: false)
           .setCenterLocation(
               lastMapPosition.latitude, lastMapPosition.longitude);
+      Navigator.of(context).pop();
     }
-    Navigator.of(context).pop();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    print("IS temp-> ${widget.isTemp}");
-    setCustomMapPin();
-    _cameraPosition = CameraPosition(target: LatLng(0, 0), zoom: 14);
-    getCurrentLocation();
-    return Scaffold(
-      backgroundColor: BaseColor.pure_white_color,
-      body: Stack(
-        children: [
-          GoogleMap(
-            myLocationEnabled: true,
-            initialCameraPosition: _cameraPosition,
-            onMapCreated: (GoogleMapController controller) {
-              _controller = (controller);
-              _controller.animateCamera(
-                  CameraUpdate.newCameraPosition(_cameraPosition));
-              print("_cameraPosition-> $_cameraPosition");
-            },
-            onCameraMove: _onCameraMove,
-          ),
-          Positioned(
-            child: Center(
-              child: Center(
-                  child: Image.asset(
-                AppImages.ic_location_marker,
-                height: 65,
-                width: 65,
-              )),
-            ),
-          ),
-          Positioned(
-              bottom: 30,
-              left: 60,
-              right: 60,
-              child: Consumer<BusinessUserProvider>(builder: (_, user, child) {
-                return GestureDetector(
-                  onTap: () {
-                    onClick();
-                  },
-                  child: GlobalView()
-                      .buttonFilled(context, AppMessages.select_location_title),
-                );
-              })),
-        ],
-      ),
-    );
   }
 }
 

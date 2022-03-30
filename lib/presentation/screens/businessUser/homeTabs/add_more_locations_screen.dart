@@ -78,12 +78,9 @@ class _AddMoreLocationsScreenState extends State<AddMoreLocationsScreen> {
                       GlobalView().sizedBoxView(
                           DeviceSize().deviceHeight(context) * 0.02),
                       Expanded(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 0),
-                          child: Container(
-                              height: DeviceSize().deviceHeight(context) - 300,
-                              child: locationsList(context)),
-                        ),
+                        child: Container(
+                            // height: DeviceSize().deviceHeight(context) - 200,
+                            child: locationsList(context)),
                       ),
                       Consumer<BusinessUserProvider>(
                           builder: (_, provider, child) {
@@ -98,8 +95,8 @@ class _AddMoreLocationsScreenState extends State<AddMoreLocationsScreen> {
                                 left: 5,
                                 right: 5,
                                 bottom:
-                                    DeviceSize().deviceHeight(context) * 0.04,
-                                top: DeviceSize().deviceHeight(context) * 0.04),
+                                    DeviceSize().deviceHeight(context) * 0.02,
+                                top: DeviceSize().deviceHeight(context) * 0.02),
                             child: GestureDetector(
                               onTap: () {
                                 Navigator.pushNamed(
@@ -183,80 +180,113 @@ class _AddMoreLocationsScreenState extends State<AddMoreLocationsScreen> {
                       controller: scrollController,
                       physics: AlwaysScrollableScrollPhysics(),
                       itemBuilder: (_, index) => Padding(
-                        padding: EdgeInsets.only(bottom: 10, top: 10),
-                        child: Row(
-                          children: [
-                            Image.asset(
-                              AppImages.ic_location_black,
-                              height: 22,
-                              width: 22,
-                              color: BaseColor.btn_gradient_end_color1,
-                            ),
-                            SizedBox(
-                              width: 6,
-                            ),
-                            Expanded(
-                              child: Container(
-                                child: GlobalView().textViewWithStartAlign(
-                                    provider.listLatLong[index].latitude +
-                                        " / " +
-                                        provider.listLatLong[index].longitude,
+                        padding: EdgeInsets.only(top: 5),
+                        child: Card(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(16)),
+                          child: Container(
+                            padding: EdgeInsets.only(
+                                bottom: 10, top: 10, left: 10, right: 10),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                GlobalView().textViewWithStartAlign(
+                                    provider.listLatLong[index].locationName ==
+                                                null ||
+                                            provider.listLatLong[index]
+                                                    .locationName ==
+                                                ""
+                                        ? "Anonymous"
+                                        : provider
+                                            .listLatLong[index].locationName,
                                     AppTextStyle.inter_font_family,
                                     AppTextStyle.semi_bold_font_weight,
                                     BaseColor.black_color,
-                                    16),
-                              ),
-                            ),
-                            // Container(
-                            //   height: 25,
-                            //   padding: EdgeInsets.zero,
-                            //   // color: Colors.green,
-                            //   child: Theme(
-                            //     data: ThemeData(
-                            //         unselectedWidgetColor:
-                            //             BaseColor.btn_gradient_end_color1,
-                            //         backgroundColor:
-                            //             BaseColor.btn_gradient_end_color1),
-                            //     child: Checkbox(
-                            //         value:
-                            //             provider.listLatLong[index].isDefault ==
-                            //                     0
-                            //                 ? false
-                            //                 : true,
-                            //         checkColor: BaseColor.pure_white_color,
-                            //         activeColor:
-                            //             BaseColor.btn_gradient_end_color1,
-                            //         onChanged: (bool value) {
-                            //           provider.changeCheckBoxValue(
-                            //               provider.listLatLong[index].id,
-                            //               value,
-                            //               context);
-                            //           // updateLatLongData(
-                            //           //     provider.listLatLong[index].latitude,
-                            //           //     provider.listLatLong[index].longitude);
-                            //         }),
-                            //     // CheckboxGroup(
-                            //     //     labels: listLocation,
-                            //     //     onSelected: (List<String> checked) =>
-                            //     //         print(checked.toString())),
-                            //   ),
-                            // ),
-                            Visibility(
-                              visible: isVisibleDeleteIcon(provider),
-                              child: GestureDetector(
-                                onTap: () {
-                                  provider.deleteBusinessLatlong(
-                                      context, provider.listLatLong[index]);
-                                },
-                                child: Image.asset(
-                                  AppImages.icon_finder_delete,
-                                  height: 22,
-                                  width: 22,
-                                  color: BaseColor.btn_gradient_end_color1,
+                                    18),
+                                GlobalView().sizedBoxView(6),
+                                Row(
+                                  children: [
+                                    Image.asset(
+                                      AppImages.ic_location_black,
+                                      height: 22,
+                                      width: 22,
+                                      color: BaseColor.btn_gradient_end_color1,
+                                    ),
+                                    SizedBox(
+                                      width: 6,
+                                    ),
+                                    Expanded(
+                                      child: Container(
+                                        child: GlobalView()
+                                            .textViewWithStartAlign(
+                                                provider.listLatLong[index]
+                                                        .latitude +
+                                                    " / " +
+                                                    provider.listLatLong[index]
+                                                        .longitude,
+                                                AppTextStyle.inter_font_family,
+                                                AppTextStyle
+                                                    .semi_bold_font_weight,
+                                                BaseColor.black_color,
+                                                16),
+                                      ),
+                                    ),
+                                    // Container(
+                                    //   height: 25,
+                                    //   padding: EdgeInsets.zero,
+                                    //   // color: Colors.green,
+                                    //   child: Theme(
+                                    //     data: ThemeData(
+                                    //         unselectedWidgetColor:
+                                    //             BaseColor.btn_gradient_end_color1,
+                                    //         backgroundColor:
+                                    //             BaseColor.btn_gradient_end_color1),
+                                    //     child: Checkbox(
+                                    //         value:
+                                    //             provider.listLatLong[index].isDefault ==
+                                    //                     0
+                                    //                 ? false
+                                    //                 : true,
+                                    //         checkColor: BaseColor.pure_white_color,
+                                    //         activeColor:
+                                    //             BaseColor.btn_gradient_end_color1,
+                                    //         onChanged: (bool value) {
+                                    //           provider.changeCheckBoxValue(
+                                    //               provider.listLatLong[index].id,
+                                    //               value,
+                                    //               context);
+                                    //           // updateLatLongData(
+                                    //           //     provider.listLatLong[index].latitude,
+                                    //           //     provider.listLatLong[index].longitude);
+                                    //         }),
+                                    //     // CheckboxGroup(
+                                    //     //     labels: listLocation,
+                                    //     //     onSelected: (List<String> checked) =>
+                                    //     //         print(checked.toString())),
+                                    //   ),
+                                    // ),
+                                    Visibility(
+                                      visible: isVisibleDeleteIcon(provider),
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          provider.deleteBusinessLatlong(
+                                              context,
+                                              provider.listLatLong[index]);
+                                        },
+                                        child: Image.asset(
+                                          AppImages.icon_finder_delete,
+                                          height: 22,
+                                          width: 22,
+                                          color:
+                                              BaseColor.btn_gradient_end_color1,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                              ),
+                              ],
                             ),
-                          ],
+                          ),
                         ),
                       ),
                     ),
