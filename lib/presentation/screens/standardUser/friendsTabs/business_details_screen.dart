@@ -891,21 +891,21 @@ class _BusinessDetailsScreenState extends State<BusinessDetailsScreen> {
                           AppTextStyle.bold_font_weight,
                           BaseColor.black_color,
                           18),
-                      GlobalView().textViewWithStartAlign(
-                          provider.businessDetailsResponse.business
-                                      .totalFeeds ==
-                                  null
-                              ? " (" + "0" + ")"
-                              : " (" +
-                                  provider.businessDetailsResponse.business
-                                      .totalFeeds
-                                      .toString() +
-                                  ")",
-                          // " (" + "0" + ")",
-                          AppTextStyle.inter_font_family,
-                          AppTextStyle.bold_font_weight,
-                          BaseColor.count_color,
-                          12),
+                      // GlobalView().textViewWithStartAlign(
+                      //     provider.businessDetailsResponse.business
+                      //                 .totalFeeds ==
+                      //             null
+                      //         ? " (" + "0" + ")"
+                      //         : " (" +
+                      //             provider.businessDetailsResponse.business
+                      //                 .totalFeeds
+                      //                 .toString() +
+                      //             ")",
+                      //     // " (" + "0" + ")",
+                      //     AppTextStyle.inter_font_family,
+                      //     AppTextStyle.bold_font_weight,
+                      //     BaseColor.count_color,
+                      //     12),
                     ],
                   ),
                 ),

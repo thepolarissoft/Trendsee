@@ -258,7 +258,7 @@ class AppMessages {
   static const String unregistered_business_title =
       "Unregistered Small Business";
   static const String unregistered_business_msg =
-      "We'll have to verify this small business location before adding it. We will email you a gift card only if you're the first to add this small business and the business becomes registered.";
+      "Thanks for your help! We will verify this business before adding it to Trendsee.";
   static const String unregistered_business_sub_msg = "Thanks For Your Help!";
   static const String business_hours_text = "Business Hours";
   static const String business_open_time_text = "Business Open Time";

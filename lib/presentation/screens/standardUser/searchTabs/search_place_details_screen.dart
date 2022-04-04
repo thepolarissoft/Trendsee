@@ -13,8 +13,8 @@ class SearchPlaceDetailsScreen extends StatelessWidget {
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
-            image:
-                DecorationImage(image: AssetImage(AppImages.background_image1))),
+            image: DecorationImage(
+                image: AssetImage(AppImages.background_image1))),
         child: CustomScrollView(
           slivers: [
             SliverAppBar(
@@ -348,23 +348,23 @@ class SearchPlaceDetailsScreen extends StatelessWidget {
             child: Row(
               children: [
                 GlobalView().textViewWithStartAlign(
-                    AppMessages.business_checkins_title + " (" + "0" + ")",
+                    AppMessages.business_checkins_title,
                     AppTextStyle.inter_font_family,
                     AppTextStyle.bold_font_weight,
                     BaseColor.black_color,
                     18),
-                GlobalView().textViewWithStartAlign(
-                    // user.profileResponse.user.totalFeed == null
-                    //     ? " (" + "0" + ")"
-                    //     : " (" +
-                    //         user.profileResponse.user.totalFeed
-                    //             .toString() +
-                    //         ")",
-                    " (" + "0" + ")",
-                    AppTextStyle.inter_font_family,
-                    AppTextStyle.bold_font_weight,
-                    BaseColor.count_color,
-                    12),
+                // GlobalView().textViewWithStartAlign(
+                //     // user.profileResponse.user.totalFeed == null
+                //     //     ? " (" + "0" + ")"
+                //     //     : " (" +
+                //     //         user.profileResponse.user.totalFeed
+                //     //             .toString() +
+                //     //         ")",
+                //     " (" + "0" + ")",
+                //     AppTextStyle.inter_font_family,
+                //     AppTextStyle.bold_font_weight,
+                //     BaseColor.count_color,
+                //     12),
               ],
             ),
           ),

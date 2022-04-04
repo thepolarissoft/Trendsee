@@ -140,9 +140,8 @@ class _AddUnregisteredBusinessScreenState
                                                   // +"\n" +AppMessages
                                                   // .unregistered_business_sub_msg
                                                   ,
-                                                  AppMessages
-                                                      .unregistered_business_sub_msg,
-                                                  AppMessages.cancel_text,
+                                                  "",
+                                                  "",
                                                   AppMessages.ok_text)
                                               .then((value) {
                                             if (value == AppMessages.ok_text) {
