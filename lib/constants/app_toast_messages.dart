@@ -33,9 +33,12 @@ class AppToastMessages {
       "Remove whitespace from keyword!";
   static const String valid_website_message = "Please Enter Valid Url!";
   static const String valid_reason_message = "Please Enter valid Reason!";
-  static const String enter_city_for_filter_message = "Please enter city name for apply filter!";
-  static const String select_both_message = "Please select both time for same Day!";
-
+  static const String enter_city_for_filter_message =
+      "Please enter city name for apply filter!";
+  static const String select_both_message =
+      "Please select both time for same Day!";
+  static const String empty_business_name_message =
+      "Please enter the business name!";
 
   // static const String follow_done_message = "Follow done successfully!";
   // static const String unfollow_done_message = "Unfollow done successfully!";

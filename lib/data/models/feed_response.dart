@@ -22,11 +22,11 @@ class FeedResponse {
     this.isDisliked,
     // this.images,
     // this.category,
-            this.categories,
-
+    this.categories,
     this.user,
     this.businessUser,
     this.comments,
+    this.locationName,
   });
 
   int id;
@@ -50,7 +50,7 @@ class FeedResponse {
   LoginUserResponse user;
   BusinessUserResponse businessUser;
   List<CommentResponse> comments;
-
+  String locationName;
   factory FeedResponse.fromJson(Map<String, dynamic> json) => FeedResponse(
         id: json["id"] == null ? null : json["id"],
         title: json["title"] == null ? null : json["title"],
@@ -80,7 +80,7 @@ class FeedResponse {
         // category: json["category"] == null
         //     ? null
         //     : CategoryResponse.fromJson(json["category"]),
-         categories: json["categories"] == null
+        categories: json["categories"] == null
             ? null
             : List<CategoryResponse>.from(
                 json["categories"].map((x) => CategoryResponse.fromJson(x))),
@@ -94,6 +94,8 @@ class FeedResponse {
             ? null
             : List<CommentResponse>.from(
                 json["comments"].map((x) => CommentResponse.fromJson(x))),
+        locationName:
+            json["location_name"] == null ? null : json["location_name"],
       );
 
   Map<String, dynamic> toJson() => {

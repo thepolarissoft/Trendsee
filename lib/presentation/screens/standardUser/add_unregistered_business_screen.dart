@@ -172,7 +172,7 @@ class _AddUnregisteredBusinessScreenState
                                         } else {
                                           GlobalView().showToast(
                                               AppToastMessages
-                                                  .empty_value_message);
+                                                  .empty_business_name_message);
                                         }
                                       },
                                       child: GlobalView().buttonFilled(context,

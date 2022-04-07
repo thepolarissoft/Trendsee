@@ -296,11 +296,18 @@ class _AddNewCheckInPageState extends State<AddNewCheckInPage> {
                                                           ? ""
                                                           : commentTextEditingController
                                                               .text,
-                                                      verifiedUserResponse.id
+                                                      verifiedUserResponse
+                                                          .id
                                                           .toString(),
                                                       verifiedUserResponse
                                                           .categories[0].id
-                                                          .toString());
+                                                          .toString(),
+                                                      verifiedUserResponse
+                                                          .latitude,
+                                                      verifiedUserResponse
+                                                          .longitude,
+                                                      verifiedUserResponse
+                                                          .locationName);
                                             } else {
                                               GlobalView().showToast(
                                                   AppToastMessages

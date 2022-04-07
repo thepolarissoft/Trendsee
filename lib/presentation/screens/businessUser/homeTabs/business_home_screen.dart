@@ -517,6 +517,39 @@ class _BusinessHomeScreenState extends State<BusinessHomeScreen> {
                                                                         .forgot_pass_txt_color,
                                                                     12),
                                                           ),
+                                                          GlobalView()
+                                                              .sizedBoxView(2),
+                                                          Visibility(
+                                                            visible: homeFeed
+                                                                            .listFeedInfo[
+                                                                                itemIndex]
+                                                                            .locationName ==
+                                                                        null ||
+                                                                    homeFeed.listFeedInfo[itemIndex]
+                                                                            .locationName ==
+                                                                        ""
+                                                                ? false
+                                                                : true,
+                                                            child: Container(
+                                                              child: GlobalView()
+                                                                  .textViewWithStartAlign(
+                                                                      homeFeed.listFeedInfo[itemIndex].locationName ==
+                                                                              null
+                                                                          ? "Cafe"
+                                                                          : homeFeed
+                                                                              .listFeedInfo[
+                                                                                  itemIndex]
+                                                                              .locationName,
+                                                                      // "Cafe",
+                                                                      AppTextStyle
+                                                                          .metropolis_font_family,
+                                                                      AppTextStyle
+                                                                          .bold_font_weight,
+                                                                      BaseColor
+                                                                          .forgot_pass_txt_color,
+                                                                      12),
+                                                            ),
+                                                          ),
                                                         ],
                                                       ),
                                                     ),

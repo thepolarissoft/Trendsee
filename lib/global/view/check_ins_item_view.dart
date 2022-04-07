@@ -224,6 +224,24 @@ class CheckInsItemView extends StatelessWidget {
                                 BaseColor.forgot_pass_txt_color,
                                 12),
                           ),
+                          GlobalView().sizedBoxView(2),
+                          Visibility(
+                            visible: feedResponse.locationName == null ||
+                                    feedResponse.locationName == ""
+                                ? false
+                                : true,
+                            child: Container(
+                              child: GlobalView().textViewWithStartAlign(
+                                  feedResponse.locationName == null
+                                      ? "Cafe"
+                                      : feedResponse.locationName,
+                                  // "Cafe",
+                                  AppTextStyle.metropolis_font_family,
+                                  AppTextStyle.bold_font_weight,
+                                  BaseColor.forgot_pass_txt_color,
+                                  12),
+                            ),
+                          ),
                         ],
                       ),
                     ),

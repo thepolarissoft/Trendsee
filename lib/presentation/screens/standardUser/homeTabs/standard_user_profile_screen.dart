@@ -79,39 +79,39 @@ class _StandardUserProfileScreenState extends State<StandardUserProfileScreen> {
                             //   alignment: Alignment.bottomCenter,
                             //   child: Padding(
                             //     padding: EdgeInsets.only(bottom: 5),
-                                // child: Container(
-                                //   height: 100,
-                                //   width: 100,
-                                //   decoration: BoxDecoration(
-                                //     shape: BoxShape.circle,
-                                //     border: Border.all(
-                                //         color: BaseColor.pure_white_color,
-                                //         width: 5),
-                                //     boxShadow: [
-                                //       BoxShadow(
-                                //           color: BaseColor.shadow_color,
-                                //           blurRadius: 5)
-                                //     ],
-                                //     image: DecorationImage(
-                                //         image:
-                                //             Provider.of<HomeFeedResponseProvider>(
-                                //                             context)
-                                //                         .profileResponse
-                                //                         .user
-                                //                         .avatar ==
-                                //                     null
-                                //                 ? AssetImage(AppImages
-                                //                     .default_profile_Pic)
-                                //                 : NetworkImage(
-                                //                     Provider.of<HomeFeedResponseProvider>(
-                                //                             context)
-                                //                         .profileResponse
-                                //                         .user
-                                //                         .avatar,
-                                //                   ),
-                                //         fit: BoxFit.cover),
-                                //   ),
-                                // ),
+                            // child: Container(
+                            //   height: 100,
+                            //   width: 100,
+                            //   decoration: BoxDecoration(
+                            //     shape: BoxShape.circle,
+                            //     border: Border.all(
+                            //         color: BaseColor.pure_white_color,
+                            //         width: 5),
+                            //     boxShadow: [
+                            //       BoxShadow(
+                            //           color: BaseColor.shadow_color,
+                            //           blurRadius: 5)
+                            //     ],
+                            //     image: DecorationImage(
+                            //         image:
+                            //             Provider.of<HomeFeedResponseProvider>(
+                            //                             context)
+                            //                         .profileResponse
+                            //                         .user
+                            //                         .avatar ==
+                            //                     null
+                            //                 ? AssetImage(AppImages
+                            //                     .default_profile_Pic)
+                            //                 : NetworkImage(
+                            //                     Provider.of<HomeFeedResponseProvider>(
+                            //                             context)
+                            //                         .profileResponse
+                            //                         .user
+                            //                         .avatar,
+                            //                   ),
+                            //         fit: BoxFit.cover),
+                            //   ),
+                            // ),
                             //   ),
                             // ),
                           ],
@@ -303,7 +303,10 @@ class _StandardUserProfileScreenState extends State<StandardUserProfileScreen> {
                           // ),
                           GlobalView().sizedBoxView(20),
                           Visibility(
-                              visible: user.profileResponse.user.feed.isNotEmpty
+                              visible: user.profileResponse != null &&
+                                      user.profileResponse.user != null &&
+                                      user.profileResponse.user.feed != null &&
+                                      user.profileResponse.user.feed.isNotEmpty
                                   ? true
                                   : false,
                               child: myCheckInsView(user)),

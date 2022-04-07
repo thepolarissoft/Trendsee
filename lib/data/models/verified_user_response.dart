@@ -45,6 +45,7 @@ class VerifiedUserResponse {
     this.totalViews,
     this.totalClick,
     this.allowNotification,
+    this.locationName,
   });
 
   int id;
@@ -89,7 +90,7 @@ class VerifiedUserResponse {
   int totalViews;
   int totalClick;
   int allowNotification;
-
+  String locationName;
   factory VerifiedUserResponse.fromJson(Map<String, dynamic> json) =>
       VerifiedUserResponse(
         id: json["id"] == null ? null : json["id"],
@@ -163,6 +164,8 @@ class VerifiedUserResponse {
         allowNotification: json["allow_notification"] == null
             ? null
             : json["allow_notification"],
+        locationName:
+            json["location_name"] == null ? null : json["location_name"],
       );
 
   Map<String, dynamic> toJson() => {

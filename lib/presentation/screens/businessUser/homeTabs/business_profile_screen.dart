@@ -1316,6 +1316,47 @@ class _BusinessProfileScreenState extends State<BusinessProfileScreen> {
                                                         .forgot_pass_txt_color,
                                                     12),
                                           ),
+                                          GlobalView().sizedBoxView(2),
+                                          Visibility(
+                                            visible: profile
+                                                            .businessUserProfileResponse
+                                                            .user
+                                                            .feed[0]
+                                                            .locationName ==
+                                                        null ||
+                                                    profile
+                                                            .businessUserProfileResponse
+                                                            .user
+                                                            .feed[0]
+                                                            .locationName ==
+                                                        ""
+                                                ? false
+                                                : true,
+                                            child: Container(
+                                              child: GlobalView()
+                                                  .textViewWithStartAlign(
+                                                      profile
+                                                                  .businessUserProfileResponse
+                                                                  .user
+                                                                  .feed[0]
+                                                                  .locationName ==
+                                                              null
+                                                          ? "Cafe"
+                                                          : profile
+                                                              .businessUserProfileResponse
+                                                              .user
+                                                              .feed[0]
+                                                              .locationName,
+                                                      // "Cafe",
+                                                      AppTextStyle
+                                                          .metropolis_font_family,
+                                                      AppTextStyle
+                                                          .bold_font_weight,
+                                                      BaseColor
+                                                          .forgot_pass_txt_color,
+                                                      12),
+                                            ),
+                                          ),
                                         ],
                                       ),
                                     ),

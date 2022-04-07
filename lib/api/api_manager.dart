@@ -356,7 +356,11 @@ class ApiManager {
   }
 
   Future<BusinessListResponse> getBusinessList(
-      int page, String latitude, String longitude, String distance) {
+    int page,
+    String latitude,
+    String longitude,
+    String distance,
+  ) {
     Completer<BusinessListResponse> completer = new Completer();
     GetBusinessListRequest getBusinessListRequest =
         new GetBusinessListRequest(page, latitude, longitude, distance);
@@ -392,10 +396,20 @@ class ApiManager {
   }
 
   Future<Baseresponse> createFeed(
-      String description, String businessUserId, String categoryId) {
+      String description,
+      String businessUserId,
+      String categoryId,
+      String latitude,
+      String longitude,
+      String locationName) {
     Completer<Baseresponse> completer = new Completer();
-    CreateFeedRequestBody createFeedRequestBody =
-        new CreateFeedRequestBody(description, businessUserId, categoryId);
+    CreateFeedRequestBody createFeedRequestBody = new CreateFeedRequestBody(
+        description,
+        businessUserId,
+        categoryId,
+        latitude,
+        longitude,
+        locationName);
     CreateFeedRequest createFeedRequest =
         new CreateFeedRequest(createFeedRequestBody);
     Api(context: context)

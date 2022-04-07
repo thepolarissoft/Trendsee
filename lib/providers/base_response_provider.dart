@@ -8,6 +8,8 @@ import 'package:trendoapp/constants/app_routes.dart';
 import 'package:trendoapp/data/models/base_response.dart';
 import 'package:trendoapp/global/view/global_view.dart';
 import 'package:trendoapp/global/view/show_alert_view.dart';
+import 'package:trendoapp/presentation/screens/standardUser/homeTabs/home_screen.dart';
+import 'package:trendoapp/presentation/screens/standardUser/homeTabs/timeline_screen.dart';
 import 'package:trendoapp/utils/dialog_utils.dart';
 import 'package:trendoapp/utils/preference_utils.dart';
 import 'package:trendoapp/utils/storage_utils.dart';
@@ -94,15 +96,18 @@ class BaseResponseProvider extends ChangeNotifier {
   }
 
   void createFeed(
-    BuildContext context,
-    String description,
-    String businessUserId,
-    String categoryId,
-  ) async {
+      BuildContext context,
+      String description,
+      String businessUserId,
+      String categoryId,
+      String latitude,
+      String longitude,
+      String locationName) async {
     isLoading = true;
     notifyListeners();
     ApiManager(context)
-        .createFeed(description, businessUserId, categoryId)
+        .createFeed(description, businessUserId, categoryId, latitude,
+            longitude, locationName)
         .then((response) {
       baseresponse = response;
       print("STATUS CODE-> ${baseresponse.statuscode}");
@@ -127,7 +132,8 @@ class BaseResponseProvider extends ChangeNotifier {
       ShowAlertView(
               context: context,
               onCallBack: () {
-                createFeed(context, description, businessUserId, categoryId);
+                createFeed(context, description, businessUserId, categoryId,
+                    latitude, longitude, locationName);
               },
               exception: onError)
           .showAlertDialog();
@@ -198,6 +204,8 @@ class BaseResponseProvider extends ChangeNotifier {
           // isLoading = false;
           print("baseresponse--->>== ${baseresponse.msg}");
           GlobalView().showToast(baseresponse.msg);
+          Navigator.push(
+              context, MaterialPageRoute(builder: (_) => TimelineScreen()));
         }
       }
       notifyListeners();
