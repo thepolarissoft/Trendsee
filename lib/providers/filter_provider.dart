@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:trendoapp/api/api_manager.dart';
 import 'package:trendoapp/data/models/business_city_response.dart';
-import 'package:trendoapp/data/models/metropolitan_areas_list_response.dart';
 import 'package:trendoapp/global/view/show_alert_view.dart';
 
 class FilterProvider extends ChangeNotifier {
@@ -31,7 +30,7 @@ class FilterProvider extends ChangeNotifier {
     print("MetropolitanCityInfo-> $value");
     selectedMetropolitanCityInfo = null;
     selectedMetropolitanCityInfo = value;
-    print("metropolitanCityInfo-> ${selectedMetropolitanCityInfo}");
+    print("metropolitanCityInfo-> $selectedMetropolitanCityInfo");
     // }
     notifyListeners();
   }

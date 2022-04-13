@@ -291,21 +291,20 @@ class _AddNewCheckInPageState extends State<AddNewCheckInPage> {
                                                       listen: false)
                                                   .createFeed(
                                                       context,
-                                                      commentTextEditingController
-                                                              .text.isEmpty
+                                                      commentTextEditingController.text
+                                                              .isEmpty
                                                           ? ""
                                                           : commentTextEditingController
                                                               .text,
-                                                      verifiedUserResponse
-                                                          .id
+                                                      verifiedUserResponse.id
                                                           .toString(),
                                                       verifiedUserResponse
                                                           .categories[0].id
                                                           .toString(),
                                                       verifiedUserResponse
-                                                          .latitude,
+                                                          .businessLatitude,
                                                       verifiedUserResponse
-                                                          .longitude,
+                                                          .businessLongitude,
                                                       verifiedUserResponse
                                                           .locationName);
                                             } else {

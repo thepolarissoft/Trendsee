@@ -15,7 +15,6 @@ import 'package:trendoapp/providers/comment_response_provider.dart';
 import 'package:trendoapp/providers/home_feed_response_provider.dart';
 import 'package:trendoapp/providers/search_by_business_provider.dart';
 import 'package:trendoapp/utils/category_utils.dart';
-import 'package:trendoapp/utils/storage_utils.dart';
 import 'package:trendoapp/utils/day_time_utils.dart';
 
 // ignore: must_be_immutable
@@ -364,42 +363,42 @@ class CheckInDetailsPage extends StatelessWidget {
                       thickness: 1,
                     ),
                     // followBusinessView(context,homeFeed),
-                    Visibility(
-                      visible:
-                          StorageUtils.readIntValue(StorageUtils.keyUserType) ==
-                                  1
-                              ? true
-                              : false,
-                      child: Padding(
-                        padding: EdgeInsets.only(top: 15, left: 20, right: 20),
-                        child: GlobalView().textViewWithStartAlign(
-                            "Comments",
-                            AppTextStyle.lato_font_family,
-                            AppTextStyle.semi_bold_font_weight,
-                            BaseColor.black_color,
-                            18),
-                      ),
-                    ),
-                    GlobalView().sizedBoxView(10),
-                    Visibility(
-                      visible:
-                          StorageUtils.readIntValue(StorageUtils.keyUserType) ==
-                                  1
-                              ? true
-                              : false,
-                      child: commentListView(),
-                    ),
+                    // Visibility(
+                    //   visible:
+                    //       StorageUtils.readIntValue(StorageUtils.keyUserType) ==
+                    //               1
+                    //           ? true
+                    //           : false,
+                    //   child: Padding(
+                    //     padding: EdgeInsets.only(top: 15, left: 20, right: 20),
+                    //     child: GlobalView().textViewWithStartAlign(
+                    //         "Comments",
+                    //         AppTextStyle.lato_font_family,
+                    //         AppTextStyle.semi_bold_font_weight,
+                    //         BaseColor.black_color,
+                    //         18),
+                    //   ),
+                    // ),
+                    // GlobalView().sizedBoxView(10),
+                    // Visibility(
+                    //   visible:
+                    //       StorageUtils.readIntValue(StorageUtils.keyUserType) ==
+                    //               1
+                    //           ? true
+                    //           : false,
+                    //   child: commentListView(),
+                    // ),
                     GlobalView().sizedBoxView(10),
                   ],
                 );
               }),
             ),
           ),
-          Visibility(
-              visible: StorageUtils.readIntValue(StorageUtils.keyUserType) == 1
-                  ? true
-                  : false,
-              child: commentTextFieldView(context)),
+          // Visibility(
+          //     visible: StorageUtils.readIntValue(StorageUtils.keyUserType) == 1
+          //         ? true
+          //         : false,
+          //     child: commentTextFieldView(context)),
         ],
       ),
     );

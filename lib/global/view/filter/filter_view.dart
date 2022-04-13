@@ -10,7 +10,6 @@ import 'package:trendoapp/constants/base_color.dart';
 import 'package:trendoapp/constants/device_size.dart';
 import 'package:trendoapp/data/global/home_list_data.dart';
 import 'package:trendoapp/data/global/search_list_data.dart';
-import 'package:trendoapp/data/models/metropolitan_areas_list_response.dart';
 import 'package:trendoapp/global/view/filter/city_filter_view.dart';
 import 'package:trendoapp/global/view/filter/distance_filter_view.dart';
 import 'package:trendoapp/global/view/global_view.dart';

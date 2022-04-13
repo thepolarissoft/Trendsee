@@ -4,7 +4,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:permission_handler/permission_handler.dart';
+import 'package:timezone/timezone.dart' as tz;
 import 'package:trendoapp/api/api_manager.dart';
 import 'package:trendoapp/api/file_request_manager.dart';
 import 'package:trendoapp/constants/app_images.dart';
@@ -25,7 +25,6 @@ import 'package:trendoapp/presentation/screens/common/email_verification_screen.
 import 'package:trendoapp/utils/day_time_utils.dart';
 import 'package:trendoapp/utils/dialog_utils.dart';
 import 'package:trendoapp/utils/preference_utils.dart';
-import 'package:timezone/timezone.dart' as tz;
 
 class BusinessUserProvider extends ChangeNotifier {
   // List<BusinessUserImagesModel> listBusinessUserImages = new List();
@@ -587,11 +586,11 @@ class BusinessUserProvider extends ChangeNotifier {
             listBusinessHours.clear();
             listBusinessHours
                 .addAll(businessUserProfileResponse.user.businessHours);
-            // listOpenTime.clear();
-            // listCloseTime.clear();
+            listOpenTime.clear();
+            listCloseTime.clear();
             for (var i = 0; i < listBusinessHours.length; i++) {
-              // listOpenTime.add(listBusinessHours[i].openTime);
-              // listCloseTime.add(listBusinessHours[i].closeTime);
+              listOpenTime.add(listBusinessHours[i].openTime);
+              listCloseTime.add(listBusinessHours[i].closeTime);
               if (listBusinessHours[i].openTime == "-1" &&
                   listBusinessHours[i].closeTime == "-1") {
                 listBusinessHours[i].isOpen = false;
@@ -1134,14 +1133,21 @@ class BusinessUserProvider extends ChangeNotifier {
 
   void setBusinessHourSwitchValue(
       int index, BusinessHoursResponse response, bool value) {
+    print("setBusinessHourSwitchValue INDEX $index");
+    print("listOpenTime length ${listOpenTime.length}");
+    print("listCloseTime length ${listCloseTime.length}");
+
     if (value == false) {
       response.openTime = "-1";
       response.closeTime = "-1";
+      // if (listOpenTime.isNotEmpty) {
       listOpenTime[index] = "-1";
+      // }
+      // if (listCloseTime.isNotEmpty) {
       listCloseTime[index] = "-1";
+      // }
     }
     response.isOpen = value;
-
     notifyListeners();
   }
 }

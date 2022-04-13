@@ -4,7 +4,6 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:trendoapp/api/api_manager.dart';
 import 'package:trendoapp/api/common/access_token.dart';
-import 'package:trendoapp/constants/app_messages.dart';
 import 'package:trendoapp/constants/app_routes.dart';
 import 'package:trendoapp/constants/app_toast_messages.dart';
 import 'package:trendoapp/data/models/base_response.dart';

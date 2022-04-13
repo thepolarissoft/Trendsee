@@ -1,6 +1,5 @@
-// ignore_for_file: must_be_immutable
+// ignore_for_file: must_be_immutable, missing_return
 
-import 'package:autocomplete_textfield/autocomplete_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:provider/provider.dart';
@@ -8,8 +7,6 @@ import 'package:trendoapp/constants/app_images.dart';
 import 'package:trendoapp/constants/app_messages.dart';
 import 'package:trendoapp/constants/app_text_style.dart';
 import 'package:trendoapp/constants/base_color.dart';
-import 'package:trendoapp/data/models/metropolitan_areas_list_response.dart';
-import 'package:trendoapp/providers/business_user_provider.dart';
 import 'package:trendoapp/providers/filter_provider.dart';
 
 import '../global_view.dart';
@@ -109,13 +106,13 @@ class CityFilterView extends StatelessWidget {
                         item, AppMessages.city_text.toLowerCase());
                   },
                   onSuggestionSelected: (item) {
-                    print("ITEM NAME-> ${item}");
+                    print("ITEM NAME-> $item");
                     citySearchController.text = item;
                     provider.selectedCity(item);
                     print("AREA TEXT->${citySearchController.text}");
                     // provider.searchByCity(context);
                     // provider.changeEditableCityValue();
-                    print("Suggestion-> ${item}");
+                    print("Suggestion-> $item");
                   },
                 )),
           );

@@ -52,6 +52,7 @@ class _BusinessProfileScreenState extends State<BusinessProfileScreen> {
           Consumer<BusinessUserProvider>(builder: (_, profile, child) {
             if (!profile.isLoading) {
               return CustomScrollView(
+                physics: AlwaysScrollableScrollPhysics(),
                 slivers: [
                   SliverAppBar(
                     automaticallyImplyLeading: false,

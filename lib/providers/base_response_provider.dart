@@ -8,7 +8,6 @@ import 'package:trendoapp/constants/app_routes.dart';
 import 'package:trendoapp/data/models/base_response.dart';
 import 'package:trendoapp/global/view/global_view.dart';
 import 'package:trendoapp/global/view/show_alert_view.dart';
-import 'package:trendoapp/presentation/screens/standardUser/homeTabs/home_screen.dart';
 import 'package:trendoapp/presentation/screens/standardUser/homeTabs/timeline_screen.dart';
 import 'package:trendoapp/utils/dialog_utils.dart';
 import 'package:trendoapp/utils/preference_utils.dart';

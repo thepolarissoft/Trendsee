@@ -4,8 +4,6 @@
 
 import 'dart:convert';
 
-import 'package:trendoapp/data/models/metropolitan_areas_list_response.dart';
-
 BusinessCityResponse businessCityResponseFromJson(String str) =>
     BusinessCityResponse.fromJson(json.decode(str));
 

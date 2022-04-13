@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:trendoapp/api/common/i_http_request.dart';
-import 'package:trendoapp/constants/app_messages.dart';
 
 class AccessToken {
   void setTokenValue(String token) {

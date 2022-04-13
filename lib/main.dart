@@ -1,10 +1,9 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:trendoapp/constants/app_images.dart';
+import 'package:timezone/data/latest.dart' as tz;
+import 'package:timezone/timezone.dart' as tz;
 import 'package:trendoapp/presentation/screens/common/app_launcher_screen.dart';
 import 'package:trendoapp/providers/business_user_provider.dart';
 import 'package:trendoapp/router/app_router.dart';
@@ -12,8 +11,6 @@ import 'package:trendoapp/utils/network_utils.dart';
 import 'package:trendoapp/utils/preference_utils.dart';
 import 'package:trendoapp/utils/provider_utils.dart';
 import 'package:trendoapp/utils/storage_utils.dart';
-import 'package:timezone/data/latest.dart' as tz;
-import 'package:timezone/timezone.dart' as tz;
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();

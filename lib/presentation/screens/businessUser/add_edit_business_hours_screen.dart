@@ -1,7 +1,6 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:day_night_time_picker/day_night_time_picker.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 import 'package:provider/provider.dart';

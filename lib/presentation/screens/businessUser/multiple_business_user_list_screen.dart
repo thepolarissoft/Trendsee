@@ -7,12 +7,10 @@ import 'package:trendoapp/constants/app_messages.dart';
 import 'package:trendoapp/constants/app_text_style.dart';
 import 'package:trendoapp/constants/base_color.dart';
 import 'package:trendoapp/constants/device_size.dart';
-import 'package:trendoapp/data/models/verified_otp_response.dart';
 import 'package:trendoapp/data/models/verified_user_response.dart';
 import 'package:trendoapp/global/view/global_view.dart';
 import 'package:trendoapp/providers/verify_otp_provider.dart';
 import 'package:trendoapp/utils/dialog_utils.dart';
-import 'package:trendoapp/utils/storage_utils.dart';
 
 class MultipleBusinessUserListSreen extends StatelessWidget {
   MultipleBusinessUserListArgs args;

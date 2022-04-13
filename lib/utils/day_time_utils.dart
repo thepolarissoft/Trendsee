@@ -65,54 +65,73 @@ class DayTimeUtils {
     var provider = Provider.of<BusinessUserProvider>(context, listen: false);
     print("TimeZone-> ${provider.selectedTimeZone.value}");
     if (isOpenTime) {
+      // for (var i = 0; i < provider.listOpenTime.length; i++) {
+      //   print("OPEN Time From DateTimeUtils $i ${provider.listOpenTime[i]}");
+      // }
       provider.listOpenTime.clear();
       DateTime date = new DateTime.now();
       for (var i = 0; i < list.length; i++) {
-        date = new DateTime(
-            date.year,
-            date.month,
-            date.day,
-            list[i].openTime != "-1"
-                ? int.parse(list[i].openTime.split(":")[0])
-                : 0,
-            list[i].openTime != "-1"
-                ? int.parse(list[i].openTime.split(":")[1])
-                : 0);
-        // print("Selected Hour-> ${date.hour}");
-        // print("Selected Minute-> ${date.minute}");
-        final timeZone = tz.getLocation(provider.selectedTimeZone.utc[0]);
-        DateTime dateTimeConverted = tz.TZDateTime.from(date, timeZone);
-        // print("Converted Hour-> ${dateTimeConverted.toUtc().hour}");
-        // print("Converted Minute-> ${dateTimeConverted.toUtc().minute}");
-        String open = dateTimeConverted.toUtc().hour.toString() +
-            ":" +
-            dateTimeConverted.toUtc().minute.toString();
-        provider.listOpenTime.add(open);
-        // print("listOpenTime-> ${provider.listOpenTime.join(",")}");
+        print("LIST business Hours openTime ${list[i].openTime}");
+        if (list[i].openTime == "-1") {
+          provider.listOpenTime.add("-1");
+        } else {
+          date = new DateTime(
+              date.year,
+              date.month,
+              date.day,
+              list[i].openTime != "-1"
+                  ? int.parse(list[i].openTime.split(":")[0])
+                  : 0,
+              list[i].openTime != "-1"
+                  ? int.parse(list[i].openTime.split(":")[1])
+                  : 0);
+          // print("Selected Hour-> ${date.hour}");
+          // print("Selected Minute-> ${date.minute}");
+          final timeZone = tz.getLocation(provider.selectedTimeZone.utc[0]);
+          DateTime dateTimeConverted = tz.TZDateTime.from(date, timeZone);
+          // print("Converted Hour-> ${dateTimeConverted.toUtc().hour}");
+          // print("Converted Minute-> ${dateTimeConverted.toUtc().minute}");
+          String open =
+              dateTimeConverted.toUtc().hour.toString().padLeft(2, "0") +
+                  ":" +
+                  dateTimeConverted.toUtc().minute.toString().padLeft(2, "0");
+          provider.listOpenTime.add(open);
+        }
+
+        print("listOpenTime-> ${provider.listOpenTime.join(",")}");
       }
     } else {
+      // for (var i = 0; i < provider.listCloseTime.length; i++) {
+      //   print("CLOSE Time From DateTimeUtils $i ${provider.listCloseTime[i]}");
+      // }
       provider.listCloseTime.clear();
       DateTime date = new DateTime.now();
       for (var i = 0; i < list.length; i++) {
-        date = new DateTime(
-            date.year,
-            date.month,
-            date.day,
-            list[i].closeTime != "-1"
-                ? int.parse(list[i].closeTime.split(":")[0])
-                : 0,
-            list[i].closeTime != "-1"
-                ? int.parse(list[i].closeTime.split(":")[1])
-                : 0);
-        final timeZone = tz.getLocation(provider.selectedTimeZone.utc[0]);
-        DateTime dateTimeConverted = tz.TZDateTime.from(date, timeZone);
-        // print("Time-> ${dateTimeConverted.toUtc().hour}");
-        // print("Time-> ${dateTimeConverted.toUtc().minute}");
-        String close = dateTimeConverted.toUtc().hour.toString() +
-            ":" +
-            dateTimeConverted.toUtc().minute.toString();
-        provider.listCloseTime.add(close);
-        // print("listCloseTime-> ${provider.listCloseTime.join(",")}");
+        print("LIST business Hours closeTime ${list[i].closeTime}");
+        if (list[i].closeTime == "-1") {
+          provider.listCloseTime.add("-1");
+        } else {
+          date = new DateTime(
+              date.year,
+              date.month,
+              date.day,
+              list[i].closeTime != "-1"
+                  ? int.parse(list[i].closeTime.split(":")[0])
+                  : 0,
+              list[i].closeTime != "-1"
+                  ? int.parse(list[i].closeTime.split(":")[1])
+                  : 0);
+          final timeZone = tz.getLocation(provider.selectedTimeZone.utc[0]);
+          DateTime dateTimeConverted = tz.TZDateTime.from(date, timeZone);
+          // print("Time-> ${dateTimeConverted.toUtc().hour}");
+          // print("Time-> ${dateTimeConverted.toUtc().minute}");
+          String close =
+              dateTimeConverted.toUtc().hour.toString().padLeft(2, "0") +
+                  ":" +
+                  dateTimeConverted.toUtc().minute.toString().padLeft(2, "0");
+          provider.listCloseTime.add(close);
+        }
+        print("listCloseTime-> ${provider.listCloseTime.join(",")}");
       }
     }
   }
@@ -129,57 +148,65 @@ class DayTimeUtils {
       DateTime date;
       DateTime utcDate = DateTime.now().toUtc();
       for (var i = 0; i < list.length; i++) {
-        date = DateTime.utc(
-            utcDate.year,
-            utcDate.month,
-            utcDate.day,
-            list[i].openTime != "-1"
-                ? int.parse(list[i].openTime.split(":")[0])
-                : 0,
-            list[i].openTime != "-1"
-                ? int.parse(list[i].openTime.split(":")[1])
-                : 0);
-        print("Selected Hour==-> ${date.hour}");
-        print("Selected Minute==-> ${date.minute}");
-        final timeZone = tz.getLocation(provider.selectedTimeZone.utc[0]);
-        print("Timezone----> ${timeZone.name}");
-        DateTime dateTimeConverted = tz.TZDateTime.from(date, timeZone);
-        print("Converted Hour==-> ${dateTimeConverted.hour}");
-        print("Converted Minute==-> ${dateTimeConverted.minute}");
-        String open = dateTimeConverted.hour.toString() +
-            ":" +
-            dateTimeConverted.minute.toString();
-        list[i].openTime = open;
-        // provider.listOpenTime.add(open);
-        // print("listOpenTime-> ${provider.listOpenTime.join(",")}");
-        // convertLocalToUtc(list: list, context: context, isOpenTime: true);
+        if (list[i].openTime == "-1") {
+          list[i].openTime = "-1";
+        } else {
+          date = DateTime.utc(
+              utcDate.year,
+              utcDate.month,
+              utcDate.day,
+              list[i].openTime != "-1"
+                  ? int.parse(list[i].openTime.split(":")[0])
+                  : 0,
+              list[i].openTime != "-1"
+                  ? int.parse(list[i].openTime.split(":")[1])
+                  : 0);
+          print("Selected Hour==-> ${date.hour}");
+          print("Selected Minute==-> ${date.minute}");
+          final timeZone = tz.getLocation(provider.selectedTimeZone.utc[0]);
+          print("Timezone----> ${timeZone.name}");
+          DateTime dateTimeConverted = tz.TZDateTime.from(date, timeZone);
+          print("Converted Hour==-> ${dateTimeConverted.hour}");
+          print("Converted Minute==-> ${dateTimeConverted.minute}");
+          String open = dateTimeConverted.hour.toString() +
+              ":" +
+              dateTimeConverted.minute.toString();
+          list[i].openTime = open;
+          // provider.listOpenTime.add(open);
+          // print("listOpenTime-> ${provider.listOpenTime.join(",")}");
+          // convertLocalToUtc(list: list, context: context, isOpenTime: true);
+        }
       }
     } else {
       // provider.listCloseTime.clear();
       DateTime date;
       DateTime utcDate = DateTime.now().toUtc();
       for (var i = 0; i < list.length; i++) {
-        date = DateTime.utc(
-            utcDate.year,
-            utcDate.month,
-            utcDate.day,
-            list[i].closeTime != "-1"
-                ? int.parse(list[i].closeTime.split(":")[0])
-                : 0,
-            list[i].closeTime != "-1"
-                ? int.parse(list[i].closeTime.split(":")[1])
-                : 0);
-        final timeZone = tz.getLocation(provider.selectedTimeZone.utc[0]);
-        DateTime dateTimeConverted = tz.TZDateTime.from(date, timeZone);
-        print("Time-> ${dateTimeConverted.hour}");
-        print("Time-> ${dateTimeConverted.minute}");
-        String close = dateTimeConverted.hour.toString() +
-            ":" +
-            dateTimeConverted.minute.toString();
-        list[i].closeTime = close;
-        // provider.listCloseTime.add(close);
-        // print("listCloseTime-> ${provider.listCloseTime.join(",")}");
-        // convertLocalToUtc(list: list, context: context, isOpenTime: false);
+        if (list[i].closeTime == "-1") {
+          list[i].closeTime = "-1";
+        } else {
+          date = DateTime.utc(
+              utcDate.year,
+              utcDate.month,
+              utcDate.day,
+              list[i].closeTime != "-1"
+                  ? int.parse(list[i].closeTime.split(":")[0])
+                  : 0,
+              list[i].closeTime != "-1"
+                  ? int.parse(list[i].closeTime.split(":")[1])
+                  : 0);
+          final timeZone = tz.getLocation(provider.selectedTimeZone.utc[0]);
+          DateTime dateTimeConverted = tz.TZDateTime.from(date, timeZone);
+          print("Time-> ${dateTimeConverted.hour}");
+          print("Time-> ${dateTimeConverted.minute}");
+          String close = dateTimeConverted.hour.toString() +
+              ":" +
+              dateTimeConverted.minute.toString();
+          list[i].closeTime = close;
+          // provider.listCloseTime.add(close);
+          // print("listCloseTime-> ${provider.listCloseTime.join(",")}");
+          // convertLocalToUtc(list: list, context: context, isOpenTime: false);
+        }
       }
     }
   }

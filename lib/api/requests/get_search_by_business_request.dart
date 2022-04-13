@@ -1,6 +1,5 @@
 import 'package:trendoapp/api/common/i_http_request.dart';
 import 'package:trendoapp/constants/api_urls.dart';
-import 'package:trendoapp/utils/feet_to_miles_utils.dart';
 
 class GetSearchByBusinessRequest implements IHttpRequest {
   String page;

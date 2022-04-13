@@ -11,7 +11,7 @@ class AppMessages {
   static const String verify_email_title = "Verify Email";
   static const String verify_email_message =
       "Enter the verification code sent to \n your email";
-  static const String otp_message = "Didn’t received code?";
+  static const String otp_message = "Didn’t receive the code?";
   static const String resend_otp_message = "Resend code";
   static const String verify_text = "Verify";
   static const String success_title = "Success";
