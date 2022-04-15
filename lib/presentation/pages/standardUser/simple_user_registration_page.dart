@@ -297,11 +297,13 @@ class _SimpleUserRegistrationPageState
                 children: [
                   // GlobalView().assetImageView(AppImages.backgroundImage1),
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal:16),
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
                     child: Scrollbar(
                       child: SingleChildScrollView(
                         child: Padding(
-                          padding: EdgeInsets.symmetric(horizontal: DeviceSize().deviceWidth(context) * 0.04),
+                          padding: EdgeInsets.symmetric(
+                              horizontal:
+                                  DeviceSize().deviceWidth(context) * 0.04),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             mainAxisSize: MainAxisSize.max,
@@ -322,93 +324,90 @@ class _SimpleUserRegistrationPageState
                               GlobalView().sizedBoxView(
                                   DeviceSize().deviceHeight(context) * 0.02),
                               // widget.isEditable
-                              //     ? 
-                                  Image.asset(
-                                      AppImages.trendsee_logo_transparent,
-                                      height:
-                                          DeviceSize().deviceWidth(context) / 3,
-                                      width:
-                                          DeviceSize().deviceWidth(context) / 3),
-                                  // : 
-                                  // Center(
-                                  //     child: Stack(
-                                  //       children: [
-                                  //         Consumer<StandardUserProvider>(
-                                  //             builder:
-                                  //                 (_, standardUser, child) {
-                                  //           return Container(
-                                  //             height: DeviceSize().deviceWidth(
-                                  //                         context) /
-                                  //                     3 -
-                                  //                 20,
-                                  //             width: DeviceSize().deviceWidth(
-                                  //                         context) /
-                                  //                     3 -
-                                  //                 20,
-                                  //             decoration: BoxDecoration(
-                                  //               color: BaseColor
-                                  //                   .terms_policy_text_color,
-                                  //               shape: BoxShape.circle,
-                                  //               image: DecorationImage(
-                                  //                   image: widget.isEditable
-                                  //                       ? imageFile == null
-                                  //                           ? NetworkImage(
-                                  //                               profilePic)
-                                  //                           : FileImage(
-                                  //                               // File(_imageFile.path),
-                                  //                               standardUser
-                                  //                                   .userImage)
-                                  //                       : standardUser
-                                  //                                   .userImage ==
-                                  //                               null
-                                  //                           ? AssetImage(AppImages
-                                  //                               .default_profile_Pic)
-                                  //                           : FileImage(
-                                  //                               // File(imageFileBody.path),
-                                  //                               // Provider.of<StandardUserProvider>(
-                                  //                               //         context,
-                                  //                               //         listen: false)
-                                  //                               //     .userImage
-                                  //                               standardUser
-                                  //                                   .userImage),
-                                  //                   fit: BoxFit.cover),
-                                  //             ),
-                                  //             // child: _imageFile == null
-                                  //             //     ? Text("not selected")
-                                  //             //     : Image.file(
-                                  //             //         File(_imageFile.path),
-                                  //             //         width: 100,
-                                  //             //         height: 100,
-                                  //             //         fit: BoxFit.fitHeight,
-                                  //             //       ),
-                                  //           );
-                                  //         }),
-                                  //         Positioned(
-                                  //             bottom: 0,
-                                  //             right: 0,
-                                  //             child: GestureDetector(
-                                  //               onTap: () {
-                                  //                 print("picker called");
-                                  //                 _showPicker(context);
-                                  //               },
-                                  //               child: Container(
-                                  //                 height: DeviceSize()
-                                  //                         .deviceHeight(
-                                  //                             context) *
-                                  //                     0.048,
-                                  //                 width: DeviceSize()
-                                  //                         .deviceHeight(
-                                  //                             context) *
-                                  //                     0.048,
-                                  //                 child: GlobalView()
-                                  //                     .assetImageView(
-                                  //                         AppImages.ic_camera),
-                                  //               ),
-                                  //             ))
-                                  //       ],
-                                  //     ),
-                                  //   ),
-                              
+                              //     ?
+                              Image.asset(AppImages.trendsee_logo_transparent,
+                                  height: DeviceSize().deviceWidth(context) / 3,
+                                  width: DeviceSize().deviceWidth(context) / 3),
+                              // :
+                              // Center(
+                              //     child: Stack(
+                              //       children: [
+                              //         Consumer<StandardUserProvider>(
+                              //             builder:
+                              //                 (_, standardUser, child) {
+                              //           return Container(
+                              //             height: DeviceSize().deviceWidth(
+                              //                         context) /
+                              //                     3 -
+                              //                 20,
+                              //             width: DeviceSize().deviceWidth(
+                              //                         context) /
+                              //                     3 -
+                              //                 20,
+                              //             decoration: BoxDecoration(
+                              //               color: BaseColor
+                              //                   .terms_policy_text_color,
+                              //               shape: BoxShape.circle,
+                              //               image: DecorationImage(
+                              //                   image: widget.isEditable
+                              //                       ? imageFile == null
+                              //                           ? NetworkImage(
+                              //                               profilePic)
+                              //                           : FileImage(
+                              //                               // File(_imageFile.path),
+                              //                               standardUser
+                              //                                   .userImage)
+                              //                       : standardUser
+                              //                                   .userImage ==
+                              //                               null
+                              //                           ? AssetImage(AppImages
+                              //                               .default_profile_Pic)
+                              //                           : FileImage(
+                              //                               // File(imageFileBody.path),
+                              //                               // Provider.of<StandardUserProvider>(
+                              //                               //         context,
+                              //                               //         listen: false)
+                              //                               //     .userImage
+                              //                               standardUser
+                              //                                   .userImage),
+                              //                   fit: BoxFit.cover),
+                              //             ),
+                              //             // child: _imageFile == null
+                              //             //     ? Text("not selected")
+                              //             //     : Image.file(
+                              //             //         File(_imageFile.path),
+                              //             //         width: 100,
+                              //             //         height: 100,
+                              //             //         fit: BoxFit.fitHeight,
+                              //             //       ),
+                              //           );
+                              //         }),
+                              //         Positioned(
+                              //             bottom: 0,
+                              //             right: 0,
+                              //             child: GestureDetector(
+                              //               onTap: () {
+                              //                 print("picker called");
+                              //                 _showPicker(context);
+                              //               },
+                              //               child: Container(
+                              //                 height: DeviceSize()
+                              //                         .deviceHeight(
+                              //                             context) *
+                              //                     0.048,
+                              //                 width: DeviceSize()
+                              //                         .deviceHeight(
+                              //                             context) *
+                              //                     0.048,
+                              //                 child: GlobalView()
+                              //                     .assetImageView(
+                              //                         AppImages.ic_camera),
+                              //               ),
+                              //             ))
+                              //       ],
+                              //     ),
+                              //   ),
+
                               fNameLnameView(),
                               Container(
                                 padding: EdgeInsets.symmetric(vertical: 5),
@@ -425,7 +424,8 @@ class _SimpleUserRegistrationPageState
                                   AppImages.ic_user,
                                   userNameTextEditingController,
                                   AppMessages.hint_username_reg,
-                                  AppTextStyle.start_text_align),
+                                  AppTextStyle.start_text_align,
+                                  textInputType: TextInputType.name),
                               GlobalView().sizedBoxView(
                                   DeviceSize().deviceHeight(context) * 0.01),
                               Container(
@@ -443,7 +443,8 @@ class _SimpleUserRegistrationPageState
                                   AppImages.ic_email,
                                   emailTextEditingController,
                                   AppMessages.hint_email,
-                                  AppTextStyle.start_text_align),
+                                  AppTextStyle.start_text_align,
+                                  textInputType: TextInputType.emailAddress),
                               // GlobalView().sizedBoxView(10),
                               // Container(
                               //   padding: EdgeInsets.symmetric(vertical: 5),
@@ -688,7 +689,8 @@ class _SimpleUserRegistrationPageState
               AppImages.ic_user,
               firstNameTextEditingController,
               AppMessages.hint_firstname,
-              AppTextStyle.start_text_align),
+              AppTextStyle.start_text_align,
+              textInputType: TextInputType.name),
           GlobalView().sizedBoxView(DeviceSize().deviceHeight(context) * 0.01),
           Container(
             padding: EdgeInsets.symmetric(vertical: 5),
@@ -705,7 +707,8 @@ class _SimpleUserRegistrationPageState
               AppImages.ic_user,
               lastNameTextEditingController,
               AppMessages.hint_lastname,
-              AppTextStyle.start_text_align),
+              AppTextStyle.start_text_align,
+              textInputType: TextInputType.name),
           GlobalView().sizedBoxView(DeviceSize().deviceHeight(context) * 0.01),
         ],
       ),
@@ -805,8 +808,7 @@ class _SimpleUserRegistrationPageState
                         recognizer: TapGestureRecognizer()
                           ..onTap = () {
                             // code to open / launch terms of service link here
-                             UrlLauncher()
-                                      .launchUrl(ApiUrls.privacy_policy_url);
+                            UrlLauncher().launchUrl(ApiUrls.privacy_policy_url);
                           }),
                     TextSpan(
                         text: ' and ',
@@ -826,7 +828,7 @@ class _SimpleUserRegistrationPageState
                               recognizer: TapGestureRecognizer()
                                 ..onTap = () {
                                   // code to open / launch privacy policy link here
-                                   UrlLauncher()
+                                  UrlLauncher()
                                       .launchUrl(ApiUrls.terms_service_url);
                                 })
                         ])

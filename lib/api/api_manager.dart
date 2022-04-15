@@ -1522,12 +1522,13 @@ class ApiManager {
       String latitude,
       String longitude,
       int isDefault,
-      int businessLocationId,
-      String locationName) {
+      
+      String locationName,
+      String businessUserId) {
     Completer<BusinessLatlongResponse> completer = new Completer();
     AddBusinessLatlongRequestBody addBusinessLatlongRequestBody =
-        new AddBusinessLatlongRequestBody(
-            latitude, longitude, isDefault, businessLocationId, locationName);
+        new AddBusinessLatlongRequestBody(latitude, longitude, isDefault,
+             locationName, businessUserId);
     AddBusinessLatlongRequest addBusinessLatlongRequest =
         new AddBusinessLatlongRequest(addBusinessLatlongRequestBody);
     Api(context: context)

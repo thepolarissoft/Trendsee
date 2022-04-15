@@ -4,11 +4,12 @@ class AddBusinessLatlongRequestBody {
   int isDefault;
   int businessLocationId;
   String locationName;
+  String businessUserId;
   AddBusinessLatlongRequestBody(
     this.latitude,
     this.longitude,
     this.isDefault,
-    this.businessLocationId,
     this.locationName,
+    this.businessUserId,
   );
 }

@@ -183,8 +183,8 @@ class _MapScreenState extends State<MapScreen> {
   }
 
   void onClick() {
+    var provider = Provider.of<BusinessUserProvider>(context, listen: false);
     if (widget.isTemp == true) {
-      var provider = Provider.of<BusinessUserProvider>(context, listen: false);
       bool isAvailableData;
       if (provider.listLatLong != null && provider.listLatLong.length > 0) {
         for (var i = 0; i < provider.listLatLong.length; i++) {
@@ -206,21 +206,21 @@ class _MapScreenState extends State<MapScreen> {
         if (locationController.text.isEmpty) {
           GlobalView().showToast("Please enter location name!");
         } else {
-          Provider.of<BusinessUserProvider>(context, listen: false)
-              .addBusinessLatlong(
-                  context,
-                  lastMapPosition.latitude.toStringAsFixed(5),
-                  lastMapPosition.longitude.toStringAsFixed(5),
-                  0,
-                  0,
-                  locationController.text);
+          provider.addBusinessLatlong(
+            context,
+            lastMapPosition.latitude.toStringAsFixed(5),
+            lastMapPosition.longitude.toStringAsFixed(5),
+            0,
+      
+            locationController.text,
+            provider.businessUserProfileResponse.user.id.toString(),
+          );
           Navigator.of(context).pop();
         }
       }
     } else {
-      Provider.of<BusinessUserProvider>(context, listen: false)
-          .setCenterLocation(
-              lastMapPosition.latitude, lastMapPosition.longitude);
+      provider.setCenterLocation(
+          lastMapPosition.latitude, lastMapPosition.longitude);
       Navigator.of(context).pop();
     }
   }

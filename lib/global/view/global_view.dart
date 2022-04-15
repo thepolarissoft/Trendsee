@@ -63,7 +63,8 @@ class GlobalView {
       );
 
   Widget textFieldView(String image, TextEditingController controller,
-          String hintText, TextAlign textAlign) =>
+          String hintText, TextAlign textAlign,
+          {TextInputType textInputType}) =>
       Material(
         shadowColor: BaseColor.shadow_color,
         elevation: 4,
@@ -76,6 +77,7 @@ class GlobalView {
             fontFamily: AppTextStyle.inter_font_family,
             fontSize: 14,
           ),
+          keyboardType: textInputType ?? TextInputType.text,
           textAlign: textAlign,
           decoration: InputDecoration(
             isDense: true,
@@ -303,22 +305,21 @@ class GlobalView {
   Widget wrappedButtonViewWithImage(BuildContext context, Widget child) =>
       Container(
           child: Container(
-            padding: EdgeInsets.symmetric(
-                vertical: DeviceSize().deviceHeight(context) * 0.007,
-                horizontal: 25),
-            decoration: BoxDecoration(
-              color: BaseColor.pure_white_color,
-              boxShadow: [
-                BoxShadow(
-                    color: BaseColor.shadow_color.withOpacity(0.3),
-                    blurRadius: 4)
-              ],
-              border: Border.all(color: BaseColor.forgot_pass_txt_color),
-              borderRadius: BorderRadius.circular(20),
-            ),
-            // width: ScreenSize().screenWidth(context) - 50,
-            child: child,
-          ));
+        padding: EdgeInsets.symmetric(
+            vertical: DeviceSize().deviceHeight(context) * 0.007,
+            horizontal: 25),
+        decoration: BoxDecoration(
+          color: BaseColor.pure_white_color,
+          boxShadow: [
+            BoxShadow(
+                color: BaseColor.shadow_color.withOpacity(0.3), blurRadius: 4)
+          ],
+          border: Border.all(color: BaseColor.forgot_pass_txt_color),
+          borderRadius: BorderRadius.circular(20),
+        ),
+        // width: ScreenSize().screenWidth(context) - 50,
+        child: child,
+      ));
 
   Widget buttonFilled2(BuildContext context, String text) => Container(
         padding: EdgeInsets.symmetric(vertical: 15),

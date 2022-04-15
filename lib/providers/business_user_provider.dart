@@ -863,13 +863,13 @@ class BusinessUserProvider extends ChangeNotifier {
       String latitude,
       String longitude,
       int isDefault,
-      int businessLocationId,
-      String locationName) {
+      String locationName,
+      String businessUserId) {
     isLoading = true;
     notifyListeners();
     ApiManager(context)
         .addBusinessLatlong(
-            latitude, longitude, isDefault, businessLocationId, locationName)
+            latitude, longitude, isDefault, locationName, businessUserId)
         .then((response) {
       print("response-> $response");
       businessLatlongResponse = response;
@@ -894,7 +894,7 @@ class BusinessUserProvider extends ChangeNotifier {
         context: context,
         onCallBack: () {
           addBusinessLatlong(context, latitude, longitude, isDefault,
-              businessLocationId, locationName);
+              locationName, businessUserId);
         },
         exception: onError,
       ).showAlertDialog();
@@ -940,13 +940,14 @@ class BusinessUserProvider extends ChangeNotifier {
     });
   }
 
-  void changeCheckBoxValue(int id, bool value, BuildContext context) {
+  void changeCheckBoxValue(int id, bool value, BuildContext context,
+      String locationName, String businessUserId) {
     if (listLatLong.isNotEmpty) {
       for (var i = 0; i < listLatLong.length; i++) {
         if (listLatLong[i].id == id) {
           listLatLong[i].isDefault = 1;
           addBusinessLatlong(context, listLatLong[i].latitude,
-              listLatLong[i].longitude, 1, listLatLong[i].id, "");
+              listLatLong[i].longitude, 1, locationName, businessUserId);
         } else {
           listLatLong[i].isDefault = 0;
           // addBusinessLatlong(context, listLatLong[i].latitude,

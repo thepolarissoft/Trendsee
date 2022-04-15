@@ -23,7 +23,7 @@ class AppMessages {
   static const String hint_email = "Enter Email ID";
   static const String hint_firstname = "Enter First Name";
   static const String hint_lastname = "Enter Last Name";
-  static const String hint_username_reg = "Choose your Username";
+  static const String hint_username_reg = "Choose Your Username";
   static const String hint_date_of_birth = "Enter Date of Birth";
   static const String send_text = "Send";
   static const String register_text = "Registration";

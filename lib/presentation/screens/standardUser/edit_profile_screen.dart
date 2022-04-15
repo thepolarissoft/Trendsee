@@ -46,7 +46,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   File imageFileBody;
   String profilePic = "";
   File profilePicFile;
-  ProfileResponse profileResponse ;
+  ProfileResponse profileResponse;
 
   @override
   void initState() {
@@ -304,7 +304,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                     AppImages.ic_user,
                                     firstNameTextEditingController,
                                     AppMessages.hint_firstname,
-                                    AppTextStyle.start_text_align),
+                                    AppTextStyle.start_text_align,
+                                    textInputType: TextInputType.name),
                                 GlobalView().sizedBoxView(10),
                                 Container(
                                   padding: EdgeInsets.symmetric(vertical: 5),
@@ -320,7 +321,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                     AppImages.ic_user,
                                     lastNameTextEditingController,
                                     AppMessages.hint_lastname,
-                                    AppTextStyle.start_text_align),
+                                    AppTextStyle.start_text_align,
+                                    textInputType: TextInputType.name),
                                 GlobalView().sizedBoxView(10),
                                 Container(
                                   padding: EdgeInsets.symmetric(vertical: 5),
@@ -336,7 +338,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                     AppImages.ic_user,
                                     userNameTextEditingController,
                                     AppMessages.hint_username_reg,
-                                    AppTextStyle.start_text_align),
+                                    AppTextStyle.start_text_align,
+                                    textInputType: TextInputType.name),
                                 GlobalView().sizedBoxView(10),
                                 Container(
                                   padding: EdgeInsets.symmetric(vertical: 5),
@@ -352,10 +355,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                     AppImages.ic_email,
                                     emailTextEditingController,
                                     AppMessages.hint_email,
-                                    AppTextStyle.start_text_align),
-
+                                    AppTextStyle.start_text_align,
+                                    textInputType: TextInputType.emailAddress),
                                 GlobalView().sizedBoxView(60),
-
                                 // Spacer(),
                                 Padding(
                                   padding: EdgeInsets.only(

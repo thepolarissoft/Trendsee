@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:trendoapp/constants/app_images.dart';
@@ -33,6 +35,11 @@ class _AddMoreLocationsScreenState extends State<AddMoreLocationsScreen> {
     businessUserType =
         StorageUtils.readStringValue(StorageUtils.keyBusinessType);
     super.initState();
+  }
+
+  FutureOr onCallBack(dynamic value) {
+    Provider.of<BusinessUserProvider>(context, listen: false)
+        .getBusinessUserProfile(context);
   }
 
   @override
@@ -103,7 +110,7 @@ class _AddMoreLocationsScreenState extends State<AddMoreLocationsScreen> {
                                   context,
                                   AppRoutes.map_route_name,
                                   arguments: TempLocationsArgs(true),
-                                );
+                                ).then(onCallBack);
                               },
                               child: GlobalView()
                                   .buttonFilled(context, AppMessages.add_text),

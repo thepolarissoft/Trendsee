@@ -9,7 +9,7 @@ import 'package:trendoapp/constants/base_color.dart';
 import 'package:trendoapp/data/models/home_feed_response.dart';
 import 'package:trendoapp/global/view/global_view.dart';
 import 'package:trendoapp/global/view/check_ins_item_view.dart';
-import 'package:trendoapp/presentation/screens/common/checkIn_details_screen.dart';
+import 'package:trendoapp/presentation/screens/standardUser/friendsTabs/business_details_screen.dart';
 import 'package:trendoapp/providers/home_feed_response_provider.dart';
 
 class MyAllCheckInsPage extends StatefulWidget {
@@ -146,7 +146,7 @@ class _MyAllCheckInsPageState extends State<MyAllCheckInsPage> {
                             Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (_) => CheckInDetailsScreen()))
+                                        builder: (_) => BusinessDetailsScreen(businessId: myCheckIns.listFeedInfo[itemIndex].businessUserId,)))
                                 // .then(onCallBack)
                                 ;
                           },

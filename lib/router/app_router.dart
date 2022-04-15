@@ -170,6 +170,7 @@ class AppRouter {
 }
 
 class TempLocationsArgs {
+  
   bool isTemp;
   TempLocationsArgs(this.isTemp);
 }

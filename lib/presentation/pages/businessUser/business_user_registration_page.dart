@@ -332,7 +332,8 @@ class _BusinessUserRegistrationPageState
                               AppImages.ic_business,
                               businessNameTextEditingController,
                               AppMessages.hint_business_name,
-                              AppTextStyle.start_text_align),
+                              AppTextStyle.start_text_align,
+                              textInputType: TextInputType.name),
                           GlobalView().sizedBoxView(10),
                           Container(
                             padding: EdgeInsets.symmetric(vertical: 5),
@@ -348,7 +349,8 @@ class _BusinessUserRegistrationPageState
                               AppImages.ic_website,
                               businessWebsiteTextEditingController,
                               AppMessages.hint_business_website,
-                              AppTextStyle.start_text_align),
+                              AppTextStyle.start_text_align,
+                              textInputType: TextInputType.url),
                           GlobalView().sizedBoxView(10),
                           Container(
                             padding: EdgeInsets.symmetric(vertical: 5),
@@ -638,7 +640,8 @@ class _BusinessUserRegistrationPageState
                               AppImages.ic_user,
                               ownerFirstNameTextEditingController,
                               AppMessages.hint_owner_firstname,
-                              AppTextStyle.start_text_align),
+                              AppTextStyle.start_text_align,
+                              textInputType: TextInputType.name),
                           GlobalView().sizedBoxView(10),
                           Container(
                             padding: EdgeInsets.symmetric(vertical: 5),
@@ -655,7 +658,8 @@ class _BusinessUserRegistrationPageState
                               lastNameTextEditingController,
                               AppMessages.hint_lastname +
                                   AppMessages.of_owner_text,
-                              AppTextStyle.start_text_align),
+                              AppTextStyle.start_text_align,
+                              textInputType: TextInputType.name),
                           GlobalView().sizedBoxView(10),
                           Container(
                             padding: EdgeInsets.symmetric(vertical: 5),
@@ -671,7 +675,8 @@ class _BusinessUserRegistrationPageState
                               AppImages.ic_user,
                               userNameTextEditingController,
                               AppMessages.hint_username_reg,
-                              AppTextStyle.start_text_align),
+                              AppTextStyle.start_text_align,
+                              textInputType: TextInputType.name),
                           GlobalView().sizedBoxView(10),
                           Container(
                             padding: EdgeInsets.symmetric(vertical: 5),
@@ -688,7 +693,8 @@ class _BusinessUserRegistrationPageState
                               emailTextEditingController,
                               AppMessages.hint_email +
                                   AppMessages.of_owner_text,
-                              AppTextStyle.start_text_align),
+                              AppTextStyle.start_text_align,
+                              textInputType: TextInputType.emailAddress),
                           GlobalView().sizedBoxView(10),
                           Container(
                             padding: EdgeInsets.symmetric(vertical: 5),
@@ -701,10 +707,11 @@ class _BusinessUserRegistrationPageState
                                 11),
                           ),
                           GlobalView().textFieldViewPhone(
-                              AppImages.ic_phone,
-                              otherPhoneTextEditingController,
-                              AppMessages.hint_other_phone_number,
-                              AppTextStyle.start_text_align),
+                            AppImages.ic_phone,
+                            otherPhoneTextEditingController,
+                            AppMessages.hint_other_phone_number,
+                            AppTextStyle.start_text_align,
+                          ),
                           // GlobalView().sizedBoxView(10),
                           // Container(
                           //   padding: EdgeInsets.symmetric(vertical: 5),
