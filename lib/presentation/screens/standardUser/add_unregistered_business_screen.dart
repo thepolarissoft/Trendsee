@@ -12,7 +12,6 @@ import 'package:trendoapp/providers/base_response_provider.dart';
 import 'package:trendoapp/providers/business_list_provider.dart';
 import 'package:trendoapp/providers/categories_list_provider.dart';
 import 'package:trendoapp/utils/category_utils.dart';
-import 'package:trendoapp/utils/dialog_utils.dart';
 import 'package:trendoapp/utils/storage_utils.dart';
 
 class AddUnregisteredBusinessScreen extends StatefulWidget {
@@ -27,7 +26,6 @@ class _AddUnregisteredBusinessScreenState
     extends State<AddUnregisteredBusinessScreen> {
   TextEditingController businessNameTextEditingController =
       TextEditingController();
-
   TextEditingController categoryTextEditingController = TextEditingController();
 
   @override
@@ -126,54 +124,7 @@ class _AddUnregisteredBusinessScreenState
                                   GlobalView().sizedBoxView(30),
                                   GestureDetector(
                                       onTap: () {
-                                        if (businessNameTextEditingController
-                                                .text.isNotEmpty &&
-                                            categoryTextEditingController
-                                                .text.isNotEmpty) {
-                                          DialogUtils.displayDialogCallBack(
-                                                  context,
-                                                  "",
-                                                  AppMessages
-                                                      .unregistered_business_title,
-                                                  AppMessages
-                                                      .unregistered_business_msg
-                                                  // +"\n" +AppMessages
-                                                  // .unregistered_business_sub_msg
-                                                  ,
-                                                  "",
-                                                  "",
-                                                  AppMessages.ok_text)
-                                              .then((value) {
-                                            if (value == AppMessages.ok_text) {
-                                              print(
-                                                  "IDS-> ${Provider.of<CategoriesListProvider>(context, listen: false).listSelectedCategoryId.join(',')}");
-                                              Provider.of<BaseResponseProvider>(
-                                                      context,
-                                                      listen: false)
-                                                  .addUnregisteredBusiness(
-                                                      businessNameTextEditingController
-                                                          .text,
-                                                      StorageUtils
-                                                          .readStringValue(
-                                                              StorageUtils
-                                                                  .keyLatitude),
-                                                      StorageUtils
-                                                          .readStringValue(
-                                                              StorageUtils
-                                                                  .keyLongitude),
-                                                      Provider.of<CategoriesListProvider>(
-                                                              context,
-                                                              listen: false)
-                                                          .listSelectedCategoryId
-                                                          .join(','),
-                                                      context);
-                                            }
-                                          });
-                                        } else {
-                                          GlobalView().showToast(
-                                              AppToastMessages
-                                                  .empty_business_name_message);
-                                        }
+                                        onTapSubmit();
                                       },
                                       child: GlobalView().buttonFilled(context,
                                           AppMessages.submit_btn_text)),
@@ -227,5 +178,26 @@ class _AddUnregisteredBusinessScreenState
         ),
       ),
     );
+  }
+
+  void onTapSubmit() {
+    int timeStamp = DateTime.now().millisecondsSinceEpoch;
+    String businessUsername = timeStamp.toString();
+    print("businessUsername $businessUsername");
+    if (businessNameTextEditingController.text.isNotEmpty &&
+        categoryTextEditingController.text.isNotEmpty) {
+      Provider.of<BaseResponseProvider>(context, listen: false)
+          .addUnregisteredBusiness(
+              businessNameTextEditingController.text,
+              StorageUtils.readStringValue(StorageUtils.keyLatitude),
+              StorageUtils.readStringValue(StorageUtils.keyLongitude),
+              Provider.of<CategoriesListProvider>(context, listen: false)
+                  .listSelectedCategoryId
+                  .join(','),
+              context,
+              businessUsername);
+    } else {
+      GlobalView().showToast(AppToastMessages.empty_business_name_message);
+    }
   }
 }

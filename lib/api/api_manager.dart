@@ -1522,13 +1522,12 @@ class ApiManager {
       String latitude,
       String longitude,
       int isDefault,
-      
       String locationName,
       String businessUserId) {
     Completer<BusinessLatlongResponse> completer = new Completer();
     AddBusinessLatlongRequestBody addBusinessLatlongRequestBody =
-        new AddBusinessLatlongRequestBody(latitude, longitude, isDefault,
-             locationName, businessUserId);
+        new AddBusinessLatlongRequestBody(
+            latitude, longitude, isDefault, locationName, businessUserId);
     AddBusinessLatlongRequest addBusinessLatlongRequest =
         new AddBusinessLatlongRequest(addBusinessLatlongRequestBody);
     Api(context: context)
@@ -1680,12 +1679,16 @@ class ApiManager {
     return completer.future;
   }
 
-  Future<Baseresponse> addUnregisteredBusiness(String businessName,
-      String latitude, String longitude, String categoryId) {
+  Future<Baseresponse> addUnregisteredBusiness(
+      String businessName,
+      String latitude,
+      String longitude,
+      String categoryId,
+      String businessUsername) {
     Completer<Baseresponse> completer = new Completer();
     AddUnregisteredBusinessRequestBody addUnregisteredBusinessRequestBody =
         AddUnregisteredBusinessRequestBody(
-            businessName, latitude, longitude, categoryId);
+            businessName, latitude, longitude, categoryId, businessUsername);
     AddUnregisteredBusinessRequest addUnregisteredBusinessRequest =
         AddUnregisteredBusinessRequest(addUnregisteredBusinessRequestBody);
     Api(context: context)

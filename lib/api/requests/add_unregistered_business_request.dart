@@ -31,6 +31,8 @@ class AddUnregisteredBusinessRequest implements IHttpRequest {
     map['latitude'] = addUnregisteredBusinessRequestBody.latitude;
     map['longitude'] = addUnregisteredBusinessRequestBody.longitude;
     map['category_ids'] = addUnregisteredBusinessRequestBody.categoryId;
+    map['business_username'] =
+        addUnregisteredBusinessRequestBody.businessUsername;
     this.body = jsonEncode(map);
     print('AddUnregisteredBusinessRequestBody-> $body');
   }

@@ -191,10 +191,16 @@ class BaseResponseProvider extends ChangeNotifier {
     });
   }
 
-  void addUnregisteredBusiness(String businessName, String latitude,
-      String longitude, String categoryId, BuildContext context) async {
+  void addUnregisteredBusiness(
+      String businessName,
+      String latitude,
+      String longitude,
+      String categoryId,
+      BuildContext context,
+      String businessUsername) async {
     ApiManager(context)
-        .addUnregisteredBusiness(businessName, latitude, longitude, categoryId)
+        .addUnregisteredBusiness(
+            businessName, latitude, longitude, categoryId, businessUsername)
         .then((response) {
       baseresponse = response;
       print("RESPONSE-> ${baseresponse.toJsonData()}");
@@ -203,8 +209,21 @@ class BaseResponseProvider extends ChangeNotifier {
           // isLoading = false;
           print("baseresponse--->>== ${baseresponse.msg}");
           GlobalView().showToast(baseresponse.msg);
-          Navigator.push(
-              context, MaterialPageRoute(builder: (_) => TimelineScreen()));
+          DialogUtils.displayDialogCallBack(
+                  context,
+                  "",
+                  AppMessages.unregistered_business_title,
+                  AppMessages.unregistered_business_msg
+                  // +"\n" +AppMessages
+                  // .unregistered_business_sub_msg
+                  ,
+                  "",
+                  "",
+                  AppMessages.ok_text)
+              .then((value) {
+            Navigator.push(
+                context, MaterialPageRoute(builder: (_) => TimelineScreen()));
+          });
         }
       }
       notifyListeners();
@@ -213,8 +232,8 @@ class BaseResponseProvider extends ChangeNotifier {
       ShowAlertView(
               context: context,
               onCallBack: () {
-                addUnregisteredBusiness(
-                    businessName, latitude, longitude, categoryId, context);
+                addUnregisteredBusiness(businessName, latitude, longitude,
+                    categoryId, context, businessUsername);
               },
               exception: onError)
           .showAlertDialog();
