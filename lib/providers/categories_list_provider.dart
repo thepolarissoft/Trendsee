@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:trendoapp/api/api_manager.dart';
-import 'package:trendoapp/constants/app_messages.dart';
 import 'package:trendoapp/data/models/categories_list_response.dart';
 import 'package:trendoapp/data/models/category_response.dart';
-import 'package:trendoapp/utils/dialog_utils.dart';
 
 class CategoriesListProvider extends ChangeNotifier {
   CategoriesListResponse categoriesListResponse;
@@ -16,7 +14,8 @@ class CategoriesListProvider extends ChangeNotifier {
   // List<CategoryResponse> tempListSelectedCategories = [];
 
   List<int> listSelectedCategoryId = [];
-  List<int> listFilteredCategoryId = [];
+  // List<int> listFilteredCategoryId = [];
+  CategoryResponse selectedCategoryResponse;
 
   // ignore: missing_return
   Future<CategoriesListResponse> getCategoriesList(BuildContext context) async {
@@ -36,9 +35,9 @@ class CategoriesListProvider extends ChangeNotifier {
           listCategoriesForHome[0].isChecked = true;
           listSelectedCategories.add(listCategories[0]);
           listSelectedCategoryId.add(listSelectedCategories[0].id);
-
-          listFilteredCategoryId.clear();
-          listFilteredCategoryId.add(listCategoriesForHome[0].id);
+          selectedCategoryResponse = listCategoriesForHome[0];
+          // listFilteredCategoryId.clear();
+          // listFilteredCategoryId.add(listCategoriesForHome[0].id);
           print(
               "IS checked from provider-> ${categoriesListResponse.category[0].isChecked}");
           return categoriesListResponse;
@@ -146,30 +145,31 @@ class CategoriesListProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void onClickCategory(
-      CategoryResponse categoryResponse, BuildContext context) {
-    print("listFilteredCategoryId Length-> ${listFilteredCategoryId.length}");
-    if (!categoryResponse.isChecked && listFilteredCategoryId.length < 2) {
-      categoryResponse.isChecked = true;
-      listFilteredCategoryId.add(categoryResponse.id);
-    } else {
-      if (listFilteredCategoryId.length == 1) {
-        DialogUtils.displayDialogCallBack(
-            context,
-            "",
-            AppMessages.categories_text,
-            AppMessages.select_atleast_one_cate_text,
-            "",
-            AppMessages.ok_text,
-            "");
-      } else {
-        categoryResponse.isChecked = false;
-        listFilteredCategoryId.remove(categoryResponse.id);
-      }
-    }
-    print("listFilteredCategoryId Length-> ${listFilteredCategoryId.length}");
-    notifyListeners();
-  }
+  // void onClickCategory(
+  //     CategoryResponse categoryResponse, BuildContext context) {
+  //   print("listFilteredCategoryId Length-> ${listFilteredCategoryId.length}");
+  //   // if (!categoryResponse.isChecked && listFilteredCategoryId.length < 2) {
+  //   if (!categoryResponse.isChecked && listFilteredCategoryId.length == 1) {
+  //     categoryResponse.isChecked = true;
+  //     listFilteredCategoryId.add(categoryResponse.id);
+  //   } else {
+  //     if (listFilteredCategoryId.length == 1) {
+  //       DialogUtils.displayDialogCallBack(
+  //           context,
+  //           "",
+  //           AppMessages.categories_text,
+  //           AppMessages.select_atleast_one_cate_text,
+  //           "",
+  //           AppMessages.ok_text,
+  //           "");
+  //     } else {
+  //       categoryResponse.isChecked = false;
+  //       listFilteredCategoryId.remove(categoryResponse.id);
+  //     }
+  //   }
+  //   print("listFilteredCategoryId Length-> ${listFilteredCategoryId.length}");
+  //   notifyListeners();
+  // }
 
   // void getHomeCategories() {
   //   // listCategoriesForHome.clear();
@@ -190,9 +190,21 @@ class CategoriesListProvider extends ChangeNotifier {
   //   notifyListeners();
   // }
 
-  // void selectedCategoryItem(CategoryResponse categoryResponse) {
-  //   // selectedCategoryData = categoryResponse;
-  //   // print("selectedCategory===>>> $selectedCategoryData");
-  //   notifyListeners();
-  // }
+  void selectedCategoryItem(CategoryResponse categoryResponse) {
+    // selectedCategoryResponse = categoryResponse;
+    // print("value Provider->> ${categoryResponse.toJson()}");
+
+    // print(
+    //     "selectedBusinessCategoryResponse Provider-> ${selectedBusinessCategoryResponse.toJson()}");
+    print("listCategories Length-> ${listCategories.length}");
+    for (var i = 0; i < listCategories.length; i++) {
+      if (listCategories[i].id == categoryResponse.id) {
+        // selectedBusinessCategoryResponse = listCategories[i];
+        selectedCategoryResponse = categoryResponse;
+        break;
+      }
+    }
+    notifyListeners();
+    notifyListeners();
+  }
 }

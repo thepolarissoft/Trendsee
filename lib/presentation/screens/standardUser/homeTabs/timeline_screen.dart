@@ -177,8 +177,10 @@ class _TimelineScreenState extends State<TimelineScreen> {
                   FloatingActionButtonLocation.centerDocked,
               floatingActionButton: GestureDetector(
                 onTap: () {
-                  Navigator.pushNamed(
-                      context, AppRoutes.add_new_checkin_route_name);
+                  // Navigator.pushNamed(
+                  //     context, AppRoutes.add_new_checkin_route_name);
+                  Navigator.pushNamed(context,
+                      AppRoutes.select_location_for_add_new_checkin_route_name);
                 },
                 child: Container(
                     height: 52,

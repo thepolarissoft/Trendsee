@@ -54,12 +54,13 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
           provider.getHomeFeedList(
             context,
             Provider.of<CategoriesListProvider>(context, listen: false)
-                .listFilteredCategoryId[0]
+                .selectedCategoryResponse.id
                 .toString(),
             StorageUtils.readStringValue(StorageUtils.keyLatitude),
             StorageUtils.readStringValue(StorageUtils.keyLongitude),
             Provider.of<FilterProvider>(context, listen: false).distanceRadius,
-            Provider.of<FilterProvider>(context, listen: false).selectedMetropolitanCityInfo,
+            Provider.of<FilterProvider>(context, listen: false)
+                .selectedMetropolitanCityInfo,
           );
         } else {
           // GlobalView().showToast(AppMessages.no_more_data_text);
@@ -171,15 +172,15 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                   .getHomeFeedList(
                 context,
                 Provider.of<CategoriesListProvider>(context, listen: false)
-                    .listFilteredCategoryId
-                    .join(",")
+                    .selectedCategoryResponse
+                    .id
                     .toString(),
                 StorageUtils.readStringValue(StorageUtils.keyLatitude),
                 StorageUtils.readStringValue(StorageUtils.keyLongitude),
                 Provider.of<FilterProvider>(context, listen: false)
                     .distanceRadius,
-                Provider.of<FilterProvider>(context, listen: false).selectedMetropolitanCityInfo
-                    ,
+                Provider.of<FilterProvider>(context, listen: false)
+                    .selectedMetropolitanCityInfo,
               );
             },
             color: BaseColor.btn_gradient_end_color1,

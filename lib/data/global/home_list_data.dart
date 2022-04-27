@@ -22,6 +22,7 @@ class HomeListData {
       print(
           "RADIUS->${Provider.of<FilterProvider>(context, listen: false).distanceRadius}");
       // Provider.of<FilterProvider>(context, listen: false).setDistanceRadius("5");
+
       Provider.of<HomeFeedResponseProvider>(context, listen: false)
           .listFeedInfo
           .clear();
@@ -29,13 +30,12 @@ class HomeListData {
           .homeFeedResponse = null;
       Provider.of<HomeFeedResponseProvider>(context, listen: false)
           .getHomeFeedList(
-        context,
-        "1",
-        StorageUtils.readStringValue(StorageUtils.keyLatitude),
-        StorageUtils.readStringValue(StorageUtils.keyLongitude),
-        "5",
-       ""
-      );
+              context,
+              "1",
+              StorageUtils.readStringValue(StorageUtils.keyLatitude),
+              StorageUtils.readStringValue(StorageUtils.keyLongitude),
+              "5",
+              "");
     });
   }
 
@@ -47,13 +47,14 @@ class HomeListData {
         .getHomeFeedList(
       context,
       Provider.of<CategoriesListProvider>(context, listen: false)
-          .listFilteredCategoryId
-          .join(",")
+          .selectedCategoryResponse
+          .id
           .toString(),
       StorageUtils.readStringValue(StorageUtils.keyLatitude),
       StorageUtils.readStringValue(StorageUtils.keyLongitude),
       Provider.of<FilterProvider>(context, listen: false).distanceRadius,
-      Provider.of<FilterProvider>(context, listen: false).selectedMetropolitanCityInfo,
+      Provider.of<FilterProvider>(context, listen: false)
+          .selectedMetropolitanCityInfo,
     );
   }
 
@@ -66,13 +67,15 @@ class HomeListData {
         .getHomeFeedList(
       context,
       Provider.of<CategoriesListProvider>(context, listen: false)
-          .listFilteredCategoryId[0]
+          // .listFilteredCategoryId[0]
+          .selectedCategoryResponse
+          .id
           .toString(),
       StorageUtils.readStringValue(StorageUtils.keyLatitude),
       StorageUtils.readStringValue(StorageUtils.keyLongitude),
       Provider.of<FilterProvider>(context, listen: false).distanceRadius,
-      Provider.of<FilterProvider>(context, listen: false).selectedMetropolitanCityInfo
-          ,
+      Provider.of<FilterProvider>(context, listen: false)
+          .selectedMetropolitanCityInfo,
     );
   }
 }

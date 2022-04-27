@@ -43,23 +43,24 @@ class SearchListData {
       page,
       Provider.of<FilterProvider>(context, listen: false).searchValue,
       Provider.of<CategoriesListProvider>(context, listen: false)
-          .listFilteredCategoryId
-          .join(",")
+          // .listFilteredCategoryId
+          // .join(",")
+          .selectedCategoryResponse
+          .id
           .toString(),
       // filterModel.categoryId,
       StorageUtils.readStringValue(StorageUtils.keyLatitude),
       StorageUtils.readStringValue(StorageUtils.keyLongitude),
       Provider.of<FilterProvider>(context, listen: false).distanceRadius,
       Provider.of<FilterProvider>(context, listen: false)
-          .selectedMetropolitanCityInfo
-          ,
+          .selectedMetropolitanCityInfo,
     );
   }
 
   void applySearchDataForDistance(
       BuildContext context, String distanceRadius) async {
     print(
-        "listFilteredCategoryId length-> ${Provider.of<CategoriesListProvider>(context, listen: false).listFilteredCategoryId.length}");
+        "listFilteredCategoryId length-> ${Provider.of<CategoriesListProvider>(context, listen: false).selectedCategoryResponse.name}");
     Provider.of<SearchByBusinessProvider>(context, listen: false)
         .listBusiness
         .clear();
@@ -69,15 +70,16 @@ class SearchListData {
       1,
       Provider.of<FilterProvider>(context, listen: false).searchValue,
       Provider.of<CategoriesListProvider>(context, listen: false)
-          .listFilteredCategoryId
-          .join(",")
+          // .listFilteredCategoryId
+          // .join(",")
+          .selectedCategoryResponse
+          .id
           .toString(),
       StorageUtils.readStringValue(StorageUtils.keyLatitude),
       StorageUtils.readStringValue(StorageUtils.keyLongitude),
-        Provider.of<FilterProvider>(context, listen: false).distanceRadius,
+      Provider.of<FilterProvider>(context, listen: false).distanceRadius,
       Provider.of<FilterProvider>(context, listen: false)
-          .selectedMetropolitanCityInfo
-          ,
+          .selectedMetropolitanCityInfo,
     );
   }
 
@@ -89,14 +91,14 @@ class SearchListData {
       0,
       Provider.of<FilterProvider>(context, listen: false).searchValue,
       Provider.of<CategoriesListProvider>(context, listen: false)
-          .listFilteredCategoryId[0]
+          .selectedCategoryResponse
+          .id
           .toString(),
       StorageUtils.readStringValue(StorageUtils.keyLatitude),
       StorageUtils.readStringValue(StorageUtils.keyLongitude),
       Provider.of<FilterProvider>(context, listen: false).distanceRadius,
       Provider.of<FilterProvider>(context, listen: false)
-          .selectedMetropolitanCityInfo
-          ,
+          .selectedMetropolitanCityInfo,
     );
   }
 }

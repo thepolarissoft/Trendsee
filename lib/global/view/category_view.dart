@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
 import 'package:trendoapp/constants/app_text_style.dart';
 import 'package:trendoapp/constants/base_color.dart';
@@ -22,7 +23,6 @@ class CategoryView extends StatefulWidget {
 
 class _CategoryViewState extends State<CategoryView> {
   int page;
-
   // FilterModel filterModel;
   @override
   void initState() {
@@ -30,14 +30,21 @@ class _CategoryViewState extends State<CategoryView> {
     // filterModel =
     //     Provider.of<FilterProvider>(context, listen: false).filterModel;
     // print("C Id-> ${filterModel.categoryId}");
+    SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
+      Provider.of<CategoriesListProvider>(context, listen: false)
+          .selectedCategoryItem(
+              Provider.of<CategoriesListProvider>(context, listen: false)
+                  .listCategoriesForHome[0]);
+    });
 
     var provider = Provider.of<CategoriesListProvider>(context, listen: false);
     for (var i = 0; i < provider.listCategoriesForHome.length; i++) {
       provider.listCategoriesForHome[i].isChecked = false;
     }
-    provider.listFilteredCategoryId.clear();
-    provider.listCategoriesForHome[0].isChecked = true;
-    provider.listFilteredCategoryId.add(provider.listCategoriesForHome[0].id);
+    // provider.listFilteredCategoryId.clear();
+    // provider.listCategoriesForHome[0].isChecked = true;
+    // provider.listFilteredCategoryId.add(provider.listCategoriesForHome[0].id);
+    // provider.selectedCategoryResponse = null;
   }
 
   void onClickCategoryItem(
@@ -45,10 +52,14 @@ class _CategoryViewState extends State<CategoryView> {
     Provider.of<HomeFeedResponseProvider>(context, listen: false)
         .homeFeedResponse = null;
     page = 1;
-    Provider.of<CategoriesListProvider>(context, listen: false).onClickCategory(
-        Provider.of<CategoriesListProvider>(context, listen: false)
-            .listCategoriesForHome[index],
-        context);
+    // Provider.of<CategoriesListProvider>(context, listen: false).onClickCategory(
+    //     Provider.of<CategoriesListProvider>(context, listen: false)
+    //         .listCategoriesForHome[index],
+    //     context);
+    Provider.of<CategoriesListProvider>(context, listen: false)
+        .selectedCategoryItem(
+            Provider.of<CategoriesListProvider>(context, listen: false)
+                .listCategoriesForHome[index]);
     if (widget.route.toLowerCase() == "home") {
       HomeListData().applyHomeData(context);
     } else if (widget.route.toLowerCase() == "search") {
@@ -80,22 +91,25 @@ class _CategoryViewState extends State<CategoryView> {
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
                             color:
-                                // categoriesProvider.listFilteredCategoryId
-                                //         .contains(categoriesProvider
-                                //             .listCategoriesForHome[index].id)
+                                //  categoriesProvider
+                                //         .listCategoriesForHome[index].isChecked
                                 categoriesProvider
-                                        .listCategoriesForHome[index].isChecked
+                                            .selectedCategoryResponse.name ==
+                                        categoriesProvider
+                                            .listCategories[index].name
                                     ? BaseColor.forgot_pass_txt_color
                                     : BaseColor.home_bg_color,
                             borderRadius: BorderRadius.circular(20),
                             border: Border.all(
                                 color:
-                                    // categoriesProvider.listFilteredCategoryId
-                                    //         .contains(categoriesProvider
-                                    //             .listCategoriesForHome[index].id)
-                                    categoriesProvider
-                                            .listCategoriesForHome[index]
-                                            .isChecked
+
+                                    // categoriesProvider
+                                    //         .listCategoriesForHome[index]
+                                    //         .isChecked
+                                    categoriesProvider.selectedCategoryResponse
+                                                .name ==
+                                            categoriesProvider
+                                                .listCategories[index].name
                                         ? BaseColor.forgot_pass_txt_color
                                         : BaseColor.black_color
                                             .withOpacity(0.5))),
@@ -104,10 +118,12 @@ class _CategoryViewState extends State<CategoryView> {
                                 .listCategoriesForHome[index].name,
                             AppTextStyle.lato_font_family,
                             AppTextStyle.normal_font_weight,
-                            // categoriesProvider.listFilteredCategoryId.contains(
-                            //         categoriesProvider.listCategoriesForHome[index].id)
-                            categoriesProvider
-                                    .listCategoriesForHome[index].isChecked
+
+                            // categoriesProvider
+                            //         .listCategoriesForHome[index].isChecked
+                            categoriesProvider.selectedCategoryResponse.name ==
+                                    categoriesProvider
+                                        .listCategories[index].name
                                 ? BaseColor.pure_white_color
                                 : BaseColor.black_color.withOpacity(0.5),
                             12),

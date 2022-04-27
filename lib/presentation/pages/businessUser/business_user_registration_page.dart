@@ -142,14 +142,15 @@ class _BusinessUserRegistrationPageState
           businessCategoryTextEditingController.text = CategoryUtils()
               .getCategoryName(catProvider.listSelectedCategories);
         } else {
-          if (catProvider.listFilteredCategoryId != null &&
+          if (
+              // catProvider.listFilteredCategoryId != null &&
               catProvider.listCategories.length > 0) {
             // catProvider.selectedCategoryData = catProvider.listCategories[0];
-            // catProvider
-            //     .selectedBusinessCategoryItem(catProvider.listCategories[0]);
+            catProvider
+                .selectedBusinessCategoryItem(catProvider.listCategories[0]);
           }
           print(
-              "catProvider.selectedCategoryData ${catProvider.listFilteredCategoryId[0]}");
+              "catProvider.selectedCategoryData ${catProvider.selectedCategoryResponse.name}");
           provider.setCenterLocation(null, null);
           businessGPSCoordinatesTextEditingController.text = "";
         }

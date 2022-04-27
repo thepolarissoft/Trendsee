@@ -65,14 +65,15 @@ class _SearchByBusinessScreenState extends State<SearchByBusinessScreen>
         page,
         searchEditingController.text,
         Provider.of<CategoriesListProvider>(context, listen: false)
-            .listFilteredCategoryId[0]
+            .selectedCategoryResponse
+            .id
             .toString(),
         // filterModel.categoryId,
         StorageUtils.readStringValue(StorageUtils.keyLatitude),
         StorageUtils.readStringValue(StorageUtils.keyLongitude),
         Provider.of<FilterProvider>(context, listen: false).distanceRadius,
-        Provider.of<FilterProvider>(context, listen: false).selectedMetropolitanCityInfo
-            ,
+        Provider.of<FilterProvider>(context, listen: false)
+            .selectedMetropolitanCityInfo,
       );
     } else {
       GlobalView()
@@ -374,14 +375,15 @@ class _SearchByBusinessScreenState extends State<SearchByBusinessScreen>
               page,
               controller.text,
               Provider.of<CategoriesListProvider>(context, listen: false)
-                  .listFilteredCategoryId[0]
+                  .selectedCategoryResponse
+                  .id
                   .toString(),
               StorageUtils.readStringValue(StorageUtils.keyLatitude),
               StorageUtils.readStringValue(StorageUtils.keyLongitude),
               Provider.of<FilterProvider>(context, listen: false)
                   .distanceRadius,
-              Provider.of<FilterProvider>(context, listen: false).selectedMetropolitanCityInfo
-                  ,
+              Provider.of<FilterProvider>(context, listen: false)
+                  .selectedMetropolitanCityInfo,
             );
             // }
           },
