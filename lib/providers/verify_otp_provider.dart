@@ -11,7 +11,7 @@ import 'package:trendoapp/data/models/profile_response.dart';
 import 'package:trendoapp/data/models/verified_otp_response.dart';
 import 'package:trendoapp/global/view/global_view.dart';
 import 'package:trendoapp/global/view/show_alert_view.dart';
-import 'package:trendoapp/presentation/screens/businessUser/multiple_business_user_list_screen.dart';
+import 'package:trendoapp/presentation/screens/businessUser/multiple_business_user_list/multiple_business_user_list_screen.dart';
 import 'package:trendoapp/utils/dialog_utils.dart';
 import 'package:trendoapp/utils/preference_utils.dart';
 import 'package:trendoapp/utils/storage_utils.dart';

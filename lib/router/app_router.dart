@@ -4,7 +4,7 @@ import 'package:trendoapp/data/models/update_business_latlong_response.dart';
 import 'package:trendoapp/presentation/screens/businessUser/add_edit_business_hours_screen.dart';
 import 'package:trendoapp/presentation/screens/businessUser/homeTabs/business_profile_screen.dart';
 import 'package:trendoapp/presentation/screens/businessUser/homeTabs/business_timeline_screen.dart';
-import 'package:trendoapp/presentation/screens/businessUser/multiple_business_user_list_screen.dart';
+import 'package:trendoapp/presentation/screens/businessUser/multiple_business_user_list/multiple_business_user_list_screen.dart';
 import 'package:trendoapp/presentation/screens/common/app_launcher_screen.dart';
 import 'package:trendoapp/presentation/screens/common/forgot_password_screen.dart';
 import 'package:trendoapp/presentation/screens/common/map_screen.dart';

@@ -53,6 +53,7 @@ import 'package:trendoapp/api/requests/save_notification_settings_request_body.d
 import 'package:trendoapp/api/requests/save_user_token_request.dart';
 import 'package:trendoapp/api/requests/save_user_token_request_body.dart';
 import 'package:trendoapp/api/requests/search_by_city_request.dart';
+import 'package:trendoapp/api/requests/send_otp_by_business_id_request.dart';
 import 'package:trendoapp/api/requests/send_otp_request.dart';
 import 'package:trendoapp/api/requests/send_otp_request_body.dart';
 import 'package:trendoapp/api/requests/sign_in_request.dart';
@@ -65,6 +66,8 @@ import 'package:trendoapp/api/requests/unlike_business_request_body.dart';
 import 'package:trendoapp/api/requests/add_business_latlong_request.dart';
 import 'package:trendoapp/api/requests/add_business_latlong_request_body.dart';
 import 'package:trendoapp/api/requests/update_list_keywords_request.dart';
+import 'package:trendoapp/api/requests/verify_otp_by_business_id_request.dart';
+import 'package:trendoapp/api/requests/verify_otp_by_business_id_request_body.dart';
 import 'package:trendoapp/api/requests/verify_otp_request.dart';
 import 'package:trendoapp/api/requests/verify_otp_request_body.dart';
 import 'package:trendoapp/api/requests/view_feed_request.dart';
@@ -1810,6 +1813,77 @@ class ApiManager {
                 {
                   completer.complete(
                       ProfileResponse.fromJson(json.decode(response.body))),
+                }
+              else if (AccessToken()
+                      .checkTokenExpiry(context: context, response: response) ==
+                  true)
+                {
+                  completer.completeError(ExceptionHelper()
+                      .handleExceptions(ExceptionType.TokenExpiredException)),
+                }
+              else
+                {
+                  completer.completeError(ExceptionHelper()
+                      .handleExceptions(ExceptionType.HttpException)),
+                }
+            })
+        .catchError((error) {
+      print("Api MAnager error-> $error");
+      completer.completeError(
+        Exception(error),
+      );
+    });
+    return completer.future;
+  }
+
+  Future<Baseresponse> sendOtpByBusinessID(int businessId) {
+    Completer<Baseresponse> completer = new Completer();
+    SendOtpByBusinessIdRequest sendOtpByIdRequest =
+        SendOtpByBusinessIdRequest(businessId: businessId);
+    Api(context: context)
+        .request(sendOtpByIdRequest)
+        .then((response) => {
+              print("RESPONSE-> $response"),
+              if (response.statusCode == 200)
+                {
+                  completer.complete(Baseresponse(json.decode(response.body))),
+                }
+              else if (AccessToken()
+                      .checkTokenExpiry(context: context, response: response) ==
+                  true)
+                {
+                  completer.completeError(ExceptionHelper()
+                      .handleExceptions(ExceptionType.TokenExpiredException)),
+                }
+              else
+                {
+                  completer.completeError(ExceptionHelper()
+                      .handleExceptions(ExceptionType.HttpException)),
+                }
+            })
+        .catchError((error) {
+      print("Api MAnager error-> $error");
+      completer.completeError(
+        Exception(error),
+      );
+    });
+    return completer.future;
+  }
+
+  Future<VerifiedOtpResponse> verifyOTPBuBusinessID(int businessId, int otp) {
+    Completer<VerifiedOtpResponse> completer = new Completer();
+    VerifyOtpByBusinessIdRequestBody verifyOtpByBusinessIdRequestBody =
+        VerifyOtpByBusinessIdRequestBody(businessId: businessId, otp: otp);
+    VerifyOtpByBusinessIdRequest verifyOtpByBusinessIdRequest =
+        VerifyOtpByBusinessIdRequest(verifyOtpByBusinessIdRequestBody);
+    Api(context: context)
+        .request(verifyOtpByBusinessIdRequest)
+        .then((response) => {
+              print("RESPONSE-> $response"),
+              if (response.statusCode == 200)
+                {
+                  completer.complete(
+                      VerifiedOtpResponse.fromJson(json.decode(response.body))),
                 }
               else if (AccessToken()
                       .checkTokenExpiry(context: context, response: response) ==

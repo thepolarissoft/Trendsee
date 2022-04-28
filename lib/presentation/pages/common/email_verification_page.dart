@@ -19,7 +19,7 @@ class EmailVerificationPage extends StatefulWidget {
 }
 
 class _EmailVerificationPageState extends State<EmailVerificationPage> {
-  String otp = "";
+  String otp = "1234";
 
   // String email;
 
