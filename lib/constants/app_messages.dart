@@ -277,4 +277,9 @@ class AppMessages {
   static const String sorry_text = "Sorry";
   static const String business_users_text = "Business Users";
   static const String approved_text = "Approved";
+  static const String verified_text = "Verified";
+  static const String new_text = "New";
+  static const String business_text = "Business";
+  static const String approve_text = "Approve";
+  static const String not_approve_text = "Not Approve";
 }

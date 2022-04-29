@@ -201,8 +201,8 @@ class ProfileProvider extends ChangeNotifier {
           Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) =>
-                      EmailVerificationScreen(profileResponse.user.email)));
+                  builder: (context) => EmailVerificationScreen(
+                      email: profileResponse.user.email)));
         } else if ((profileResponse.statuscode == 403 &&
                 profileResponse.msg == "User is suspended") ||
             (profileResponse.statuscode == 405 &&

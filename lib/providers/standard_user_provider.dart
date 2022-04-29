@@ -51,7 +51,7 @@ class StandardUserProvider extends ChangeNotifier {
           Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => EmailVerificationScreen(email)));
+                  builder: (context) => EmailVerificationScreen(email: email)));
         }
       } else if (baseresponse.statuscode == 400) {
         DialogUtils.displayDialogCallBack(

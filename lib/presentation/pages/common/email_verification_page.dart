@@ -13,7 +13,10 @@ import 'package:trendoapp/providers/verify_otp_provider.dart';
 // ignore: must_be_immutable
 class EmailVerificationPage extends StatefulWidget {
   String email;
-  EmailVerificationPage(this.email);
+  bool isVerifyByBusinessID;
+  int businessID = 0;
+  EmailVerificationPage(this.email, this.isVerifyByBusinessID,
+      {this.businessID = 0});
   @override
   _EmailVerificationPageState createState() => _EmailVerificationPageState();
 }
@@ -73,7 +76,7 @@ class _EmailVerificationPageState extends State<EmailVerificationPage> {
                                 AppTextStyle.inter_font_family,
                                 AppTextStyle.bold_font_weight,
                                 BaseColor.black_color,
-                                 DeviceSize().deviceHeight(context) * 0.034),
+                                DeviceSize().deviceHeight(context) * 0.034),
                             GlobalView().sizedBoxView(
                                 DeviceSize().deviceHeight(context) * 0.02),
                             GlobalView().textViewWithCenterAlign(
@@ -85,7 +88,8 @@ class _EmailVerificationPageState extends State<EmailVerificationPage> {
                             GlobalView().sizedBoxView(
                                 DeviceSize().deviceHeight(context) * 0.04),
                             otpTextFieldView(context),
-                            GlobalView().sizedBoxView(DeviceSize().deviceHeight(context) * 0.02),
+                            GlobalView().sizedBoxView(
+                                DeviceSize().deviceHeight(context) * 0.02),
                             GlobalView().textViewWithCenterAlign(
                                 AppMessages.otp_message,
                                 AppTextStyle.inter_font_family,
@@ -112,7 +116,9 @@ class _EmailVerificationPageState extends State<EmailVerificationPage> {
                             // Spacer(),
                             Padding(
                               padding: EdgeInsets.only(
-                                  left: 30, right: 30, bottom: DeviceSize().deviceHeight(context) *
+                                  left: 30,
+                                  right: 30,
+                                  bottom: DeviceSize().deviceHeight(context) *
                                       0.07),
                               child: GestureDetector(
                                 onTap: () {
@@ -122,10 +128,20 @@ class _EmailVerificationPageState extends State<EmailVerificationPage> {
                                   //         .successfulEmailVerificationRouteName);
                                   print("OTP--====>>> $otp");
                                   print("EMAIL--====>>> ${widget.email}");
-                                  if (otp != null && widget.email != null) {
-                                    Provider.of<VerifyOtpProvider>(context,
-                                            listen: false)
-                                        .verifyOtpNew(context, widget.email, otp);
+                                  if (otp != null) {
+                                    if (widget.isVerifyByBusinessID) {
+                                      Provider.of<VerifyOtpProvider>(context,
+                                              listen: false)
+                                          .verifyOtpByBusinessID(
+                                              context,
+                                              widget.businessID,
+                                              int.parse(otp));
+                                    } else {
+                                      Provider.of<VerifyOtpProvider>(context,
+                                              listen: false)
+                                          .verifyOtpNew(
+                                              context, widget.email, otp);
+                                    }
                                   } else {
                                     GlobalView().showToast(
                                         AppToastMessages.empty_value_message);

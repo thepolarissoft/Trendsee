@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -1837,6 +1838,7 @@ class ApiManager {
   }
 
   Future<Baseresponse> sendOtpByBusinessID(int businessId) {
+    log("businessId FROM Api manager $businessId");
     Completer<Baseresponse> completer = new Completer();
     SendOtpByBusinessIdRequest sendOtpByIdRequest =
         SendOtpByBusinessIdRequest(businessId: businessId);

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:trendoapp/api/common/i_http_request.dart';
 import 'package:trendoapp/constants/api_urls.dart';
@@ -20,6 +22,7 @@ class SendOtpByBusinessIdRequest implements IHttpRequest {
 
   @override
   Map<String, String> get parameters {
+    log("businessId FROM Request $businessId");
     Map<String, String> map = {"business_id": businessId.toString()};
     print("SendOtpByIdRequest $map");
     return map;

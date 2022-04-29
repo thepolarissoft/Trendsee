@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:trendoapp/api/common/i_http_request.dart';
 import 'package:trendoapp/api/requests/verify_otp_by_business_id_request_body.dart';
 import 'package:trendoapp/constants/api_urls.dart';
@@ -30,7 +32,7 @@ class VerifyOtpByBusinessIdRequest implements IHttpRequest {
     var map = Map<String, String>();
     map['business_id'] = verifyOtpByBusinessIdRequestBody.businessId.toString();
     map['otp'] = verifyOtpByBusinessIdRequestBody.otp.toString();
-    this.body = map;
+    this.body = jsonEncode(map);
     print("VerifyOtpByBusinessIdRequest $body");
   }
 }

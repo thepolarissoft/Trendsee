@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:trendoapp/constants/api_urls.dart';
 import 'package:trendoapp/constants/app_images.dart';
 import 'package:trendoapp/constants/app_messages.dart';
+import 'package:trendoapp/constants/app_routes.dart';
 import 'package:trendoapp/constants/app_text_style.dart';
 import 'package:trendoapp/constants/base_color.dart';
 import 'package:trendoapp/constants/device_size.dart';
@@ -137,7 +138,7 @@ class SuccessfulEmailVerificationPage extends StatelessWidget {
                 width: 25,
                 child: GestureDetector(
                     onTap: () {
-                      Navigator.pop(context);
+                      Navigator.pushNamed(context, AppRoutes.signin_route_name);
                     },
                     child: GlobalView().assetImageView(AppImages.ic_back)),
               ),

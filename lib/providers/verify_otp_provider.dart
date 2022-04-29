@@ -12,6 +12,7 @@ import 'package:trendoapp/data/models/verified_otp_response.dart';
 import 'package:trendoapp/global/view/global_view.dart';
 import 'package:trendoapp/global/view/show_alert_view.dart';
 import 'package:trendoapp/presentation/screens/businessUser/multiple_business_user_list/multiple_business_user_list_screen.dart';
+import 'package:trendoapp/presentation/screens/common/email_verification_screen.dart';
 import 'package:trendoapp/utils/dialog_utils.dart';
 import 'package:trendoapp/utils/preference_utils.dart';
 import 'package:trendoapp/utils/storage_utils.dart';
@@ -251,6 +252,106 @@ class VerifyOtpProvider extends ChangeNotifier {
         },
         exception: onError,
       ).showAlertDialog();
+      notifyListeners();
+    });
+  }
+
+  void sendOTPByBusinessID(BuildContext context, int businessID) async {
+    isLoading = true;
+    notifyListeners();
+    ApiManager(context).sendOtpByBusinessID(businessID).then((response) {
+      baseresponse = response;
+      print("STATUS CODE-> ${baseresponse.statuscode}");
+      print("MSG-> ${baseresponse.msg}");
+      if (baseresponse != null) {
+        isLoading = false;
+        if (baseresponse.statuscode == 200) {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => EmailVerificationScreen(
+                        isVerifyByBusinessID: true,
+                        businessID: businessID,
+                      )));
+        }
+      }
+      notifyListeners();
+    }).catchError((onError) {
+      isLoading = false;
+      print("ONERROR->> ${onError.toString()}");
+      ShowAlertView(
+        context: context,
+        onCallBack: () {
+          sendOTPByBusinessID(context, businessID);
+        },
+        exception: onError,
+      ).showAlertDialog();
+      notifyListeners();
+    });
+  }
+
+  void verifyOtpByBusinessID(BuildContext context, int businessID, int otp) {
+    isLoading = true;
+    notifyListeners();
+    ApiManager(context)
+        .verifyOTPBuBusinessID(businessID, otp)
+        .then((response) async {
+      verifiedOtpResponse = response;
+      print("verifiedOtpResponse CODE-> ${verifiedOtpResponse.statuscode}");
+      print("verifiedOtpResponse msg-> ${verifiedOtpResponse.msg}");
+      if (verifiedOtpResponse.statuscode == 200) {
+        if (verifiedOtpResponse != null) {
+          if (verifiedOtpResponse.businessUsers != null) {
+            print(verifiedOtpResponse.businessUsers.toString());
+            isLoading = false;
+            if (verifiedOtpResponse.businessUsers != null &&
+                verifiedOtpResponse.businessUsers.isNotEmpty &&
+                verifiedOtpResponse.businessUsers.length == 1) {
+              if (verifiedOtpResponse.businessUsers[0].isApproved == 0) {
+                Navigator.pushNamed(context, AppRoutes.signin_route_name);
+              } else if (verifiedOtpResponse.businessUsers[0].isApproved == 1) {
+                log("Verified Token ${verifiedOtpResponse.token}");
+                StorageUtils.writeStringValue(
+                    StorageUtils.keyToken, verifiedOtpResponse.token);
+                AccessToken().setTokenValue(
+                    StorageUtils.readStringValue(StorageUtils.keyToken));
+                PreferenceUtils.setStringValue(
+                    PreferenceUtils.keyBusinessUserProfileObject,
+                    json.encode(verifiedOtpResponse.businessUsers[0]));
+                PreferenceUtils.setIntValue(PreferenceUtils.keyUserId,
+                    verifiedOtpResponse.businessUsers[0].id);
+                Navigator.pushNamed(
+                    context, AppRoutes.business_timeline_route_name);
+              }
+            }
+            // else {
+            //   Navigator.pushNamed(
+            //       context, AppRoutes.multiple_business_user_list_route_name,
+            //       arguments: MultipleBusinessUserListArgs(
+            //           listBusinessUsers: verifiedOtpResponse.businessUsers));
+            // }
+          }
+          log("StorageUtils TOKEN=-==-->> ${StorageUtils.readStringValue(StorageUtils.keyToken)}");
+        }
+      } else if (verifiedOtpResponse.statuscode == 402) {
+        DialogUtils().showSupportAlertDialog(context, "approval");
+        Navigator.pushNamed(
+            context, AppRoutes.successful_email_verification_route_name);
+      } else {
+        GlobalView().showToast(verifiedOtpResponse.msg);
+      }
+      isLoading = false;
+      notifyListeners();
+    }).catchError((onError) {
+      isLoading = false;
+      print("ONERROR->> $onError");
+      ShowAlertView(
+              context: context,
+              onCallBack: () {
+                verifyOtpByBusinessID(context, businessID, otp);
+              },
+              exception: onError)
+          .showAlertDialog();
       notifyListeners();
     });
   }
