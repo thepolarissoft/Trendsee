@@ -41,7 +41,9 @@ class BusinessItemView extends StatelessWidget {
                 ),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(8),
-                  child: verifiedUserResponse.businessMedia[0].media != null
+                  child: verifiedUserResponse.businessMedia != null &&
+                          verifiedUserResponse.businessMedia.isNotEmpty &&
+                          verifiedUserResponse.businessMedia[0].media != null
                       ? FadeInImage.assetNetwork(
                           placeholder: AppImages.loader_gif_removeBG,
                           image: verifiedUserResponse.businessMedia[0].media,
@@ -101,8 +103,7 @@ class BusinessItemView extends StatelessWidget {
                         ],
                       ),
                       GlobalView().sizedBoxView(3),
-                    
-                        GlobalView().textViewWithStartAlign(
+                      GlobalView().textViewWithStartAlign(
                           verifiedUserResponse.categories != null
                               ? CategoryUtils().getCategoryName(
                                   verifiedUserResponse.categories)

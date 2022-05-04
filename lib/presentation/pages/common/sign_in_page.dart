@@ -13,10 +13,11 @@ import 'package:trendoapp/global/view/global_view.dart';
 import 'package:trendoapp/providers/profile_provider.dart';
 import 'package:trendoapp/utils/preference_utils.dart';
 import 'package:trendoapp/utils/storage_utils.dart';
+import 'package:trendoapp/utils/validation_utils.dart';
 
 // ignore: must_be_immutable
 class SignInPage extends StatelessWidget {
-  TextEditingController userNameTextEditingController =
+  TextEditingController emailTextEditingController =
       new TextEditingController();
   TextEditingController passwordTextEditingController =
       new TextEditingController();
@@ -27,7 +28,7 @@ class SignInPage extends StatelessWidget {
         "LAT=-=-=-->>${StorageUtils.readStringValue(StorageUtils.keyLatitude)}");
     // print("USER LAT->> ${UserUtils.userLatitude}");
     if (kDebugMode) {
-      userNameTextEditingController.text = "testBusiness01";
+      emailTextEditingController.text = "Oncor.Michael@icloud.com";
     }
     // userNameTextEditingController.text = "kaushitapolaris";
     //  userNameTextEditingController.text = "abct9551@gmail.com";
@@ -108,8 +109,8 @@ class SignInPage extends StatelessWidget {
                             padding: EdgeInsets.symmetric(horizontal: 30),
                             child: GlobalView().textFieldView(
                                 AppImages.ic_user,
-                                userNameTextEditingController,
-                                AppMessages.hint_for_login,
+                                emailTextEditingController,
+                                AppMessages.hint_email,
                                 AppTextStyle.start_text_align),
                           ),
                           GlobalView().sizedBoxView(
@@ -149,20 +150,21 @@ class SignInPage extends StatelessWidget {
                                 //     MaterialPageRoute(
                                 //         builder: (context) =>
                                 //             SuccessfulEmailVerificationScreen()));
-                                if (userNameTextEditingController
-                                    .text.isNotEmpty) {
+                                if (emailTextEditingController.text.isEmpty) {
+                                  GlobalView().showToast(
+                                      AppToastMessages.empty_email_message);
+                                } else if (!ValidationUtils().isEmailValidate(
+                                    emailTextEditingController.text)) {
+                                  GlobalView().showToast(
+                                      AppToastMessages.valid_email_message);
+                                } else {
                                   PreferenceUtils.setStringValue(
                                       PreferenceUtils.keyUsername,
-                                      userNameTextEditingController.text);
+                                      emailTextEditingController.text);
                                   Provider.of<ProfileProvider>(context,
                                           listen: false)
                                       .signIn(context,
-                                          userNameTextEditingController.text);
-                                  //   Navigator.pushNamed(
-                                  //       context, AppRoutes.forgotPasswordRouteName);
-                                } else {
-                                  GlobalView().showToast(AppToastMessages
-                                      .login_with_no_value_message);
+                                          emailTextEditingController.text);
                                 }
                               },
                               child: GlobalView().buttonFilled(
