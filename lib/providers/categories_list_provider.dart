@@ -30,11 +30,14 @@ class CategoriesListProvider extends ChangeNotifier {
             categoriesListResponse.category != null) {
           listCategories.clear();
           listCategories.addAll(categoriesListResponse.category);
+          // listCategories[0].isChecked = true;
           // selectedBusinessCategoryResponse = listCategories[0];
           listCategoriesForHome.addAll(categoriesListResponse.category);
           listCategoriesForHome[0].isChecked = true;
-          listSelectedCategories.add(listCategories[0]);
-          listSelectedCategoryId.add(listSelectedCategories[0].id);
+
+          // listSelectedCategories.add(listCategories[0]);
+          // listSelectedCategoryId.add(listSelectedCategories[0].id);
+
           selectedCategoryResponse = listCategoriesForHome[0];
           // listFilteredCategoryId.clear();
           // listFilteredCategoryId.add(listCategoriesForHome[0].id);
@@ -204,7 +207,6 @@ class CategoriesListProvider extends ChangeNotifier {
         break;
       }
     }
-    notifyListeners();
     notifyListeners();
   }
 }

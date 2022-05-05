@@ -129,21 +129,31 @@ class _CategorySelectionScreenState extends State<CategorySelectionScreen> {
                           ),
                         ),
                       ),
-                      Visibility(
-                        visible: widget.userType == 0 ? true : false,
-                        child: CommonGradientButton(
-                            onPressed: () {
-                              // Provider.of<CategoriesListProvider>(context,
-                              //         listen: false)
-                              //     .onClickSaveCategory();
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (_) =>
-                                          AddUnregisteredBusinessScreen()));
-                            },
-                            title: AppMessages.next_text),
-                      ),
+                      Consumer<CategoriesListProvider>(
+                          builder: (_, provider, child) {
+                        return Visibility(
+                          visible: widget.userType == 0 ? true : false,
+                          child: provider.listSelectedCategories.isNotEmpty
+                              ? CommonGradientButton(
+                                  onPressed: () {
+                                    // provider.onClickSaveCategory();
+                                    if (provider
+                                        .listSelectedCategories.isNotEmpty) {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (_) =>
+                                                  AddUnregisteredBusinessScreen()));
+                                    } else {}
+                                  },
+                                  title: AppMessages.next_text)
+                              : CommonGradientButton(
+                                  onPressed: () {},
+                                  title: AppMessages.next_text,
+                                  gradientColors: [Colors.grey, Colors.grey],
+                                ),
+                        );
+                      })
                     ],
                   ),
                   Positioned(
@@ -164,6 +174,15 @@ class _CategorySelectionScreenState extends State<CategorySelectionScreen> {
                       width: 25,
                       child: GestureDetector(
                           onTap: () {
+                            var provider = Provider.of<CategoriesListProvider>(
+                                context,
+                                listen: false);
+                            provider.listSelectedCategories.clear();
+                            for (var i = 0;
+                                i < provider.listCategories.length;
+                                i++) {
+                              provider.listCategories[i].isChecked = false;
+                            }
                             Navigator.pop(context);
                           },
                           child:

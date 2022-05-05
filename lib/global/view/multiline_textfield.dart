@@ -28,7 +28,9 @@ class MultilineCategoryTextfield extends StatelessWidget {
       borderRadius: BorderRadius.circular(25),
       child: TextField(
         onTap: () {
-          onClick();
+          if (onClick != null) {
+            onClick();
+          }
         },
         readOnly: true,
         controller: controller,
