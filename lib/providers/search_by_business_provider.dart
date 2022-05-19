@@ -6,6 +6,8 @@ import 'package:trendoapp/data/models/business_details_response.dart';
 import 'package:trendoapp/data/models/business_liked_list_response.dart';
 import 'package:trendoapp/data/models/comment_response.dart';
 import 'package:trendoapp/data/models/disliked_comments_response.dart';
+import 'package:trendoapp/data/models/feed_response.dart';
+import 'package:trendoapp/data/models/home_feed_response.dart';
 import 'package:trendoapp/data/models/search_by_business_response.dart';
 import 'package:trendoapp/data/models/verified_user_response.dart';
 import 'package:trendoapp/global/view/global_view.dart';
@@ -26,6 +28,9 @@ class SearchByBusinessProvider extends ChangeNotifier {
       new DislikedCommentsResponse();
   List<CommentResponse> listDislikedComments = [];
   bool isAvailableComment = false;
+  HomeFeedResponse homeFeedResponse;
+  List<FeedResponse> listFeedInfo = [];
+  bool isAvailableFeedsData = false;
 
   void getSearchByBusinessList(
       BuildContext context,
@@ -40,7 +45,7 @@ class SearchByBusinessProvider extends ChangeNotifier {
     notifyListeners();
     ApiManager(context)
         .getSearchByBusinessList(page.toString(), searchValue, categoryId,
-            latitude, longitude, distance,cityName)
+            latitude, longitude, distance, cityName)
         .then((response) {
       searchByBusinessResponse = response;
       if (searchByBusinessResponse.statuscode == 200) {
@@ -69,7 +74,7 @@ class SearchByBusinessProvider extends ChangeNotifier {
               context: context,
               onCallBack: () {
                 getSearchByBusinessList(context, page, searchValue, categoryId,
-                    latitude, longitude, distance,cityName);
+                    latitude, longitude, distance, cityName);
               },
               exception: onError)
           .showAlertDialog();
@@ -514,6 +519,46 @@ class SearchByBusinessProvider extends ChangeNotifier {
               },
               exception: onError)
           .showAlertDialog();
+      notifyListeners();
+    });
+  }
+
+  void getFeedListbyBusinessID(
+      BuildContext context, String businessUserId, int page) async {
+    isLoading = true;
+    isAvailableFeedsData = false;
+    notifyListeners();
+    ApiManager(context)
+        .getFeedsByBusinessID(businessUserId, page)
+        .then((response) {
+      homeFeedResponse = response;
+      if (homeFeedResponse.statuscode == 200) {
+        if (homeFeedResponse != null &&
+            homeFeedResponse.data != null &&
+            homeFeedResponse.data.data != null) {
+          print("ISLOADING-=-=> $isLoading");
+          if (page == 1) {
+            listFeedInfo.clear();
+          }
+          listFeedInfo.addAll(homeFeedResponse.data.data);
+          print("listFeedInfo Length-->> ${listFeedInfo.length}");
+          isAvailableFeedsData = true;
+        } else {
+          isAvailableFeedsData = false;
+        }
+      }
+      isLoading = false;
+      notifyListeners();
+    }).catchError((onError) {
+      isLoading = false;
+      print("ONERROR->> ${onError.toString()}");
+      ShowAlertView(
+        context: context,
+        onCallBack: () {
+          getFeedListbyBusinessID(context, businessUserId, page);
+        },
+        exception: onError,
+      ).showAlertDialog();
       notifyListeners();
     });
   }

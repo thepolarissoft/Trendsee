@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -27,9 +26,6 @@ class SignInPage extends StatelessWidget {
     print(
         "LAT=-=-=-->>${StorageUtils.readStringValue(StorageUtils.keyLatitude)}");
     // print("USER LAT->> ${UserUtils.userLatitude}");
-    if (kDebugMode) {
-      emailTextEditingController.text = "Oncor.Michael@icloud.com";
-    }
     // userNameTextEditingController.text = "kaushitapolaris";
     //  userNameTextEditingController.text = "abct9551@gmail.com";
     return WillPopScope(

@@ -32,6 +32,7 @@ import 'package:trendoapp/api/requests/get_business_list_request.dart';
 import 'package:trendoapp/api/requests/get_business_user_profile_request.dart';
 import 'package:trendoapp/api/requests/get_categories_list_request.dart';
 import 'package:trendoapp/api/requests/get_comment_list_request.dart';
+import 'package:trendoapp/api/requests/get_feeds_by_id_request.dart';
 import 'package:trendoapp/api/requests/get_home_feed_request.dart';
 import 'package:trendoapp/api/requests/get_list_business_home_feed_request.dart';
 import 'package:trendoapp/api/requests/get_location_list_request.dart';
@@ -1904,6 +1905,45 @@ class ApiManager {
       print("Api MAnager error-> $error");
       completer.completeError(
         Exception(error),
+      );
+    });
+    return completer.future;
+  }
+
+  Future<HomeFeedResponse> getFeedsByBusinessID(
+      String businessUserId, int page) async {
+    Completer<HomeFeedResponse> completer = new Completer();
+    GetFeedsByIdRequest getFeedsByIdRequest =
+        GetFeedsByIdRequest(businessUserId: businessUserId, page: page);
+    Api(context: context)
+        .request(getFeedsByIdRequest)
+        .then((response) => {
+              print("RESPONSE-> $response"),
+              if (response.statusCode == 200)
+                {
+                  completer.complete(
+                      HomeFeedResponse.fromJson(json.decode(response.body))),
+                }
+              else if (AccessToken()
+                      .checkTokenExpiry(context: context, response: response) ==
+                  true)
+                {
+                  // completer
+                  //     .completeError(Exception(AppMessages.token_expired_text)),
+                  completer.completeError(ExceptionHelper()
+                      .handleExceptions(ExceptionType.TokenExpiredException)),
+                }
+              else
+                {
+                  completer.completeError(ExceptionHelper()
+                      .handleExceptions(ExceptionType.HttpException)),
+                }
+            })
+        .catchError((error) {
+      print("Api MAnager error-> $error");
+      completer.completeError(
+        Exception(error),
+        // ExceptionHelper().handleExceptions(ExceptionType.NetworkException),
       );
     });
     return completer.future;
