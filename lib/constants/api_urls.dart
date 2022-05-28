@@ -74,6 +74,8 @@ class ApiUrls {
   static const String send_otp_by_id_url = base_url + "api/send_otp_by_id";
   static const String verify_otp_by_id_url = base_url + "api/verify_otp_by_id";
   static const String feeds_by_id_url = base_url + "api/feeds_by_id";
+  static const String search_business_keywords_url =
+      base_url + "api/search_business_keywords";
 
   static const String terms_service_url = "https://trendsee.app/terms/";
   static const String privacy_policy_url = "https://trendsee.app/privacy/";

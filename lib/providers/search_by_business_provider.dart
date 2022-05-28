@@ -8,6 +8,7 @@ import 'package:trendoapp/data/models/comment_response.dart';
 import 'package:trendoapp/data/models/disliked_comments_response.dart';
 import 'package:trendoapp/data/models/feed_response.dart';
 import 'package:trendoapp/data/models/home_feed_response.dart';
+import 'package:trendoapp/data/models/search_business_keywords_response.dart';
 import 'package:trendoapp/data/models/search_by_business_response.dart';
 import 'package:trendoapp/data/models/verified_user_response.dart';
 import 'package:trendoapp/global/view/global_view.dart';
@@ -31,6 +32,9 @@ class SearchByBusinessProvider extends ChangeNotifier {
   HomeFeedResponse homeFeedResponse;
   List<FeedResponse> listFeedInfo = [];
   bool isAvailableFeedsData = false;
+  SearchBusinessKeywordsResponse searchBusinessKeywordsResponse =
+      SearchBusinessKeywordsResponse();
+  List<String> listBusinessKeyword = [];
 
   void getSearchByBusinessList(
       BuildContext context,
@@ -561,5 +565,44 @@ class SearchByBusinessProvider extends ChangeNotifier {
       ).showAlertDialog();
       notifyListeners();
     });
+  }
+
+  List<String> searchBusinessKeywords(
+      BuildContext context, String searchValue) {
+    // isLoading = true;
+    // isAvailableFeedsData = false;
+    ApiManager(context)
+        .searchBusinessKeywords(searchValue.trim())
+        .then((response) {
+      searchBusinessKeywordsResponse = response;
+      if (searchBusinessKeywordsResponse.statuscode == 200) {
+        if (searchBusinessKeywordsResponse != null &&
+            searchBusinessKeywordsResponse.data != null) {
+          print("ISLOADING-=-=> $isLoading");
+          listBusinessKeyword.clear();
+          for (var i = 0; i < searchBusinessKeywordsResponse.data.length; i++) {
+            listBusinessKeyword
+                .add(searchBusinessKeywordsResponse.data[i].trim());
+          }
+          // listBusinessKeyword.retainWhere(
+          //     (s) => s.toLowerCase().contains(searchValue.toLowerCase()));
+          print("listBusinessKeyword-=-=--> $listBusinessKeyword");
+        }
+      }
+      isLoading = false;
+      notifyListeners();
+    }).catchError((onError) {
+      isLoading = false;
+      print("ONERROR->> ${onError.toString()}");
+      ShowAlertView(
+        context: context,
+        onCallBack: () {
+          searchBusinessKeywords(context, searchValue);
+        },
+        exception: onError,
+      ).showAlertDialog();
+      notifyListeners();
+    });
+    return listBusinessKeyword;
   }
 }

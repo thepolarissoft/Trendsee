@@ -54,6 +54,7 @@ import 'package:trendoapp/api/requests/save_notification_settings_request.dart';
 import 'package:trendoapp/api/requests/save_notification_settings_request_body.dart';
 import 'package:trendoapp/api/requests/save_user_token_request.dart';
 import 'package:trendoapp/api/requests/save_user_token_request_body.dart';
+import 'package:trendoapp/api/requests/search_business_keywords_request.dart';
 import 'package:trendoapp/api/requests/search_by_city_request.dart';
 import 'package:trendoapp/api/requests/send_otp_by_business_id_request.dart';
 import 'package:trendoapp/api/requests/send_otp_request.dart';
@@ -88,6 +89,7 @@ import 'package:trendoapp/data/models/location_list_response.dart';
 import 'package:trendoapp/data/models/metropolitan_areas_list_response.dart';
 import 'package:trendoapp/data/models/notification_list_response.dart';
 import 'package:trendoapp/data/models/profile_response.dart';
+import 'package:trendoapp/data/models/search_business_keywords_response.dart';
 import 'package:trendoapp/data/models/search_by_business_response.dart';
 import 'package:trendoapp/data/models/update_business_latlong_response.dart';
 import 'package:trendoapp/data/models/update_list_keywords_response.dart';
@@ -1923,6 +1925,45 @@ class ApiManager {
                 {
                   completer.complete(
                       HomeFeedResponse.fromJson(json.decode(response.body))),
+                }
+              else if (AccessToken()
+                      .checkTokenExpiry(context: context, response: response) ==
+                  true)
+                {
+                  // completer
+                  //     .completeError(Exception(AppMessages.token_expired_text)),
+                  completer.completeError(ExceptionHelper()
+                      .handleExceptions(ExceptionType.TokenExpiredException)),
+                }
+              else
+                {
+                  completer.completeError(ExceptionHelper()
+                      .handleExceptions(ExceptionType.HttpException)),
+                }
+            })
+        .catchError((error) {
+      print("Api MAnager error-> $error");
+      completer.completeError(
+        Exception(error),
+        // ExceptionHelper().handleExceptions(ExceptionType.NetworkException),
+      );
+    });
+    return completer.future;
+  }
+
+  Future<SearchBusinessKeywordsResponse> searchBusinessKeywords(
+      String searchValue) async {
+    Completer<SearchBusinessKeywordsResponse> completer = new Completer();
+    SearchBusinessKeywordsRequest searchBusinessKeywordsRequest =
+        SearchBusinessKeywordsRequest(searchValue: searchValue);
+    Api(context: context)
+        .request(searchBusinessKeywordsRequest)
+        .then((response) => {
+              print("RESPONSE-> $response"),
+              if (response.statusCode == 200)
+                {
+                  completer.complete(SearchBusinessKeywordsResponse.fromJson(
+                      json.decode(response.body))),
                 }
               else if (AccessToken()
                       .checkTokenExpiry(context: context, response: response) ==

@@ -17,7 +17,9 @@ class FilterProvider extends ChangeNotifier {
   }
 
   void setSearchValue(String value) {
+    print("FilterProvider value--> $value");
     searchValue = value;
+    print("FilterProvider searchValue--> $searchValue");
     notifyListeners();
   }
 

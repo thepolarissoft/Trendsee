@@ -21,7 +21,7 @@ class CityFilterView extends StatelessWidget {
   // GlobalKey<AutoCompleteTextFieldState<String>> keyCity;
   //     new GlobalKey();
   TextEditingController citySearchController = TextEditingController();
-  @override   
+  @override
   Widget build(BuildContext context) {
     return Column(
       children: [

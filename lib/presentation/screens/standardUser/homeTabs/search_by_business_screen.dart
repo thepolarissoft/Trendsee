@@ -1,5 +1,8 @@
+// ignore_for_file: missing_return
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:provider/provider.dart';
 import 'package:trendoapp/constants/app_images.dart';
 import 'package:trendoapp/constants/app_messages.dart';
@@ -137,30 +140,128 @@ class _SearchByBusinessScreenState extends State<SearchByBusinessScreen>
                           child: HeaderView(AppMessages.search_title, "search"),
                         ),
                         GlobalView().sizedBoxView(15),
-                        Row(
-                          children: [
-                            Expanded(
-                              child: Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 22),
-                                child: textfieldViewForSearchPeople(
-                                    AppImages.ic_search,
-                                    searchEditingController,
-                                    AppMessages.hint_search_by_business_name,
-                                    AppTextStyle.start_text_align),
+                        // Row(
+                        //   children: [
+                        //     Expanded(
+                        //       child: Padding(
+                        //         padding:
+                        //             const EdgeInsets.symmetric(horizontal: 22),
+                        //         child: textfieldViewForSearchPeople(
+                        //             AppImages.ic_search,
+                        //             searchEditingController,
+                        //             AppMessages.hint_search_by_business_name,
+                        //             AppTextStyle.start_text_align),
+                        //       ),
+                        //     ),
+                        //     // Container(
+                        //     //   height: 52,
+                        //     //   width: 52,
+                        //     //   child: Image.asset(
+                        //     //     AppImages.ic_sort,
+                        //     //     // height: 50,
+                        //     //     // width: 50,
+                        //     //   ),
+                        //     // ),
+                        //   ],
+                        // ),
+                        Consumer<SearchByBusinessProvider>(
+                            builder: (ctx, provider, child) {
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 22),
+                            child: Theme(
+                              data: ThemeData(
+                                textSelectionTheme: TextSelectionThemeData(
+                                  cursorColor: BaseColor.border_txtfield_color,
+                                ),
                               ),
+                              child: Material(
+                                  shadowColor: BaseColor.shadow_color,
+                                  elevation: 4,
+                                  borderRadius: BorderRadius.circular(25),
+                                  child: TypeAheadField<String>(
+                                    textFieldConfiguration:
+                                        TextFieldConfiguration(
+                                      controller: searchEditingController,
+                                      autocorrect: false,
+                                      enableSuggestions: false,
+                                      style: TextStyle(
+                                        color: BaseColor.hint_color,
+                                        fontFamily:
+                                            AppTextStyle.inter_font_family,
+                                        fontSize: 14,
+                                      ),
+                                      decoration: InputDecoration(
+                                        isDense: true,
+                                        // filled: true,
+                                        focusColor: BaseColor.pure_white_color,
+                                        contentPadding: EdgeInsets.only(
+                                            left: 60, right: -40),
+                                        prefixIcon: GlobalView().prefixIconView(
+                                            AppImages.ic_search),
+                                        enabledBorder: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(25),
+                                          borderSide: BorderSide(
+                                              color: BaseColor
+                                                  .border_txtfield_color),
+                                        ),
+                                        disabledBorder: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(25),
+                                            borderSide: BorderSide(
+                                                color: BaseColor
+                                                    .border_txtfield_color)),
+                                        border: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(25),
+                                            borderSide: BorderSide(
+                                                color: BaseColor
+                                                    .border_txtfield_color)),
+                                        focusedBorder: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(25),
+                                            borderSide: BorderSide(
+                                                color: BaseColor
+                                                    .border_txtfield_color)),
+                                        hintText: AppMessages
+                                            .hint_search_by_business_name,
+                                        hintStyle: TextStyle(
+                                          color: BaseColor.hint_color
+                                              .withOpacity(0.6),
+                                          fontFamily:
+                                              AppTextStyle.inter_font_family,
+                                          fontSize: 14,
+                                        ),
+                                      ),
+                                    ),
+                                    suggestionsCallback: (pattern) async {
+                                      print(
+                                          "suggestionsCallback pattern--> $pattern");
+                                      if (pattern.length >= 3)
+                                      return provider.searchBusinessKeywords(
+                                          context, pattern);
+                                    },
+                                    hideOnEmpty: true,
+                                    itemBuilder: (context, item) {
+                                      return searchItemView(item);
+                                    },
+                                    onSuggestionSelected: (item) {
+                                      print("ITEM NAME-> $item");
+                                      searchEditingController.text = item;
+                                      Provider.of<FilterProvider>(context,
+                                              listen: false)
+                                          .setSearchValue(item);
+                                      print(
+                                          "AREA TEXT->${searchEditingController.text}");
+                                      // provider.searchByCity(context);
+                                      // provider.changeEditableCityValue();
+                                      print("Suggestion-> $item");
+                                    },
+                                  )),
                             ),
-                            // Container(
-                            //   height: 52,
-                            //   width: 52,
-                            //   child: Image.asset(
-                            //     AppImages.ic_sort,
-                            //     // height: 50,
-                            //     // width: 50,
-                            //   ),
-                            // ),
-                          ],
-                        ),
+                          );
+                        }),
+
                         // GlobalView().sizedBoxView(10),
                         // Padding(
                         //   padding: EdgeInsets.zero,
@@ -186,6 +287,53 @@ class _SearchByBusinessScreenState extends State<SearchByBusinessScreen>
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  Widget searchItemView(
+    String data,
+  ) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Row(
+        children: [
+          Container(
+            height: 30,
+            width: 30,
+            padding: EdgeInsets.all(6),
+            decoration: BoxDecoration(
+                shape: BoxShape.circle, color: BaseColor.border_txtfield_color),
+            child: Image.asset(AppImages.ic_business,
+                height: 20, width: 20, color: BaseColor.pure_white_color),
+          ),
+          SizedBox(width: 10),
+          Expanded(
+            child:
+                // GlobalView().textViewWithStartAlign(
+                //     "item.name GlobalViewGlobalViewGlobalViewGlobalViewGlobalView",
+                //     AppTextStyle.inter_font_family,
+                //     AppTextStyle.normal_font_weight,
+                //     BaseColor.black_color,
+                //     14),
+                Text(
+              // "ABC Gold & silver jewellery manufacturer ABC Gold & silver jewellery manufacturer",
+              data,
+              textAlign: TextAlign.start,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(
+                fontFamily: AppTextStyle.inter_font_family,
+                fontWeight: AppTextStyle.normal_font_weight,
+                color: BaseColor.black_color,
+                fontSize: 14,
+              ),
+            ),
+          ),
+          Image.asset(AppImages.ic_back_search2,
+              height: 15, width: 15, color: BaseColor.black_color),
+          SizedBox(width: 10),
+        ],
       ),
     );
   }

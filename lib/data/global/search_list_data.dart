@@ -34,6 +34,8 @@ class SearchListData {
   }
 
   void searchDataForCategories(BuildContext context, int page) async {
+    print(
+        "searchValue From Search INIT--->> ${Provider.of<FilterProvider>(context, listen: false).searchValue}");
     Provider.of<SearchByBusinessProvider>(context, listen: false)
         .listBusiness
         .clear();
