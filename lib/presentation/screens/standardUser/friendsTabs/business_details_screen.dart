@@ -787,20 +787,20 @@ class _BusinessDetailsScreenState extends State<BusinessDetailsScreen> {
                                                   left: 7),
                                               child: GlobalView()
                                                   .textViewWithStartAlign(
-                                                      provider
-                                                                      .businessDetailsResponse
-                                                                      .business
-                                                                      .cityName !=
+                                                      provider.businessDetailsResponse
+                                                                      .business.city !=
                                                                   null &&
                                                               provider
                                                                       .businessDetailsResponse
                                                                       .business
-                                                                      .cityName !=
+                                                                      .city
+                                                                      .name !=
                                                                   ""
                                                           ? provider
                                                               .businessDetailsResponse
                                                               .business
-                                                              .cityName
+                                                              .city
+                                                              .name
                                                           //      +
                                                           // ", " +
                                                           // provider.selectedBusinessResponse

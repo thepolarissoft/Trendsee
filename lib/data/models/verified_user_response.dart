@@ -1,5 +1,6 @@
 import 'package:trendoapp/data/models/business_media_response.dart';
 import 'package:trendoapp/data/models/category_response.dart';
+import 'package:trendoapp/data/models/city_model.dart';
 import 'package:trendoapp/data/models/feed_response.dart';
 
 class VerifiedUserResponse {
@@ -48,6 +49,7 @@ class VerifiedUserResponse {
     this.locationName,
     this.businessLatitude,
     this.businessLongitude,
+    this.city,
   });
 
   int id;
@@ -95,6 +97,7 @@ class VerifiedUserResponse {
   String locationName;
   String businessLatitude;
   String businessLongitude;
+  CityModel city;
 
   factory VerifiedUserResponse.fromJson(Map<String, dynamic> json) =>
       VerifiedUserResponse(
@@ -177,6 +180,7 @@ class VerifiedUserResponse {
         businessLongitude: json["business_longitude"] == null
             ? null
             : json["business_longitude"],
+        city: json["city"] == null ? null : CityModel.fromJson(json["city"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -230,5 +234,6 @@ class VerifiedUserResponse {
         "total_click": totalClick == null ? null : totalClick,
         "allow_notification":
             allowNotification == null ? null : allowNotification,
+        "city": city == null ? null : city.toJson(),
       };
 }

@@ -90,7 +90,7 @@ class SearchListData {
     Provider.of<SearchByBusinessProvider>(context, listen: false)
         .getSearchByBusinessList(
       context,
-      0,
+      1,
       Provider.of<FilterProvider>(context, listen: false).searchValue,
       Provider.of<CategoriesListProvider>(context, listen: false)
           .selectedCategoryResponse
