@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:trendoapp/api/api_manager.dart';
+import 'package:trendoapp/constants/app_messages.dart';
 import 'package:trendoapp/data/models/categories_list_response.dart';
 import 'package:trendoapp/data/models/category_response.dart';
 
@@ -31,14 +32,20 @@ class CategoriesListProvider extends ChangeNotifier {
           listCategories.clear();
           listCategories.addAll(categoriesListResponse.category);
           // listCategories[0].isChecked = true;
-          // selectedBusinessCategoryResponse = listCategories[0];
+          listCategoriesForHome.clear();
+          CategoryResponse category =
+              CategoryResponse(id: 0, name: AppMessages.home_first_cat_name);
+          listCategoriesForHome.add(category);
           listCategoriesForHome.addAll(categoriesListResponse.category);
           listCategoriesForHome[0].isChecked = true;
+          selectedBusinessCategoryResponse = listCategoriesForHome[0];
 
           // listSelectedCategories.add(listCategories[0]);
           // listSelectedCategoryId.add(listSelectedCategories[0].id);
 
           selectedCategoryResponse = listCategoriesForHome[0];
+          print(
+              "selectedCategoryResponse--->> ${selectedCategoryResponse.toJson()}");
           // listFilteredCategoryId.clear();
           // listFilteredCategoryId.add(listCategoriesForHome[0].id);
           print(
@@ -50,21 +57,21 @@ class CategoriesListProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  // void selectedBusinessCategoryItem(CategoryResponse value) {
-  //   print("value Provider->> ${value.toJson()}");
-  //   // selectedBusinessCategoryResponse = null;
-  //   // selectedBusinessCategoryResponse = value;
-  //   print(
-  //       "selectedBusinessCategoryResponse Provider-> ${selectedBusinessCategoryResponse.toJson()}");
-  //   print("listCategories Length-> ${listCategories.length}");
-  //   for (var i = 0; i < listCategories.length; i++) {
-  //     if (listCategories[i].id == value.id) {
-  //       selectedBusinessCategoryResponse = listCategories[i];
-  //       break;
-  //     }
-  //   }
-  //   notifyListeners();
-  // }
+  void selectedBusinessCategoryItem(CategoryResponse value) {
+    print("value Provider->> ${value.toJson()}");
+    // selectedBusinessCategoryResponse = null;
+    // selectedBusinessCategoryResponse = value;
+    print(
+        "selectedBusinessCategoryResponse Provider-> ${selectedBusinessCategoryResponse.toJson()}");
+    print("listCategories Length-> ${listCategories.length}");
+    for (var i = 0; i < listCategories.length; i++) {
+      if (listCategories[i].id == value.id) {
+        selectedBusinessCategoryResponse = listCategories[i];
+        break;
+      }
+    }
+    notifyListeners();
+  }
 
   void addDataToList(List<CategoryResponse> list) {
     listSelectedCategories.clear();
@@ -90,21 +97,21 @@ class CategoriesListProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void selectedBusinessCategoryItem(CategoryResponse value) {
-    print("value Provider->> ${value.toJson()}");
-    // selectedBusinessCategoryResponse = null;
-    // selectedBusinessCategoryResponse = value;
-    print(
-        "selectedBusinessCategoryResponse Provider-> ${selectedBusinessCategoryResponse.toJson()}");
-    print("listCategories Length-> ${listCategories.length}");
-    for (var i = 0; i < listCategories.length; i++) {
-      if (listCategories[i].id == value.id) {
-        selectedBusinessCategoryResponse = listCategories[i];
-        break;
-      }
-    }
-    notifyListeners();
-  }
+  // void selectedBusinessCategoryItem(CategoryResponse value) {
+  //   print("value Provider->> ${value.toJson()}");
+  //   // selectedBusinessCategoryResponse = null;
+  //   // selectedBusinessCategoryResponse = value;
+  //   print(
+  //       "selectedBusinessCategoryResponse Provider-> ${selectedBusinessCategoryResponse.toJson()}");
+  //   print("listCategories Length-> ${listCategoriesForHome.length}");
+  //   for (var i = 0; i < listCategoriesForHome.length; i++) {
+  //     if (listCategoriesForHome[i].id == value.id) {
+  //       selectedBusinessCategoryResponse = listCategoriesForHome[i];
+  //       break;
+  //     }
+  //   }
+  //   notifyListeners();
+  // }
 
   void changeCheckBoxValue(CategoryResponse categoryResponse, bool value) {
     print(
@@ -199,9 +206,9 @@ class CategoriesListProvider extends ChangeNotifier {
 
     // print(
     //     "selectedBusinessCategoryResponse Provider-> ${selectedBusinessCategoryResponse.toJson()}");
-    print("listCategories Length-> ${listCategories.length}");
-    for (var i = 0; i < listCategories.length; i++) {
-      if (listCategories[i].id == categoryResponse.id) {
+    print("listCategoriesForHome Length-> ${listCategoriesForHome.length}");
+    for (var i = 0; i < listCategoriesForHome.length; i++) {
+      if (listCategoriesForHome[i].id == categoryResponse.id) {
         // selectedBusinessCategoryResponse = listCategories[i];
         selectedCategoryResponse = categoryResponse;
         break;

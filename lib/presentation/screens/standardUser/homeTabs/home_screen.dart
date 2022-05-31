@@ -111,7 +111,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                         top: 20, left: 16, right: 16, bottom: 0),
                     child: HeaderView(AppMessages.trend_text, "home"),
                   ),
-                  GlobalView().sizedBoxView(5),
+                  GlobalView().sizedBoxView(15),
                   CategoryView("home"),
                   Expanded(
                     child: Padding(

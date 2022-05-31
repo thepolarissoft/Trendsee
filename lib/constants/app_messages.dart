@@ -117,7 +117,7 @@ class AppMessages {
   static const String select_this_location = "Select this Location";
   static const String title_select_category = "Select Category";
   static const String no_feeds_available_with_filters_message =
-      "Change filter to get results!";
+      "Nothing Here \n Enter different location!";
   static const String no_feeds_available_message = "No feeds Available!";
   static const String my_checkins_title = "My Check-ins";
   static const String views_text = "Views";
@@ -145,7 +145,7 @@ class AppMessages {
   static const String yes_text = "Yes";
   static const String no_text = "No";
   static const String hint_search_by_business_name =
-      "Search Business Name or Keywords";
+      "What are you looking for?";
   static const String find_near_by_business_text = "Find Nearby Businesses";
   static const String businesses_i_like_title = "Businesses I Like";
   static const String nearby_businesses_text = "Nearby Businesses";
@@ -282,4 +282,5 @@ class AppMessages {
   static const String business_text = "Business";
   static const String approve_text = "Approve";
   static const String not_approve_text = "Not Approve";
+  static const String home_first_cat_name = "Not Selected";
 }

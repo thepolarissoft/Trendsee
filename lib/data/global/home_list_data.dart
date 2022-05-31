@@ -31,7 +31,10 @@ class HomeListData {
       Provider.of<HomeFeedResponseProvider>(context, listen: false)
           .getHomeFeedList(
               context,
-              "1",
+              Provider.of<CategoriesListProvider>(context, listen: false)
+                  .selectedCategoryResponse
+                  .id
+                  .toString(),
               StorageUtils.readStringValue(StorageUtils.keyLatitude),
               StorageUtils.readStringValue(StorageUtils.keyLongitude),
               "5",

@@ -180,7 +180,7 @@ class _BusinessDetailsScreenState extends State<BusinessDetailsScreen> {
                                       AppImages.ic_back_filled,
                                     ),
                                   ),
-                                ),
+                                ), 
                               ),
                             ),
                             SliverStickyHeader(

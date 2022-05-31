@@ -125,7 +125,7 @@ class _SearchByBusinessScreenState extends State<SearchByBusinessScreen>
               extendBodyBehindAppBar: false,
               backgroundColor: BaseColor.home_bg_color,
               appBar: PreferredSize(
-                preferredSize: Size.fromHeight(200),
+                preferredSize: Size.fromHeight(210),
                 // preferredSize: Size.fromHeight(260),
                 child: AppBar(
                   flexibleSpace: Container(
@@ -268,7 +268,7 @@ class _SearchByBusinessScreenState extends State<SearchByBusinessScreen>
                         //   child: GlobalView().buttonFilled(
                         //       context, AppMessages.find_near_by_business_text),
                         // ),
-                        GlobalView().sizedBoxView(25),
+                        GlobalView().sizedBoxView(15),
                         CategoryView(
                           "search",
                         ),
