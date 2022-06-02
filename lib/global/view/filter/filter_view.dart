@@ -323,8 +323,7 @@ class _FilterViewState extends State<FilterView> {
     print("Apply Clicked");
 
     if (widget.route.toLowerCase() == "search") {
-      if (Provider.of<BusinessUserProvider>(context, listen: false)
-          .isCitySelected) {
+      if (filterProvider.isCitySelected) {
         selectedRadiusValue = 0;
         filterProvider.setDistanceRadius('0');
       } else {
@@ -340,18 +339,15 @@ class _FilterViewState extends State<FilterView> {
     filterProvider.setCityValue(cityTextEditingController.text);
     Provider.of<HomeFeedResponseProvider>(context, listen: false)
         .homeFeedResponse = null;
-    print(Provider.of<BusinessUserProvider>(context, listen: false)
-        .isCitySelected);
+    print(filterProvider);
     print("City-> ${filterProvider.selectedMetropolitanCityInfo}");
 
     if (widget.route.toLowerCase() == "home") {
       HomeListData().applyHomeData(context);
       Navigator.pop(context);
     } else if (widget.route.toLowerCase() == "search") {
-      print(
-          "IS CITY SELECTED ${Provider.of<BusinessUserProvider>(context, listen: false).isCitySelected}");
-      if (Provider.of<BusinessUserProvider>(context, listen: false)
-              .isCitySelected &&
+      print("IS CITY SELECTED ${filterProvider.isCitySelected}");
+      if (filterProvider.isCitySelected &&
           // filterProvider.citySearchController.text == "" &&
           filterProvider.selectedMetropolitanCityInfo == "") {
         print("Toast called");
@@ -501,13 +497,11 @@ class _FilterViewState extends State<FilterView> {
                       unselectedWidgetColor: BaseColor.btn_gradient_end_color1,
                       backgroundColor: BaseColor.btn_gradient_end_color1),
                   child: Checkbox(
-                    value: businessProvider.isCitySelected,
+                    value: filterProvider.isCitySelected,
                     checkColor: BaseColor.pure_white_color,
                     activeColor: BaseColor.btn_gradient_end_color1,
                     onChanged: (bool value) {
-                      if (Provider.of<BusinessUserProvider>(context,
-                              listen: false)
-                          .isDistanceRadiusSelected) {}
+                      if (filterProvider.isDistanceRadiusSelected) {}
                       cityTextEditingController.text = "";
                       businessProvider.changeFilterCheckBoxValue(
                           route: AppMessages.city_text, value: value);
@@ -517,11 +511,7 @@ class _FilterViewState extends State<FilterView> {
               ),
               Expanded(
                 child: AbsorbPointer(
-                  absorbing:
-                      Provider.of<BusinessUserProvider>(context, listen: false)
-                              .isCitySelected
-                          ? false
-                          : true,
+                  absorbing: filterProvider.isCitySelected ? false : true,
                   child: GlobalView().textFieldView(
                       AppImages.ic_location,
                       cityTextEditingController,
@@ -560,15 +550,11 @@ class _FilterViewState extends State<FilterView> {
                             BaseColor.btn_gradient_end_color1,
                         backgroundColor: BaseColor.btn_gradient_end_color1),
                     child: Checkbox(
-                        value: Provider.of<BusinessUserProvider>(context,
-                                listen: false)
-                            .isDistanceRadiusSelected,
+                        value: filterProvider.isDistanceRadiusSelected,
                         checkColor: BaseColor.pure_white_color,
                         activeColor: BaseColor.btn_gradient_end_color1,
                         onChanged: (bool value) {
-                          if (Provider.of<BusinessUserProvider>(context,
-                                  listen: false)
-                              .isDistanceRadiusSelected) {}
+                          if (filterProvider.isDistanceRadiusSelected) {}
                           cityTextEditingController.text = "";
                           // provider.changeSegmentValue(
                           //     route: AppMessages.radius_text);
