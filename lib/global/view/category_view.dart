@@ -4,8 +4,6 @@ import 'package:provider/provider.dart';
 import 'package:trendoapp/constants/app_images.dart';
 import 'package:trendoapp/constants/app_text_style.dart';
 import 'package:trendoapp/constants/base_color.dart';
-import 'package:trendoapp/data/global/home_list_data.dart';
-import 'package:trendoapp/data/global/search_list_data.dart';
 import 'package:trendoapp/data/models/category_response.dart';
 import 'package:trendoapp/providers/categories_list_provider.dart';
 import 'package:trendoapp/providers/home_feed_response_provider.dart';
@@ -33,10 +31,10 @@ class _CategoryViewState extends State<CategoryView> {
     //     Provider.of<FilterProvider>(context, listen: false).filterModel;
     // print("C Id-> ${filterModel.categoryId}");
     SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
-      Provider.of<CategoriesListProvider>(context, listen: false)
-          .selectedCategoryItem(
-              Provider.of<CategoriesListProvider>(context, listen: false)
-                  .listCategoriesForHome[0]);
+      // Provider.of<CategoriesListProvider>(context, listen: false)
+      //     .selectedCategoryItem(
+      //         Provider.of<CategoriesListProvider>(context, listen: false)
+      //             .listCategoriesForHome[0]);
     });
 
     var provider = Provider.of<CategoriesListProvider>(context, listen: false);
@@ -57,17 +55,18 @@ class _CategoryViewState extends State<CategoryView> {
     //     .selectedCategoryItem(
     //         Provider.of<CategoriesListProvider>(context, listen: false)
     //             .listCategoriesForHome[index]);
-    if (widget.route.toLowerCase() == "home") {
-      HomeListData().applyHomeData(context);
-    } else if (widget.route.toLowerCase() == "search") {
-      SearchListData().searchDataForCategories(context, page);
-    } else if (widget.route.toLowerCase() == "businesslikes") {}
+
+    // if (widget.route.toLowerCase() == "home") {
+    //   HomeListData().applyHomeData(context);
+    // } else if (widget.route.toLowerCase() == "search") {
+    //   SearchListData().searchDataForCategories(context, page);
+    // } else if (widget.route.toLowerCase() == "businesslikes") {}
   }
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 20),
+      padding: EdgeInsets.symmetric(horizontal: 0),
       child: categoryView(),
     );
   }
@@ -107,14 +106,20 @@ class _CategoryViewState extends State<CategoryView> {
                               categories.listCategoriesForHome[i]
                           ].map((CategoryResponse value) {
                             return DropdownMenuItem<CategoryResponse>(
-                              value: value,
-                              child: GlobalView().textViewWithStartAlign(
-                                  value.name,
-                                  AppTextStyle.inter_font_family,
-                                  AppTextStyle.normal_font_weight,
-                                  BaseColor.hint_color,
-                                  14),
-                            );
+                                value: value,
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                      child: GlobalView()
+                                          .textViewWithStartAlign(
+                                              value.name,
+                                              AppTextStyle.inter_font_family,
+                                              AppTextStyle.normal_font_weight,
+                                              BaseColor.hint_color,
+                                              14),
+                                    ),
+                                  ],
+                                ));
                           }).toList(),
                           // hint: new GlobalView().textViewWithCenterAlign(
                           //     categories.listCategories[0].name,

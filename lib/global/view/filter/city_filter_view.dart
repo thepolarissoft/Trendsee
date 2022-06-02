@@ -12,15 +12,16 @@ import 'package:trendoapp/providers/filter_provider.dart';
 import '../global_view.dart';
 
 class CityFilterView extends StatelessWidget {
-  CityFilterView({
-    Key key,
-    // @required this.keyCity,
-    @required this.citySearchController,
-  }) : super(key: key);
+  CityFilterView({Key key, @required this.filterProvider
+      // @required this.keyCity,
+      // @required this.citySearchController,
+      })
+      : super(key: key);
+  FilterProvider filterProvider;
   // AutoCompleteTextField searchCityTextField;
   // GlobalKey<AutoCompleteTextFieldState<String>> keyCity;
   //     new GlobalKey();
-  TextEditingController citySearchController = TextEditingController();
+  // TextEditingController citySearchController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -56,7 +57,7 @@ class CityFilterView extends StatelessWidget {
                 borderRadius: BorderRadius.circular(25),
                 child: TypeAheadField<String>(
                   textFieldConfiguration: TextFieldConfiguration(
-                    controller: citySearchController,
+                    controller: filterProvider.citySearchController,
                     autocorrect: false,
                     enableSuggestions: false,
                     style: TextStyle(
@@ -107,9 +108,10 @@ class CityFilterView extends StatelessWidget {
                   },
                   onSuggestionSelected: (item) {
                     print("ITEM NAME-> $item");
-                    citySearchController.text = item;
+                    filterProvider.citySearchController.text = item;
                     provider.selectedCity(item);
-                    print("AREA TEXT->${citySearchController.text}");
+                    print(
+                        "AREA TEXT->${filterProvider.citySearchController.text}");
                     // provider.searchByCity(context);
                     // provider.changeEditableCityValue();
                     print("Suggestion-> $item");

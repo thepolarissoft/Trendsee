@@ -8,18 +8,19 @@ import 'package:trendoapp/utils/storage_utils.dart';
 class SearchListData {
   void initSearchData(
       BuildContext context, String searchValue, int page) async {
+    CategoriesListProvider catProvider =
+        Provider.of<CategoriesListProvider>(context, listen: false);
+    catProvider.selectedCategoryItem(catProvider.listCategoriesForHome[0]);
     Provider.of<SearchByBusinessProvider>(context, listen: false)
         .listBusiness
         .clear();
+    Provider.of<FilterProvider>(context, listen: false).selectedCity("");
     Provider.of<SearchByBusinessProvider>(context, listen: false)
         .getSearchByBusinessList(
             context,
             page,
             searchValue,
-            Provider.of<CategoriesListProvider>(context, listen: false)
-                .selectedCategoryResponse
-                .id
-                .toString(),
+            catProvider.selectedCategoryResponse.id.toString(),
             StorageUtils.readStringValue(StorageUtils.keyLatitude),
             StorageUtils.readStringValue(StorageUtils.keyLongitude),
             "5",
@@ -32,8 +33,7 @@ class SearchListData {
 
     // print(
     // "SELECTED CATEGORY DATA-> ${Provider.of<CategoriesListProvider>(context, listen: false).selectedCategoryData.name}");
-    print(
-        "INIT CATEGORY-> ${Provider.of<CategoriesListProvider>(context, listen: false).listCategories[0].name}");
+    print("INIT CATEGORY-> ${catProvider.listCategories[0].name}");
   }
 
   void searchDataForCategories(BuildContext context, int page) async {
@@ -65,7 +65,10 @@ class SearchListData {
   void applySearchDataForDistance(
       BuildContext context, String distanceRadius) async {
     print(
-        "listFilteredCategoryId length-> ${Provider.of<CategoriesListProvider>(context, listen: false).selectedCategoryResponse.name}");
+        "Distance Radius-->> ${Provider.of<FilterProvider>(context, listen: false).distanceRadius}");
+    print(
+        "Selected Metropolitan City-->> ${Provider.of<FilterProvider>(context, listen: false).selectedMetropolitanCityInfo}");
+
     Provider.of<SearchByBusinessProvider>(context, listen: false)
         .listBusiness
         .clear();
@@ -89,16 +92,16 @@ class SearchListData {
   }
 
   void resetSearchDataForDistance(BuildContext context) async {
+    CategoriesListProvider catProvider =
+        Provider.of<CategoriesListProvider>(context, listen: false);
+    catProvider.selectedCategoryItem(catProvider.listCategoriesForHome[0]);
     Provider.of<FilterProvider>(context, listen: false).setCityValue("");
     Provider.of<SearchByBusinessProvider>(context, listen: false)
         .getSearchByBusinessList(
       context,
       1,
       Provider.of<FilterProvider>(context, listen: false).searchValue,
-      Provider.of<CategoriesListProvider>(context, listen: false)
-          .selectedCategoryResponse
-          .id
-          .toString(),
+      catProvider.selectedCategoryResponse.id.toString(),
       StorageUtils.readStringValue(StorageUtils.keyLatitude),
       StorageUtils.readStringValue(StorageUtils.keyLongitude),
       Provider.of<FilterProvider>(context, listen: false).distanceRadius,

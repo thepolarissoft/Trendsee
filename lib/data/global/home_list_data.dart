@@ -19,6 +19,9 @@ class HomeListData {
 
   void initHomeData(BuildContext context) async {
     Future.delayed(Duration.zero, () {
+      CategoriesListProvider catProvider =
+          Provider.of<CategoriesListProvider>(context, listen: false);
+      catProvider.selectedCategoryItem(catProvider.listCategoriesForHome[0]);
       print(
           "RADIUS->${Provider.of<FilterProvider>(context, listen: false).distanceRadius}");
       // Provider.of<FilterProvider>(context, listen: false).setDistanceRadius("5");
@@ -28,13 +31,11 @@ class HomeListData {
           .clear();
       Provider.of<HomeFeedResponseProvider>(context, listen: false)
           .homeFeedResponse = null;
+      Provider.of<FilterProvider>(context, listen: false).selectedCity("");
       Provider.of<HomeFeedResponseProvider>(context, listen: false)
           .getHomeFeedList(
               context,
-              Provider.of<CategoriesListProvider>(context, listen: false)
-                  .selectedCategoryResponse
-                  .id
-                  .toString(),
+              catProvider.selectedCategoryResponse.id.toString(),
               StorageUtils.readStringValue(StorageUtils.keyLatitude),
               StorageUtils.readStringValue(StorageUtils.keyLongitude),
               "5",
@@ -62,6 +63,9 @@ class HomeListData {
   }
 
   void resetHomeData(BuildContext context) async {
+    CategoriesListProvider catProvider =
+        Provider.of<CategoriesListProvider>(context, listen: false);
+    catProvider.selectedCategoryItem(catProvider.listCategoriesForHome[0]);
     Provider.of<FilterProvider>(context, listen: false).setCityValue("");
     Provider.of<HomeFeedResponseProvider>(context, listen: false)
         .listFeedInfo
@@ -69,7 +73,7 @@ class HomeListData {
     Provider.of<HomeFeedResponseProvider>(context, listen: false)
         .getHomeFeedList(
       context,
-      Provider.of<CategoriesListProvider>(context, listen: false)
+      catProvider
           // .listFilteredCategoryId[0]
           .selectedCategoryResponse
           .id

@@ -10,6 +10,7 @@ import 'package:trendoapp/constants/base_color.dart';
 import 'package:trendoapp/constants/device_size.dart';
 import 'package:trendoapp/data/global/home_list_data.dart';
 import 'package:trendoapp/data/global/search_list_data.dart';
+import 'package:trendoapp/global/view/category_view.dart';
 import 'package:trendoapp/global/view/filter/city_filter_view.dart';
 import 'package:trendoapp/global/view/filter/distance_filter_view.dart';
 import 'package:trendoapp/global/view/global_view.dart';
@@ -38,7 +39,8 @@ class _FilterViewState extends State<FilterView> {
   TextEditingController cityTextEditingController = new TextEditingController();
   int selectedFilterValue = 0;
   String filterText = AppMessages.by_city_text;
-  TextEditingController citySearchController = TextEditingController();
+  FilterProvider filterProvider;
+  // TextEditingController citySearchController = TextEditingController();
   final Map<int, Widget> myTabs = <int, Widget>{
     0: GlobalView().textViewWithCenterAlign(
       "1",
@@ -107,7 +109,7 @@ class _FilterViewState extends State<FilterView> {
         .homeFeedResponse = null;
 
     Future.delayed(Duration.zero, () {
-      Provider.of<BusinessUserProvider>(context, listen: false)
+      Provider.of<FilterProvider>(context, listen: false)
           .changeSegmentValue(route: AppMessages.city_text);
       Provider.of<FilterProvider>(context, listen: false)
           .setDistanceRadius(distanceRadius);
@@ -118,6 +120,7 @@ class _FilterViewState extends State<FilterView> {
 
   @override
   Widget build(BuildContext context) {
+    filterProvider = Provider.of<FilterProvider>(context, listen: false);
     return GestureDetector(
       onTap: () {
         showModalBottomSheet<void>(
@@ -156,6 +159,8 @@ class _FilterViewState extends State<FilterView> {
                                 children: <Widget>[
                                   titleView(context),
                                   GlobalView().sizedBoxView(10),
+                                  CategoryView(widget.route),
+                                  GlobalView().sizedBoxView(20),
                                   widget.route == "search"
                                       ? Container(
                                           padding: EdgeInsets.all(2),
@@ -220,7 +225,7 @@ class _FilterViewState extends State<FilterView> {
                                                   // Provider.of<FilterProvider>(context,
                                                   //         listen: false)
                                                   //     .setDistanceRadius(distanceRadius);
-                                                  Provider.of<BusinessUserProvider>(
+                                                  Provider.of<FilterProvider>(
                                                           context,
                                                           listen: false)
                                                       .changeSegmentValue(
@@ -239,10 +244,9 @@ class _FilterViewState extends State<FilterView> {
                                   GlobalView().sizedBoxView(20),
                                   selectedFilterValue == 0
                                       ? CityFilterView(
-                                          citySearchController:
-                                              citySearchController,
-                                          // keyCity: keyCity,
-                                          // searchCityTextField: searchCityTextField,
+                                          filterProvider: filterProvider,
+                                          // citySearchController:
+                                          //     citySearchController,
                                         )
                                       : DistanceFilterView(),
                                   // cityAutoCompleteTextFieldView(),
@@ -317,45 +321,47 @@ class _FilterViewState extends State<FilterView> {
 
   void onClickApplyButton() {
     print("Apply Clicked");
+
     if (widget.route.toLowerCase() == "search") {
       if (Provider.of<BusinessUserProvider>(context, listen: false)
           .isCitySelected) {
         selectedRadiusValue = 0;
-        Provider.of<FilterProvider>(context, listen: false)
-            .setDistanceRadius('1');
+        filterProvider.setDistanceRadius('0');
+      } else {
+        filterProvider.citySearchController.text = "";
+        filterProvider.setCityValue("");
       }
     }
+
     // else {
     //   Provider.of<FilterProvider>(context, listen: false)
     //       .setDistanceRadius(distanceRadius);
     // }
-
-    Provider.of<FilterProvider>(context, listen: false)
-        .setCityValue(cityTextEditingController.text);
+    filterProvider.setCityValue(cityTextEditingController.text);
     Provider.of<HomeFeedResponseProvider>(context, listen: false)
         .homeFeedResponse = null;
     print(Provider.of<BusinessUserProvider>(context, listen: false)
         .isCitySelected);
-    print(
-        "City-> ${Provider.of<FilterProvider>(context, listen: false).selectedMetropolitanCityInfo}");
+    print("City-> ${filterProvider.selectedMetropolitanCityInfo}");
 
     if (widget.route.toLowerCase() == "home") {
       HomeListData().applyHomeData(context);
       Navigator.pop(context);
     } else if (widget.route.toLowerCase() == "search") {
+      print(
+          "IS CITY SELECTED ${Provider.of<BusinessUserProvider>(context, listen: false).isCitySelected}");
       if (Provider.of<BusinessUserProvider>(context, listen: false)
               .isCitySelected &&
-          // searchCityTextField != null &&
-          // searchCityTextField.controller.text != null
-          Provider.of<FilterProvider>(context, listen: false)
-                  .selectedMetropolitanCityInfo ==
-              "") {
+          // filterProvider.citySearchController.text == "" &&
+          filterProvider.selectedMetropolitanCityInfo == "") {
         print("Toast called");
         GlobalView().showToast(AppToastMessages.enter_city_for_filter_message);
       } else {
         SearchListData().applySearchDataForDistance(context, distanceRadius);
         Navigator.pop(context);
       }
+      // SearchListData().applySearchDataForDistance(context, distanceRadius);
+      // Navigator.pop(context);
     }
 
     // Provider.of<FilterProvider>(context, listen: false)
@@ -365,11 +371,10 @@ class _FilterViewState extends State<FilterView> {
 
   void onClickResetButton() {
     cityTextEditingController.text = "";
-    Provider.of<FilterProvider>(context, listen: false)
-        .setCityValue(cityTextEditingController.text);
+    filterProvider.setCityValue(cityTextEditingController.text);
     Provider.of<HomeFeedResponseProvider>(context, listen: false)
         .homeFeedResponse = null;
-    Provider.of<FilterProvider>(context, listen: false).setDistanceRadius("5");
+    filterProvider.setDistanceRadius("5");
     if (widget.route.toLowerCase() == "home") {
       HomeListData().resetHomeData(context);
     } else if (widget.route.toLowerCase() == "search") {
@@ -379,7 +384,7 @@ class _FilterViewState extends State<FilterView> {
     Navigator.pop(context);
     Provider.of<FilterProvider>(context, listen: false)
         .selectedMetropolitanCityInfo = "";
-    citySearchController.text = "";
+    filterProvider.citySearchController.text = "";
   }
 
   Widget titleView(BuildContext context) => Row(
@@ -900,59 +905,58 @@ class CustomTrackShape extends RoundedRectSliderTrackShape {
   }
 }
 
-  //  showModalBottomSheet<void>(
-  //         shape: RoundedRectangleBorder(
-  //             borderRadius: BorderRadius.only(
-  //                 topLeft: Radius.circular(20), topRight: Radius.circular(20))),
-  //         context: context,
-  //         isScrollControlled: true,
-  //         builder: (BuildContext context) {
-  //           return StatefulBuilder(builder: (BuildContext context,
-  //               void Function(void Function()) setState) {
-  //             return GestureDetector(
-  //               onTap: () {
-  //                 FocusScope.of(context).unfocus();
-  //               },
-  //               child: Padding(
-  //                 padding: EdgeInsets.only(
-  //                     bottom: MediaQuery.of(context).viewInsets.bottom),
-  //                 child: Container(
-  //                   // height: ScreenSize().screenHeight(context) - 600,
-  //                   decoration: BoxDecoration(
-  //                     color: BaseColor.pure_white_color,
-  //                     borderRadius: BorderRadius.only(
-  //                       topLeft: Radius.circular(20),
-  //                       topRight: Radius.circular(20),
-  //                     ),
-  //                   ),
-  //                   child: SingleChildScrollView(
-  //                     physics: AlwaysScrollableScrollPhysics(),
-  //                     child: Padding(
-  //                       padding: const EdgeInsets.all(25),
-  //                       child: Column(
-  //                         // mainAxisAlignment: MainAxisAlignment.start,
-  //                         crossAxisAlignment: CrossAxisAlignment.start,
-  //                         mainAxisSize: MainAxisSize.max,
-  //                         children: <Widget>[
-  //                           titleView(context),
-  //                           GlobalView().sizedBoxView(20),
-  //                           // categoriesView(),
-  //                           // GlobalView().sizedBoxView(20),
-  //                           // cityAutoCompleteTextFieldView(),
-  //                           cityTextFieldView(),
-  //                           GlobalView().sizedBoxView(20),
-  //                           distanceRadiusView(setState, context),
-  //                           GlobalView().sizedBoxView(25),
-  //                           resetApplyView(context),
-  //                           GlobalView().sizedBoxView(20),
-  //                         ],
-  //                       ),
-  //                     ),
-  //                   ),
-  //                 ),
-  //               ),
-  //             );
-  //           });
-  //         },
-  //       );
-     
+//  showModalBottomSheet<void>(
+//         shape: RoundedRectangleBorder(
+//             borderRadius: BorderRadius.only(
+//                 topLeft: Radius.circular(20), topRight: Radius.circular(20))),
+//         context: context,
+//         isScrollControlled: true,
+//         builder: (BuildContext context) {
+//           return StatefulBuilder(builder: (BuildContext context,
+//               void Function(void Function()) setState) {
+//             return GestureDetector(
+//               onTap: () {
+//                 FocusScope.of(context).unfocus();
+//               },
+//               child: Padding(
+//                 padding: EdgeInsets.only(
+//                     bottom: MediaQuery.of(context).viewInsets.bottom),
+//                 child: Container(
+//                   // height: ScreenSize().screenHeight(context) - 600,
+//                   decoration: BoxDecoration(
+//                     color: BaseColor.pure_white_color,
+//                     borderRadius: BorderRadius.only(
+//                       topLeft: Radius.circular(20),
+//                       topRight: Radius.circular(20),
+//                     ),
+//                   ),
+//                   child: SingleChildScrollView(
+//                     physics: AlwaysScrollableScrollPhysics(),
+//                     child: Padding(
+//                       padding: const EdgeInsets.all(25),
+//                       child: Column(
+//                         // mainAxisAlignment: MainAxisAlignment.start,
+//                         crossAxisAlignment: CrossAxisAlignment.start,
+//                         mainAxisSize: MainAxisSize.max,
+//                         children: <Widget>[
+//                           titleView(context),
+//                           GlobalView().sizedBoxView(20),
+//                           // categoriesView(),
+//                           // GlobalView().sizedBoxView(20),
+//                           // cityAutoCompleteTextFieldView(),
+//                           cityTextFieldView(),
+//                           GlobalView().sizedBoxView(20),
+//                           distanceRadiusView(setState, context),
+//                           GlobalView().sizedBoxView(25),
+//                           resetApplyView(context),
+//                           GlobalView().sizedBoxView(20),
+//                         ],
+//                       ),
+//                     ),
+//                   ),
+//                 ),
+//               ),
+//             );
+//           });
+//         },
+//       );

@@ -282,5 +282,15 @@ class AppMessages {
   static const String business_text = "Business";
   static const String approve_text = "Approve";
   static const String not_approve_text = "Not Approve";
-  static const String home_first_cat_name = "Not Selected";
+  static const String home_first_cat_name = "All Categories";
+  static const String mile_text = " Mile";
+  static const String miles_text = " Miles";
+
+  static const String searching_text = "Searching ";
+  static const String within_text = " within ";
+  static const String location_or_text = " location or ";
+  static const String near_me_text2 = " near me!";
+
+// “Searching____ (selected category) within ____ miles near me”
+// “ Searching ____ within _____ (selected location) or ( distance “ miles near me”)”
 }

@@ -12,7 +12,7 @@ import 'package:trendoapp/constants/base_color.dart';
 import 'package:trendoapp/data/global/search_list_data.dart';
 import 'package:trendoapp/data/models/search_by_business_response.dart';
 import 'package:trendoapp/global/view/business_item_view.dart';
-import 'package:trendoapp/global/view/category_view.dart';
+import 'package:trendoapp/global/view/filter_text_widget.dart';
 import 'package:trendoapp/global/view/global_view.dart';
 import 'package:trendoapp/global/view/header_view.dart';
 import 'package:trendoapp/presentation/screens/standardUser/friendsTabs/business_details_screen.dart';
@@ -238,8 +238,8 @@ class _SearchByBusinessScreenState extends State<SearchByBusinessScreen>
                                       print(
                                           "suggestionsCallback pattern--> $pattern");
                                       if (pattern.length >= 3)
-                                      return provider.searchBusinessKeywords(
-                                          context, pattern);
+                                        return provider.searchBusinessKeywords(
+                                            context, pattern);
                                     },
                                     hideOnEmpty: true,
                                     itemBuilder: (context, item) {
@@ -268,9 +268,13 @@ class _SearchByBusinessScreenState extends State<SearchByBusinessScreen>
                         //   child: GlobalView().buttonFilled(
                         //       context, AppMessages.find_near_by_business_text),
                         // ),
-                        GlobalView().sizedBoxView(15),
-                        CategoryView(
-                          "search",
+                        GlobalView().sizedBoxView(20),
+                        // CategoryView("search"),
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 22),
+                          child: FilterTextWidget(
+                            isHome: false,
+                          ),
                         ),
                       ],
                     ),

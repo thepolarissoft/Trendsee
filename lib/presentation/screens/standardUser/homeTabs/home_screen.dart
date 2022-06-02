@@ -8,8 +8,8 @@ import 'package:trendoapp/constants/app_text_style.dart';
 import 'package:trendoapp/constants/base_color.dart';
 import 'package:trendoapp/data/global/home_list_data.dart';
 import 'package:trendoapp/data/models/feed_response.dart';
-import 'package:trendoapp/global/view/category_view.dart';
 import 'package:trendoapp/global/view/check_ins_item_view.dart';
+import 'package:trendoapp/global/view/filter_text_widget.dart';
 import 'package:trendoapp/global/view/global_view.dart';
 import 'package:trendoapp/global/view/header_view.dart';
 import 'package:trendoapp/presentation/screens/standardUser/friendsTabs/business_details_screen.dart';
@@ -54,7 +54,8 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
           provider.getHomeFeedList(
             context,
             Provider.of<CategoriesListProvider>(context, listen: false)
-                .selectedCategoryResponse.id
+                .selectedCategoryResponse
+                .id
                 .toString(),
             StorageUtils.readStringValue(StorageUtils.keyLatitude),
             StorageUtils.readStringValue(StorageUtils.keyLongitude),
@@ -112,7 +113,11 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                     child: HeaderView(AppMessages.trend_text, "home"),
                   ),
                   GlobalView().sizedBoxView(15),
-                  CategoryView("home"),
+                  // CategoryView("home"),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 16),
+                    child: FilterTextWidget(),
+                  ),
                   Expanded(
                     child: Padding(
                       padding: EdgeInsets.only(

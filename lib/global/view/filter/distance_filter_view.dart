@@ -48,7 +48,7 @@ class DistanceFilterView extends StatelessWidget {
                         GestureDetector(
                           onTap: () {
                             provider.setDistanceRadius(
-                                provider.listDistances[index][0]);
+                                provider.listDistances[index]);
                           },
                           child: Row(
                             children: [
@@ -57,13 +57,18 @@ class DistanceFilterView extends StatelessWidget {
                                   padding:
                                       const EdgeInsets.only(top: 2, bottom: 2),
                                   child: GlobalView().textViewWithStartAlign(
-                                      provider.listDistances[index],
+                                      provider.listDistances[index] +
+                                          (provider.listDistances[index]
+                                                      .length ==
+                                                  1
+                                              ? AppMessages.mile_text
+                                              : AppMessages.miles_text),
                                       AppTextStyle.inter_font_family,
-                                      provider.listDistances[index][0] ==
+                                      provider.listDistances[index] ==
                                               provider.distanceRadius
                                           ? AppTextStyle.bold_font_weight
                                           : AppTextStyle.normal_font_weight,
-                                      provider.listDistances[index][0] ==
+                                      provider.listDistances[index] ==
                                               provider.distanceRadius
                                           ? BaseColor.forgot_pass_txt_color
                                           : BaseColor.black_color,

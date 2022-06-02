@@ -266,7 +266,7 @@ class BusinessUserProvider extends ChangeNotifier {
           Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => EmailVerificationScreen(email:email)));
+                  builder: (context) => EmailVerificationScreen(email: email)));
         }
       } else if (baseresponse.statuscode == 400) {
         DialogUtils.displayDialogCallBack(
@@ -985,20 +985,6 @@ class BusinessUserProvider extends ChangeNotifier {
       isCitySelected = !value;
     }
     print("value-> $value");
-    print("isDistanceRadiusSelected-> $isDistanceRadiusSelected");
-    print("isCitySelected-> $isCitySelected");
-    notifyListeners();
-  }
-
-  void changeSegmentValue({@required String route}) {
-    if (route.toLowerCase() == AppMessages.city_text.toLowerCase()) {
-      isCitySelected = true;
-      isDistanceRadiusSelected = false;
-    } else {
-      isDistanceRadiusSelected = true;
-      isCitySelected = false;
-    }
-    // print("value-> $value");
     print("isDistanceRadiusSelected-> $isDistanceRadiusSelected");
     print("isCitySelected-> $isCitySelected");
     notifyListeners();
