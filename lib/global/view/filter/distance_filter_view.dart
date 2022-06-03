@@ -58,9 +58,7 @@ class DistanceFilterView extends StatelessWidget {
                                       const EdgeInsets.only(top: 2, bottom: 2),
                                   child: GlobalView().textViewWithStartAlign(
                                       provider.listDistances[index] +
-                                          (provider.listDistances[index]
-                                                      .length ==
-                                                  1
+                                          (provider.listDistances[index] == "1"
                                               ? AppMessages.mile_text
                                               : AppMessages.miles_text),
                                       AppTextStyle.inter_font_family,

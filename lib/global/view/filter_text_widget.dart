@@ -65,14 +65,16 @@ class FilterTextWidget extends StatelessWidget {
             TextSpan(
               text: filterProvider.distanceRadius != "0"
                   ? filterProvider.distanceRadius +
-                      (filterProvider.distanceRadius.length == 1
+                      (filterProvider.distanceRadius == "1"
                           ? AppMessages.mile_text
                           : AppMessages.miles_text)
                   : "",
               style: textValueStyle,
             ),
             TextSpan(
-              text: AppMessages.near_me_text2,
+              text: filterProvider.distanceRadius != "0"
+                  ? AppMessages.near_me_text2
+                  : "",
               style: textStyle,
             ),
           ])),

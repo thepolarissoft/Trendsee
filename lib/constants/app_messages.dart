@@ -117,7 +117,7 @@ class AppMessages {
   static const String select_this_location = "Select this Location";
   static const String title_select_category = "Select Category";
   static const String no_feeds_available_with_filters_message =
-      "Nothing Here \n Enter different location!";
+      "Nothing Here \n Change Search To Get Result";
   static const String no_feeds_available_message = "No feeds Available!";
   static const String my_checkins_title = "My Check-ins";
   static const String views_text = "Views";
@@ -202,7 +202,7 @@ class AppMessages {
   static const String online_business_text = "Online Business";
   static const String mobile_business_text = "Mobile Business";
   static const String add_text = "Add";
-  static const String near_me_text = "Near me";
+  static const String change_search_text = "Change Search?";
   static const String other_text = "Other";
   static const String area_text = "area";
   static const String working_progress_text = "Working Progress!";
@@ -289,7 +289,7 @@ class AppMessages {
   static const String searching_text = "Searching ";
   static const String within_text = " within ";
   static const String location_or_text = " location or ";
-  static const String near_me_text2 = " near me!";
+  static const String near_me_text2 = " near me";
 
 // “Searching____ (selected category) within ____ miles near me”
 // “ Searching ____ within _____ (selected location) or ( distance “ miles near me”)”
