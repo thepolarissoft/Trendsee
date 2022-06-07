@@ -290,7 +290,10 @@ class AppMessages {
   static const String within_text = " within ";
   static const String location_or_text = " location or ";
   static const String near_me_text2 = " near me";
+  static const String miles_from_text = " miles from you";
+  static const String within = "Within ";
 
+// Within___ miles from you
 // “Searching____ (selected category) within ____ miles near me”
 // “ Searching ____ within _____ (selected location) or ( distance “ miles near me”)”
 }

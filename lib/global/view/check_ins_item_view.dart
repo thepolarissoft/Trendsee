@@ -20,13 +20,14 @@ class CheckInsItemView extends StatelessWidget {
   bool isVisibleDeleteIcon;
   bool isVisibleLikePanel;
   VoidCallback onClickDelete;
-  CheckInsItemView({
-    @required this.verifiedUserResponse,
-    @required this.feedResponse,
-    @required this.isVisibleDeleteIcon,
-    @required this.isVisibleLikePanel,
-    @required this.onClickDelete,
-  });
+  bool isHome;
+  CheckInsItemView(
+      {@required this.verifiedUserResponse,
+      @required this.feedResponse,
+      @required this.isVisibleDeleteIcon,
+      @required this.isVisibleLikePanel,
+      @required this.onClickDelete,
+      this.isHome = false});
 
   void onClickLike(BuildContext context, int feedId) {
     Provider.of<HomeFeedResponseProvider>(context, listen: false).checkInsLike(
@@ -248,6 +249,7 @@ class CheckInsItemView extends StatelessWidget {
                   ],
                 ),
               ),
+
               GlobalView().sizedBoxView(5),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 10),
@@ -286,6 +288,22 @@ class CheckInsItemView extends StatelessWidget {
                       ),
                     )
                   ],
+                ),
+              ),
+              Visibility(
+                visible: isHome,
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+                  child: GlobalView().textViewWithStartAlign(
+                      feedResponse.distance != null
+                          ? AppMessages.within +
+                              feedResponse.distance +
+                              AppMessages.miles_from_text
+                          : "",
+                      AppTextStyle.inter_font_family,
+                      AppTextStyle.semi_bold_font_weight,
+                      BaseColor.forgot_pass_txt_color,
+                      12),
                 ),
               ),
               GlobalView().sizedBoxView(5),

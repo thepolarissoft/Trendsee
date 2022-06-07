@@ -50,6 +50,7 @@ class VerifiedUserResponse {
     this.businessLatitude,
     this.businessLongitude,
     this.city,
+    this.distance,
   });
 
   int id;
@@ -98,6 +99,7 @@ class VerifiedUserResponse {
   String businessLatitude;
   String businessLongitude;
   CityModel city;
+  String distance;
 
   factory VerifiedUserResponse.fromJson(Map<String, dynamic> json) =>
       VerifiedUserResponse(
@@ -181,6 +183,7 @@ class VerifiedUserResponse {
             ? null
             : json["business_longitude"],
         city: json["city"] == null ? null : CityModel.fromJson(json["city"]),
+        distance: json["distance"] == null ? null : json["distance"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -235,5 +238,6 @@ class VerifiedUserResponse {
         "allow_notification":
             allowNotification == null ? null : allowNotification,
         "city": city == null ? null : city.toJson(),
+        "distance": distance == null ? null : distance,
       };
 }

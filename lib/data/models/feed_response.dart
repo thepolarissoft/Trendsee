@@ -27,6 +27,7 @@ class FeedResponse {
     this.businessUser,
     this.comments,
     this.locationName,
+    this.distance,
   });
 
   int id;
@@ -51,6 +52,7 @@ class FeedResponse {
   BusinessUserResponse businessUser;
   List<CommentResponse> comments;
   String locationName;
+  String distance;
   factory FeedResponse.fromJson(Map<String, dynamic> json) => FeedResponse(
         id: json["id"] == null ? null : json["id"],
         title: json["title"] == null ? null : json["title"],
@@ -96,6 +98,7 @@ class FeedResponse {
                 json["comments"].map((x) => CommentResponse.fromJson(x))),
         locationName:
             json["location_name"] == null ? null : json["location_name"],
+        distance: json["distance"] == null ? null : json["distance"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -122,5 +125,6 @@ class FeedResponse {
         "comments": comments == null
             ? null
             : List<dynamic>.from(comments.map((x) => x.toJson())),
+        "distance": distance == null ? null : distance,
       };
 }

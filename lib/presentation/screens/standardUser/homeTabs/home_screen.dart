@@ -215,6 +215,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                           homeFeedResponseProvider.listFeedInfo[itemIndex],
                       isVisibleDeleteIcon: false,
                       isVisibleLikePanel: true,
+                      isHome: true,
                       onClickDelete: () {
                         homeFeedResponseProvider.deleteMycheckIns(
                             context,

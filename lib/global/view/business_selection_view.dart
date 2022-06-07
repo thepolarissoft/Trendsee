@@ -53,6 +53,15 @@ class BusinessSelectionView extends StatelessWidget {
                       BaseColor.black_color.withOpacity(0.5),
                       16),
                 ),
+                GlobalView().sizedBoxView(5),
+                GlobalView().textViewWithStartAlign(
+                    AppMessages.within +
+                        verifiedUserResponse.distance +
+                        AppMessages.miles_from_text,
+                    AppTextStyle.inter_font_family,
+                    AppTextStyle.semi_bold_font_weight,
+                    BaseColor.forgot_pass_txt_color,
+                    12)
               ],
             ),
           ),

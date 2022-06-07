@@ -41,13 +41,14 @@ class _SelectBusinessForAddNewCheckInPageState
         Provider.of<BusinessListProvider>(context, listen: false);
     businessListProvider.businessListResponse = null;
     businessListProvider.getBusinessList(
-      context,
-      StorageUtils.readStringValue(StorageUtils.keyLatitude),
-      StorageUtils.readStringValue(StorageUtils.keyLongitude),
-      "0.02",
-      // Provider.of<FilterProvider>(context, listen: false).distanceRadius,
-      // "100000000000000000000",
-    );
+        context,
+        StorageUtils.readStringValue(StorageUtils.keyLatitude),
+        StorageUtils.readStringValue(StorageUtils.keyLongitude),
+        // "0.02",
+        "5"
+        // Provider.of<FilterProvider>(context, listen: false).distanceRadius,
+        // "100000000000000000000",
+        );
     print(
         "RADIUS==-> ${Provider.of<FilterProvider>(context, listen: false).distanceRadius}");
     businessListProvider.isChecked = false;
@@ -180,7 +181,9 @@ class _SelectBusinessForAddNewCheckInPageState
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (_) => CategorySelectionScreen(userType: 0,)));
+                                builder: (_) => CategorySelectionScreen(
+                                      userType: 0,
+                                    )));
                       },
                       title: AppMessages.add_unregistered_business_title),
                 ],
