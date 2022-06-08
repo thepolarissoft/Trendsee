@@ -180,7 +180,7 @@ class _BusinessDetailsScreenState extends State<BusinessDetailsScreen> {
                                       AppImages.ic_back_filled,
                                     ),
                                   ),
-                                ), 
+                                ),
                               ),
                             ),
                             SliverStickyHeader(
@@ -313,10 +313,34 @@ class _BusinessDetailsScreenState extends State<BusinessDetailsScreen> {
                                   // ),
                                   GlobalView().sizedBoxView(15),
                                   GlobalView().dividerView(),
-                                  GlobalView().sizedBoxView(5),
+                                  Visibility(
+                                    visible: provider.businessDetailsResponse
+                                                .business.isMobile ==
+                                            0 &&
+                                        provider.businessDetailsResponse
+                                                .business.isOnline ==
+                                            0,
+                                    child: Padding(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 10, vertical: 8),
+                                      child: GlobalView()
+                                          .textViewWithCenterAlign(
+                                              AppMessages.thisPlaceIsWithin +
+                                                  provider
+                                                      .businessDetailsResponse
+                                                      .business
+                                                      .distance +
+                                                  AppMessages.miles_from_text,
+                                              AppTextStyle.inter_font_family,
+                                              AppTextStyle
+                                                  .semi_bold_font_weight,
+                                              BaseColor.forgot_pass_txt_color,
+                                              16),
+                                    ),
+                                  ),
                                   Padding(
-                                    padding:
-                                        EdgeInsets.symmetric(horizontal: 20),
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 20, vertical: 5),
                                     child: Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,

@@ -13,6 +13,7 @@ import 'package:trendoapp/data/models/search_by_business_response.dart';
 import 'package:trendoapp/data/models/verified_user_response.dart';
 import 'package:trendoapp/global/view/global_view.dart';
 import 'package:trendoapp/global/view/show_alert_view.dart';
+import 'package:trendoapp/utils/storage_utils.dart';
 
 class SearchByBusinessProvider extends ChangeNotifier {
   SearchByBusinessResponse searchByBusinessResponse;
@@ -408,7 +409,12 @@ class SearchByBusinessProvider extends ChangeNotifier {
   void businessDetails(BuildContext context, int businessId) async {
     isLoading = true;
     // notifyListeners();
-    ApiManager(context).businessDetails(businessId).then((response) {
+    ApiManager(context)
+        .businessDetails(
+            businessId,
+            StorageUtils.readStringValue(StorageUtils.keyLatitude),
+            StorageUtils.readStringValue(StorageUtils.keyLongitude))
+        .then((response) {
       businessDetailsResponse = response;
       if (businessDetailsResponse != null) {
         print("businessDetailsResponse--->>== ${businessDetailsResponse.msg}");

@@ -1399,10 +1399,11 @@ class ApiManager {
     return completer.future;
   }
 
-  Future<BusinessDetailsResponse> businessDetails(int businessId) async {
+  Future<BusinessDetailsResponse> businessDetails(
+      int businessId, String latitude, String longitude) async {
     Completer<BusinessDetailsResponse> completer = new Completer();
     BusinessDetailsRequest businessDetailsRequest =
-        new BusinessDetailsRequest(businessId);
+        new BusinessDetailsRequest(businessId, latitude, longitude);
     // Response response =
     //     await Api(context: context).request(businessDetailsRequest);
     // try {

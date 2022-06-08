@@ -3,6 +3,7 @@ import 'package:trendoapp/constants/api_urls.dart';
 
 class BusinessDetailsRequest implements IHttpRequest {
   int businessId;
+  String latitude, longitude;
   @override
   String absolutePath = ApiUrls.business_details_url;
 
@@ -20,11 +21,17 @@ class BusinessDetailsRequest implements IHttpRequest {
   @override
   Map<String, String> get parameters {
     Map<String, String> map = new Map<String, String>();
-    map = {"business_id": businessId.toString()};
+    map = {
+      "business_id": businessId.toString(),
+      "latitude": latitude,
+      "longitude": longitude,
+    };
     return map;
   }
 
-  BusinessDetailsRequest(int businessId) {
+  BusinessDetailsRequest(int businessId, String latitude, String longitude) {
     this.businessId = businessId;
+    this.latitude = latitude;
+    this.longitude = longitude;
   }
 }
