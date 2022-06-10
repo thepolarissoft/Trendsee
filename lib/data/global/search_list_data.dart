@@ -14,7 +14,9 @@ class SearchListData {
     Provider.of<SearchByBusinessProvider>(context, listen: false)
         .listBusiness
         .clear();
-    Provider.of<FilterProvider>(context, listen: false).selectedCity("");
+    Provider.of<FilterProvider>(context, listen: false).setSearchValue("");
+    Provider.of<FilterProvider>(context, listen: false).setCityValue("");
+
     Provider.of<SearchByBusinessProvider>(context, listen: false)
         .getSearchByBusinessList(
             context,
@@ -31,7 +33,7 @@ class SearchListData {
     // Provider.of<CategoriesListProvider>(context, listen: false)
     //     .getCategoriesList(context);
 
-    // print(
+    // print(s
     // "SELECTED CATEGORY DATA-> ${Provider.of<CategoriesListProvider>(context, listen: false).selectedCategoryData.name}");
     print("INIT CATEGORY-> ${catProvider.listCategories[0].name}");
   }
@@ -96,6 +98,9 @@ class SearchListData {
         Provider.of<CategoriesListProvider>(context, listen: false);
     catProvider.selectedCategoryItem(catProvider.listCategoriesForHome[0]);
     Provider.of<FilterProvider>(context, listen: false).setCityValue("");
+    Provider.of<SearchByBusinessProvider>(context, listen: false)
+        .listBusiness
+        .clear();
     Provider.of<SearchByBusinessProvider>(context, listen: false)
         .getSearchByBusinessList(
       context,

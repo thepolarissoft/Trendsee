@@ -204,6 +204,7 @@ class _SearchByBusinessScreenState extends State<SearchByBusinessScreen>
                                           borderSide: BorderSide(
                                               color: BaseColor
                                                   .border_txtfield_color),
+                                          // gapPadding: 50,
                                         ),
                                         disabledBorder: OutlineInputBorder(
                                             borderRadius:
@@ -234,14 +235,22 @@ class _SearchByBusinessScreenState extends State<SearchByBusinessScreen>
                                         ),
                                       ),
                                     ),
+                                    suggestionsBoxDecoration:
+                                        SuggestionsBoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(20)),
                                     suggestionsCallback: (pattern) async {
                                       print(
                                           "suggestionsCallback pattern--> $pattern");
+                                      // if (pattern.length == 0) {
+                                      //   getSearchData();
+                                      // }
                                       if (pattern.length >= 3)
                                         return provider.searchBusinessKeywords(
                                             context, pattern);
                                     },
                                     hideOnEmpty: true,
+                                    getImmediateSuggestions: true,
                                     itemBuilder: (context, item) {
                                       return searchItemView(item);
                                     },
@@ -251,6 +260,7 @@ class _SearchByBusinessScreenState extends State<SearchByBusinessScreen>
                                       Provider.of<FilterProvider>(context,
                                               listen: false)
                                           .setSearchValue(item);
+                                      getSearchData();
                                       print(
                                           "AREA TEXT->${searchEditingController.text}");
                                       // provider.searchByCity(context);
@@ -292,6 +302,31 @@ class _SearchByBusinessScreenState extends State<SearchByBusinessScreen>
           ),
         ),
       ),
+    );
+  }
+
+  void getSearchData() {
+    print(
+        "Distance radius provider value From UI--> ${Provider.of<FilterProvider>(context, listen: false).distanceRadius}");
+    page = 1;
+    Provider.of<SearchByBusinessProvider>(context, listen: false)
+        .listBusiness
+        .clear();
+    Provider.of<SearchByBusinessProvider>(context, listen: false)
+        .getSearchByBusinessList(
+      context,
+      page,
+      searchEditingController.text,
+      Provider.of<CategoriesListProvider>(context, listen: false)
+          .selectedCategoryResponse
+          .id
+          .toString(),
+      // filterModel.categoryId,
+      StorageUtils.readStringValue(StorageUtils.keyLatitude),
+      StorageUtils.readStringValue(StorageUtils.keyLongitude),
+      Provider.of<FilterProvider>(context, listen: false).distanceRadius,
+      Provider.of<FilterProvider>(context, listen: false)
+          .selectedMetropolitanCityInfo,
     );
   }
 

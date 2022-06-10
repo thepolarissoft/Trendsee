@@ -114,12 +114,15 @@ class BusinessItemView extends StatelessWidget {
                           12),
                       GlobalView().sizedBoxView(2),
                       Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Image.asset(
                             AppImages.ic_location_black,
                             height: 16,
                             width: 12,
                           ),
+                          SizedBox(width: 1),
                           Expanded(
                             child: GlobalView().textViewWithStartAlign(
                                 verifiedUserResponse.isMobile == 1

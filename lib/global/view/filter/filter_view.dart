@@ -273,49 +273,49 @@ class _FilterViewState extends State<FilterView> {
         //   width: 40,
         // ),
         // color: Colors.red,
-        child: 
-        // widget.route.toLowerCase() == "search"
-        //     ? Container(
-        //         child: Container(
-        //         padding: EdgeInsets.only(
-        //           top: 1,
-        //           bottom: 1,
-        //           left: 16,
-        //           right: 6,
-        //         ),
-        //         decoration: BoxDecoration(
-        //             color: BaseColor.pure_white_color,
-        //             borderRadius: BorderRadius.circular(25),
-        //             boxShadow: [
-        //               BoxShadow(
-        //                 color: BaseColor.black_color.withOpacity(0.1),
-        //                 blurRadius: 6,
-        //                 offset: Offset(3, 6),
-        //                 // spreadRadius:6,
-        //               ),
-        //             ]),
-        //         child: Row(
-        //           children: [
-        //             GlobalView().textViewWithCenterAlign(
-        //                 AppMessages.filter_text,
-        //                 AppTextStyle.inter_font_family,
-        //                 AppTextStyle.bold_font_weight,
-        //                 BaseColor.black_color,
-        //                 16),
-        //             Container(
-        //               // height: 40,
-        //               // width: 40,
-        //               child: Image.asset(
-        //                 AppImages.ic_filter,
-        //                 height: 35,
-        //                 width: 35,
-        //               ),
-        //             )
-        //           ],
-        //         ),
-        //       ))
-        //     :
-             GlobalView().wrappedButtonFilledView(
+        child:
+            // widget.route.toLowerCase() == "search"
+            //     ? Container(
+            //         child: Container(
+            //         padding: EdgeInsets.only(
+            //           top: 1,
+            //           bottom: 1,
+            //           left: 16,
+            //           right: 6,
+            //         ),
+            //         decoration: BoxDecoration(
+            //             color: BaseColor.pure_white_color,
+            //             borderRadius: BorderRadius.circular(25),
+            //             boxShadow: [
+            //               BoxShadow(
+            //                 color: BaseColor.black_color.withOpacity(0.1),
+            //                 blurRadius: 6,
+            //                 offset: Offset(3, 6),
+            //                 // spreadRadius:6,
+            //               ),
+            //             ]),
+            //         child: Row(
+            //           children: [
+            //             GlobalView().textViewWithCenterAlign(
+            //                 AppMessages.filter_text,
+            //                 AppTextStyle.inter_font_family,
+            //                 AppTextStyle.bold_font_weight,
+            //                 BaseColor.black_color,
+            //                 16),
+            //             Container(
+            //               // height: 40,
+            //               // width: 40,
+            //               child: Image.asset(
+            //                 AppImages.ic_filter,
+            //                 height: 35,
+            //                 width: 35,
+            //               ),
+            //             )
+            //           ],
+            //         ),
+            //       ))
+            //     :
+            GlobalView().wrappedButtonFilledView(
                 context, AppMessages.change_search_text),
       ),
     );
