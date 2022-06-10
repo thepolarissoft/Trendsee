@@ -585,6 +585,8 @@ class SearchByBusinessProvider extends ChangeNotifier {
         if (searchBusinessKeywordsResponse != null &&
             searchBusinessKeywordsResponse.data != null) {
           print("ISLOADING-=-=> $isLoading");
+          searchBusinessKeywordsResponse.data =
+              searchBusinessKeywordsResponse.data.toSet().toList();
           listBusinessKeyword.clear();
           for (var i = 0; i < searchBusinessKeywordsResponse.data.length; i++) {
             listBusinessKeyword

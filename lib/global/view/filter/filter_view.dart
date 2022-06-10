@@ -5,14 +5,9 @@ import 'package:provider/provider.dart';
 import 'package:trendoapp/constants/app_images.dart';
 import 'package:trendoapp/constants/app_messages.dart';
 import 'package:trendoapp/constants/app_text_style.dart';
-import 'package:trendoapp/constants/app_toast_messages.dart';
 import 'package:trendoapp/constants/base_color.dart';
 import 'package:trendoapp/constants/device_size.dart';
-import 'package:trendoapp/data/global/home_list_data.dart';
-import 'package:trendoapp/data/global/search_list_data.dart';
-import 'package:trendoapp/global/view/category_view.dart';
-import 'package:trendoapp/global/view/filter/city_filter_view.dart';
-import 'package:trendoapp/global/view/filter/distance_filter_view.dart';
+import 'package:trendoapp/global/view/filter/open_filter_bottom_sheet.dart';
 import 'package:trendoapp/global/view/global_view.dart';
 import 'package:trendoapp/providers/business_user_provider.dart';
 import 'package:trendoapp/providers/categories_list_provider.dart';
@@ -81,22 +76,7 @@ class _FilterViewState extends State<FilterView> {
     //     BaseColor.black_color,
     //     14),
   };
-  final Map<int, Widget> myFilterTabs = <int, Widget>{
-    0: GlobalView().textViewWithCenterAlign(
-      AppMessages.by_city_text,
-      AppTextStyle.inter_font_family,
-      AppTextStyle.medium_font_weight,
-      BaseColor.grey_color,
-      14,
-    ),
-    1: GlobalView().textViewWithCenterAlign(
-      AppMessages.by_distance_text,
-      AppTextStyle.inter_font_family,
-      AppTextStyle.medium_font_weight,
-      BaseColor.grey_color,
-      14,
-    ),
-  };
+
   Map<int, Widget> listTabs = new Map();
   List<int> list = [1, 2, 3, 4, 5];
   // FilterModel filterModel;
@@ -123,145 +103,12 @@ class _FilterViewState extends State<FilterView> {
     filterProvider = Provider.of<FilterProvider>(context, listen: false);
     return GestureDetector(
       onTap: () {
-        showModalBottomSheet<void>(
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(20), topRight: Radius.circular(20))),
+        openFilterBottomSheet(
           context: context,
-          isScrollControlled: true,
-          builder: (BuildContext context) {
-            return StatefulBuilder(builder: (BuildContext context,
-                void Function(void Function()) setState) {
-              return GestureDetector(
-                  onTap: () {
-                    FocusScope.of(context).unfocus();
-                  },
-                  child: Padding(
-                      padding: EdgeInsets.only(
-                          bottom: MediaQuery.of(context).viewInsets.bottom),
-                      child: Container(
-                          // height: ScreenSize().screenHeight(context) - 600,
-                          decoration: BoxDecoration(
-                            color: BaseColor.pure_white_color,
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(20),
-                              topRight: Radius.circular(20),
-                            ),
-                          ),
-                          child: SingleChildScrollView(
-                            physics: AlwaysScrollableScrollPhysics(),
-                            child: Padding(
-                              padding: const EdgeInsets.all(25),
-                              child: Column(
-                                // mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisSize: MainAxisSize.max,
-                                children: <Widget>[
-                                  titleView(context),
-                                  GlobalView().sizedBoxView(10),
-                                  CategoryView(widget.route),
-                                  GlobalView().sizedBoxView(20),
-                                  widget.route == "search"
-                                      ? Container(
-                                          padding: EdgeInsets.all(2),
-                                          width:
-                                              DeviceSize().deviceWidth(context),
-                                          decoration: BoxDecoration(
-                                            color: BaseColor.grey_color,
-                                            borderRadius:
-                                                BorderRadius.circular(12),
-                                            // border: Border.all(color: BaseColor.grey_color),
-                                          ),
-                                          child:
-                                              CupertinoSlidingSegmentedControl(
-                                            padding: EdgeInsets.all(0),
-                                            groupValue: selectedFilterValue,
-                                            children: {
-                                              0: Padding(
-                                                padding: EdgeInsets.all(10),
-                                                child: GlobalView()
-                                                    .textViewWithCenterAlign(
-                                                  AppMessages.by_city_text,
-                                                  AppTextStyle
-                                                      .inter_font_family,
-                                                  AppTextStyle
-                                                      .semi_bold_font_weight,
-                                                  selectedFilterValue == 0
-                                                      ? BaseColor
-                                                          .pure_white_color
-                                                      : BaseColor.grey_color,
-                                                  16,
-                                                ),
-                                              ),
-                                              1: Padding(
-                                                padding: EdgeInsets.all(10),
-                                                child: GlobalView()
-                                                    .textViewWithCenterAlign(
-                                                  AppMessages.by_distance_text,
-                                                  AppTextStyle
-                                                      .inter_font_family,
-                                                  AppTextStyle
-                                                      .semi_bold_font_weight,
-                                                  selectedFilterValue == 1
-                                                      ? BaseColor
-                                                          .pure_white_color
-                                                      : BaseColor.grey_color,
-                                                  16,
-                                                ),
-                                              ),
-                                            },
-                                            backgroundColor:
-                                                BaseColor.pure_white_color,
-                                            thumbColor:
-                                                BaseColor.forgot_pass_txt_color,
-                                            onValueChanged: (i) {
-                                              setState(
-                                                () {
-                                                  selectedFilterValue = i;
-                                                  // print("Value-> ${myTabs[i]}");
-                                                  Text list = myFilterTabs[i];
-                                                  distanceRadius = list.data;
-                                                  // print("Distance Radius-> $distanceRadius");
-                                                  // Provider.of<FilterProvider>(context,
-                                                  //         listen: false)
-                                                  //     .setDistanceRadius(distanceRadius);
-                                                  Provider.of<FilterProvider>(
-                                                          context,
-                                                          listen: false)
-                                                      .changeSegmentValue(
-                                                          route: i == 0
-                                                              ? AppMessages
-                                                                  .city_text
-                                                              : AppMessages
-                                                                  .radius_text);
-                                                },
-                                              );
-                                            },
-                                          ),
-                                        )
-                                      : Container(),
-                                  // categoriesView(),
-                                  GlobalView().sizedBoxView(20),
-                                  selectedFilterValue == 0
-                                      ? CityFilterView(
-                                          filterProvider: filterProvider,
-                                          // citySearchController:
-                                          //     citySearchController,
-                                        )
-                                      : DistanceFilterView(),
-                                  // cityAutoCompleteTextFieldView(),
-                                  // cityTextFieldView(),
-                                  // GlobalView().sizedBoxView(20),
-                                  // distanceRadiusView(setState, context),
-                                  GlobalView().sizedBoxView(25),
-                                  resetApplyView(context),
-                                  GlobalView().sizedBoxView(20),
-                                ],
-                              ),
-                            ),
-                          ))));
-            });
-          },
+          distanceRadius: distanceRadius,
+          filterProvider: filterProvider,
+          route: widget.route,
+          selectedFilterValue: selectedFilterValue,
         );
       },
       child: Container(
@@ -321,119 +168,6 @@ class _FilterViewState extends State<FilterView> {
     );
   }
 
-  void onClickApplyButton() {
-    print("Apply Clicked");
-
-    if (widget.route.toLowerCase() == "search") {
-      if (filterProvider.isCitySelected) {
-        selectedRadiusValue = 0;
-        filterProvider.setDistanceRadius('0');
-      } else {
-        filterProvider.citySearchController.text = "";
-        filterProvider.setCityValue("");
-      }
-    }
-
-    // else {
-    //   Provider.of<FilterProvider>(context, listen: false)
-    //       .setDistanceRadius(distanceRadius);
-    // }
-    filterProvider.setCityValue(cityTextEditingController.text);
-    Provider.of<HomeFeedResponseProvider>(context, listen: false)
-        .homeFeedResponse = null;
-    print(filterProvider);
-    print("City-> ${filterProvider.selectedMetropolitanCityInfo}");
-
-    if (widget.route.toLowerCase() == "home") {
-      HomeListData().applyHomeData(context);
-      Navigator.pop(context);
-    } else if (widget.route.toLowerCase() == "search") {
-      print("IS CITY SELECTED ${filterProvider.isCitySelected}");
-      if (filterProvider.isCitySelected &&
-          // filterProvider.citySearchController.text == "" &&
-          filterProvider.selectedMetropolitanCityInfo == "") {
-        print("Toast called");
-        GlobalView().showToast(AppToastMessages.enter_city_for_filter_message);
-      } else {
-        SearchListData().applySearchDataForDistance(context, distanceRadius);
-        Navigator.pop(context);
-      }
-      // SearchListData().applySearchDataForDistance(context, distanceRadius);
-      // Navigator.pop(context);
-    }
-
-    // Provider.of<FilterProvider>(context, listen: false)
-    //     .selectedMetropolitanCityInfo = "";
-    //     citySearchController.text = "";
-  }
-
-  void onClickResetButton() {
-    cityTextEditingController.text = "";
-    filterProvider.setCityValue(cityTextEditingController.text);
-    Provider.of<HomeFeedResponseProvider>(context, listen: false)
-        .homeFeedResponse = null;
-    filterProvider.setDistanceRadius("5");
-    if (widget.route.toLowerCase() == "home") {
-      HomeListData().resetHomeData(context);
-    } else if (widget.route.toLowerCase() == "search") {
-      SearchListData().resetSearchDataForDistance(context);
-    }
-
-    Navigator.pop(context);
-    Provider.of<FilterProvider>(context, listen: false)
-        .selectedMetropolitanCityInfo = "";
-    filterProvider.citySearchController.text = "";
-  }
-
-  Widget titleView(BuildContext context) => Row(
-        children: [
-          Expanded(
-            child: GlobalView().textViewWithStartAlign(
-                AppMessages.filter_text,
-                AppTextStyle.inter_font_family,
-                AppTextStyle.semi_bold_font_weight,
-                BaseColor.black_color,
-                18),
-          ),
-          GestureDetector(
-            onTap: () {
-              Navigator.pop(context);
-            },
-            child: Icon(
-              Icons.close,
-              size: 20,
-            ),
-          ),
-        ],
-      );
-  Widget resetApplyView(BuildContext context) => Row(
-        children: [
-          Expanded(
-            child: GestureDetector(
-              onTap: () {
-                print("Reset Clicked");
-                setState(() {
-                  selectedRadiusValue = 1;
-                });
-                onClickResetButton();
-              },
-              child:
-                  GlobalView().buttonFilled2(context, AppMessages.reset_text),
-            ),
-          ),
-          SizedBox(
-            width: 15,
-          ),
-          Expanded(
-            child: GestureDetector(
-                onTap: () {
-                  onClickApplyButton();
-                },
-                child:
-                    GlobalView().buttonFilled(context, AppMessages.apply_text)),
-          ),
-        ],
-      );
   Widget categoriesView() => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

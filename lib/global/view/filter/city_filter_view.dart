@@ -110,6 +110,7 @@ class CityFilterView extends StatelessWidget {
                     print("ITEM NAME-> $item");
                     filterProvider.citySearchController.text = item;
                     provider.selectedCity(item);
+                    provider.setDistanceRadius("0");
                     print(
                         "AREA TEXT->${filterProvider.citySearchController.text}");
                     // provider.searchByCity(context);

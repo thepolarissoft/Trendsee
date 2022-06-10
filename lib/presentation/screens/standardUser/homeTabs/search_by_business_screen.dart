@@ -12,6 +12,7 @@ import 'package:trendoapp/constants/base_color.dart';
 import 'package:trendoapp/data/global/search_list_data.dart';
 import 'package:trendoapp/data/models/search_by_business_response.dart';
 import 'package:trendoapp/global/view/business_item_view.dart';
+import 'package:trendoapp/global/view/filter/open_filter_bottom_sheet.dart';
 import 'package:trendoapp/global/view/filter_text_widget.dart';
 import 'package:trendoapp/global/view/global_view.dart';
 import 'package:trendoapp/global/view/header_view.dart';
@@ -35,8 +36,8 @@ class _SearchByBusinessScreenState extends State<SearchByBusinessScreen>
   int page = 1;
   ScrollController scrollController = new ScrollController();
   TextEditingController reasonEditingController = new TextEditingController();
-  // String distanceRadius = "5";
-  // FocusNode focusNode = new FocusNode();
+  FilterProvider filterProvider;
+
   @override
   void initState() {
     super.initState();
@@ -54,40 +55,9 @@ class _SearchByBusinessScreenState extends State<SearchByBusinessScreen>
     });
   }
 
-  void getMoreBusinessData() async {
-    SearchByBusinessResponse searchByBusinessResponse =
-        Provider.of<SearchByBusinessProvider>(context, listen: false)
-            .searchByBusinessResponse;
-    if (searchByBusinessResponse != null &&
-        searchByBusinessResponse.place != null &&
-        searchByBusinessResponse.place.nextPageUrl != null) {
-      page++;
-      Provider.of<SearchByBusinessProvider>(context, listen: false)
-          .getSearchByBusinessList(
-        context,
-        page,
-        searchEditingController.text,
-        Provider.of<CategoriesListProvider>(context, listen: false)
-            .selectedCategoryResponse
-            .id
-            .toString(),
-        // filterModel.categoryId,
-        StorageUtils.readStringValue(StorageUtils.keyLatitude),
-        StorageUtils.readStringValue(StorageUtils.keyLongitude),
-        Provider.of<FilterProvider>(context, listen: false).distanceRadius,
-        Provider.of<FilterProvider>(context, listen: false)
-            .selectedMetropolitanCityInfo,
-      );
-    } else {
-      GlobalView()
-          .showToast(AppMessages.no_feeds_available_with_filters_message);
-    }
-  }
-
-  // void onClickLikedButton(){}
-
   @override
   Widget build(BuildContext context) {
+    filterProvider = Provider.of<FilterProvider>(context, listen: false);
     print(
         "IS INTERNET Search->${Provider.of<ConnectionProvider>(context).isInternetConnection} ");
     // filterModel.page = page;
@@ -260,12 +230,23 @@ class _SearchByBusinessScreenState extends State<SearchByBusinessScreen>
                                       Provider.of<FilterProvider>(context,
                                               listen: false)
                                           .setSearchValue(item);
-                                      getSearchData();
+                                      // getSearchData();
                                       print(
                                           "AREA TEXT->${searchEditingController.text}");
                                       // provider.searchByCity(context);
                                       // provider.changeEditableCityValue();
                                       print("Suggestion-> $item");
+                                      filterProvider.selectedCity("");
+                                      filterProvider.setDistanceRadius("5");
+                                      filterProvider.citySearchController.text =
+                                          "";
+                                      openFilterBottomSheet(
+                                        context: context,
+                                        route: "search",
+                                        filterProvider: filterProvider,
+                                        selectedFilterValue: 0,
+                                        distanceRadius: "5",
+                                      );
                                     },
                                   )),
                             ),
@@ -304,6 +285,38 @@ class _SearchByBusinessScreenState extends State<SearchByBusinessScreen>
       ),
     );
   }
+
+  void getMoreBusinessData() async {
+    SearchByBusinessResponse searchByBusinessResponse =
+        Provider.of<SearchByBusinessProvider>(context, listen: false)
+            .searchByBusinessResponse;
+    if (searchByBusinessResponse != null &&
+        searchByBusinessResponse.place != null &&
+        searchByBusinessResponse.place.nextPageUrl != null) {
+      page++;
+      Provider.of<SearchByBusinessProvider>(context, listen: false)
+          .getSearchByBusinessList(
+        context,
+        page,
+        searchEditingController.text,
+        Provider.of<CategoriesListProvider>(context, listen: false)
+            .selectedCategoryResponse
+            .id
+            .toString(),
+        // filterModel.categoryId,
+        StorageUtils.readStringValue(StorageUtils.keyLatitude),
+        StorageUtils.readStringValue(StorageUtils.keyLongitude),
+        Provider.of<FilterProvider>(context, listen: false).distanceRadius,
+        Provider.of<FilterProvider>(context, listen: false)
+            .selectedMetropolitanCityInfo,
+      );
+    } else {
+      GlobalView()
+          .showToast(AppMessages.no_feeds_available_with_filters_message);
+    }
+  }
+
+  // void onClickLikedButton(){}
 
   void getSearchData() {
     print(
