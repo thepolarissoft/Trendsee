@@ -6,7 +6,6 @@ import 'package:trendoapp/constants/app_routes.dart';
 import 'package:trendoapp/constants/base_color.dart';
 import 'package:trendoapp/providers/filter_provider.dart';
 import 'package:trendoapp/utils/notification_utils.dart';
-
 import 'home_screen.dart';
 import 'standard_user_profile_screen.dart';
 import 'business_liked_screen.dart';

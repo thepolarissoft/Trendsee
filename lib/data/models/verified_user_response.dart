@@ -51,6 +51,7 @@ class VerifiedUserResponse {
     this.businessLongitude,
     this.city,
     this.distance,
+    this.isAdmin,
   });
 
   int id;
@@ -100,6 +101,7 @@ class VerifiedUserResponse {
   String businessLongitude;
   CityModel city;
   String distance;
+  int isAdmin;
 
   factory VerifiedUserResponse.fromJson(Map<String, dynamic> json) =>
       VerifiedUserResponse(
@@ -184,6 +186,7 @@ class VerifiedUserResponse {
             : json["business_longitude"],
         city: json["city"] == null ? null : CityModel.fromJson(json["city"]),
         distance: json["distance"] == null ? null : json["distance"],
+        isAdmin: json["is_admin"] == null ? null : json["is_admin"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -239,5 +242,6 @@ class VerifiedUserResponse {
             allowNotification == null ? null : allowNotification,
         "city": city == null ? null : city.toJson(),
         "distance": distance == null ? null : distance,
+        "is_admin": isAdmin == null ? null : isAdmin,
       };
 }

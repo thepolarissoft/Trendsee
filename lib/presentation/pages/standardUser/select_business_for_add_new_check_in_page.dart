@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:trendoapp/constants/app_images.dart';
@@ -6,6 +9,7 @@ import 'package:trendoapp/constants/app_routes.dart';
 import 'package:trendoapp/constants/app_text_style.dart';
 import 'package:trendoapp/constants/base_color.dart';
 import 'package:trendoapp/constants/device_size.dart';
+import 'package:trendoapp/data/models/profile_response.dart';
 import 'package:trendoapp/global/view/business_selection_view.dart';
 import 'package:trendoapp/global/view/common_gradient_button.dart';
 import 'package:trendoapp/global/view/global_view.dart';
@@ -13,6 +17,7 @@ import 'package:trendoapp/presentation/screens/businessUser/category_selection_s
 import 'package:trendoapp/presentation/screens/online_business_check_in_screen.dart';
 import 'package:trendoapp/providers/business_list_provider.dart';
 import 'package:trendoapp/providers/filter_provider.dart';
+import 'package:trendoapp/utils/preference_utils.dart';
 import 'package:trendoapp/utils/storage_utils.dart';
 
 class SelectBusinessForAddNewCheckInPage extends StatefulWidget {
@@ -29,12 +34,16 @@ class _SelectBusinessForAddNewCheckInPageState
       new TextEditingController();
   List<String> listLocation = [];
   ScrollController scrollController = new ScrollController();
-
+  ProfileResponse profileResponse;
   // VerifiedUserResponse verifiedUserResponse = new VerifiedUserResponse();
 
   @override
   void initState() {
     super.initState();
+    String model =
+        PreferenceUtils.getObject(PreferenceUtils.keyStandardUserProfileObject);
+    log("Prefs model data--==> $model");
+    profileResponse = ProfileResponse.fromJson(json.decode(model));
     print(
         "RADIUS-> ${Provider.of<FilterProvider>(context, listen: false).distanceRadius}");
     var businessListProvider =
@@ -173,18 +182,29 @@ class _SelectBusinessForAddNewCheckInPageState
                       },
                       title: AppMessages.online_business_check_in_text),
                   GlobalView().sizedBoxView(5),
-                  GlobalView().dividerView(),
-                  GlobalView().sizedBoxView(5),
-                  CommonGradientButton(
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (_) => CategorySelectionScreen(
-                                      userType: 0,
-                                    )));
-                      },
-                      title: AppMessages.add_unregistered_business_title),
+                  Visibility(
+                    visible: profileResponse != null &&
+                            profileResponse.user != null &&
+                            profileResponse.user.isAdmin == 1
+                        ? true
+                        : false,
+                    child: Column(
+                      children: [
+                        GlobalView().dividerView(),
+                        GlobalView().sizedBoxView(5),
+                        CommonGradientButton(
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (_) => CategorySelectionScreen(
+                                            userType: 0,
+                                          )));
+                            },
+                            title: AppMessages.add_unregistered_business_title),
+                      ],
+                    ),
+                  )
                 ],
               ),
               Positioned(

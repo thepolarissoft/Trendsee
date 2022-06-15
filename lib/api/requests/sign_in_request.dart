@@ -25,7 +25,6 @@ class SignInRequest implements IHttpRequest {
   SignInRequest(SignInRequestBody signInRequestBody) {
     var map = Map<String, String>();
     map['userInput'] = signInRequestBody.userInput;
-
     this.body = map;
   }
 }

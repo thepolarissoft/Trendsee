@@ -17,6 +17,7 @@ import 'package:trendoapp/providers/categories_list_provider.dart';
 import 'package:trendoapp/providers/connection/connection_provider.dart';
 import 'package:trendoapp/providers/filter_provider.dart';
 import 'package:trendoapp/providers/home_feed_response_provider.dart';
+import 'package:trendoapp/providers/profile_provider.dart';
 import 'package:trendoapp/utils/storage_utils.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -37,6 +38,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
+    Provider.of<ProfileProvider>(context, listen: false).getProfile(context);
     print("init Called");
     Provider.of<HomeFeedResponseProvider>(context, listen: false)
         .homeFeedResponse = null;
@@ -89,6 +91,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
     if (state == AppLifecycleState.resumed) {
       print("didChangeAppLifecycleState Called");
       HomeListData().initHome(context);
+      Provider.of<ProfileProvider>(context, listen: false).getProfile(context);
     }
   }
 
@@ -164,6 +167,8 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
         if (homeFeedResponseProvider.listFeedInfo.isNotEmpty) {
           return RefreshIndicator(
             onRefresh: () async {
+              Provider.of<ProfileProvider>(context, listen: false)
+                  .getProfile(context);
               print(
                   "RADIUS->${Provider.of<FilterProvider>(context, listen: false).distanceRadius}");
               // Provider.of<FilterProvider>(context, listen: false).setDistanceRadius("5");

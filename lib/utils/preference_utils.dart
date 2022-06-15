@@ -1,4 +1,3 @@
-
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PreferenceUtils {
@@ -11,7 +10,6 @@ class PreferenceUtils {
   static final String keyStandardUserProfileObject = 'standard_user_profile';
   static final String keyBusinessUserProfileObject = 'business_user_profile';
   static final String keyUserId = 'user_id';
-
 
   static SharedPreferences prefs;
 

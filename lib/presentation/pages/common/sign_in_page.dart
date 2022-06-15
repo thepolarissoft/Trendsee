@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -15,11 +16,25 @@ import 'package:trendoapp/utils/storage_utils.dart';
 import 'package:trendoapp/utils/validation_utils.dart';
 
 // ignore: must_be_immutable
-class SignInPage extends StatelessWidget {
+class SignInPage extends StatefulWidget {
+  @override
+  State<SignInPage> createState() => _SignInPageState();
+}
+
+class _SignInPageState extends State<SignInPage> {
   TextEditingController emailTextEditingController =
       new TextEditingController();
+
   TextEditingController passwordTextEditingController =
       new TextEditingController();
+
+  @override
+  void initState() {
+    if (kDebugMode) {
+      emailTextEditingController.text = "testuser01@gmail.com";
+    }
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -211,24 +226,8 @@ class SignInPage extends StatelessWidget {
           ),
     );
   }
+
 // Route _createRoute() {
-//     return PageRouteBuilder(
-//       pageBuilder: (context, animation, secondaryAnimation) =>  UserTypeSelectionScreen(),
-//       transitionsBuilder: (context, animation, secondaryAnimation, child) {
-//         const begin = Offset(0.0, 1.0);
-//         const end = Offset.zero;
-//         const curve = Curves.linearToEaseOut;
-
-//         var tween =
-//             Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-
-//         return SlideTransition(
-//           position: animation.drive(tween),
-//           child: child,
-//         );
-//       },
-//     );
-//   }
   Widget lineBreakerView() => Padding(
         padding: EdgeInsets.symmetric(horizontal: 80),
         child: Row(
