@@ -4,50 +4,51 @@ import 'package:trendoapp/data/models/feed_response.dart';
 import 'package:trendoapp/data/models/metropolitan_areas_list_response.dart';
 
 class BusinessUserResponse {
-  BusinessUserResponse({
-    this.id,
-    this.firstName,
-    this.lastName,
-    this.username,
-    this.email,
-    this.dob,
-    this.userType,
-    this.isApproved,
-    this.businessName,
-    this.businessAddress,
-    this.businessPhone,
-    this.businessWebsite,
-    this.businessKeywords,
-    this.isOnline,
-    this.isMobile,
-    this.categoryId,
-    this.latitude,
-    this.longitude,
-    this.cityId,
-    this.metropolitanAreaId,
-    this.contact,
-    this.isVerified,
-    this.avatar,
-    this.totalLikes,
-    this.totalDislike,
-    this.totalViews,
-    this.totalClick,
-    this.createdAt,
-    this.updatedAt,
-    this.feed,
-    this.totalFeeds,
-    // this.category,
-    this.categories,
-    this.metropolitanArea,
-    this.city,
-    this.businessMedia,
-    this.allowNotification,
-    this.cityName,
-    this.isFollow,
-    this.isLiked,
-    this.businessHours,
-    this.businessTimeZone,
-  });
+  BusinessUserResponse(
+      {this.id,
+      this.firstName,
+      this.lastName,
+      this.username,
+      this.email,
+      this.dob,
+      this.userType,
+      this.isApproved,
+      this.businessName,
+      this.businessAddress,
+      this.businessPhone,
+      this.businessWebsite,
+      this.businessKeywords,
+      this.isOnline,
+      this.isMobile,
+      this.categoryId,
+      this.latitude,
+      this.longitude,
+      this.cityId,
+      this.metropolitanAreaId,
+      this.contact,
+      this.isVerified,
+      this.avatar,
+      this.totalLikes,
+      this.totalDislike,
+      this.totalViews,
+      this.totalClick,
+      this.createdAt,
+      this.updatedAt,
+      this.feed,
+      this.totalFeeds,
+      // this.category,
+      this.categories,
+      this.metropolitanArea,
+      this.city,
+      this.businessMedia,
+      this.allowNotification,
+      this.cityName,
+      this.isFollow,
+      this.isLiked,
+      this.businessHours,
+      this.businessTimeZone,
+      // this.isShowClosingSoon,
+      this.businessStatus = ""});
   int id;
   String firstName;
   String lastName;
@@ -90,6 +91,8 @@ class BusinessUserResponse {
   int isFollow;
   List<BusinessHoursResponse> businessHours;
   String businessTimeZone;
+  String businessStatus = "";
+  // bool isShowClosingSoon = false;
 
   factory BusinessUserResponse.fromJson(Map<String, dynamic> json) =>
       BusinessUserResponse(
@@ -229,16 +232,17 @@ class BusinessUserResponse {
 }
 
 class BusinessHoursResponse {
-  BusinessHoursResponse({
-    this.id,
-    this.dayNumber,
-    this.userId,
-    this.openTime,
-    this.closeTime,
-    this.createdAt,
-    this.updatedAt,
-    this.isOpen,
-  });
+  BusinessHoursResponse(
+      {this.id,
+      this.dayNumber,
+      this.userId,
+      this.openTime,
+      this.closeTime,
+      this.createdAt,
+      this.updatedAt,
+      this.isOpen,
+      // this.isShowClosingSoon = false,
+      this.businessStatus = ""});
 
   int id;
   int dayNumber;
@@ -248,6 +252,8 @@ class BusinessHoursResponse {
   DateTime createdAt;
   DateTime updatedAt;
   bool isOpen = false;
+  // bool isShowClosingSoon = false;
+  String businessStatus = "";
 
   factory BusinessHoursResponse.fromJson(Map<String, dynamic> json) =>
       BusinessHoursResponse(

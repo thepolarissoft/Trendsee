@@ -198,6 +198,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print("Edit profile build called");
     print("_imageFile-> $_imageFile");
     return GlobalView().safeAreaView(Container(
         child: GestureDetector(onTap: () {

@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:autocomplete_textfield/autocomplete_textfield.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:group_radio_button/group_radio_button.dart';
@@ -113,6 +114,9 @@ class _BusinessUserRegistrationPageState
   GlobalKey<AutoCompleteTextFieldState<MetropolitanCityInfo>> keyCity =
       new GlobalKey();
   File imageFileBody;
+  TextEditingController passwordTextEditingController =
+      new TextEditingController();
+  bool isObscure = true;
 
   @override
   void initState() {
@@ -696,6 +700,49 @@ class _BusinessUserRegistrationPageState
                                   AppMessages.of_owner_text,
                               AppTextStyle.start_text_align,
                               textInputType: TextInputType.emailAddress),
+                          Visibility(
+                            visible: kDebugMode && !widget.isEditable,
+                            child: StatefulBuilder(builder: (context, state) {
+                              return Column(
+                                children: [
+                                  GlobalView().sizedBoxView(
+                                      DeviceSize().deviceHeight(context) *
+                                          0.01),
+                                  Container(
+                                    padding: EdgeInsets.symmetric(vertical: 5),
+                                    alignment: Alignment.centerLeft,
+                                    child: GlobalView().textViewWithCenterAlign(
+                                        AppMessages.hint_password,
+                                        AppTextStyle.inter_font_family,
+                                        AppTextStyle.normal_font_weight,
+                                        BaseColor.black_color.withOpacity(0.5),
+                                        // 11
+                                        DeviceSize().deviceHeight(context) *
+                                            0.014),
+                                  ),
+                                  GlobalView().textFieldView(
+                                      AppImages.ic_password,
+                                      passwordTextEditingController,
+                                      AppMessages.hint_password,
+                                      AppTextStyle.start_text_align,
+                                      isObscure: isObscure,
+                                      suffixIcon: IconButton(
+                                          padding: EdgeInsets.zero,
+                                          onPressed: () {
+                                            isObscure = !isObscure;
+                                            state(() {});
+                                          },
+                                          icon: Icon(
+                                            isObscure
+                                                ? Icons.visibility_off
+                                                : Icons.visibility,
+                                            color: BaseColor
+                                                .btn_gradient_start_color1,
+                                          ))),
+                                ],
+                              );
+                            }),
+                          ),
                           GlobalView().sizedBoxView(10),
                           Container(
                             padding: EdgeInsets.symmetric(vertical: 5),

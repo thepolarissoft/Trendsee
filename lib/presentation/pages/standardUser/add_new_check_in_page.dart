@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -242,6 +243,11 @@ class _AddNewCheckInPageState extends State<AddNewCheckInPage> {
                                                   .inter_font_family,
                                               fontSize: 14,
                                             ),
+                                            // maxLength: 60,
+                                            inputFormatters: [
+                                              LengthLimitingTextInputFormatter(
+                                                  60),
+                                            ],
                                             cursorColor: BaseColor.black_color
                                                 .withOpacity(0.5),
                                             decoration: InputDecoration(

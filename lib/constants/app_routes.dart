@@ -43,4 +43,6 @@ class AppRoutes {
   static const String add_edit_business_hours_route_name = "/addBusinessHours";
   static const String multiple_business_user_list_route_name =
       "/multipleBusinessUserList";
+
+  static const String resetPassword = "/resetPassword";
 }

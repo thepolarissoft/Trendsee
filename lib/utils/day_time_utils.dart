@@ -1,6 +1,9 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:trendoapp/constants/app_messages.dart';
 import 'package:trendoapp/data/models/business_user_response.dart';
 import 'package:trendoapp/providers/business_user_provider.dart';
 import 'package:timezone/timezone.dart' as tz;
@@ -142,16 +145,17 @@ class DayTimeUtils {
     @required bool isOpenTime,
   }) {
     var provider = Provider.of<BusinessUserProvider>(context, listen: false);
-
+    DateTime openDate = DateTime.now().toUtc();
+    DateTime closeDate = DateTime.now().toUtc();
     if (isOpenTime) {
       // provider.listOpenTime.clear();
-      DateTime date;
+      // DateTime date;
       DateTime utcDate = DateTime.now().toUtc();
       for (var i = 0; i < list.length; i++) {
         if (list[i].openTime == "-1") {
           list[i].openTime = "-1";
         } else {
-          date = DateTime.utc(
+          openDate = DateTime.utc(
               utcDate.year,
               utcDate.month,
               utcDate.day,
@@ -161,11 +165,31 @@ class DayTimeUtils {
               list[i].openTime != "-1"
                   ? int.parse(list[i].openTime.split(":")[1])
                   : 0);
-          print("Selected Hour==-> ${date.hour}");
-          print("Selected Minute==-> ${date.minute}");
+          closeDate = DateTime.utc(
+              utcDate.year,
+              utcDate.month,
+              utcDate.day,
+              list[i].closeTime != "-1"
+                  ? int.parse(list[i].closeTime.split(":")[0])
+                  : 0,
+              list[i].closeTime != "-1"
+                  ? int.parse(list[i].closeTime.split(":")[1])
+                  : 0);
+          // date = DateTime.utc(
+          //     utcDate.year,
+          //     utcDate.month,
+          //     utcDate.day,
+          //     list[i].openTime != "-1"
+          //         ? int.parse(list[i].openTime.split(":")[0])
+          //         : 0,
+          //     list[i].openTime != "-1"
+          //         ? int.parse(list[i].openTime.split(":")[1])
+          //         : 0);
+          print("Selected Hour==-> ${openDate.hour}");
+          print("Selected Minute==-> ${openDate.minute}");
           final timeZone = tz.getLocation(provider.selectedTimeZone.utc[0]);
           print("Timezone----> ${timeZone.name}");
-          DateTime dateTimeConverted = tz.TZDateTime.from(date, timeZone);
+          DateTime dateTimeConverted = tz.TZDateTime.from(openDate, timeZone);
           print("Converted Hour==-> ${dateTimeConverted.hour}");
           print("Converted Minute==-> ${dateTimeConverted.minute}");
           String open = dateTimeConverted.hour.toString() +
@@ -179,13 +203,23 @@ class DayTimeUtils {
       }
     } else {
       // provider.listCloseTime.clear();
-      DateTime date;
       DateTime utcDate = DateTime.now().toUtc();
+      DateTime dateTimeConverted;
       for (var i = 0; i < list.length; i++) {
         if (list[i].closeTime == "-1") {
           list[i].closeTime = "-1";
         } else {
-          date = DateTime.utc(
+          openDate = DateTime.utc(
+              utcDate.year,
+              utcDate.month,
+              utcDate.day,
+              list[i].openTime != "-1"
+                  ? int.parse(list[i].openTime.split(":")[0])
+                  : 0,
+              list[i].openTime != "-1"
+                  ? int.parse(list[i].openTime.split(":")[1])
+                  : 0);
+          closeDate = DateTime.utc(
               utcDate.year,
               utcDate.month,
               utcDate.day,
@@ -195,17 +229,54 @@ class DayTimeUtils {
               list[i].closeTime != "-1"
                   ? int.parse(list[i].closeTime.split(":")[1])
                   : 0);
+
           final timeZone = tz.getLocation(provider.selectedTimeZone.utc[0]);
-          DateTime dateTimeConverted = tz.TZDateTime.from(date, timeZone);
+          dateTimeConverted = tz.TZDateTime.from(closeDate, timeZone);
           print("Time-> ${dateTimeConverted.hour}");
           print("Time-> ${dateTimeConverted.minute}");
+          print("dateTimeConverted.weekday-=---> ${dateTimeConverted.weekday}");
+          print("list[i].dayNumber-=---> ${list[i].dayNumber}");
           String close = dateTimeConverted.hour.toString() +
               ":" +
               dateTimeConverted.minute.toString();
           list[i].closeTime = close;
-          // provider.listCloseTime.add(close);
-          // print("listCloseTime-> ${provider.listCloseTime.join(",")}");
-          // convertLocalToUtc(list: list, context: context, isOpenTime: false);
+        }
+
+        if (dateTimeConverted.weekday == list[i].dayNumber) {
+          log("openDate-=-=------->>>>> $openDate");
+          log("closeDate-=-=------->>>>> $closeDate");
+          log("utcDate.hour-=-=------->>>>> ${(utcDate.hour)}");
+          log("openDate.hour-=-=------->>>>> ${(openDate.hour)}");
+          log("closeDate.hour-=-=------->>>>> ${(closeDate.hour)}");
+          int closeDiff = closeDate.hour - utcDate.hour;
+          log("Difference between hour-=-=------->>>>> $closeDiff");
+          log("Open-=-=------->>>>> ${utcDate.hour >= openDate.hour && utcDate.hour <= closeDate.hour}");
+
+          if (closeDiff <= 1 && closeDiff > 0) {
+            list[i].businessStatus = AppMessages.closingSoonText;
+            provider.businessUserProfileResponse.user.businessStatus =
+                AppMessages.closingSoonText;
+          }
+          // else if (utcDate.hour >= openDate.hour &&
+          //     utcDate.hour <= closeDate.hour) {
+          //   provider.businessUserProfileResponse.user.businessStatus =
+          //       AppMessages.open_text;
+          //   list[i].businessStatus = AppMessages.open_text;
+          // } else {
+          //   provider.businessUserProfileResponse.user.businessStatus =
+          //       AppMessages.closed_text;
+          //   list[i].businessStatus = AppMessages.closed_text;
+          // }
+          else if (closeDiff <= 0) {
+            provider.businessUserProfileResponse.user.businessStatus =
+                AppMessages.closed_text;
+            list[i].businessStatus = AppMessages.closed_text;
+          } else if (closeDiff > 1) {
+            provider.businessUserProfileResponse.user.businessStatus =
+                AppMessages.openNowText;
+            list[i].businessStatus = AppMessages.open_text;
+          }
+          log("list[i].businessStatus-=-=------->>>>> ${list[i].businessStatus}");
         }
       }
     }

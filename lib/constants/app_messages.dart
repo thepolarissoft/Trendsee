@@ -293,6 +293,13 @@ class AppMessages {
   static const String miles_from_text = " miles from you";
   static const String within = "Within ";
   static const String thisPlaceIsWithin = "This place is within ";
+  static const String closingSoonText = "Closing Soon";
+  static const String openNowText = "Open Now";
+  static const String openSoonText = "Open Soon";
+
+  static const String currentPassword = "Current Password";
+  static const String newPassword = "New Password";
+  static const String reEnterNewPassword = "Re-enter New Password";
 
 // Within___ miles from you
 // “Searching____ (selected category) within ____ miles near me”

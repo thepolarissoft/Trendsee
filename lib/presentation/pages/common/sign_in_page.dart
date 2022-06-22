@@ -24,10 +24,9 @@ class SignInPage extends StatefulWidget {
 class _SignInPageState extends State<SignInPage> {
   TextEditingController emailTextEditingController =
       new TextEditingController();
-
   TextEditingController passwordTextEditingController =
       new TextEditingController();
-
+  bool isObscure = true;
   @override
   void initState() {
     if (kDebugMode) {
@@ -124,30 +123,55 @@ class _SignInPageState extends State<SignInPage> {
                                 AppMessages.hint_email,
                                 AppTextStyle.start_text_align),
                           ),
-                          GlobalView().sizedBoxView(
-                              DeviceSize().deviceHeight(context) * 0.06),
-                          // GlobalView().sizedBoxView(20),
-                          // Padding(
-                          //   padding: EdgeInsets.symmetric(horizontal: 30),
-                          //   child: GlobalView().textFieldView(
-                          //       AppImages.ic_password,
-                          //       passwordTextEditingController,
-                          //       AppMessages.hintPassword,
-                          //       AppTextStyle.startTextAlign),
-                          // ),
-                          // GlobalView().sizedBoxView(20),
-                          // GestureDetector(
-                          //   onTap: () {
-                          //     Navigator.pushNamed(
-                          //         context, AppRoutes.forgotPasswordRouteName);
-                          //   },
-                          //   child: GlobalView().textViewWithCenterAlign(
-                          //       AppMessages.forgotPassText,
-                          //       AppTextStyle.interFontFamily,
-                          //       AppTextStyle.semiBoldFontWeight,
-                          //       BaseColor.forgotPassTxtColor,
-                          //       14),
-                          // ),
+                          // GlobalView().sizedBoxView(
+                          //     DeviceSize().deviceHeight(context) * 0.06),
+                          Visibility(
+                            visible: kDebugMode,
+                            child: Column(
+                              children: [
+                                GlobalView().sizedBoxView(20),
+                                StatefulBuilder(builder: (context, state) {
+                                  return Padding(
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 30),
+                                    child: GlobalView().textFieldView(
+                                        AppImages.ic_password,
+                                        passwordTextEditingController,
+                                        AppMessages.hint_password,
+                                        AppTextStyle.start_text_align,
+                                        isObscure: isObscure,
+                                        suffixIcon: IconButton(
+                                            padding: EdgeInsets.zero,
+                                            onPressed: () {
+                                              isObscure = !isObscure;
+                                              state(() {});
+                                            },
+                                            icon: Icon(
+                                              isObscure
+                                                  ? Icons.visibility_off
+                                                  : Icons.visibility,
+                                              color: BaseColor
+                                                  .btn_gradient_start_color1,
+                                            ))),
+                                  );
+                                }),
+                                GlobalView().sizedBoxView(20),
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.pushNamed(context,
+                                        AppRoutes.forgot_password_route_name);
+                                  },
+                                  child: GlobalView().textViewWithCenterAlign(
+                                      AppMessages.forgot_pass_text,
+                                      AppTextStyle.inter_font_family,
+                                      AppTextStyle.semi_bold_font_weight,
+                                      BaseColor.forgot_pass_txt_color,
+                                      14),
+                                ),
+                              ],
+                            ),
+                          ),
+
                           GlobalView().sizedBoxView(
                               DeviceSize().deviceHeight(context) * 0.03),
                           Padding(

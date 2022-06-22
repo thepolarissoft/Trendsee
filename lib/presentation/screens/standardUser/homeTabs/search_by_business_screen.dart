@@ -399,101 +399,110 @@ class _SearchByBusinessScreenState extends State<SearchByBusinessScreen>
                 child: Container(
                   // color: Colors.red,
                   child: provider.listBusiness.isNotEmpty
-                      ? MediaQuery.removePadding(
-                          context: context,
-                          removeTop: false,
-                          removeBottom: true,
-                          child: ListView.builder(
-                            shrinkWrap: true,
-                            controller: scrollController,
-                            keyboardDismissBehavior:
-                                ScrollViewKeyboardDismissBehavior.onDrag,
-                            itemCount: provider.listBusiness.length,
-                            physics: AlwaysScrollableScrollPhysics(),
-                            itemBuilder: (_, index) =>
-                                // Padding(
-                                //   padding: EdgeInsets.only(bottom: 10, top: 10),
-                                //   child: Column(
-                                //     crossAxisAlignment: CrossAxisAlignment.start,
-                                //     children: [
-                                //       Container(
-                                //         child: GlobalView().textViewWithStartAlign(
-                                //             provider
-                                //                 .listBusiness[index].businessName,
-                                //             AppTextStyle.interFontFamily,
-                                //             AppTextStyle.boldFontWeight,
-                                //             BaseColor.blackColor,
-                                //             18),
-                                //       ),
-                                //       Container(
-                                //         child: GlobalView().textViewWithStartAlign(
-                                //             provider.listBusiness[index]
-                                //                 .businessAddress,
-                                //             AppTextStyle.interFontFamily,
-                                //             AppTextStyle.normalFontWeight,
-                                //             BaseColor.blackColor.withOpacity(0.5),
-                                //             16),
-                                //       ),
-                                //     ],
-                                //   ),
-                                // ),
-                                GestureDetector(
-                              onTap: () {
-                                // if (provider.listBusiness.isNotEmpty) {
-                                // provider.selectedBusinessItem(
-                                //     provider.listBusiness[index]);
-                                // }
-                                // Navigator.pushNamed(
-                                //     context,
-                                //     AppRoutes
-                                //         .business_liked_details_route_name);
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => BusinessDetailsScreen(
-                                      businessId:
-                                          provider.listBusiness[index].id,
+                      ? RefreshIndicator(
+                          color: BaseColor.btn_gradient_end_color1,
+                          onRefresh: () async {
+                            SearchListData().initSearchData(
+                                context, searchEditingController.text, page);
+                          },
+                          child: MediaQuery.removePadding(
+                            context: context,
+                            removeTop: false,
+                            removeBottom: true,
+                            child: ListView.builder(
+                              shrinkWrap: true,
+                              controller: scrollController,
+                              keyboardDismissBehavior:
+                                  ScrollViewKeyboardDismissBehavior.onDrag,
+                              itemCount: provider.listBusiness.length,
+                              physics: AlwaysScrollableScrollPhysics(),
+                              itemBuilder: (_, index) =>
+                                  // Padding(
+                                  //   padding: EdgeInsets.only(bottom: 10, top: 10),
+                                  //   child: Column(
+                                  //     crossAxisAlignment: CrossAxisAlignment.start,
+                                  //     children: [
+                                  //       Container(
+                                  //         child: GlobalView().textViewWithStartAlign(
+                                  //             provider
+                                  //                 .listBusiness[index].businessName,
+                                  //             AppTextStyle.interFontFamily,
+                                  //             AppTextStyle.boldFontWeight,
+                                  //             BaseColor.blackColor,
+                                  //             18),
+                                  //       ),
+                                  //       Container(
+                                  //         child: GlobalView().textViewWithStartAlign(
+                                  //             provider.listBusiness[index]
+                                  //                 .businessAddress,
+                                  //             AppTextStyle.interFontFamily,
+                                  //             AppTextStyle.normalFontWeight,
+                                  //             BaseColor.blackColor.withOpacity(0.5),
+                                  //             16),
+                                  //       ),
+                                  //     ],
+                                  //   ),
+                                  // ),
+                                  GestureDetector(
+                                onTap: () {
+                                  // if (provider.listBusiness.isNotEmpty) {
+                                  // provider.selectedBusinessItem(
+                                  //     provider.listBusiness[index]);
+                                  // }
+                                  // Navigator.pushNamed(
+                                  //     context,
+                                  //     AppRoutes
+                                  //         .business_liked_details_route_name);
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          BusinessDetailsScreen(
+                                        businessId:
+                                            provider.listBusiness[index].id,
+                                      ),
                                     ),
-                                  ),
-                                );
-                              },
-                              child: BusinessItemView(
-                                  verifiedUserResponse:
-                                      provider.listBusiness[index],
-                                  onClickLikeButton: () {
-                                    if (provider.listBusiness[index].isLiked ==
-                                        0) {
-                                      provider.likeBusiness(context,
-                                          provider.listBusiness[index]);
-                                    } else {
-                                      // DialogUtils().onClickLikedBusiness(
-                                      //     context,
-                                      //     provider,
-                                      //     index,
-                                      //     "",
-                                      //     provider.listBusiness[index].id);
-                                      DialogUtils.displayDislikeDialog(
-                                        context,
-                                        reasonEditingController,
-                                        () {
-                                          if (reasonEditingController
-                                              .text.isNotEmpty) {
-                                            provider.dislikeBusiness(
-                                                context,
-                                                provider.listBusiness[index],
-                                                reasonEditingController.text,
-                                                1,
-                                                "");
-                                          } else if (reasonEditingController
-                                              .text.isEmpty) {
-                                            GlobalView().showToast(
-                                                AppToastMessages
-                                                    .valid_reason_message);
-                                          }
-                                        },
-                                      );
-                                    }
-                                  }),
+                                  );
+                                },
+                                child: BusinessItemView(
+                                    verifiedUserResponse:
+                                        provider.listBusiness[index],
+                                    onClickLikeButton: () {
+                                      if (provider
+                                              .listBusiness[index].isLiked ==
+                                          0) {
+                                        provider.likeBusiness(context,
+                                            provider.listBusiness[index]);
+                                      } else {
+                                        // DialogUtils().onClickLikedBusiness(
+                                        //     context,
+                                        //     provider,
+                                        //     index,
+                                        //     "",
+                                        //     provider.listBusiness[index].id);
+                                        DialogUtils.displayDislikeDialog(
+                                          context,
+                                          reasonEditingController,
+                                          () {
+                                            if (reasonEditingController
+                                                .text.isNotEmpty) {
+                                              provider.dislikeBusiness(
+                                                  context,
+                                                  provider.listBusiness[index],
+                                                  reasonEditingController.text,
+                                                  1,
+                                                  "");
+                                            } else if (reasonEditingController
+                                                .text.isEmpty) {
+                                              GlobalView().showToast(
+                                                  AppToastMessages
+                                                      .valid_reason_message);
+                                            }
+                                          },
+                                        );
+                                      }
+                                    }),
+                              ),
                             ),
                           ),
                         )

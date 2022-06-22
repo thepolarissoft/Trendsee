@@ -1,6 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:trendoapp/constants/app_images.dart';
@@ -42,7 +40,7 @@ class _SelectBusinessForAddNewCheckInPageState
     super.initState();
     String model =
         PreferenceUtils.getObject(PreferenceUtils.keyStandardUserProfileObject);
-    log("Prefs model data--==> $model");
+    // log("Prefs model data--==> $model");
     profileResponse = ProfileResponse.fromJson(json.decode(model));
     print(
         "RADIUS-> ${Provider.of<FilterProvider>(context, listen: false).distanceRadius}");

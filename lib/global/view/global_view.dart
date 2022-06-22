@@ -64,7 +64,9 @@ class GlobalView {
 
   Widget textFieldView(String image, TextEditingController controller,
           String hintText, TextAlign textAlign,
-          {TextInputType textInputType}) =>
+          {TextInputType textInputType,
+          Widget suffixIcon,
+          bool isObscure = false}) =>
       Material(
         shadowColor: BaseColor.shadow_color,
         elevation: 4,
@@ -79,11 +81,14 @@ class GlobalView {
           ),
           keyboardType: textInputType ?? TextInputType.text,
           textAlign: textAlign,
+          obscureText: isObscure,
           decoration: InputDecoration(
             isDense: true,
+
             focusColor: BaseColor.pure_white_color,
             contentPadding: EdgeInsets.only(left: 60, right: -40),
             prefixIcon: prefixIconView(image),
+            suffixIcon: suffixIcon,
             //  prefixIconConstraints:BoxConstraints(minWidth: 23, maxHeight: 20),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(25),

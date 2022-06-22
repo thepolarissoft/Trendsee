@@ -32,6 +32,9 @@ class HomeListData {
       Provider.of<HomeFeedResponseProvider>(context, listen: false)
           .homeFeedResponse = null;
       Provider.of<FilterProvider>(context, listen: false).selectedCity("");
+      Provider.of<FilterProvider>(context, listen: false)
+          .setDistanceRadius("5");
+
       Provider.of<HomeFeedResponseProvider>(context, listen: false)
           .getHomeFeedList(
               context,

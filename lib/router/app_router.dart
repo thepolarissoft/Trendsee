@@ -9,6 +9,7 @@ import 'package:trendoapp/presentation/screens/common/app_launcher_screen.dart';
 import 'package:trendoapp/presentation/screens/common/forgot_password_screen.dart';
 import 'package:trendoapp/presentation/screens/common/map_screen.dart';
 import 'package:trendoapp/presentation/screens/common/my_all_check_ins_screen.dart';
+import 'package:trendoapp/presentation/screens/common/reset_password_screen.dart';
 import 'package:trendoapp/presentation/screens/common/sign_in_screen.dart';
 import 'package:trendoapp/presentation/screens/common/successful_email_verification_screen.dart';
 import 'package:trendoapp/presentation/screens/common/user_type_selection_screen.dart';
@@ -163,6 +164,9 @@ class AppRouter {
                   args: args,
                 ));
         break;
+      case AppRoutes.resetPassword:
+        return MaterialPageRoute(builder: (_) => ResetPasswordScreen());
+        break;
       default:
         return null;
     }
@@ -170,7 +174,6 @@ class AppRouter {
 }
 
 class TempLocationsArgs {
-  
   bool isTemp;
   TempLocationsArgs(this.isTemp);
 }

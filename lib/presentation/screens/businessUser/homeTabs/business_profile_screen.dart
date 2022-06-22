@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:trendoapp/constants/app_images.dart';
@@ -338,36 +339,52 @@ class _BusinessProfileScreenState extends State<BusinessProfileScreen> {
                             color: BaseColor.selected_tab_color,
                           ),
                         ),
-                        // GlobalView().sizedBoxView(15),
-                        // Padding(
-                        //   padding: EdgeInsets.symmetric(horizontal: 20),
-                        //   child: Row(
-                        //     children: [
-                        //       Expanded(
-                        //         child: GlobalView().textViewWithStartAlign(
-                        //             AppMessages.resetPasswordTitle,
-                        //             AppTextStyle.interFontFamily,
-                        //             AppTextStyle.semiBoldFontWeight,
-                        //             BaseColor.blackColor,
-                        //             14),
-                        //       ),
-                        //       Container(
-                        //         padding: EdgeInsets.zero,
-                        //         height: 15,
-                        //         width: 15,
-                        //         // color: Colors.red,
-                        //         child: Image.asset(AppImages.ic_next2),
-                        //       ),
-                        //     ],
-                        //   ),
-                        // ),
-                        // GlobalView().sizedBoxView(15),
-                        // Padding(
-                        //   padding: EdgeInsets.symmetric(horizontal: 20),
-                        //   child: Divider(
-                        //     color: BaseColor.selectedTabColor,
-                        //   ),
-                        // ),
+                        Visibility(
+                          visible: kDebugMode,
+                          child: Column(
+                            children: [
+                              GlobalView().sizedBoxView(15),
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.pushNamed(
+                                      context, AppRoutes.resetPassword);
+                                },
+                                child: Padding(
+                                  padding: EdgeInsets.symmetric(horizontal: 20),
+                                  child: Row(
+                                    children: [
+                                      Expanded(
+                                        child: GlobalView()
+                                            .textViewWithStartAlign(
+                                                AppMessages
+                                                    .reset_password_title,
+                                                AppTextStyle.inter_font_family,
+                                                AppTextStyle
+                                                    .semi_bold_font_weight,
+                                                BaseColor.black_color,
+                                                14),
+                                      ),
+                                      Container(
+                                        padding: EdgeInsets.zero,
+                                        height: 15,
+                                        width: 15,
+                                        // color: Colors.red,
+                                        child: Image.asset(AppImages.ic_next2),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              GlobalView().sizedBoxView(15),
+                              Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 20),
+                                child: Divider(
+                                  color: BaseColor.selected_tab_color,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
 
                         // GlobalView().sizedBoxView(20),
                         // Padding(
@@ -1016,27 +1033,33 @@ class _BusinessProfileScreenState extends State<BusinessProfileScreen> {
                             BaseColor.black_color,
                             18),
                         SizedBox(width: 20),
+                        Expanded(
+                          child: GlobalView().textViewWithStartAlign(
+                              profile.businessUserProfileResponse.user
+                                          .businessHours[index].isOpen ==
+                                      false
+                                  ? AppMessages.closed_text
+                                  : profile.businessUserProfileResponse.user
+                                          .businessHours[index].openTime +
+                                      " - " +
+                                      profile.businessUserProfileResponse.user
+                                          .businessHours[index].closeTime,
+                              AppTextStyle.inter_font_family,
+                              AppTextStyle.medium_font_weight,
+                              BaseColor.black_color,
+                              18),
+                        ),
                         GlobalView().textViewWithStartAlign(
                             profile.businessUserProfileResponse.user
-                                        .businessHours[index].isOpen ==
-                                    false
-                                ? AppMessages.closed_text
-                                : profile.businessUserProfileResponse.user
-                                        .businessHours[index].openTime +
-                                    " - " +
-                                    profile.businessUserProfileResponse.user
-                                        .businessHours[index].closeTime,
+                                .businessHours[index].businessStatus,
                             AppTextStyle.inter_font_family,
                             AppTextStyle.medium_font_weight,
-                            BaseColor.black_color,
-                            18),
-                        // GlobalView().textViewWithStartAlign(
-                        //     profile.businessUserProfileResponse.user
-                        //         .businessHours[index].closeTime,
-                        //     AppTextStyle.inter_font_family,
-                        //     AppTextStyle.medium_font_weight,
-                        //     BaseColor.black_color,
-                        //     18)
+                            profile.businessUserProfileResponse.user
+                                        .businessHours[index].businessStatus ==
+                                    AppMessages.open_text
+                                ? Colors.green
+                                : BaseColor.forgot_pass_txt_color,
+                            16),
                       ]);
                     }),
               ],

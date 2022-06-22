@@ -16,6 +16,8 @@ class SearchListData {
         .clear();
     Provider.of<FilterProvider>(context, listen: false).setSearchValue("");
     Provider.of<FilterProvider>(context, listen: false).setCityValue("");
+    Provider.of<FilterProvider>(context, listen: false).selectedCity("");
+    Provider.of<FilterProvider>(context, listen: false).setDistanceRadius("5");
 
     Provider.of<SearchByBusinessProvider>(context, listen: false)
         .getSearchByBusinessList(
@@ -101,6 +103,7 @@ class SearchListData {
     Provider.of<SearchByBusinessProvider>(context, listen: false)
         .listBusiness
         .clear();
+    Provider.of<FilterProvider>(context, listen: false).selectedCity("");
     Provider.of<SearchByBusinessProvider>(context, listen: false)
         .getSearchByBusinessList(
       context,
