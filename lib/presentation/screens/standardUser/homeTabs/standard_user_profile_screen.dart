@@ -1,6 +1,4 @@
 import 'dart:async';
-
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:trendoapp/constants/app_images.dart';
@@ -277,8 +275,51 @@ class _StandardUserProfileScreenState extends State<StandardUserProfileScreen> {
                               color: BaseColor.selected_tab_color,
                             ),
                           ),
+                          Column(
+                            children: [
+                              GlobalView().sizedBoxView(15),
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.pushNamed(
+                                      context, AppRoutes.changePasscode);
+                                },
+                                child: Padding(
+                                  padding: EdgeInsets.symmetric(horizontal: 20),
+                                  child: Row(
+                                    children: [
+                                      Expanded(
+                                        child: GlobalView()
+                                            .textViewWithStartAlign(
+                                                AppMessages.changePasscodeTitle,
+                                                AppTextStyle.inter_font_family,
+                                                AppTextStyle
+                                                    .semi_bold_font_weight,
+                                                BaseColor.black_color,
+                                                14),
+                                      ),
+                                      Container(
+                                        padding: EdgeInsets.zero,
+                                        height: 15,
+                                        width: 15,
+                                        // color: Colors.red,
+                                        child: Image.asset(AppImages.ic_next2),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              GlobalView().sizedBoxView(15),
+                              Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 20),
+                                child: Divider(
+                                  color: BaseColor.selected_tab_color,
+                                ),
+                              ),
+                            ],
+                          ),
+
                           Visibility(
-                            visible: kDebugMode,
+                            visible: false,
                             child: Column(
                               children: [
                                 GlobalView().sizedBoxView(15),

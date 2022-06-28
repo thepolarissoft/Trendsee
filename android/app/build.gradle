@@ -28,7 +28,7 @@ apply plugin: 'com.google.gms.google-services'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
 android {
-    buildToolsVersion "23.0.2"
+    buildToolsVersion "29.0.2"
     compileSdkVersion 31
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'

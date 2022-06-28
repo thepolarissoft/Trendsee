@@ -1,22 +1,25 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:trendoapp/constants/app_images.dart';
 import 'package:trendoapp/constants/app_messages.dart';
 import 'package:trendoapp/constants/app_text_style.dart';
+import 'package:trendoapp/constants/app_toast_messages.dart';
 import 'package:trendoapp/constants/base_color.dart';
 import 'package:trendoapp/constants/device_size.dart';
 import 'package:trendoapp/global/view/global_view.dart';
+import 'package:trendoapp/providers/settings/account_settings_provider.dart';
 
-class ResetPasswordScreen extends StatelessWidget {
-  ResetPasswordScreen({Key key}) : super(key: key);
-  TextEditingController currentPasswordController = TextEditingController();
-  TextEditingController newPasswordController = TextEditingController();
-  TextEditingController reEnterPasswordController = TextEditingController();
+class ChangePasscodeScreen extends StatelessWidget {
+  ChangePasscodeScreen({Key key}) : super(key: key);
+  TextEditingController oldPasscodeController = TextEditingController();
+  TextEditingController newPasscodeController = TextEditingController();
+  TextEditingController reEnterPasscodeController = TextEditingController();
 
-  bool isObscureCurrentPass = true;
-  bool isObscureNewPass = true;
-  bool isObscureReEnterPass = true;
+  bool isObscureCurrentPasscode = true;
+  bool isObscureNewPasscode = true;
+  bool isObscureReEnterPasscode = true;
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +47,7 @@ class ResetPasswordScreen extends StatelessWidget {
                     Container(
                       alignment: Alignment.topCenter,
                       child: GlobalView().textViewWithCenterAlign(
-                          AppMessages.reset_password_title,
+                          AppMessages.changePasscodeTitle,
                           AppTextStyle.inter_font_family,
                           AppTextStyle.semi_bold_font_weight,
                           BaseColor.black_color,
@@ -55,7 +58,7 @@ class ResetPasswordScreen extends StatelessWidget {
                       padding: EdgeInsets.symmetric(vertical: 5),
                       alignment: Alignment.centerLeft,
                       child: GlobalView().textViewWithCenterAlign(
-                          AppMessages.currentPassword,
+                          AppMessages.currentPasscode,
                           AppTextStyle.inter_font_family,
                           AppTextStyle.normal_font_weight,
                           BaseColor.black_color.withOpacity(0.5),
@@ -64,18 +67,19 @@ class ResetPasswordScreen extends StatelessWidget {
                     ),
                     GlobalView().textFieldView(
                         AppImages.ic_password,
-                        currentPasswordController,
-                        AppMessages.currentPassword,
+                        oldPasscodeController,
+                        AppMessages.currentPasscode,
                         AppTextStyle.start_text_align,
-                        isObscure: isObscureCurrentPass,
+                        isObscure: isObscureCurrentPasscode,
                         suffixIcon: IconButton(
                             padding: EdgeInsets.zero,
                             onPressed: () {
-                              isObscureCurrentPass = !isObscureCurrentPass;
+                              isObscureCurrentPasscode =
+                                  !isObscureCurrentPasscode;
                               state(() {});
                             },
                             icon: Icon(
-                              isObscureCurrentPass
+                              isObscureCurrentPasscode
                                   ? Icons.visibility_off
                                   : Icons.visibility,
                               color: BaseColor.btn_gradient_start_color1,
@@ -85,7 +89,7 @@ class ResetPasswordScreen extends StatelessWidget {
                       padding: EdgeInsets.symmetric(vertical: 5),
                       alignment: Alignment.centerLeft,
                       child: GlobalView().textViewWithCenterAlign(
-                          AppMessages.newPassword,
+                          AppMessages.newPasscode,
                           AppTextStyle.inter_font_family,
                           AppTextStyle.normal_font_weight,
                           BaseColor.black_color.withOpacity(0.5),
@@ -94,18 +98,18 @@ class ResetPasswordScreen extends StatelessWidget {
                     ),
                     GlobalView().textFieldView(
                         AppImages.ic_password,
-                        newPasswordController,
-                        AppMessages.newPassword,
+                        newPasscodeController,
+                        AppMessages.newPasscode,
                         AppTextStyle.start_text_align,
-                        isObscure: isObscureNewPass,
+                        isObscure: isObscureNewPasscode,
                         suffixIcon: IconButton(
                             padding: EdgeInsets.zero,
                             onPressed: () {
-                              isObscureNewPass = !isObscureNewPass;
+                              isObscureNewPasscode = !isObscureNewPasscode;
                               state(() {});
                             },
                             icon: Icon(
-                              isObscureNewPass
+                              isObscureNewPasscode
                                   ? Icons.visibility_off
                                   : Icons.visibility,
                               color: BaseColor.btn_gradient_start_color1,
@@ -115,7 +119,7 @@ class ResetPasswordScreen extends StatelessWidget {
                       padding: EdgeInsets.symmetric(vertical: 5),
                       alignment: Alignment.centerLeft,
                       child: GlobalView().textViewWithCenterAlign(
-                          AppMessages.reEnterNewPassword,
+                          AppMessages.reEnterNewPasscode,
                           AppTextStyle.inter_font_family,
                           AppTextStyle.normal_font_weight,
                           BaseColor.black_color.withOpacity(0.5),
@@ -124,26 +128,32 @@ class ResetPasswordScreen extends StatelessWidget {
                     ),
                     GlobalView().textFieldView(
                         AppImages.ic_password,
-                        reEnterPasswordController,
-                        AppMessages.reEnterNewPassword,
+                        reEnterPasscodeController,
+                        AppMessages.reEnterNewPasscode,
                         AppTextStyle.start_text_align,
-                        isObscure: isObscureReEnterPass,
+                        isObscure: isObscureReEnterPasscode,
                         suffixIcon: IconButton(
                             padding: EdgeInsets.zero,
                             onPressed: () {
-                              isObscureReEnterPass = !isObscureReEnterPass;
+                              isObscureReEnterPasscode =
+                                  !isObscureReEnterPasscode;
                               state(() {});
                             },
                             icon: Icon(
-                              isObscureReEnterPass
+                              isObscureReEnterPasscode
                                   ? Icons.visibility_off
                                   : Icons.visibility,
                               color: BaseColor.btn_gradient_start_color1,
                             ))),
                     GlobalView().sizedBoxView(
                         DeviceSize().deviceHeight(context) * 0.06),
-                    GlobalView().buttonFilled(
-                        context, AppMessages.reset_password_title),
+                    GestureDetector(
+                      onTap: () {
+                        onTapChangePasscodeBtn(context);
+                      },
+                      child: GlobalView().buttonFilled(
+                          context, AppMessages.changePasscodeTitle),
+                    ),
                   ],
                 );
               }),
@@ -178,5 +188,19 @@ class ResetPasswordScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void onTapChangePasscodeBtn(BuildContext context) {
+    if (oldPasscodeController.text.isEmpty ||
+        newPasscodeController.text.isEmpty ||
+        reEnterPasscodeController.text.isEmpty) {
+      GlobalView().showToast(AppToastMessages.empty_value_message);
+    } else if (newPasscodeController.text != reEnterPasscodeController.text) {
+      GlobalView().showToast(AppToastMessages.passcode_not_same_message);
+    } else {
+      Provider.of<AccountSettingsProvider>(context, listen: false)
+          .changePasscode(
+              context, oldPasscodeController.text, newPasscodeController.text);
+    }
   }
 }

@@ -5,12 +5,15 @@ class AppMessages {
   static const String hint_username = "Username";
   static const String hint_password = "Password";
   static const String forgot_pass_text = "Forgot Password?";
+  static const String forgot_passcode_text = "Forgot Passcode?";
   static const String login_btn_text = "Log in";
   static const String register_btn_text = "Register Now";
   static const String or_text = "OR";
   static const String verify_email_title = "Verify Email";
+  static const String verify_passcode_title = "Verify Passcode";
   static const String verify_email_message =
       "Enter the verification code sent to \n your email";
+  static const String verify_passcode_message = "Enter the pass code!";
   static const String otp_message = "Didn’t receive the code?";
   static const String resend_otp_message = "Resend code";
   static const String verify_text = "Verify";
@@ -300,6 +303,17 @@ class AppMessages {
   static const String currentPassword = "Current Password";
   static const String newPassword = "New Password";
   static const String reEnterNewPassword = "Re-enter New Password";
+  static const String forgot_passcode_message =
+      "Send an email to passcodehelp@trendsee.app with your new 5 digit passcode";
+  static const String changePasscodeTitle = "Change Passcode";
+  static const String currentPasscode = "Current Passcode";
+  static const String newPasscode = "New Passcode";
+  static const String reEnterNewPasscode = "Re-enter Passcode";
+  static const String set_passcode_title = "Set Passcode";
+  static const String registrationSuccessfullyText =
+      "Registration Successfully";
+  static const String registerAnotherBusinessTitle =
+      "You registered another business with same email, so please login again to verify this new added business.";
 
 // Within___ miles from you
 // “Searching____ (selected category) within ____ miles near me”

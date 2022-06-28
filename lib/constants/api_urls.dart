@@ -76,10 +76,17 @@ class ApiUrls {
   static const String feeds_by_id_url = base_url + "api/feeds_by_id";
   static const String search_business_keywords_url =
       base_url + "api/search_business_keywords";
+  static const String verify_passcode_new_url =
+      base_url + "api/verify_passcode_new";
+  static const String verify_passcode_by_id_url =
+      base_url + "api/verify_passcode_by_id";
+  static const String change_passcode_url = base_url + "api/change_passcode";
+  static const String set_passcode_url = base_url + "api/set_passcode";
 
   static const String terms_service_url = "https://trendsee.app/terms/";
   static const String privacy_policy_url = "https://trendsee.app/privacy/";
   static const String msa_url = "https://trendsee.app/msa/";
   static const String business_error_email = "help@trendsee.app";
   static const String admin_trendsee_email = "admin@trendsee.app";
+  static const String passcode_reset_email = "passcodehelp@trendsee.app";
 }

@@ -5,11 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:trendoapp/constants/app_images.dart';
 import 'package:trendoapp/constants/app_messages.dart';
+import 'package:trendoapp/constants/app_routes.dart';
 import 'package:trendoapp/constants/app_text_style.dart';
 import 'package:trendoapp/constants/base_color.dart';
 import 'package:trendoapp/constants/device_size.dart';
 import 'package:trendoapp/data/models/verified_user_response.dart';
 import 'package:trendoapp/global/view/global_view.dart';
+import 'package:trendoapp/presentation/screens/common/set_passcode_screen.dart';
 import 'package:trendoapp/providers/verify_otp_provider.dart';
 import 'package:trendoapp/utils/dialog_utils.dart';
 
@@ -26,8 +28,10 @@ class BusinessUserItem extends StatelessWidget {
               .getUserByIdToken(context, businessUser.id);
         } else {
           if (businessUser.isVerified == 0) {
-            Provider.of<VerifyOtpProvider>(context, listen: false)
-                .sendOTPByBusinessID(context, businessUser.id);
+            // Provider.of<VerifyOtpProvider>(context, listen: false)
+            //     .sendOTPByBusinessID(context, businessUser.id);
+            Navigator.pushNamed(context, AppRoutes.setPasscode,
+                arguments: SetPasscodeArgs(email: businessUser.email));
           } else {
             DialogUtils().showSupportAlertDialog(context, "approval");
           }

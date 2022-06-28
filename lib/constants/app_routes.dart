@@ -45,4 +45,7 @@ class AppRoutes {
       "/multipleBusinessUserList";
 
   static const String resetPassword = "/resetPassword";
+  static const String passcodeVerification = "/passcodeVerification";
+  static const String changePasscode = "/changePasscode";
+  static const String setPasscode = "/setPasscode";
 }

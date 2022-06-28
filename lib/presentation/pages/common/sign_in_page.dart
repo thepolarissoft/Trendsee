@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:trendoapp/constants/api_urls.dart';
 import 'package:trendoapp/constants/app_images.dart';
 import 'package:trendoapp/constants/app_messages.dart';
 import 'package:trendoapp/constants/app_routes.dart';
@@ -11,8 +12,10 @@ import 'package:trendoapp/constants/base_color.dart';
 import 'package:trendoapp/constants/device_size.dart';
 import 'package:trendoapp/global/view/global_view.dart';
 import 'package:trendoapp/providers/profile_provider.dart';
+import 'package:trendoapp/utils/dialog_utils.dart';
 import 'package:trendoapp/utils/preference_utils.dart';
 import 'package:trendoapp/utils/storage_utils.dart';
+import 'package:trendoapp/utils/url_launcher.dart';
 import 'package:trendoapp/utils/validation_utils.dart';
 
 // ignore: must_be_immutable
@@ -126,7 +129,7 @@ class _SignInPageState extends State<SignInPage> {
                           // GlobalView().sizedBoxView(
                           //     DeviceSize().deviceHeight(context) * 0.06),
                           Visibility(
-                            visible: kDebugMode,
+                            visible: false,
                             child: Column(
                               children: [
                                 GlobalView().sizedBoxView(20),
@@ -171,7 +174,21 @@ class _SignInPageState extends State<SignInPage> {
                               ],
                             ),
                           ),
-
+                          GlobalView().sizedBoxView(
+                              DeviceSize().deviceHeight(context) * 0.03),
+                          GestureDetector(
+                            onTap: () {
+                              // Navigator.pushNamed(context,
+                              //     AppRoutes.forgot_password_route_name);
+                              onTapForgotPasscode();
+                            },
+                            child: GlobalView().textViewWithCenterAlign(
+                                AppMessages.forgot_passcode_text,
+                                AppTextStyle.inter_font_family,
+                                AppTextStyle.semi_bold_font_weight,
+                                BaseColor.forgot_pass_txt_color,
+                                14),
+                          ),
                           GlobalView().sizedBoxView(
                               DeviceSize().deviceHeight(context) * 0.03),
                           Padding(
@@ -271,4 +288,24 @@ class _SignInPageState extends State<SignInPage> {
           ],
         ),
       );
+
+  void onTapForgotPasscode() {
+    DialogUtils.displayDialogCallBack(
+            context,
+            "",
+            AppMessages.forgot_passcode_text
+                .substring(0, AppMessages.forgot_passcode_text.length - 1),
+            AppMessages.forgot_passcode_message,
+            "",
+            AppMessages.cancel_text,
+            AppMessages.ok_text)
+        .then((value) {
+      if (value == AppMessages.ok_text) {
+        UrlLauncher().openEmail(
+            ApiUrls.passcode_reset_email,
+            AppMessages.forgot_passcode_text
+                .substring(0, AppMessages.forgot_passcode_text.length - 1));
+      }
+    });
+  }
 }

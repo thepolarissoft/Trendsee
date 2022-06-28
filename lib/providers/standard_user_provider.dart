@@ -1,14 +1,14 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:trendoapp/api/file_request_manager.dart';
 import 'package:trendoapp/constants/app_messages.dart';
+import 'package:trendoapp/constants/app_routes.dart';
 import 'package:trendoapp/constants/app_toast_messages.dart';
 import 'package:trendoapp/data/models/base_response.dart';
 import 'package:trendoapp/data/models/standard_user_image_model.dart';
 import 'package:trendoapp/global/view/global_view.dart';
 import 'package:trendoapp/global/view/show_alert_view.dart';
-import 'package:trendoapp/presentation/screens/common/email_verification_screen.dart';
+import 'package:trendoapp/presentation/screens/common/set_passcode_screen.dart';
 import 'package:trendoapp/utils/dialog_utils.dart';
 import 'package:trendoapp/utils/preference_utils.dart';
 
@@ -48,10 +48,29 @@ class StandardUserProvider extends ChangeNotifier {
           print(
               "EMAIL-->> ${PreferenceUtils.getStringValue(PreferenceUtils.keyEmail)}");
           // Navigator.pushNamed(context, AppRoutes.emailVerificationRouteName);
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => EmailVerificationScreen(email: email)));
+          if (baseresponse.isThisFirstBusinessWithThisEmail == true) {
+            Navigator.pushNamed(context, AppRoutes.setPasscode,
+                arguments: SetPasscodeArgs(email: email));
+          } else {
+            DialogUtils.displayDialogCallBack(
+                    context,
+                    "",
+                    AppMessages.registrationSuccessfullyText,
+                    AppMessages.registerAnotherBusinessTitle,
+                    "",
+                    "",
+                    AppMessages.ok_text)
+                .then((value) {
+              if (value == AppMessages.ok_text) {
+                Navigator.pushNamed(context, AppRoutes.signin_route_name);
+              }
+            });
+          }
+
+          // Navigator.push(
+          //     context,
+          //     MaterialPageRoute(
+          //         builder: (context) => EmailVerificationScreen(email: email)));
         }
       } else if (baseresponse.statuscode == 400) {
         DialogUtils.displayDialogCallBack(

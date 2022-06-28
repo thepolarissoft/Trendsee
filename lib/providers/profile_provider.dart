@@ -3,12 +3,13 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:trendoapp/api/api_manager.dart';
 import 'package:trendoapp/constants/app_messages.dart';
+import 'package:trendoapp/constants/app_routes.dart';
 import 'package:trendoapp/data/models/base_response.dart';
 import 'package:trendoapp/data/models/like_dislike_response.dart';
 import 'package:trendoapp/data/models/profile_response.dart';
 import 'package:trendoapp/global/view/global_view.dart';
 import 'package:trendoapp/global/view/show_alert_view.dart';
-import 'package:trendoapp/presentation/screens/common/email_verification_screen.dart';
+import 'package:trendoapp/presentation/screens/common/passcode_verification_screen.dart';
 import 'package:trendoapp/utils/dialog_utils.dart';
 import 'package:trendoapp/utils/preference_utils.dart';
 
@@ -198,11 +199,14 @@ class ProfileProvider extends ChangeNotifier {
       if (profileResponse != null) {
         isLoading = false;
         if (profileResponse.statuscode == 200) {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => EmailVerificationScreen(
-                      email: profileResponse.user.email)));
+          // Navigator.push(
+          //     context,
+          //     MaterialPageRoute(
+          //         builder: (context) => EmailVerificationScreen(
+          //             email: profileResponse.user.email)));
+          Navigator.pushNamed(context, AppRoutes.passcodeVerification,
+              arguments:
+                  PasscodeVerificationArgs(email: profileResponse.user.email));
         } else if ((profileResponse.statuscode == 403 &&
                 profileResponse.msg == "User is suspended") ||
             (profileResponse.statuscode == 405 &&

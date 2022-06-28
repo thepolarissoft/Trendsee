@@ -12,6 +12,8 @@ import 'package:trendoapp/api/requests/add_business_hours_request_body.dart';
 import 'package:trendoapp/api/requests/add_unregistered_business_request.dart';
 import 'package:trendoapp/api/requests/add_unregistered_business_request_body.dart';
 import 'package:trendoapp/api/requests/business_details_request.dart';
+import 'package:trendoapp/api/requests/change_passcode_request.dart';
+import 'package:trendoapp/api/requests/change_passcode_request_body.dart';
 import 'package:trendoapp/api/requests/click_feed_request.dart';
 import 'package:trendoapp/api/requests/create_comment_request.dart';
 import 'package:trendoapp/api/requests/create_comment_request_body.dart';
@@ -59,6 +61,8 @@ import 'package:trendoapp/api/requests/search_by_city_request.dart';
 import 'package:trendoapp/api/requests/send_otp_by_business_id_request.dart';
 import 'package:trendoapp/api/requests/send_otp_request.dart';
 import 'package:trendoapp/api/requests/send_otp_request_body.dart';
+import 'package:trendoapp/api/requests/set_passcode_request.dart';
+import 'package:trendoapp/api/requests/set_passcode_request_body.dart';
 import 'package:trendoapp/api/requests/sign_in_request.dart';
 import 'package:trendoapp/api/requests/sign_in_request_body.dart';
 import 'package:trendoapp/api/requests/standard_user_registration_request.dart';
@@ -73,6 +77,10 @@ import 'package:trendoapp/api/requests/verify_otp_by_business_id_request.dart';
 import 'package:trendoapp/api/requests/verify_otp_by_business_id_request_body.dart';
 import 'package:trendoapp/api/requests/verify_otp_request.dart';
 import 'package:trendoapp/api/requests/verify_otp_request_body.dart';
+import 'package:trendoapp/api/requests/verify_passcode_by_business_id_request.dart';
+import 'package:trendoapp/api/requests/verify_passcode_by_business_id_request_body.dart';
+import 'package:trendoapp/api/requests/verify_passcode_request.dart';
+import 'package:trendoapp/api/requests/verify_passcode_request_body.dart';
 import 'package:trendoapp/api/requests/view_feed_request.dart';
 import 'package:trendoapp/data/models/base_response.dart';
 import 'package:trendoapp/data/models/business_city_response.dart';
@@ -1876,7 +1884,7 @@ class ApiManager {
     return completer.future;
   }
 
-  Future<VerifiedOtpResponse> verifyOTPBuBusinessID(int businessId, int otp) {
+  Future<VerifiedOtpResponse> verifyOTPByBusinessID(int businessId, int otp) {
     Completer<VerifiedOtpResponse> completer = new Completer();
     VerifyOtpByBusinessIdRequestBody verifyOtpByBusinessIdRequestBody =
         VerifyOtpByBusinessIdRequestBody(businessId: businessId, otp: otp);
@@ -1986,6 +1994,158 @@ class ApiManager {
       completer.completeError(
         Exception(error),
         // ExceptionHelper().handleExceptions(ExceptionType.NetworkException),
+      );
+    });
+    return completer.future;
+  }
+
+  Future<VerifiedOtpResponse> verifyPasscode(String email, String passcode) {
+    Completer<VerifiedOtpResponse> completer = new Completer();
+    VerifyPasscodeRequestBody verifyPasscodeRequestBody =
+        VerifyPasscodeRequestBody(email, passcode);
+    VerifyPasscodeRequest verifyPasscodeRequest =
+        VerifyPasscodeRequest(verifyPasscodeRequestBody);
+    Api(context: context)
+        .request(verifyPasscodeRequest)
+        .then((response) => {
+              print("RESPONSE-> $response"),
+              if (response.statusCode == 200)
+                {
+                  completer.complete(
+                      VerifiedOtpResponse.fromJson(json.decode(response.body))),
+                }
+              else if (AccessToken()
+                      .checkTokenExpiry(context: context, response: response) ==
+                  true)
+                {
+                  completer.completeError(ExceptionHelper()
+                      .handleExceptions(ExceptionType.TokenExpiredException)),
+                }
+              else
+                {
+                  completer.completeError(ExceptionHelper()
+                      .handleExceptions(ExceptionType.HttpException)),
+                }
+            })
+        .catchError((error) {
+      print("Api MAnager error-> $error");
+      completer.completeError(
+        Exception(error),
+      );
+    });
+    return completer.future;
+  }
+
+  Future<VerifiedOtpResponse> verifyPasscodeByBusinessID(
+      int businessId, int passcode) {
+    Completer<VerifiedOtpResponse> completer = new Completer();
+    VerifyPasscodeByBusinessIdRequestBody
+        verifyPasscodeByBusinessIdRequestBody =
+        VerifyPasscodeByBusinessIdRequestBody(
+            businessId: businessId, passcode: passcode);
+    VerifyPasscodeByBusinessIdRequest verifyPasscodeByBusinessIdRequest =
+        VerifyPasscodeByBusinessIdRequest(
+            verifyPasscodeByBusinessIdRequestBody);
+    Api(context: context)
+        .request(verifyPasscodeByBusinessIdRequest)
+        .then((response) => {
+              print("RESPONSE-> $response"),
+              if (response.statusCode == 200)
+                {
+                  completer.complete(
+                      VerifiedOtpResponse.fromJson(json.decode(response.body))),
+                }
+              else if (AccessToken()
+                      .checkTokenExpiry(context: context, response: response) ==
+                  true)
+                {
+                  completer.completeError(ExceptionHelper()
+                      .handleExceptions(ExceptionType.TokenExpiredException)),
+                }
+              else
+                {
+                  completer.completeError(ExceptionHelper()
+                      .handleExceptions(ExceptionType.HttpException)),
+                }
+            })
+        .catchError((error) {
+      print("Api MAnager error-> $error");
+      completer.completeError(
+        Exception(error),
+      );
+    });
+    return completer.future;
+  }
+
+  Future<Baseresponse> changePasscode(String oldPasscode, String newPasscode) {
+    Completer<Baseresponse> completer = new Completer();
+    ChangePasscodeRequestBody changePasscodeRequestBody =
+        ChangePasscodeRequestBody(
+            oldPasscode: oldPasscode, newPasscode: newPasscode);
+    ChangePasscodeRequest changePasscodeRequest =
+        ChangePasscodeRequest(changePasscodeRequestBody);
+    Api(context: context)
+        .request(changePasscodeRequest)
+        .then((response) => {
+              print("RESPONSE-> $response"),
+              if (response.statusCode == 200)
+                {
+                  completer.complete(Baseresponse(json.decode(response.body))),
+                }
+              else if (AccessToken()
+                      .checkTokenExpiry(context: context, response: response) ==
+                  true)
+                {
+                  completer.completeError(ExceptionHelper()
+                      .handleExceptions(ExceptionType.TokenExpiredException)),
+                }
+              else
+                {
+                  completer.completeError(ExceptionHelper()
+                      .handleExceptions(ExceptionType.HttpException)),
+                }
+            })
+        .catchError((error) {
+      print("Api MAnager error-> $error");
+      completer.completeError(
+        Exception(error),
+      );
+    });
+    return completer.future;
+  }
+
+  Future<VerifiedOtpResponse> setPasscode(String email, String passcode) {
+    Completer<VerifiedOtpResponse> completer = new Completer();
+    SetPasscodeRequestBody setPasscodeRequestBody =
+        SetPasscodeRequestBody(email, passcode);
+    SetPasscodeRequest setPasscodeRequest =
+        SetPasscodeRequest(setPasscodeRequestBody);
+    Api(context: context)
+        .request(setPasscodeRequest)
+        .then((response) => {
+              print("RESPONSE-> $response"),
+              if (response.statusCode == 200)
+                {
+                  completer.complete(
+                      VerifiedOtpResponse.fromJson(json.decode(response.body))),
+                }
+              else if (AccessToken()
+                      .checkTokenExpiry(context: context, response: response) ==
+                  true)
+                {
+                  completer.completeError(ExceptionHelper()
+                      .handleExceptions(ExceptionType.TokenExpiredException)),
+                }
+              else
+                {
+                  completer.completeError(ExceptionHelper()
+                      .handleExceptions(ExceptionType.HttpException)),
+                }
+            })
+        .catchError((error) {
+      print("Api MAnager error-> $error");
+      completer.completeError(
+        Exception(error),
       );
     });
     return completer.future;

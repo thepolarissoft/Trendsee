@@ -40,6 +40,7 @@ class AppToastMessages {
   static const String empty_business_name_message =
       "Please enter the business name!";
   static const String empty_email_message = "Please Enter Email!";
+  static const String passcode_not_same_message = "Passcode must be same!";
 
   // static const String follow_done_message = "Follow done successfully!";
   // static const String unfollow_done_message = "Unfollow done successfully!";

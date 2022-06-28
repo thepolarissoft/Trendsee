@@ -6,10 +6,13 @@ import 'package:trendoapp/presentation/screens/businessUser/homeTabs/business_pr
 import 'package:trendoapp/presentation/screens/businessUser/homeTabs/business_timeline_screen.dart';
 import 'package:trendoapp/presentation/screens/businessUser/multiple_business_user_list/multiple_business_user_list_screen.dart';
 import 'package:trendoapp/presentation/screens/common/app_launcher_screen.dart';
+import 'package:trendoapp/presentation/screens/common/change_passcode_screen.dart';
 import 'package:trendoapp/presentation/screens/common/forgot_password_screen.dart';
 import 'package:trendoapp/presentation/screens/common/map_screen.dart';
 import 'package:trendoapp/presentation/screens/common/my_all_check_ins_screen.dart';
+import 'package:trendoapp/presentation/screens/common/passcode_verification_screen.dart';
 import 'package:trendoapp/presentation/screens/common/reset_password_screen.dart';
+import 'package:trendoapp/presentation/screens/common/set_passcode_screen.dart';
 import 'package:trendoapp/presentation/screens/common/sign_in_screen.dart';
 import 'package:trendoapp/presentation/screens/common/successful_email_verification_screen.dart';
 import 'package:trendoapp/presentation/screens/common/user_type_selection_screen.dart';
@@ -166,6 +169,18 @@ class AppRouter {
         break;
       case AppRoutes.resetPassword:
         return MaterialPageRoute(builder: (_) => ResetPasswordScreen());
+        break;
+      case AppRoutes.passcodeVerification:
+        var args = routeSettings.arguments as PasscodeVerificationArgs;
+        return MaterialPageRoute(
+            builder: (_) => PasscodeVerificationScreen(args: args));
+        break;
+      case AppRoutes.changePasscode:
+        return MaterialPageRoute(builder: (_) => ChangePasscodeScreen());
+        break;
+      case AppRoutes.setPasscode:
+        var args = routeSettings.arguments as SetPasscodeArgs;
+        return MaterialPageRoute(builder: (_) => SetPasscodeScreen(args: args));
         break;
       default:
         return null;

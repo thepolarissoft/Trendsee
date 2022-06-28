@@ -6,6 +6,7 @@ import 'package:trendoapp/constants/app_routes.dart';
 import 'package:trendoapp/data/models/base_response.dart';
 import 'package:trendoapp/data/models/business_user_profile_response.dart';
 import 'package:trendoapp/data/models/profile_response.dart';
+import 'package:trendoapp/global/view/global_view.dart';
 import 'package:trendoapp/global/view/show_alert_view.dart';
 import 'package:trendoapp/utils/preference_utils.dart';
 import 'package:trendoapp/utils/storage_utils.dart';
@@ -108,6 +109,32 @@ class AccountSettingsProvider extends ChangeNotifier {
         context: context,
         onCallBack: () {
           deleteAccount(context);
+        },
+        exception: onError,
+      ).showAlertDialog();
+      notifyListeners();
+    });
+  }
+
+  void changePasscode(
+      BuildContext context, String oldPasscode, String newPasscode) async {
+    ApiManager(context)
+        .changePasscode(oldPasscode, newPasscode)
+        .then((response) {
+      baseresponse = response;
+      print(baseresponse.statuscode);
+      if (baseresponse.statuscode == 200) {
+        print(baseresponse.statuscode);
+        Navigator.pop(context);
+      }
+      GlobalView().showToast(baseresponse.msg);
+      notifyListeners();
+    }).catchError((onError) {
+      print("ONERROR->> ${onError.toString()}");
+      ShowAlertView(
+        context: context,
+        onCallBack: () {
+          changePasscode(context, oldPasscode, newPasscode);
         },
         exception: onError,
       ).showAlertDialog();

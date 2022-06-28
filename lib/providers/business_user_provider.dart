@@ -21,7 +21,7 @@ import 'package:trendoapp/data/models/update_business_latlong_response.dart';
 import 'package:trendoapp/data/models/update_list_keywords_response.dart';
 import 'package:trendoapp/global/view/global_view.dart';
 import 'package:trendoapp/global/view/show_alert_view.dart';
-import 'package:trendoapp/presentation/screens/common/email_verification_screen.dart';
+import 'package:trendoapp/presentation/screens/common/passcode_verification_screen.dart';
 import 'package:trendoapp/utils/day_time_utils.dart';
 import 'package:trendoapp/utils/dialog_utils.dart';
 import 'package:trendoapp/utils/preference_utils.dart';
@@ -266,7 +266,11 @@ class BusinessUserProvider extends ChangeNotifier {
           Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => EmailVerificationScreen(email: email)));
+                  builder: (context) => PasscodeVerificationScreen(
+                        args: PasscodeVerificationArgs(
+                          email: email,
+                        ),
+                      )));
         }
       } else if (baseresponse.statuscode == 400) {
         DialogUtils.displayDialogCallBack(
