@@ -8,7 +8,6 @@ import 'package:trendoapp/data/models/base_response.dart';
 import 'package:trendoapp/data/models/standard_user_image_model.dart';
 import 'package:trendoapp/global/view/global_view.dart';
 import 'package:trendoapp/global/view/show_alert_view.dart';
-import 'package:trendoapp/presentation/screens/common/set_passcode_screen.dart';
 import 'package:trendoapp/utils/dialog_utils.dart';
 import 'package:trendoapp/utils/preference_utils.dart';
 
@@ -30,12 +29,13 @@ class StandardUserProvider extends ChangeNotifier {
       String avatar,
       String userType,
       int isEighteen,
-      int isAcceptedTac) {
+      int isAcceptedTac,
+      String passcode) {
     isLoading = true;
     notifyListeners();
     FileRequestManager()
         .stdUserRegister(firstName, lastName, username, email, avatar, userType,
-            isEighteen, isAcceptedTac)
+            isEighteen, isAcceptedTac, passcode)
         .then((response) {
       baseresponse = response;
       print("RESPONSE->> ${baseresponse.toJsonData()}");
@@ -48,24 +48,25 @@ class StandardUserProvider extends ChangeNotifier {
           print(
               "EMAIL-->> ${PreferenceUtils.getStringValue(PreferenceUtils.keyEmail)}");
           // Navigator.pushNamed(context, AppRoutes.emailVerificationRouteName);
-          if (baseresponse.isThisFirstBusinessWithThisEmail == true) {
-            Navigator.pushNamed(context, AppRoutes.setPasscode,
-                arguments: SetPasscodeArgs(email: email));
-          } else {
-            DialogUtils.displayDialogCallBack(
-                    context,
-                    "",
-                    AppMessages.registrationSuccessfullyText,
-                    AppMessages.registerAnotherBusinessTitle,
-                    "",
-                    "",
-                    AppMessages.ok_text)
-                .then((value) {
-              if (value == AppMessages.ok_text) {
-                Navigator.pushNamed(context, AppRoutes.signin_route_name);
-              }
-            });
-          }
+          // if (baseresponse.isThisFirstBusinessWithThisEmail == true) {
+          //   Navigator.pushNamed(context, AppRoutes.setPasscode,
+          //       arguments: SetPasscodeArgs(email: email));
+          // } else {
+          DialogUtils.displayDialogCallBack(
+                  context,
+                  "",
+                  AppMessages.registrationSuccessfullyText,
+                  // AppMessages.registerAnotherBusinessTitle,
+                  "",
+                  "",
+                  "",
+                  AppMessages.ok_text)
+              .then((value) {
+            if (value == AppMessages.ok_text) {
+              Navigator.pushNamed(context, AppRoutes.signin_route_name);
+            }
+          });
+          // }
 
           // Navigator.push(
           //     context,
@@ -90,8 +91,17 @@ class StandardUserProvider extends ChangeNotifier {
       ShowAlertView(
               context: context,
               onCallBack: () {
-                standardUserRegister(context, firstName, lastName, username,
-                    email, avatar, userType, isEighteen, isAcceptedTac);
+                standardUserRegister(
+                    context,
+                    firstName,
+                    lastName,
+                    username,
+                    email,
+                    avatar,
+                    userType,
+                    isEighteen,
+                    isAcceptedTac,
+                    passcode);
               },
               exception: onError)
           .showAlertDialog();

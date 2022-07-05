@@ -1,6 +1,7 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:trendoapp/constants/app_images.dart';
 import 'package:trendoapp/constants/app_messages.dart';
@@ -71,6 +72,7 @@ class ChangePasscodeScreen extends StatelessWidget {
                         AppMessages.currentPasscode,
                         AppTextStyle.start_text_align,
                         isObscure: isObscureCurrentPasscode,
+                        inputFormatters: [LengthLimitingTextInputFormatter(5)],
                         suffixIcon: IconButton(
                             padding: EdgeInsets.zero,
                             onPressed: () {
@@ -102,6 +104,7 @@ class ChangePasscodeScreen extends StatelessWidget {
                         AppMessages.newPasscode,
                         AppTextStyle.start_text_align,
                         isObscure: isObscureNewPasscode,
+                        inputFormatters: [LengthLimitingTextInputFormatter(5)],
                         suffixIcon: IconButton(
                             padding: EdgeInsets.zero,
                             onPressed: () {
@@ -132,6 +135,7 @@ class ChangePasscodeScreen extends StatelessWidget {
                         AppMessages.reEnterNewPasscode,
                         AppTextStyle.start_text_align,
                         isObscure: isObscureReEnterPasscode,
+                        inputFormatters: [LengthLimitingTextInputFormatter(5)],
                         suffixIcon: IconButton(
                             padding: EdgeInsets.zero,
                             onPressed: () {

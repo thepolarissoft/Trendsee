@@ -22,7 +22,8 @@ class FileRequestManager {
       String filename,
       String userType,
       int isEighteen,
-      int isAcceptedTac) async {
+      int isAcceptedTac,
+      String passcode) async {
     var request =
         http.MultipartRequest('POST', Uri.parse(ApiUrls.user_register_url));
     request.fields["first_name"] = firstName;
@@ -33,6 +34,7 @@ class FileRequestManager {
     request.fields["user_type"] = userType;
     request.fields["is_eighteen"] = isEighteen.toString();
     request.fields["is_accepted_tac"] = isAcceptedTac.toString();
+    request.fields["passcode"] = passcode;
     print("FILENAME-> $filename");
     if (filename != null && filename.length > 0) {
       request.files.add(await http.MultipartFile.fromPath('avatar', filename));

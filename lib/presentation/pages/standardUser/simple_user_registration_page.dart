@@ -3,11 +3,10 @@
 import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
-
 import 'package:email_validator/email_validator.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
@@ -52,7 +51,11 @@ class _SimpleUserRegistrationPageState
 
   TextEditingController dateofBirthTextEditingController =
       new TextEditingController();
+  TextEditingController passcodeController = TextEditingController();
+  TextEditingController reEnterPasscodeController = TextEditingController();
 
+  bool isObscureReEnterPasscode = true;
+  bool isObscurePasscode = true;
   bool checkValue = true;
 
   File image;
@@ -67,203 +70,8 @@ class _SimpleUserRegistrationPageState
   String profilePic = "";
   TextEditingController passwordTextEditingController =
       new TextEditingController();
+
   bool isObscure = true;
-
-  void _onImageButtonPressed(ImageSource source, {BuildContext context}) async {
-    try {
-      final ImagePicker _picker = new ImagePicker();
-      final pickedFile = await _picker.getImage(
-        source: source,
-        imageQuality: 40,
-      );
-      // setState(() {
-      imageFile = pickedFile;
-      print("_imageFile-->> ${imageFile.path.toString()}");
-      imageFileBody = File(imageFile.path);
-      // _imageFile.readAsString().then((value) => imageFileBody = value);
-      print("imageFileBody->> $imageFileBody");
-      // });
-      // _imageFile = pickedFile;
-      // print("_imageFile-->> ${_imageFile.path.toString()}");
-      Provider.of<StandardUserProvider>(context, listen: false)
-          .setStandardUserImage(imageFileBody);
-      // // print("Image-->> ${StandardUserProvider().getUserImage()}");
-    } catch (e) {
-      // setState(() {
-      pickImageError = e;
-      // });
-    }
-  }
-
-  void _showPicker(context) {
-    showModalBottomSheet(
-        context: context,
-        builder: (BuildContext bc) {
-          return SafeArea(
-            child: Container(
-              child: new Wrap(
-                children: <Widget>[
-                  new ListTile(
-                      leading: new Icon(Icons.photo_library),
-                      title: new Text('Photo Library'),
-                      onTap: () {
-                        _onImageButtonPressed(ImageSource.gallery,
-                            context: context);
-                        Navigator.of(context).pop();
-                      }),
-                  // new ListTile(
-                  //   leading: new Icon(Icons.photo_camera),
-                  //   title: new Text('Camera'),
-                  //   onTap: () {
-                  //     _onImageButtonPressed(ImageSource.camera,
-                  //         context: context);
-                  //     Navigator.of(context).pop();
-                  //   },
-                  // ),
-                ],
-              ),
-            ),
-          );
-        });
-  }
-
-  void onClickRegisterBtn(BuildContext context) {
-    // print(
-    //     "isAgeCheckBoxValue -> ${Provider.of<StandardUserProvider>(context, listen: false).isAgeCheckBoxValue}");
-    // print(
-    //     "isPrivacyValue -> ${Provider.of<StandardUserProvider>(context, listen: false).isPrivacyCheckBoxValue}");
-
-    if (Provider.of<StandardUserProvider>(context, listen: false)
-            .isAgeCheckBoxValue &&
-        Provider.of<StandardUserProvider>(context, listen: false)
-            .isPrivacyCheckBoxValue) {
-      if (
-          // firstNameTextEditingController.text.isNotEmpty &&
-          //   lastNameTextEditingController.text.isNotEmpty &&
-          userNameTextEditingController.text.isNotEmpty &&
-              emailTextEditingController.text.isNotEmpty) {
-        if (EmailValidator.validate(emailTextEditingController.text) &&
-            // Provider.of<StandardUserProvider>(context, listen: false)
-            //         .userImage !=
-            //     null &&
-            Provider.of<StandardUserProvider>(context, listen: false)
-                .isAgeCheckBoxValue &&
-            Provider.of<StandardUserProvider>(context, listen: false)
-                .isPrivacyCheckBoxValue) {
-          Provider.of<StandardUserProvider>(context, listen: false)
-              .standardUserRegister(
-            context,
-            firstNameTextEditingController.text.isEmpty
-                ? ""
-                : firstNameTextEditingController.text,
-            lastNameTextEditingController.text.isEmpty
-                ? ""
-                : lastNameTextEditingController.text,
-            userNameTextEditingController.text,
-            emailTextEditingController.text,
-            // dateofBirthTextEditingController.text,
-            // imageFileBody.path,
-            Provider.of<StandardUserProvider>(context, listen: false)
-                        .userImage ==
-                    null
-                ? ""
-                : Provider.of<StandardUserProvider>(context, listen: false)
-                    .userImage
-                    .path,
-            "1",
-            Provider.of<StandardUserProvider>(context, listen: false)
-                        .isAgeCheckBoxValue ==
-                    true
-                ? 1
-                : 0,
-            Provider.of<StandardUserProvider>(context, listen: false)
-                        .isPrivacyCheckBoxValue ==
-                    true
-                ? 1
-                : 0,
-          );
-        }
-        // else if (Provider.of<StandardUserProvider>(context, listen: false)
-        //         .userImage ==
-        //     null) {
-        //   GlobalView().showToast(AppToastMessages.image_selection);
-        // }
-        else if (!EmailValidator.validate(emailTextEditingController.text)) {
-          GlobalView().showToast(AppToastMessages.valid_email_message);
-        } else {
-          if (!Provider.of<StandardUserProvider>(context, listen: false)
-                  .isAgeCheckBoxValue &&
-              !Provider.of<StandardUserProvider>(context, listen: false)
-                  .isPrivacyCheckBoxValue) {
-            GlobalView().showToast(AppToastMessages.select_checkbox_message);
-          } else if (!Provider.of<StandardUserProvider>(context, listen: false)
-              .isAgeCheckBoxValue) {
-            GlobalView().showToast(AppToastMessages.select_age_checkboxMessage);
-          } else if (!Provider.of<StandardUserProvider>(context, listen: false)
-              .isPrivacyCheckBoxValue) {
-            GlobalView().showToast(
-                AppToastMessages.select_terms_policy_checkbox_message);
-          }
-
-          // GlobalView().showToast(AppToastMessages
-          //     .selectCheckBoxMessage);
-        }
-      } else {
-        GlobalView().showToast(AppToastMessages.empty_value_message);
-      }
-    }
-  }
-
-  void getProfileData() async {
-    String model =
-        PreferenceUtils.getObject(PreferenceUtils.keyStandardUserProfileObject);
-    profileResponse = ProfileResponse.fromJson(json.decode(model));
-    print(profileResponse.user.avatar);
-    if (profileResponse != null) {
-      print("PRefs is not empty");
-      profilePic = profileResponse.user.avatar;
-      firstNameTextEditingController.text = profileResponse.user.firstName;
-      lastNameTextEditingController.text = profileResponse.user.lastName;
-      userNameTextEditingController.text = profileResponse.user.username;
-      emailTextEditingController.text = profileResponse.user.email;
-    } else {
-      print("PRefs is empty");
-    }
-    // setState(() {});
-  }
-
-  void onClickUpdateProfileButton() async {
-    var rng = new Random();
-    // get temporary directory of device.
-    Directory tempDir = await getTemporaryDirectory();
-    // get temporary path from temporary directory.
-    String tempPath = tempDir.path;
-    // create a new file in temporary path with random file name.
-    File file = new File('$tempPath' + (rng.nextInt(100)).toString() + '.png');
-    // call http.get method and pass imageUrl into it to get response.
-    var response = await http.get(Uri.parse(profilePic));
-    // write bodyBytes received in response to file.
-    profilePicFile = await file.writeAsBytes(response.bodyBytes);
-    print("profile_pic_file path-> ${profilePicFile.path}");
-    // print(
-    //     "imageFileBody path-> ${imageFileBody.path}");
-    if (userNameTextEditingController.text.isNotEmpty &&
-        emailTextEditingController.text.isNotEmpty) {
-      if (EmailValidator.validate(emailTextEditingController.text)) {
-        Provider.of<BaseResponseProvider>(context, listen: false).updateProfile(
-            context,
-            firstNameTextEditingController.text,
-            lastNameTextEditingController.text,
-            userNameTextEditingController.text,
-            emailTextEditingController.text,
-            imageFileBody == null ? profilePicFile.path : imageFileBody.path);
-      } else {
-        GlobalView().showToast(AppToastMessages.valid_email_message);
-      }
-    } else {
-      GlobalView().showToast(AppToastMessages.empty_value_message);
-    }
-  }
 
   @override
   void initState() {
@@ -451,7 +259,7 @@ class _SimpleUserRegistrationPageState
                                   AppTextStyle.start_text_align,
                                   textInputType: TextInputType.emailAddress),
                               Visibility(
-                                visible: kDebugMode && !widget.isEditable,
+                                visible: !widget.isEditable,
                                 child:
                                     StatefulBuilder(builder: (context, state) {
                                   return Column(
@@ -465,7 +273,7 @@ class _SimpleUserRegistrationPageState
                                         alignment: Alignment.centerLeft,
                                         child: GlobalView()
                                             .textViewWithCenterAlign(
-                                                AppMessages.hint_password,
+                                                AppMessages.passcodeText,
                                                 AppTextStyle.inter_font_family,
                                                 AppTextStyle.normal_font_weight,
                                                 BaseColor.black_color
@@ -477,18 +285,64 @@ class _SimpleUserRegistrationPageState
                                       ),
                                       GlobalView().textFieldView(
                                           AppImages.ic_password,
-                                          passwordTextEditingController,
-                                          AppMessages.hint_password,
+                                          passcodeController,
+                                          AppMessages.createPasscodeText,
                                           AppTextStyle.start_text_align,
-                                          isObscure: isObscure,
+                                          isObscure: isObscurePasscode,
+                                          inputFormatters: [
+                                            LengthLimitingTextInputFormatter(5)
+                                          ],
                                           suffixIcon: IconButton(
                                               padding: EdgeInsets.zero,
                                               onPressed: () {
-                                                isObscure = !isObscure;
+                                                isObscurePasscode =
+                                                    !isObscurePasscode;
                                                 state(() {});
                                               },
                                               icon: Icon(
-                                                isObscure
+                                                isObscurePasscode
+                                                    ? Icons.visibility_off
+                                                    : Icons.visibility,
+                                                color: BaseColor
+                                                    .btn_gradient_start_color1,
+                                              ))),
+                                      GlobalView().sizedBoxView(
+                                          DeviceSize().deviceHeight(context) *
+                                              0.01),
+                                      Container(
+                                        padding:
+                                            EdgeInsets.symmetric(vertical: 5),
+                                        alignment: Alignment.centerLeft,
+                                        child: GlobalView()
+                                            .textViewWithCenterAlign(
+                                                AppMessages.reEnterNewPasscode,
+                                                AppTextStyle.inter_font_family,
+                                                AppTextStyle.normal_font_weight,
+                                                BaseColor.black_color
+                                                    .withOpacity(0.5),
+                                                // 11
+                                                DeviceSize()
+                                                        .deviceHeight(context) *
+                                                    0.014),
+                                      ),
+                                      GlobalView().textFieldView(
+                                          AppImages.ic_password,
+                                          reEnterPasscodeController,
+                                          AppMessages.reEnterNewPasscode,
+                                          AppTextStyle.start_text_align,
+                                          isObscure: isObscureReEnterPasscode,
+                                          inputFormatters: [
+                                            LengthLimitingTextInputFormatter(5)
+                                          ],
+                                          suffixIcon: IconButton(
+                                              padding: EdgeInsets.zero,
+                                              onPressed: () {
+                                                isObscureReEnterPasscode =
+                                                    !isObscureReEnterPasscode;
+                                                state(() {});
+                                              },
+                                              icon: Icon(
+                                                isObscureReEnterPasscode
                                                     ? Icons.visibility_off
                                                     : Icons.visibility,
                                                 color: BaseColor
@@ -498,6 +352,55 @@ class _SimpleUserRegistrationPageState
                                   );
                                 }),
                               ),
+                              // Visibility(
+                              //   visible: false,
+                              //   child:
+                              //       StatefulBuilder(builder: (context, state) {
+                              //     return Column(
+                              //       children: [
+                              //         GlobalView().sizedBoxView(
+                              //             DeviceSize().deviceHeight(context) *
+                              //                 0.01),
+                              //         Container(
+                              //           padding:
+                              //               EdgeInsets.symmetric(vertical: 5),
+                              //           alignment: Alignment.centerLeft,
+                              //           child: GlobalView()
+                              //               .textViewWithCenterAlign(
+                              //                   AppMessages.hint_password,
+                              //                   AppTextStyle.inter_font_family,
+                              //                   AppTextStyle.normal_font_weight,
+                              //                   BaseColor.black_color
+                              //                       .withOpacity(0.5),
+                              //                   // 11
+                              //                   DeviceSize()
+                              //                           .deviceHeight(context) *
+                              //                       0.014),
+                              //         ),
+                              //         GlobalView().textFieldView(
+                              //             AppImages.ic_password,
+                              //             passwordTextEditingController,
+                              //             AppMessages.hint_password,
+                              //             AppTextStyle.start_text_align,
+                              //             isObscure: isObscure,
+                              //             suffixIcon: IconButton(
+                              //                 padding: EdgeInsets.zero,
+                              //                 onPressed: () {
+                              //                   isObscure = !isObscure;
+                              //                   state(() {});
+                              //                 },
+                              //                 icon: Icon(
+                              //                   isObscure
+                              //                       ? Icons.visibility_off
+                              //                       : Icons.visibility,
+                              //                   color: BaseColor
+                              //                       .btn_gradient_start_color1,
+                              //                 ))),
+                              //       ],
+                              //     );
+                              //   }),
+                              // ),
+
                               // GlobalView().sizedBoxView(10),
                               // Container(
                               //   padding: EdgeInsets.symmetric(vertical: 5),
@@ -720,6 +623,212 @@ class _SimpleUserRegistrationPageState
             ),
           );
         });
+  }
+
+  void _onImageButtonPressed(ImageSource source, {BuildContext context}) async {
+    try {
+      final ImagePicker _picker = new ImagePicker();
+      final pickedFile = await _picker.getImage(
+        source: source,
+        imageQuality: 40,
+      );
+      // setState(() {
+      imageFile = pickedFile;
+      print("_imageFile-->> ${imageFile.path.toString()}");
+      imageFileBody = File(imageFile.path);
+      // _imageFile.readAsString().then((value) => imageFileBody = value);
+      print("imageFileBody->> $imageFileBody");
+      // });
+      // _imageFile = pickedFile;
+      // print("_imageFile-->> ${_imageFile.path.toString()}");
+      Provider.of<StandardUserProvider>(context, listen: false)
+          .setStandardUserImage(imageFileBody);
+      // // print("Image-->> ${StandardUserProvider().getUserImage()}");
+    } catch (e) {
+      // setState(() {
+      pickImageError = e;
+      // });
+    }
+  }
+
+  void _showPicker(context) {
+    showModalBottomSheet(
+        context: context,
+        builder: (BuildContext bc) {
+          return SafeArea(
+            child: Container(
+              child: new Wrap(
+                children: <Widget>[
+                  new ListTile(
+                      leading: new Icon(Icons.photo_library),
+                      title: new Text('Photo Library'),
+                      onTap: () {
+                        _onImageButtonPressed(ImageSource.gallery,
+                            context: context);
+                        Navigator.of(context).pop();
+                      }),
+                  // new ListTile(
+                  //   leading: new Icon(Icons.photo_camera),
+                  //   title: new Text('Camera'),
+                  //   onTap: () {
+                  //     _onImageButtonPressed(ImageSource.camera,
+                  //         context: context);
+                  //     Navigator.of(context).pop();
+                  //   },
+                  // ),
+                ],
+              ),
+            ),
+          );
+        });
+  }
+
+  void onClickRegisterBtn(BuildContext context) {
+    // print(
+    //     "isAgeCheckBoxValue -> ${Provider.of<StandardUserProvider>(context, listen: false).isAgeCheckBoxValue}");
+    // print(
+    //     "isPrivacyValue -> ${Provider.of<StandardUserProvider>(context, listen: false).isPrivacyCheckBoxValue}");
+
+    if (Provider.of<StandardUserProvider>(context, listen: false)
+            .isAgeCheckBoxValue &&
+        Provider.of<StandardUserProvider>(context, listen: false)
+            .isPrivacyCheckBoxValue) {
+      if (
+          // firstNameTextEditingController.text.isNotEmpty &&
+          //   lastNameTextEditingController.text.isNotEmpty &&
+          userNameTextEditingController.text.isNotEmpty &&
+              emailTextEditingController.text.isNotEmpty &&
+              passcodeController.text.isNotEmpty &&
+              reEnterPasscodeController.text.isNotEmpty) {
+        if (passcodeController.text.length < 5 ||
+            reEnterPasscodeController.text.length < 5) {
+          GlobalView()
+              .showToast(AppToastMessages.enter_five_digit_passcode_message);
+        } else if (passcodeController.text != reEnterPasscodeController.text) {
+          GlobalView().showToast(AppToastMessages.passcode_not_same_message);
+        } else if (EmailValidator.validate(emailTextEditingController.text) &&
+            // Provider.of<StandardUserProvider>(context, listen: false)
+            //         .userImage !=
+            //     null &&
+            Provider.of<StandardUserProvider>(context, listen: false)
+                .isAgeCheckBoxValue &&
+            Provider.of<StandardUserProvider>(context, listen: false)
+                .isPrivacyCheckBoxValue) {
+          Provider.of<StandardUserProvider>(context, listen: false)
+              .standardUserRegister(
+                  context,
+                  firstNameTextEditingController.text.isEmpty
+                      ? ""
+                      : firstNameTextEditingController.text,
+                  lastNameTextEditingController.text.isEmpty
+                      ? ""
+                      : lastNameTextEditingController.text,
+                  userNameTextEditingController.text,
+                  emailTextEditingController.text,
+                  // dateofBirthTextEditingController.text,
+                  // imageFileBody.path,
+                  Provider.of<StandardUserProvider>(context, listen: false)
+                              .userImage ==
+                          null
+                      ? ""
+                      : Provider.of<StandardUserProvider>(context,
+                              listen: false)
+                          .userImage
+                          .path,
+                  "1",
+                  Provider.of<StandardUserProvider>(context,
+                                  listen: false)
+                              .isAgeCheckBoxValue ==
+                          true
+                      ? 1
+                      : 0,
+                  Provider.of<StandardUserProvider>(context, listen: false)
+                              .isPrivacyCheckBoxValue ==
+                          true
+                      ? 1
+                      : 0,
+                  passcodeController.text);
+        }
+        // else if (Provider.of<StandardUserProvider>(context, listen: false)
+        //         .userImage ==
+        //     null) {
+        //   GlobalView().showToast(AppToastMessages.image_selection);
+        // }
+        else if (!EmailValidator.validate(emailTextEditingController.text)) {
+          GlobalView().showToast(AppToastMessages.valid_email_message);
+        } else {
+          if (!Provider.of<StandardUserProvider>(context, listen: false)
+                  .isAgeCheckBoxValue &&
+              !Provider.of<StandardUserProvider>(context, listen: false)
+                  .isPrivacyCheckBoxValue) {
+            GlobalView().showToast(AppToastMessages.select_checkbox_message);
+          } else if (!Provider.of<StandardUserProvider>(context, listen: false)
+              .isAgeCheckBoxValue) {
+            GlobalView().showToast(AppToastMessages.select_age_checkboxMessage);
+          } else if (!Provider.of<StandardUserProvider>(context, listen: false)
+              .isPrivacyCheckBoxValue) {
+            GlobalView().showToast(
+                AppToastMessages.select_terms_policy_checkbox_message);
+          }
+
+          // GlobalView().showToast(AppToastMessages
+          //     .selectCheckBoxMessage);
+        }
+      } else {
+        GlobalView().showToast(AppToastMessages.empty_value_message);
+      }
+    }
+  }
+
+  void getProfileData() async {
+    String model =
+        PreferenceUtils.getObject(PreferenceUtils.keyStandardUserProfileObject);
+    profileResponse = ProfileResponse.fromJson(json.decode(model));
+    print(profileResponse.user.avatar);
+    if (profileResponse != null) {
+      print("PRefs is not empty");
+      profilePic = profileResponse.user.avatar;
+      firstNameTextEditingController.text = profileResponse.user.firstName;
+      lastNameTextEditingController.text = profileResponse.user.lastName;
+      userNameTextEditingController.text = profileResponse.user.username;
+      emailTextEditingController.text = profileResponse.user.email;
+    } else {
+      print("PRefs is empty");
+    }
+    // setState(() {});
+  }
+
+  void onClickUpdateProfileButton() async {
+    var rng = new Random();
+    // get temporary directory of device.
+    Directory tempDir = await getTemporaryDirectory();
+    // get temporary path from temporary directory.
+    String tempPath = tempDir.path;
+    // create a new file in temporary path with random file name.
+    File file = new File('$tempPath' + (rng.nextInt(100)).toString() + '.png');
+    // call http.get method and pass imageUrl into it to get response.
+    var response = await http.get(Uri.parse(profilePic));
+    // write bodyBytes received in response to file.
+    profilePicFile = await file.writeAsBytes(response.bodyBytes);
+    print("profile_pic_file path-> ${profilePicFile.path}");
+    // print(
+    //     "imageFileBody path-> ${imageFileBody.path}");
+    if (userNameTextEditingController.text.isNotEmpty &&
+        emailTextEditingController.text.isNotEmpty) {
+      if (EmailValidator.validate(emailTextEditingController.text)) {
+        Provider.of<BaseResponseProvider>(context, listen: false).updateProfile(
+            context,
+            firstNameTextEditingController.text,
+            lastNameTextEditingController.text,
+            userNameTextEditingController.text,
+            emailTextEditingController.text,
+            imageFileBody == null ? profilePicFile.path : imageFileBody.path);
+      } else {
+        GlobalView().showToast(AppToastMessages.valid_email_message);
+      }
+    } else {
+      GlobalView().showToast(AppToastMessages.empty_value_message);
+    }
   }
 
   Widget fNameLnameView() {

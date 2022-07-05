@@ -66,7 +66,8 @@ class GlobalView {
           String hintText, TextAlign textAlign,
           {TextInputType textInputType,
           Widget suffixIcon,
-          bool isObscure = false}) =>
+          bool isObscure = false,
+          List<TextInputFormatter> inputFormatters}) =>
       Material(
         shadowColor: BaseColor.shadow_color,
         elevation: 4,
@@ -79,12 +80,12 @@ class GlobalView {
             fontFamily: AppTextStyle.inter_font_family,
             fontSize: 14,
           ),
+          inputFormatters: inputFormatters,
           keyboardType: textInputType ?? TextInputType.text,
           textAlign: textAlign,
           obscureText: isObscure,
           decoration: InputDecoration(
             isDense: true,
-
             focusColor: BaseColor.pure_white_color,
             contentPadding: EdgeInsets.only(left: 60, right: -40),
             prefixIcon: prefixIconView(image),

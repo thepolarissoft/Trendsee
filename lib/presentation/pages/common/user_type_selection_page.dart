@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:trendoapp/constants/api_urls.dart';
 import 'package:trendoapp/constants/app_images.dart';
 import 'package:trendoapp/constants/app_messages.dart';
 import 'package:trendoapp/constants/app_text_style.dart';
 import 'package:trendoapp/constants/base_color.dart';
 import 'package:trendoapp/constants/device_size.dart';
 import 'package:trendoapp/global/view/global_view.dart';
-import 'package:trendoapp/presentation/screens/businessUser/business_user_registration_screen.dart';
 import 'package:trendoapp/presentation/screens/standardUser/simple_user_registration_screen.dart';
 import 'package:trendoapp/utils/preference_utils.dart';
+import 'package:trendoapp/utils/url_launcher.dart';
 
 class UserTypeSelectionPage extends StatelessWidget {
   Widget build(BuildContext context) {
@@ -98,12 +99,14 @@ class UserTypeSelectionPage extends StatelessWidget {
                                 // Navigator.pushNamed(context,
                                 //     AppRoutes.business_user_registration_route_name);
                                 print("business called");
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            BusinessUserRegistrationScreen(
-                                                false)));
+                                // Navigator.push(
+                                //     context,
+                                //     MaterialPageRoute(
+                                //         builder: (context) =>
+                                //             BusinessUserRegistrationScreen(
+                                //                 false)));
+                                UrlLauncher()
+                                    .launchUrl(ApiUrls.sign_up_website_url);
                               },
                               child: Container(
                                 // color: Colors.red,

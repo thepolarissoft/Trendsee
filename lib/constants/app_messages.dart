@@ -7,7 +7,7 @@ class AppMessages {
   static const String forgot_pass_text = "Forgot Password?";
   static const String forgot_passcode_text = "Forgot Passcode?";
   static const String login_btn_text = "Log in";
-  static const String register_btn_text = "Register Now";
+  static const String register_btn_text = "Sign up";
   static const String or_text = "OR";
   static const String verify_email_title = "Verify Email";
   static const String verify_passcode_title = "Verify Passcode";
@@ -314,6 +314,9 @@ class AppMessages {
       "Registration Successfully";
   static const String registerAnotherBusinessTitle =
       "You registered another business with same email, so please login again to verify this new added business.";
+  static const String hintEmailAddress = "Enter Email Address";
+  static const String passcodeText = "Passcode";
+  static const String createPasscodeText = "Create a 5 Digit Passcode";
 
 // Within___ miles from you
 // “Searching____ (selected category) within ____ miles near me”

@@ -86,6 +86,7 @@ class ApiUrls {
   static const String terms_service_url = "https://trendsee.app/terms/";
   static const String privacy_policy_url = "https://trendsee.app/privacy/";
   static const String msa_url = "https://trendsee.app/msa/";
+  static const String sign_up_website_url = "https://trendsee.app/sign-up/#";
   static const String business_error_email = "help@trendsee.app";
   static const String admin_trendsee_email = "admin@trendsee.app";
   static const String passcode_reset_email = "passcodehelp@trendsee.app";
