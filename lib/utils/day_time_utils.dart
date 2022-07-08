@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -66,7 +64,7 @@ class DayTimeUtils {
     @required bool isOpenTime,
   }) {
     var provider = Provider.of<BusinessUserProvider>(context, listen: false);
-    print("TimeZone-> ${provider.selectedTimeZone.value}");
+    // print("TimeZone-> ${provider.selectedTimeZone.value}");
     if (isOpenTime) {
       // for (var i = 0; i < provider.listOpenTime.length; i++) {
       //   print("OPEN Time From DateTimeUtils $i ${provider.listOpenTime[i]}");
@@ -74,7 +72,7 @@ class DayTimeUtils {
       provider.listOpenTime.clear();
       DateTime date = new DateTime.now();
       for (var i = 0; i < list.length; i++) {
-        print("LIST business Hours openTime ${list[i].openTime}");
+        // print("LIST business Hours openTime ${list[i].openTime}");
         if (list[i].openTime == "-1") {
           provider.listOpenTime.add("-1");
         } else {
@@ -101,7 +99,7 @@ class DayTimeUtils {
           provider.listOpenTime.add(open);
         }
 
-        print("listOpenTime-> ${provider.listOpenTime.join(",")}");
+        // print("listOpenTime-> ${provider.listOpenTime.join(",")}");
       }
     } else {
       // for (var i = 0; i < provider.listCloseTime.length; i++) {
@@ -110,7 +108,7 @@ class DayTimeUtils {
       provider.listCloseTime.clear();
       DateTime date = new DateTime.now();
       for (var i = 0; i < list.length; i++) {
-        print("LIST business Hours closeTime ${list[i].closeTime}");
+        // print("LIST business Hours closeTime ${list[i].closeTime}");
         if (list[i].closeTime == "-1") {
           provider.listCloseTime.add("-1");
         } else {
@@ -134,7 +132,7 @@ class DayTimeUtils {
                   dateTimeConverted.toUtc().minute.toString().padLeft(2, "0");
           provider.listCloseTime.add(close);
         }
-        print("listCloseTime-> ${provider.listCloseTime.join(",")}");
+        // print("listCloseTime-> ${provider.listCloseTime.join(",")}");
       }
     }
   }
@@ -185,13 +183,13 @@ class DayTimeUtils {
           //     list[i].openTime != "-1"
           //         ? int.parse(list[i].openTime.split(":")[1])
           //         : 0);
-          print("Selected Hour==-> ${openDate.hour}");
-          print("Selected Minute==-> ${openDate.minute}");
+          // print("Selected Hour==-> ${openDate.hour}");
+          // print("Selected Minute==-> ${openDate.minute}");
           final timeZone = tz.getLocation(provider.selectedTimeZone.utc[0]);
-          print("Timezone----> ${timeZone.name}");
+          // print("Timezone----> ${timeZone.name}");
           DateTime dateTimeConverted = tz.TZDateTime.from(openDate, timeZone);
-          print("Converted Hour==-> ${dateTimeConverted.hour}");
-          print("Converted Minute==-> ${dateTimeConverted.minute}");
+          // print("Converted Hour==-> ${dateTimeConverted.hour}");
+          // print("Converted Minute==-> ${dateTimeConverted.minute}");
           String open = dateTimeConverted.hour.toString() +
               ":" +
               dateTimeConverted.minute.toString();
@@ -232,10 +230,10 @@ class DayTimeUtils {
 
           final timeZone = tz.getLocation(provider.selectedTimeZone.utc[0]);
           dateTimeConverted = tz.TZDateTime.from(closeDate, timeZone);
-          print("Time-> ${dateTimeConverted.hour}");
-          print("Time-> ${dateTimeConverted.minute}");
-          print("dateTimeConverted.weekday-=---> ${dateTimeConverted.weekday}");
-          print("list[i].dayNumber-=---> ${list[i].dayNumber}");
+          // print("Time-> ${dateTimeConverted.hour}");
+          // print("Time-> ${dateTimeConverted.minute}");
+          // print("dateTimeConverted.weekday-=---> ${dateTimeConverted.weekday}");
+          // print("list[i].dayNumber-=---> ${list[i].dayNumber}");
           String close = dateTimeConverted.hour.toString() +
               ":" +
               dateTimeConverted.minute.toString();
@@ -243,14 +241,14 @@ class DayTimeUtils {
         }
 
         if (dateTimeConverted.weekday == list[i].dayNumber) {
-          log("openDate-=-=------->>>>> $openDate");
-          log("closeDate-=-=------->>>>> $closeDate");
-          log("utcDate.hour-=-=------->>>>> ${(utcDate.hour)}");
-          log("openDate.hour-=-=------->>>>> ${(openDate.hour)}");
-          log("closeDate.hour-=-=------->>>>> ${(closeDate.hour)}");
+          // log("openDate-=-=------->>>>> $openDate");
+          // log("closeDate-=-=------->>>>> $closeDate");
+          // log("utcDate.hour-=-=------->>>>> ${(utcDate.hour)}");
+          // log("openDate.hour-=-=------->>>>> ${(openDate.hour)}");
+          // log("closeDate.hour-=-=------->>>>> ${(closeDate.hour)}");
           int closeDiff = closeDate.hour - utcDate.hour;
-          log("Difference between hour-=-=------->>>>> $closeDiff");
-          log("Open-=-=------->>>>> ${utcDate.hour >= openDate.hour && utcDate.hour <= closeDate.hour}");
+          // log("Difference between hour-=-=------->>>>> $closeDiff");
+          // log("Open-=-=------->>>>> ${utcDate.hour >= openDate.hour && utcDate.hour <= closeDate.hour}");
 
           if (closeDiff <= 1 && closeDiff > 0) {
             list[i].businessStatus = AppMessages.closingSoonText;
@@ -276,7 +274,7 @@ class DayTimeUtils {
                 AppMessages.openNowText;
             list[i].businessStatus = AppMessages.open_text;
           }
-          log("list[i].businessStatus-=-=------->>>>> ${list[i].businessStatus}");
+          // log("list[i].businessStatus-=-=------->>>>> ${list[i].businessStatus}");
         }
       }
     }

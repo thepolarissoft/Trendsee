@@ -67,7 +67,9 @@ class GlobalView {
           {TextInputType textInputType,
           Widget suffixIcon,
           bool isObscure = false,
-          List<TextInputFormatter> inputFormatters}) =>
+          List<TextInputFormatter> inputFormatters,
+          bool isReadOnly,
+          Function onTap}) =>
       Material(
         shadowColor: BaseColor.shadow_color,
         elevation: 4,
@@ -84,6 +86,12 @@ class GlobalView {
           keyboardType: textInputType ?? TextInputType.text,
           textAlign: textAlign,
           obscureText: isObscure,
+          readOnly: isReadOnly ?? false,
+          onTap: () {
+            if (onTap != null) {
+              onTap();
+            }
+          },
           decoration: InputDecoration(
             isDense: true,
             focusColor: BaseColor.pure_white_color,
@@ -180,7 +188,8 @@ class GlobalView {
       );
 
   Widget textFieldViewPhone(String image, TextEditingController controller,
-          String hintText, TextAlign textAlign) =>
+          String hintText, TextAlign textAlign,
+          {bool isReadOnly, Function onTap}) =>
       Material(
         shadowColor: BaseColor.shadow_color,
         elevation: 4,
@@ -196,6 +205,12 @@ class GlobalView {
           ),
           inputFormatters: [LengthLimitingTextInputFormatter(10)],
           textAlign: textAlign,
+          readOnly: isReadOnly ?? false,
+          onTap: () {
+            if (onTap != null) {
+              onTap();
+            }
+          },
           decoration: InputDecoration(
             isDense: true,
             focusColor: BaseColor.pure_white_color,

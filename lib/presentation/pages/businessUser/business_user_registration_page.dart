@@ -176,13 +176,12 @@ class _BusinessUserRegistrationPageState
     // return ListenableProvider<BusinessUserProvider>(
     //     create: (_) => BusinessUserProvider(),
     //     builder: (context, child) {
-    return WillPopScope(
-      onWillPop: () async {
-        Provider.of<BusinessUserProvider>(context, listen: false)
-            .isVisibleMetropolitanCity = false;
-        return true;
-      },
-      child: GestureDetector(
+    return WillPopScope(onWillPop: () async {
+      Provider.of<BusinessUserProvider>(context, listen: false)
+          .isVisibleMetropolitanCity = false;
+      return true;
+    }, child: Consumer<BusinessUserProvider>(builder: (_, provider, child) {
+      return GestureDetector(
         onTap: () {
           FocusScope.of(context).unfocus();
         },
@@ -238,73 +237,89 @@ class _BusinessUserRegistrationPageState
                             child: Center(
                               child: Stack(
                                 children: [
-                                  Consumer<BusinessUserProvider>(
-                                    builder: (_, provider, child) {
-                                      return Container(
-                                        height:
-                                            DeviceSize().deviceWidth(context) /
-                                                    3 -
-                                                20,
-                                        width:
-                                            DeviceSize().deviceWidth(context) /
-                                                    3 -
-                                                20,
-                                        decoration: BoxDecoration(
-                                          color:
-                                              BaseColor.terms_policy_text_color,
-                                          shape: BoxShape.circle,
-                                          image: DecorationImage(
-                                              image: widget.isEditable
-                                                  ? _imageFile == null
-                                                      ? businessUserResponse
-                                                                      .avatar !=
-                                                                  null &&
-                                                              businessUserResponse
-                                                                      .avatar
-                                                                      .length >
-                                                                  0
-                                                          ? NetworkImage(
-                                                              businessUserResponse
-                                                                  .avatar)
-                                                          : AssetImage(AppImages
-                                                              .default_profile_Pic)
-                                                      : FileImage(
-                                                          // File(_imageFile.path),
-                                                          provider.userImage)
-                                                  : provider.userImage == null
-                                                      ? AssetImage(AppImages
+                                  Container(
+                                    height:
+                                        DeviceSize().deviceWidth(context) / 3 -
+                                            20,
+                                    width:
+                                        DeviceSize().deviceWidth(context) / 3 -
+                                            20,
+                                    decoration: BoxDecoration(
+                                      color: BaseColor.terms_policy_text_color,
+                                      shape: BoxShape.circle,
+                                      image: DecorationImage(
+                                          image: widget.isEditable
+                                              ? _imageFile == null
+                                                  ? businessUserResponse
+                                                                  .avatar !=
+                                                              null &&
+                                                          businessUserResponse
+                                                                  .avatar
+                                                                  .length >
+                                                              0
+                                                      ? NetworkImage(
+                                                          businessUserResponse
+                                                              .avatar)
+                                                      : AssetImage(AppImages
                                                           .default_profile_Pic)
-                                                      : FileImage(
-                                                          // File(imageFileBody.path),
-                                                          // Provider.of<StandardUserProvider>(
-                                                          //         context,
-                                                          //         listen: false)
-                                                          //     .userImage
-                                                          provider.userImage),
-                                              // NetworkImage(
-                                              //     businessUserResponse
-                                              //         .avatar),
-                                              fit: BoxFit.cover),
-                                        ),
-                                        // child: _imageFile == null
-                                        //     ? Text("not selected")
-                                        //     : Image.file(
-                                        //         File(_imageFile.path),
-                                        //         width: 100,
-                                        //         height: 100,
-                                        //         fit: BoxFit.fitHeight,
-                                        //       ),
-                                      );
-                                    },
+                                                  : FileImage(
+                                                      // File(_imageFile.path),
+                                                      provider.userImage)
+                                              : provider.userImage == null
+                                                  ? AssetImage(AppImages
+                                                      .default_profile_Pic)
+                                                  : FileImage(
+                                                      // File(imageFileBody.path),
+                                                      // Provider.of<StandardUserProvider>(
+                                                      //         context,
+                                                      //         listen: false)
+                                                      //     .userImage
+                                                      provider.userImage),
+                                          // NetworkImage(
+                                          //     businessUserResponse
+                                          //         .avatar),
+                                          fit: BoxFit.cover),
+                                    ),
+                                    // child: _imageFile == null
+                                    //     ? Text("not selected")
+                                    //     : Image.file(
+                                    //         File(_imageFile.path),
+                                    //         width: 100,
+                                    //         height: 100,
+                                    //         fit: BoxFit.fitHeight,
+                                    //       ),
                                   ),
                                   Positioned(
                                     bottom: 0,
                                     right: 0,
                                     child: GestureDetector(
                                       onTap: () {
-                                        print("picker called");
-                                        _showPicker(
-                                            context, AppMessages.profile_text);
+                                        if (widget.isEditable &&
+                                            provider.businessUserProfileResponse
+                                                    .user.currentPlan
+                                                    .toLowerCase() ==
+                                                AppMessages.freeText) {
+                                          DialogUtils.displayDialogCallBack(
+                                                  context,
+                                                  "",
+                                                  "",
+                                                  AppMessages
+                                                      .selectDiffPlanText,
+                                                  "",
+                                                  AppMessages.ok_text,
+                                                  AppMessages.viewPlansHereText)
+                                              .then((value) {
+                                            if (value ==
+                                                AppMessages.viewPlansHereText) {
+                                              UrlLauncher().launchUrl(
+                                                  ApiUrls.sign_up_website_url);
+                                            }
+                                          });
+                                        } else {
+                                          print("picker called");
+                                          _showPicker(context,
+                                              AppMessages.profile_text);
+                                        }
                                       },
                                       child: Container(
                                         height:
@@ -355,7 +370,33 @@ class _BusinessUserRegistrationPageState
                               businessWebsiteTextEditingController,
                               AppMessages.hint_business_website,
                               AppTextStyle.start_text_align,
-                              textInputType: TextInputType.url),
+                              textInputType: TextInputType.url,
+                              isReadOnly: widget.isEditable &&
+                                  provider.businessUserProfileResponse.user
+                                          .currentPlan
+                                          .toLowerCase() ==
+                                      AppMessages.freeText, onTap: () {
+                            if (widget.isEditable &&
+                                provider.businessUserProfileResponse.user
+                                        .currentPlan
+                                        .toLowerCase() ==
+                                    AppMessages.freeText) {
+                              DialogUtils.displayDialogCallBack(
+                                      context,
+                                      "",
+                                      "",
+                                      AppMessages.selectDiffPlanText,
+                                      "",
+                                      AppMessages.ok_text,
+                                      AppMessages.viewPlansHereText)
+                                  .then((value) {
+                                if (value == AppMessages.viewPlansHereText) {
+                                  UrlLauncher()
+                                      .launchUrl(ApiUrls.sign_up_website_url);
+                                }
+                              });
+                            }
+                          }),
                           GlobalView().sizedBoxView(10),
                           Container(
                             padding: EdgeInsets.symmetric(vertical: 5),
@@ -755,11 +796,36 @@ class _BusinessUserRegistrationPageState
                                 11),
                           ),
                           GlobalView().textFieldViewPhone(
-                            AppImages.ic_phone,
-                            otherPhoneTextEditingController,
-                            AppMessages.hint_other_phone_number,
-                            AppTextStyle.start_text_align,
-                          ),
+                              AppImages.ic_phone,
+                              otherPhoneTextEditingController,
+                              AppMessages.hint_other_phone_number,
+                              AppTextStyle.start_text_align,
+                              isReadOnly: widget.isEditable &&
+                                  provider.businessUserProfileResponse.user
+                                          .currentPlan
+                                          .toLowerCase() ==
+                                      AppMessages.freeText, onTap: () {
+                            if (widget.isEditable &&
+                                provider.businessUserProfileResponse.user
+                                        .currentPlan
+                                        .toLowerCase() ==
+                                    AppMessages.freeText) {
+                              DialogUtils.displayDialogCallBack(
+                                      context,
+                                      "",
+                                      "",
+                                      AppMessages.selectDiffPlanText,
+                                      "",
+                                      AppMessages.ok_text,
+                                      AppMessages.viewPlansHereText)
+                                  .then((value) {
+                                if (value == AppMessages.viewPlansHereText) {
+                                  UrlLauncher()
+                                      .launchUrl(ApiUrls.sign_up_website_url);
+                                }
+                              });
+                            }
+                          }),
                           // GlobalView().sizedBoxView(10),
                           // Container(
                           //   padding: EdgeInsets.symmetric(vertical: 5),
@@ -884,8 +950,8 @@ class _BusinessUserRegistrationPageState
             ],
           ),
         ),
-      ),
-    );
+      );
+    }));
     // });
   }
 

@@ -317,6 +317,12 @@ class AppMessages {
   static const String hintEmailAddress = "Enter Email Address";
   static const String passcodeText = "Passcode";
   static const String createPasscodeText = "Create a 5 Digit Passcode";
+  static const String freeText = "free";
+  static const String featureNotAvailableMsg =
+      "This feature is not available for this business";
+  static const String selectDiffPlanText =
+      "Select a different subscription plan to change this info";
+  static const String viewPlansHereText = "View plans here";
 
 // Within___ miles from you
 // “Searching____ (selected category) within ____ miles near me”

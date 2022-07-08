@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:trendoapp/constants/api_urls.dart';
 import 'package:trendoapp/constants/app_images.dart';
 import 'package:trendoapp/constants/app_messages.dart';
 import 'package:trendoapp/constants/app_routes.dart';
@@ -510,11 +511,32 @@ class _BusinessProfileScreenState extends State<BusinessProfileScreen> {
                                 GlobalView().sizedBoxView(5),
                                 GestureDetector(
                                   onTap: () {
-                                    String url = profile
-                                        .businessUserProfileResponse
-                                        .user
-                                        .businessWebsite;
-                                    UrlLauncher().launchUrl(url);
+                                    if (profile.businessUserProfileResponse.user
+                                            .currentPlan
+                                            .toLowerCase() ==
+                                        AppMessages.freeText) {
+                                      DialogUtils.displayDialogCallBack(
+                                              context,
+                                              "",
+                                              "",
+                                              AppMessages.selectDiffPlanText,
+                                              "",
+                                              AppMessages.ok_text,
+                                              AppMessages.viewPlansHereText)
+                                          .then((value) {
+                                        if (value ==
+                                            AppMessages.viewPlansHereText) {
+                                          UrlLauncher().launchUrl(
+                                              ApiUrls.sign_up_website_url);
+                                        }
+                                      });
+                                    } else {
+                                      String url = profile
+                                          .businessUserProfileResponse
+                                          .user
+                                          .businessWebsite;
+                                      UrlLauncher().launchUrl(url);
+                                    }
                                   },
                                   child: GlobalView().wrappedButtonFilledView(
                                       context, AppMessages.visit_site_text),
@@ -595,7 +617,28 @@ class _BusinessProfileScreenState extends State<BusinessProfileScreen> {
                                   padding: const EdgeInsets.only(left: 10),
                                   child: GestureDetector(
                                     onTap: () {
-                                      onClickAddKeywordButton();
+                                      if (profile.businessUserProfileResponse
+                                              .user.currentPlan
+                                              .toLowerCase() ==
+                                          AppMessages.freeText) {
+                                        DialogUtils.displayDialogCallBack(
+                                                context,
+                                                "",
+                                                "",
+                                                AppMessages.selectDiffPlanText,
+                                                "",
+                                                AppMessages.ok_text,
+                                                AppMessages.viewPlansHereText)
+                                            .then((value) {
+                                          if (value ==
+                                              AppMessages.viewPlansHereText) {
+                                            UrlLauncher().launchUrl(
+                                                ApiUrls.sign_up_website_url);
+                                          }
+                                        });
+                                      } else {
+                                        onClickAddKeywordButton();
+                                      }
                                     },
                                     child: GlobalView().wrappedButtonFilledView(
                                         context, AppMessages.add_text),
@@ -707,12 +750,32 @@ class _BusinessProfileScreenState extends State<BusinessProfileScreen> {
                         GestureDetector(
                           onTap: () async {
                             print("Call now");
-                            String url =
-                                'tel:${profile.businessUserProfileResponse.user.businessPhone}';
-                            if (await canLaunch(url)) {
-                              await launch(url);
+                            if (profile.businessUserProfileResponse.user
+                                    .currentPlan
+                                    .toLowerCase() ==
+                                AppMessages.freeText) {
+                              DialogUtils.displayDialogCallBack(
+                                      context,
+                                      "",
+                                      "",
+                                      AppMessages.selectDiffPlanText,
+                                      "",
+                                      AppMessages.ok_text,
+                                      AppMessages.viewPlansHereText)
+                                  .then((value) {
+                                if (value == AppMessages.viewPlansHereText) {
+                                  UrlLauncher()
+                                      .launchUrl(ApiUrls.sign_up_website_url);
+                                }
+                              });
                             } else {
-                              throw 'Could not launch $url';
+                              String url =
+                                  'tel:${profile.businessUserProfileResponse.user.businessPhone}';
+                              if (await canLaunch(url)) {
+                                await launch(url);
+                              } else {
+                                throw 'Could not launch $url';
+                              }
                             }
                           },
                           child: Align(

@@ -603,11 +603,28 @@ class _BusinessDetailsScreenState extends State<BusinessDetailsScreen> {
                                           GlobalView().sizedBoxView(10),
                                           GestureDetector(
                                             onTap: () {
-                                              String url = provider
-                                                  .businessDetailsResponse
-                                                  .business
-                                                  .businessWebsite;
-                                              UrlLauncher().launchUrl(url);
+                                              if (provider
+                                                      .businessDetailsResponse
+                                                      .business
+                                                      .currentPlan
+                                                      .toLowerCase() ==
+                                                  AppMessages.freeText) {
+                                                DialogUtils.displayDialogCallBack(
+                                                    context,
+                                                    "",
+                                                    "",
+                                                    AppMessages
+                                                        .featureNotAvailableMsg,
+                                                    "",
+                                                    AppMessages.ok_text,
+                                                    "");
+                                              } else {
+                                                String url = provider
+                                                    .businessDetailsResponse
+                                                    .business
+                                                    .businessWebsite;
+                                                UrlLauncher().launchUrl(url);
+                                              }
                                             },
                                             child: GlobalView()
                                                 .wrappedButtonFilledView(
@@ -664,13 +681,27 @@ class _BusinessDetailsScreenState extends State<BusinessDetailsScreen> {
                                   GlobalView().sizedBoxView(10),
                                   GestureDetector(
                                     onTap: () async {
-                                      print("Call now called");
-                                      String url =
-                                          'tel:${provider.businessDetailsResponse.business.businessPhone}';
-                                      if (await canLaunch(url)) {
-                                        await launch(url);
+                                      if (provider.businessDetailsResponse
+                                              .business.currentPlan
+                                              .toLowerCase() ==
+                                          AppMessages.freeText) {
+                                        DialogUtils.displayDialogCallBack(
+                                            context,
+                                            "",
+                                            "",
+                                            AppMessages.featureNotAvailableMsg,
+                                            "",
+                                            AppMessages.ok_text,
+                                            "");
                                       } else {
-                                        throw 'Could not launch $url';
+                                        print("Call now called");
+                                        String url =
+                                            'tel:${provider.businessDetailsResponse.business.businessPhone}';
+                                        if (await canLaunch(url)) {
+                                          await launch(url);
+                                        } else {
+                                          throw 'Could not launch $url';
+                                        }
                                       }
                                     },
                                     child: Align(
