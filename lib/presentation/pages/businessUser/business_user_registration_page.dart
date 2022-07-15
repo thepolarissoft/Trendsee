@@ -1289,8 +1289,29 @@ class _BusinessUserRegistrationPageState
                     return index == businessUser.listImageUrl.length
                         ? GestureDetector(
                             onTap: () {
-                              isVideo = true;
-                              _showPicker(context, AppMessages.media_text);
+                              if (widget.isEditable &&
+                                  businessUser.businessUserProfileResponse.user
+                                          .currentPlan
+                                          .toLowerCase() ==
+                                      AppMessages.freeText) {
+                                DialogUtils.displayDialogCallBack(
+                                        context,
+                                        "",
+                                        "",
+                                        AppMessages.selectDiffPlanText,
+                                        "",
+                                        AppMessages.ok_text,
+                                        AppMessages.viewPlansHereText)
+                                    .then((value) {
+                                  if (value == AppMessages.viewPlansHereText) {
+                                    UrlLauncher()
+                                        .launchUrl(ApiUrls.sign_up_website_url);
+                                  }
+                                });
+                              } else {
+                                isVideo = true;
+                                _showPicker(context, AppMessages.media_text);
+                              }
                             },
                             child: Container(
                                 padding: EdgeInsets.all(
@@ -1353,12 +1374,36 @@ class _BusinessUserRegistrationPageState
                                     print("Delete called");
                                     print(
                                         "listImageUrl LENGTH-> ${businessUser.listImageUrl.length}");
-                                    if (businessUser.listImageUrl.isNotEmpty) {
-                                      Provider.of<BusinessUserProvider>(context,
-                                              listen: false)
-                                          .removeImageFromList(index);
-                                      // .deleteFromBusinessUserImagesList(
-                                      //     index);
+                                    if (widget.isEditable &&
+                                        businessUser.businessUserProfileResponse
+                                                .user.currentPlan
+                                                .toLowerCase() ==
+                                            AppMessages.freeText) {
+                                      DialogUtils.displayDialogCallBack(
+                                              context,
+                                              "",
+                                              "",
+                                              AppMessages.selectDiffPlanText,
+                                              "",
+                                              AppMessages.ok_text,
+                                              AppMessages.viewPlansHereText)
+                                          .then((value) {
+                                        if (value ==
+                                            AppMessages.viewPlansHereText) {
+                                          UrlLauncher().launchUrl(
+                                              ApiUrls.sign_up_website_url);
+                                        }
+                                      });
+                                    } else {
+                                      if (businessUser
+                                          .listImageUrl.isNotEmpty) {
+                                        Provider.of<BusinessUserProvider>(
+                                                context,
+                                                listen: false)
+                                            .removeImageFromList(index);
+                                        // .deleteFromBusinessUserImagesList(
+                                        //     index);
+                                      }
                                     }
                                   },
                                   child: Image.asset(
