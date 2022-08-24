@@ -5,15 +5,15 @@ import 'package:trendoapp/api/requests/verify_otp_by_business_id_request_body.da
 import 'package:trendoapp/constants/api_urls.dart';
 
 class VerifyOtpByBusinessIdRequest implements IHttpRequest {
-  int businessId;
+  int? businessId;
   @override
-  String absolutePath = ApiUrls.verify_otp_by_id_url;
+  String? absolutePath = ApiUrls.verify_otp_by_id_url;
 
   @override
-  Object body;
+  Object? body;
 
   @override
-  HttpMethod httpMethod = HttpMethod.POST;
+  HttpMethod? httpMethod = HttpMethod.POST;
 
   @override
   Map<String, dynamic> get headers {

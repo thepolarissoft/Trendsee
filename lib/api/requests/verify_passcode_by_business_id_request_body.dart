@@ -4,5 +4,5 @@ class VerifyPasscodeByBusinessIdRequestBody {
   int businessId;
   int passcode;
   VerifyPasscodeByBusinessIdRequestBody(
-      {@required this.businessId, @required this.passcode});
+      {required this.businessId, required this.passcode});
 }

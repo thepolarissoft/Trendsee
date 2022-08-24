@@ -12,8 +12,8 @@ class AccessToken {
   }
 
   bool checkTokenExpiry({
-    @required BuildContext context,
-    @required Response response,
+    required BuildContext context,
+    required Response response,
   }) {
     // if (response.statusCode == 401)
     if (response.statusCode == 401 

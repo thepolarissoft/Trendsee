@@ -35,17 +35,17 @@ Widget titleView(BuildContext context) => Row(
     );
 
 class ResetApplyView extends StatefulWidget {
-  ResetApplyView({Key key, @required this.route, @required this.distanceRadius})
+  ResetApplyView({Key? key, required this.route, required this.distanceRadius})
       : super(key: key);
   String route;
-  String distanceRadius;
+  String? distanceRadius;
   @override
   State<ResetApplyView> createState() => _ResetApplyViewState();
 }
 
 class _ResetApplyViewState extends State<ResetApplyView> {
-  FilterProvider filterProvider;
-  int selectedRadiusValue;
+  FilterProvider? filterProvider;
+  int? selectedRadiusValue;
   @override
   Widget build(BuildContext context) {
     filterProvider = Provider.of<FilterProvider>(context, listen: false);
@@ -82,29 +82,29 @@ class _ResetApplyViewState extends State<ResetApplyView> {
     print("Apply Clicked");
 
     if (widget.route.toLowerCase() == "search") {
-      if (filterProvider.isCitySelected) {
+      if (filterProvider!.isCitySelected) {
         selectedRadiusValue = 0;
-        filterProvider.setDistanceRadius('0');
+        filterProvider!.setDistanceRadius('0');
       } else {
-        filterProvider.citySearchController.text = "";
-        filterProvider.setCityValue("");
+        filterProvider!.citySearchController.text = "";
+        filterProvider!.setCityValue("");
       }
     }
 
-    filterProvider.setCityValue(filterProvider.citySearchController.text);
+    filterProvider!.setCityValue(filterProvider!.citySearchController.text);
     Provider.of<HomeFeedResponseProvider>(context, listen: false)
         .homeFeedResponse = null;
     print(filterProvider);
-    print("City-> ${filterProvider.selectedMetropolitanCityInfo}");
+    print("City-> ${filterProvider!.selectedMetropolitanCityInfo}");
 
     if (widget.route.toLowerCase() == "home") {
       HomeListData().applyHomeData(context);
       Navigator.pop(context);
     } else if (widget.route.toLowerCase() == "search") {
-      print("IS CITY SELECTED ${filterProvider.isCitySelected}");
-      if (filterProvider.isCitySelected &&
+      print("IS CITY SELECTED ${filterProvider!.isCitySelected}");
+      if (filterProvider!.isCitySelected &&
           // filterProvider.citySearchController.text == "" &&
-          filterProvider.selectedMetropolitanCityInfo == "") {
+          filterProvider!.selectedMetropolitanCityInfo == "") {
         print("Toast called");
         GlobalView().showToast(AppToastMessages.enter_city_for_filter_message);
       } else {
@@ -116,11 +116,11 @@ class _ResetApplyViewState extends State<ResetApplyView> {
   }
 
   void onClickResetButton() {
-    filterProvider.citySearchController.text = "";
-    filterProvider.setCityValue(filterProvider.citySearchController.text);
+    filterProvider!.citySearchController.text = "";
+    filterProvider!.setCityValue(filterProvider!.citySearchController.text);
     Provider.of<HomeFeedResponseProvider>(context, listen: false)
         .homeFeedResponse = null;
-    filterProvider.setDistanceRadius("5");
+    filterProvider!.setDistanceRadius("5");
     if (widget.route.toLowerCase() == "home") {
       HomeListData().resetHomeData(context);
     } else if (widget.route.toLowerCase() == "search") {
@@ -130,6 +130,6 @@ class _ResetApplyViewState extends State<ResetApplyView> {
     Navigator.pop(context);
     Provider.of<FilterProvider>(context, listen: false)
         .selectedMetropolitanCityInfo = "";
-    filterProvider.citySearchController.text = "";
+    filterProvider!.citySearchController.text = "";
   }
 }

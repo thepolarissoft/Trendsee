@@ -13,7 +13,7 @@ import 'package:trendoapp/presentation/screens/standardUser/friendsTabs/business
 import 'package:trendoapp/providers/home_feed_response_provider.dart';
 
 class MyAllCheckInsPage extends StatefulWidget {
-  const MyAllCheckInsPage({Key key}) : super(key: key);
+  const MyAllCheckInsPage({Key? key}) : super(key: key);
 
   @override
   _MyAllCheckInsPageState createState() => _MyAllCheckInsPageState();
@@ -45,10 +45,10 @@ class _MyAllCheckInsPageState extends State<MyAllCheckInsPage> {
   void getMoreMyCheckInsData() {
     HomeFeedResponse homeFeedResponse =
         Provider.of<HomeFeedResponseProvider>(context, listen: false)
-            .homeFeedResponse;
-    print("nextPageUrl-->> ${homeFeedResponse.data.nextPageUrl}");
+            .homeFeedResponse!;
+    print("nextPageUrl-->> ${homeFeedResponse.data!.nextPageUrl}");
     if (homeFeedResponse != null) {
-      if (homeFeedResponse.data.nextPageUrl != null) {
+      if (homeFeedResponse.data!.nextPageUrl != null) {
         page++;
         Provider.of<HomeFeedResponseProvider>(context, listen: false)
             .getMyCheckInsList(context, page);

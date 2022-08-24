@@ -17,19 +17,19 @@ import 'package:trendoapp/providers/business_user_provider.dart';
 class MapScreen extends StatefulWidget {
   // Completer<GoogleMapController> _controller = Completer();
   bool isTemp;
-  MapScreen({@required this.isTemp});
+  MapScreen({required this.isTemp});
   @override
   _MapScreenState createState() => _MapScreenState();
 }
 
 class _MapScreenState extends State<MapScreen> {
-  LatLng latlong;
-  CameraPosition _cameraPosition;
-  GoogleMapController _controller;
+  LatLng? latlong;
+  late CameraPosition _cameraPosition;
+  GoogleMapController? _controller;
   // Set<Marker> _markers = {};
-  BitmapDescriptor pinLocationIcon;
-  Position position;
-  LatLng lastMapPosition;
+  BitmapDescriptor? pinLocationIcon;
+  late Position position;
+  LatLng? lastMapPosition;
   TextEditingController locationController = TextEditingController();
 
   @override
@@ -86,7 +86,7 @@ class _MapScreenState extends State<MapScreen> {
                         initialCameraPosition: _cameraPosition,
                         onMapCreated: (GoogleMapController controller) {
                           _controller = (controller);
-                          _controller.animateCamera(
+                          _controller!.animateCamera(
                               CameraUpdate.newCameraPosition(_cameraPosition));
                           print("_cameraPosition-> $_cameraPosition");
                         },
@@ -154,12 +154,12 @@ class _MapScreenState extends State<MapScreen> {
     print(position.longitude);
     latlong = new LatLng(position.latitude, position.longitude);
     lastMapPosition = latlong;
-    _cameraPosition = CameraPosition(target: latlong, zoom: 14);
+    _cameraPosition = CameraPosition(target: latlong!, zoom: 14);
     print("_cameraPosition=-=-=-=>$_cameraPosition");
     if (_controller != null)
-      _controller.animateCamera(
+      _controller!.animateCamera(
         CameraUpdate.newCameraPosition(
-          CameraPosition(target: lastMapPosition, zoom: 14),
+          CameraPosition(target: lastMapPosition!, zoom: 14),
         ),
       );
     // _markers.add(Marker(
@@ -178,22 +178,22 @@ class _MapScreenState extends State<MapScreen> {
 
   void _onCameraMove(CameraPosition position) {
     lastMapPosition = position.target;
-    print("Latitude-->> ${lastMapPosition.latitude}");
-    print("Longitude-->> ${lastMapPosition.longitude}");
+    print("Latitude-->> ${lastMapPosition!.latitude}");
+    print("Longitude-->> ${lastMapPosition!.longitude}");
   }
 
   void onClick() {
     var provider = Provider.of<BusinessUserProvider>(context, listen: false);
     if (widget.isTemp == true) {
-      bool isAvailableData;
-      if (provider.listLatLong != null && provider.listLatLong.length > 0) {
-        for (var i = 0; i < provider.listLatLong.length; i++) {
-          if ((double.parse(provider.listLatLong[i].latitude)
+      bool? isAvailableData;
+      if (provider.listLatLong != null && provider.listLatLong!.length > 0) {
+        for (var i = 0; i < provider.listLatLong!.length; i++) {
+          if ((double.parse(provider.listLatLong![i].latitude!)
                       .toStringAsFixed(5) ==
-                  lastMapPosition.latitude.toStringAsFixed(5)) ||
-              (double.parse(provider.listLatLong[i].longitude)
+                  lastMapPosition!.latitude.toStringAsFixed(5)) ||
+              (double.parse(provider.listLatLong![i].longitude!)
                       .toStringAsFixed(5) ==
-                  lastMapPosition.longitude.toStringAsFixed(5))) {
+                  lastMapPosition!.longitude.toStringAsFixed(5))) {
             isAvailableData = true;
           } else {
             isAvailableData = false;
@@ -208,19 +208,19 @@ class _MapScreenState extends State<MapScreen> {
         } else {
           provider.addBusinessLatlong(
             context,
-            lastMapPosition.latitude.toStringAsFixed(5),
-            lastMapPosition.longitude.toStringAsFixed(5),
+            lastMapPosition!.latitude.toStringAsFixed(5),
+            lastMapPosition!.longitude.toStringAsFixed(5),
             0,
       
             locationController.text,
-            provider.businessUserProfileResponse.user.id.toString(),
+            provider.businessUserProfileResponse!.user!.id.toString(),
           );
           Navigator.of(context).pop();
         }
       }
     } else {
       provider.setCenterLocation(
-          lastMapPosition.latitude, lastMapPosition.longitude);
+          lastMapPosition!.latitude, lastMapPosition!.longitude);
       Navigator.of(context).pop();
     }
   }

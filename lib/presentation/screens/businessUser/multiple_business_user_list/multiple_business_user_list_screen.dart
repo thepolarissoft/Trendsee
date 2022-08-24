@@ -14,10 +14,10 @@ import 'package:trendoapp/providers/verify_otp_provider.dart';
 import 'package:trendoapp/utils/dialog_utils.dart';
 
 class MultipleBusinessUserListSreen extends StatelessWidget {
-  MultipleBusinessUserListArgs args;
+  MultipleBusinessUserListArgs? args;
   MultipleBusinessUserListSreen({
-    Key key,
-    @required this.args,
+    Key? key,
+    required this.args,
   }) : super(key: key);
 
   @override
@@ -95,11 +95,11 @@ class MultipleBusinessUserListSreen extends StatelessWidget {
                             child: Padding(
                               padding: EdgeInsets.only(left: 20, right: 20),
                               child: ListView.builder(
-                                  itemCount: args.listBusinessUsers.length,
+                                  itemCount: args!.listBusinessUsers!.length,
                                   itemBuilder: (_, index) {
                                     return BusinessUserItem(
                                       businessUser:
-                                          args.listBusinessUsers[index],
+                                          args!.listBusinessUsers![index],
                                     );
                                   }),
                             ),
@@ -133,6 +133,6 @@ class MultipleBusinessUserListSreen extends StatelessWidget {
 }
 
 class MultipleBusinessUserListArgs {
-  List<VerifiedUserResponse> listBusinessUsers = [];
-  MultipleBusinessUserListArgs({@required this.listBusinessUsers});
+  List<VerifiedUserResponse>? listBusinessUsers = [];
+  MultipleBusinessUserListArgs({required this.listBusinessUsers});
 }

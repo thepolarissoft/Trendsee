@@ -2,16 +2,16 @@ import 'package:trendoapp/api/common/i_http_request.dart';
 import 'package:trendoapp/constants/api_urls.dart';
 
 class DislikedCommentsRequest implements IHttpRequest {
-  int page;
-  int businessId;
+  int? page;
+  int? businessId;
   @override
-  String absolutePath = ApiUrls.list_disliked_business_url;
+  String? absolutePath = ApiUrls.list_disliked_business_url;
 
   @override
-  Object body;
+  Object? body;
 
   @override
-  HttpMethod httpMethod = HttpMethod.GET;
+  HttpMethod? httpMethod = HttpMethod.GET;
 
   @override
   Map<String, dynamic> get headers {
@@ -28,7 +28,7 @@ class DislikedCommentsRequest implements IHttpRequest {
     return map;
   }
 
-  DislikedCommentsRequest(int page, int businessId) {
+  DislikedCommentsRequest(int page, int? businessId) {
     this.page = page;
     this.businessId = businessId;
   }

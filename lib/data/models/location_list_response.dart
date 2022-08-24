@@ -20,7 +20,7 @@ class LocationListResponse extends Baseresponse {
   //   this.location,
   // }) : super(status: status, statuscode: statuscode, msg: msg);
 
-  List<Location> location;
+  List<Location>? location;
 
   LocationListResponse.fromJson(Map<String, dynamic> json) : super(json) {
     location = json["location"] == null
@@ -34,7 +34,7 @@ class LocationListResponse extends Baseresponse {
         "msg": msg == null ? null : msg,
         "location": location == null
             ? null
-            : List<dynamic>.from(location.map((x) => x.toJson())),
+            : List<dynamic>.from(location!.map((x) => x.toJson())),
       };
 }
 
@@ -43,7 +43,7 @@ class Location {
     this.city,
   });
 
-  String city;
+  String? city;
   bool isChecked = false;
 
   factory Location.fromJson(Map<String, dynamic> json) => Location(

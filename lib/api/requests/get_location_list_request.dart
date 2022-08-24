@@ -3,13 +3,13 @@ import 'package:trendoapp/constants/api_urls.dart';
 
 class GetLocationListRequest implements IHttpRequest {
   @override
-  String absolutePath = ApiUrls.list_location_url;
+  String? absolutePath = ApiUrls.list_location_url;
 
   @override
-  Object body;
+  Object? body;
 
   @override
-  HttpMethod httpMethod = HttpMethod.GET;
+  HttpMethod? httpMethod = HttpMethod.GET;
 
   @override
   Map<String, dynamic> get headers {

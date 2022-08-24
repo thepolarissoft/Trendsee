@@ -16,10 +16,10 @@ class BusinessSelectionView extends StatelessWidget {
   // VoidCallback onClickCheckbox;
   int index;
   BusinessSelectionView({
-    Key key,
-    @required this.verifiedUserResponse,
+    Key? key,
+    required this.verifiedUserResponse,
     // @required this.onClickCheckbox,
-    @required this.index,
+    required this.index,
     // @required this.checkBoxView,
   }) : super(key: key);
 
@@ -35,7 +35,7 @@ class BusinessSelectionView extends StatelessWidget {
               children: [
                 Container(
                   child: GlobalView().textViewWithStartAlign(
-                      verifiedUserResponse.businessName,
+                      verifiedUserResponse.businessName!,
                       AppTextStyle.inter_font_family,
                       AppTextStyle.bold_font_weight,
                       BaseColor.black_color,
@@ -46,7 +46,7 @@ class BusinessSelectionView extends StatelessWidget {
                       verifiedUserResponse.isMobile == 1
                           ? AppMessages.mobile_business_text
                           : verifiedUserResponse.isOnline == 0
-                              ? verifiedUserResponse.businessAddress
+                              ? verifiedUserResponse.businessAddress!
                               : AppMessages.online_business_text,
                       AppTextStyle.inter_font_family,
                       AppTextStyle.normal_font_weight,
@@ -56,7 +56,7 @@ class BusinessSelectionView extends StatelessWidget {
                 GlobalView().sizedBoxView(5),
                 GlobalView().textViewWithStartAlign(
                     AppMessages.within +
-                        verifiedUserResponse.distance +
+                        verifiedUserResponse.distance! +
                         AppMessages.miles_from_text,
                     AppTextStyle.inter_font_family,
                     AppTextStyle.semi_bold_font_weight,
@@ -78,13 +78,13 @@ class BusinessSelectionView extends StatelessWidget {
                   value: verifiedUserResponse.isChecked,
                   checkColor: BaseColor.pure_white_color,
                   activeColor: BaseColor.btn_gradient_end_color1,
-                  onChanged: (bool value) {
+                  onChanged: (bool? value) {
                     // onClickCheckbox();
                     // provider.changeCheckBoxValue(index, value);
                     Provider.of<BusinessListProvider>(context, listen: false)
                         .changeCheckBoxValue(index, value);
                     print(
-                        "CHECKED value-->> ${Provider.of<BusinessListProvider>(context, listen: false).businessListResponse.business.data[index].isChecked = value}");
+                        "CHECKED value-->> ${Provider.of<BusinessListProvider>(context, listen: false).businessListResponse!.business!.data![index].isChecked = value}");
                     // setState(() {
                     //   checkValue = value;
                     // });

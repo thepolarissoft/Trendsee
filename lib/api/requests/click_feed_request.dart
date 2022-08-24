@@ -4,13 +4,13 @@ import 'package:trendoapp/constants/api_urls.dart';
 class ClickFeedRequest implements IHttpRequest {
   String feedId = '';
   @override
-  String absolutePath = ApiUrls.click_feed_url;
+  String? absolutePath = ApiUrls.click_feed_url;
 
   @override
-  Object body;
+  Object? body;
 
   @override
-  HttpMethod httpMethod = HttpMethod.GET;
+  HttpMethod? httpMethod = HttpMethod.GET;
 
   @override
   Map<String, dynamic> get headers {

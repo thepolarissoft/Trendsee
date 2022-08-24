@@ -5,5 +5,5 @@ class ChangePasscodeRequestBody {
   String newPasscode;
 
   ChangePasscodeRequestBody(
-      {@required this.oldPasscode, @required this.newPasscode});
+      {required this.oldPasscode, required this.newPasscode});
 }

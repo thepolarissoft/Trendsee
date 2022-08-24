@@ -1,23 +1,23 @@
 class BusinessUserRegisterRequestBody {
-  String firstName;
-  String lastName;
-  String username;
-  String email;
-  String businessName;
-  String businessAddress;
-  String businessPhone;
-  String latitude;
-  String longitude;
-  String city;
-  String metropolitanArea;
-  String contact;
-  String advertiseMedia;
-  String userType;
-  String isEighteen;
-  String isAcceptedTac;
-  String categoryId;
-  int metropolitanAreaId;
-  int cityId;
+  String? firstName;
+  String? lastName;
+  String? username;
+  String? email;
+  String? businessName;
+  String? businessAddress;
+  String? businessPhone;
+  String? latitude;
+  String? longitude;
+  String? city;
+  String? metropolitanArea;
+  String? contact;
+  String? advertiseMedia;
+  String? userType;
+  String? isEighteen;
+  String? isAcceptedTac;
+  String? categoryId;
+  int? metropolitanAreaId;
+  int? cityId;
 
   BusinessUserRegisterRequestBody(
       String firstName,

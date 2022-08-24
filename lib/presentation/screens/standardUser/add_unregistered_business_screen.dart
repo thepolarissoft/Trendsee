@@ -15,7 +15,7 @@ import 'package:trendoapp/utils/category_utils.dart';
 import 'package:trendoapp/utils/storage_utils.dart';
 
 class AddUnregisteredBusinessScreen extends StatefulWidget {
-  AddUnregisteredBusinessScreen({Key key}) : super(key: key);
+  AddUnregisteredBusinessScreen({Key? key}) : super(key: key);
 
   @override
   State<AddUnregisteredBusinessScreen> createState() =>

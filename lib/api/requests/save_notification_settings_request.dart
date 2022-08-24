@@ -5,15 +5,15 @@ import 'package:trendoapp/api/requests/save_notification_settings_request_body.d
 import 'package:trendoapp/constants/api_urls.dart';
 
 class SaveNotificationSettingsRequest implements IHttpRequest {
-  int allowNotification;
+  int? allowNotification;
   @override
-  String absolutePath = ApiUrls.save_notification_settings_url;
+  String? absolutePath = ApiUrls.save_notification_settings_url;
 
   @override
-  Object body;
+  Object? body;
 
   @override
-  HttpMethod httpMethod = HttpMethod.POST;
+  HttpMethod? httpMethod = HttpMethod.POST;
 
   @override
   Map<String, dynamic> get headers {

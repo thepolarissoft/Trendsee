@@ -70,7 +70,7 @@ class _MyAppState extends State<MyApp> {
       onGenerateRoute: AppRouter().onGenerateRoute,
       builder: (context, child) {
         return MediaQuery(
-          child: child,
+          child: child!,
           data: MediaQuery.of(context)
               .copyWith(textScaleFactor: 1.0), //for restrict system settings
         );

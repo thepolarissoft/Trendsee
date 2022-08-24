@@ -6,13 +6,13 @@ import 'package:trendoapp/constants/api_urls.dart';
 
 class AddUnregisteredBusinessRequest implements IHttpRequest {
   @override
-  String absolutePath = ApiUrls.add_unregistered_business_url;
+  String? absolutePath = ApiUrls.add_unregistered_business_url;
 
   @override
-  Object body;
+  Object? body;
 
   @override
-  HttpMethod httpMethod = HttpMethod.POST;
+  HttpMethod? httpMethod = HttpMethod.POST;
 
   @override
   Map<String, dynamic> get headers {
@@ -26,7 +26,7 @@ class AddUnregisteredBusinessRequest implements IHttpRequest {
 
   AddUnregisteredBusinessRequest(
       AddUnregisteredBusinessRequestBody addUnregisteredBusinessRequestBody) {
-    var map = Map<String, String>();
+    var map = Map<String, String?>();
     map['business_name'] = addUnregisteredBusinessRequestBody.businessName;
     map['latitude'] = addUnregisteredBusinessRequestBody.latitude;
     map['longitude'] = addUnregisteredBusinessRequestBody.longitude;

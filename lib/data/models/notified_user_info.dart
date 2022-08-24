@@ -11,15 +11,15 @@ class NotifiedUserInfo {
     this.sender,
   });
 
-  int id;
-  int receiverId;
-  int senderId;
-  int type;
-  String description;
-  int isRead;
-  DateTime createdAt;
-  DateTime updatedAt;
-  Sender sender;
+  int? id;
+  int? receiverId;
+  int? senderId;
+  int? type;
+  String? description;
+  int? isRead;
+  DateTime? createdAt;
+  DateTime? updatedAt;
+  Sender? sender;
 
   factory NotifiedUserInfo.fromJson(Map<String, dynamic> json) =>
       NotifiedUserInfo(
@@ -45,9 +45,9 @@ class NotifiedUserInfo {
         "type": type == null ? null : type,
         "description": description == null ? null : description,
         "is_read": isRead == null ? null : isRead,
-        "created_at": createdAt == null ? null : createdAt.toIso8601String(),
-        "updated_at": updatedAt == null ? null : updatedAt.toIso8601String(),
-        "sender": sender == null ? null : sender.toJson(),
+        "created_at": createdAt == null ? null : createdAt!.toIso8601String(),
+        "updated_at": updatedAt == null ? null : updatedAt!.toIso8601String(),
+        "sender": sender == null ? null : sender!.toJson(),
       };
 }
 
@@ -59,10 +59,10 @@ class Sender {
     this.avatar,
   });
 
-  int id;
-  String firstName;
-  String lastName;
-  String avatar;
+  int? id;
+  String? firstName;
+  String? lastName;
+  String? avatar;
 
   factory Sender.fromJson(Map<String, dynamic> json) => Sender(
         id: json["id"] == null ? null : json["id"],

@@ -1,6 +1,5 @@
 import 'dart:async';
-
-import 'package:connectivity/connectivity.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -9,17 +8,16 @@ import 'package:trendoapp/providers/connection/connection_provider.dart';
 class NetworkUtils {
   BuildContext context;
 
-  NetworkUtils({@required this.context});
+  NetworkUtils({required this.context});
 
   // String connectionStatus = 'no';
   final Connectivity _connectivity = Connectivity();
   // ignore: cancel_subscriptions
-  StreamSubscription<ConnectivityResult> connectivitySubscription;
+  StreamSubscription<ConnectivityResult>? connectivitySubscription;
 
   Future<void> init() async {
     instance();
-    connectivitySubscription =
-        _connectivity.onConnectivityChanged.listen(updateConnectionStatus);
+    connectivitySubscription = _connectivity.onConnectivityChanged.listen(updateConnectionStatus);
   }
 
   Future<void> instance() async {
@@ -35,20 +33,16 @@ class NetworkUtils {
   Future<void> updateConnectionStatus(ConnectivityResult result) async {
     switch (result) {
       case ConnectivityResult.wifi:
-        Provider.of<ConnectionProvider>(context, listen: false)
-            .setConnectionValue(true);
+        Provider.of<ConnectionProvider>(context, listen: false).setConnectionValue(true);
         break;
       case ConnectivityResult.mobile:
-        Provider.of<ConnectionProvider>(context, listen: false)
-            .setConnectionValue(true);
+        Provider.of<ConnectionProvider>(context, listen: false).setConnectionValue(true);
         break;
       case ConnectivityResult.none:
-        Provider.of<ConnectionProvider>(context, listen: false)
-            .setConnectionValue(false);
+        Provider.of<ConnectionProvider>(context, listen: false).setConnectionValue(false);
         break;
       default:
-        Provider.of<ConnectionProvider>(context, listen: false)
-            .setConnectionValue(true);
+        Provider.of<ConnectionProvider>(context, listen: false).setConnectionValue(true);
         break;
     }
   }

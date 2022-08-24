@@ -6,13 +6,13 @@ import 'package:trendoapp/constants/api_urls.dart';
 
 class ChangePasscodeRequest implements IHttpRequest {
   @override
-  String absolutePath = ApiUrls.change_passcode_url;
+  String? absolutePath = ApiUrls.change_passcode_url;
 
   @override
-  Object body;
+  Object? body;
 
   @override
-  HttpMethod httpMethod = HttpMethod.POST;
+  HttpMethod? httpMethod = HttpMethod.POST;
 
   @override
   Map<String, dynamic> get headers {

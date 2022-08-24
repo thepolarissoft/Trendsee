@@ -4,7 +4,7 @@ import 'package:trendoapp/presentation/pages/common/email_verification_page.dart
 
 // ignore: must_be_immutable
 class EmailVerificationScreen extends StatelessWidget {
-  String email;
+  String? email;
   bool isVerifyByBusinessID;
   int businessID = 0;
   EmailVerificationScreen({

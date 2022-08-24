@@ -4,13 +4,13 @@ import 'package:trendoapp/constants/api_urls.dart';
 
 class SignInRequest implements IHttpRequest {
   @override
-  String absolutePath = ApiUrls.signin_url;
+  String? absolutePath = ApiUrls.signin_url;
 
   @override
-  Object body;
+  Object? body;
 
   @override
-  HttpMethod httpMethod = HttpMethod.POST;
+  HttpMethod? httpMethod = HttpMethod.POST;
 
   @override
   Map<String, dynamic> get headers {
@@ -23,7 +23,7 @@ class SignInRequest implements IHttpRequest {
   }
 
   SignInRequest(SignInRequestBody signInRequestBody) {
-    var map = Map<String, String>();
+    var map = Map<String, String?>();
     map['userInput'] = signInRequestBody.userInput;
     this.body = map;
   }

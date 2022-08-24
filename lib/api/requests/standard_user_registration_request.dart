@@ -4,13 +4,13 @@ import 'package:trendoapp/constants/api_urls.dart';
 
 class StandardUserRegistrationRequest implements IHttpRequest {
   @override
-  String absolutePath = ApiUrls.user_register_url;
+  String? absolutePath = ApiUrls.user_register_url;
 
   @override
-  Object body;
+  Object? body;
 
   @override
-  HttpMethod httpMethod = HttpMethod.POST;
+  HttpMethod? httpMethod = HttpMethod.POST;
 
   @override
   Map<String, String> get headers {

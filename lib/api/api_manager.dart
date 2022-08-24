@@ -121,11 +121,8 @@ class ApiManager {
   ) {
     Completer<Baseresponse> completer = new Completer();
     StandardUserRegistrationRequestBody standardUserRegistrationRequestBody =
-        new StandardUserRegistrationRequestBody(
-            firstName, lastName, username, email, dob, avatar, userType);
-    StandardUserRegistrationRequest standardUserRegistrationRequest =
-        new StandardUserRegistrationRequest(
-            standardUserRegistrationRequestBody);
+        new StandardUserRegistrationRequestBody(firstName, lastName, username, email, dob, avatar, userType);
+    StandardUserRegistrationRequest standardUserRegistrationRequest = new StandardUserRegistrationRequest(standardUserRegistrationRequestBody);
     Api(context: context)
         .request(standardUserRegistrationRequest)
         .then((response) => {
@@ -136,17 +133,13 @@ class ApiManager {
                       // Baseresponse.fromJson(json.decode(response.body))),
                       Baseresponse(json.decode(response.body))),
                 }
-              else if (AccessToken()
-                      .checkTokenExpiry(context: context, response: response) ==
-                  true)
+              else if (AccessToken().checkTokenExpiry(context: context, response: response) == true)
                 {
-                  completer.completeError(ExceptionHelper()
-                      .handleExceptions(ExceptionType.TokenExpiredException)),
+                  completer.completeError(ExceptionHelper().handleExceptions(ExceptionType.TokenExpiredException)),
                 }
               else
                 {
-                  completer.completeError(ExceptionHelper()
-                      .handleExceptions(ExceptionType.HttpException)),
+                  completer.completeError(ExceptionHelper().handleExceptions(ExceptionType.HttpException)),
                 }
             })
         .catchError((error) {
@@ -158,7 +151,7 @@ class ApiManager {
     return completer.future;
   }
 
-  Future<Baseresponse> sendOTP(String email) {
+  Future<Baseresponse> sendOTP(String? email) {
     Completer<Baseresponse> completer = new Completer();
     SendOtpRequestBody sendOtpRequestBody = new SendOtpRequestBody(email);
     SendOtpRequest sendOtpRequest = new SendOtpRequest(sendOtpRequestBody);
@@ -172,17 +165,13 @@ class ApiManager {
                       // Baseresponse.fromJson(json.decode(response.body))),
                       Baseresponse(json.decode(response.body))),
                 }
-              else if (AccessToken()
-                      .checkTokenExpiry(context: context, response: response) ==
-                  true)
+              else if (AccessToken().checkTokenExpiry(context: context, response: response) == true)
                 {
-                  completer.completeError(ExceptionHelper()
-                      .handleExceptions(ExceptionType.TokenExpiredException)),
+                  completer.completeError(ExceptionHelper().handleExceptions(ExceptionType.TokenExpiredException)),
                 }
               else
                 {
-                  completer.completeError(ExceptionHelper()
-                      .handleExceptions(ExceptionType.HttpException)),
+                  completer.completeError(ExceptionHelper().handleExceptions(ExceptionType.HttpException)),
                 }
             })
         .catchError((error) {
@@ -194,32 +183,25 @@ class ApiManager {
     return completer.future;
   }
 
-  Future<VerifiedOtpResponse> verifyOTP(String email, String otp) {
+  Future<VerifiedOtpResponse> verifyOTP(String? email, String otp) {
     Completer<VerifiedOtpResponse> completer = new Completer();
-    VerifyOtpRequestBody verifyOtpRequestBody =
-        new VerifyOtpRequestBody(email, otp);
-    VerifyOtpRequest verifyOtpRequest =
-        new VerifyOtpRequest(verifyOtpRequestBody);
+    VerifyOtpRequestBody verifyOtpRequestBody = new VerifyOtpRequestBody(email, otp);
+    VerifyOtpRequest verifyOtpRequest = new VerifyOtpRequest(verifyOtpRequestBody);
     Api(context: context)
         .request(verifyOtpRequest)
         .then((response) => {
               print("RESPONSE-> $response"),
               if (response.statusCode == 200)
                 {
-                  completer.complete(
-                      VerifiedOtpResponse.fromJson(json.decode(response.body))),
+                  completer.complete(VerifiedOtpResponse.fromJson(json.decode(response.body))),
                 }
-              else if (AccessToken()
-                      .checkTokenExpiry(context: context, response: response) ==
-                  true)
+              else if (AccessToken().checkTokenExpiry(context: context, response: response) == true)
                 {
-                  completer.completeError(ExceptionHelper()
-                      .handleExceptions(ExceptionType.TokenExpiredException)),
+                  completer.completeError(ExceptionHelper().handleExceptions(ExceptionType.TokenExpiredException)),
                 }
               else
                 {
-                  completer.completeError(ExceptionHelper()
-                      .handleExceptions(ExceptionType.HttpException)),
+                  completer.completeError(ExceptionHelper().handleExceptions(ExceptionType.HttpException)),
                 }
             })
         .catchError((error) {
@@ -241,20 +223,15 @@ class ApiManager {
               print("RESPONSE-> $response"),
               if (response.statusCode == 200)
                 {
-                  completer.complete(
-                      ProfileResponse.fromJson(json.decode(response.body))),
+                  completer.complete(ProfileResponse.fromJson(json.decode(response.body))),
                 }
-              else if (AccessToken()
-                      .checkTokenExpiry(context: context, response: response) ==
-                  true)
+              else if (AccessToken().checkTokenExpiry(context: context, response: response) == true)
                 {
-                  completer.completeError(ExceptionHelper()
-                      .handleExceptions(ExceptionType.TokenExpiredException)),
+                  completer.completeError(ExceptionHelper().handleExceptions(ExceptionType.TokenExpiredException)),
                 }
               else
                 {
-                  completer.completeError(ExceptionHelper()
-                      .handleExceptions(ExceptionType.HttpException)),
+                  completer.completeError(ExceptionHelper().handleExceptions(ExceptionType.HttpException)),
                 }
             })
         .catchError((error) {
@@ -275,20 +252,15 @@ class ApiManager {
               print("RESPONSE-> $response"),
               if (response.statusCode == 200)
                 {
-                  completer.complete(
-                      ProfileResponse.fromJson(json.decode(response.body))),
+                  completer.complete(ProfileResponse.fromJson(json.decode(response.body))),
                 }
-              else if (AccessToken()
-                      .checkTokenExpiry(context: context, response: response) ==
-                  true)
+              else if (AccessToken().checkTokenExpiry(context: context, response: response) == true)
                 {
-                  completer.completeError(ExceptionHelper()
-                      .handleExceptions(ExceptionType.TokenExpiredException)),
+                  completer.completeError(ExceptionHelper().handleExceptions(ExceptionType.TokenExpiredException)),
                 }
               else
                 {
-                  completer.completeError(ExceptionHelper()
-                      .handleExceptions(ExceptionType.HttpException)),
+                  completer.completeError(ExceptionHelper().handleExceptions(ExceptionType.HttpException)),
                 }
             })
         .catchError((error) {
@@ -313,17 +285,13 @@ class ApiManager {
                       // Baseresponse.fromJson(json.decode(response.body))),
                       Baseresponse(json.decode(response.body))),
                 }
-              else if (AccessToken()
-                      .checkTokenExpiry(context: context, response: response) ==
-                  true)
+              else if (AccessToken().checkTokenExpiry(context: context, response: response) == true)
                 {
-                  completer.completeError(ExceptionHelper()
-                      .handleExceptions(ExceptionType.TokenExpiredException)),
+                  completer.completeError(ExceptionHelper().handleExceptions(ExceptionType.TokenExpiredException)),
                 }
               else
                 {
-                  completer.completeError(ExceptionHelper()
-                      .handleExceptions(ExceptionType.HttpException)),
+                  completer.completeError(ExceptionHelper().handleExceptions(ExceptionType.HttpException)),
                 }
             })
         .catchError((error) {
@@ -337,28 +305,22 @@ class ApiManager {
 
   Future<LocationListResponse> getLocationList() {
     Completer<LocationListResponse> completer = new Completer();
-    GetLocationListRequest getLocationListRequest =
-        new GetLocationListRequest();
+    GetLocationListRequest getLocationListRequest = new GetLocationListRequest();
     Api(context: context)
         .request(getLocationListRequest)
         .then((response) => {
               print("RESPONSE-> $response"),
               if (response.statusCode == 200)
                 {
-                  completer.complete(LocationListResponse.fromJson(
-                      json.decode(response.body))),
+                  completer.complete(LocationListResponse.fromJson(json.decode(response.body))),
                 }
-              else if (AccessToken()
-                      .checkTokenExpiry(context: context, response: response) ==
-                  true)
+              else if (AccessToken().checkTokenExpiry(context: context, response: response) == true)
                 {
-                  completer.completeError(ExceptionHelper()
-                      .handleExceptions(ExceptionType.TokenExpiredException)),
+                  completer.completeError(ExceptionHelper().handleExceptions(ExceptionType.TokenExpiredException)),
                 }
               else
                 {
-                  completer.completeError(ExceptionHelper()
-                      .handleExceptions(ExceptionType.HttpException)),
+                  completer.completeError(ExceptionHelper().handleExceptions(ExceptionType.HttpException)),
                 }
             })
         .catchError((error) {
@@ -374,31 +336,25 @@ class ApiManager {
     int page,
     String latitude,
     String longitude,
-    String distance,
+    String? distance,
   ) {
     Completer<BusinessListResponse> completer = new Completer();
-    GetBusinessListRequest getBusinessListRequest =
-        new GetBusinessListRequest(page, latitude, longitude, distance);
+    GetBusinessListRequest getBusinessListRequest = new GetBusinessListRequest(page, latitude, longitude, distance);
     Api(context: context)
         .request(getBusinessListRequest)
         .then((response) => {
               print("RESPONSE-> $response"),
               if (response.statusCode == 200)
                 {
-                  completer.complete(BusinessListResponse.fromJson(
-                      json.decode(response.body))),
+                  completer.complete(BusinessListResponse.fromJson(json.decode(response.body))),
                 }
-              else if (AccessToken()
-                      .checkTokenExpiry(context: context, response: response) ==
-                  true)
+              else if (AccessToken().checkTokenExpiry(context: context, response: response) == true)
                 {
-                  completer.completeError(ExceptionHelper()
-                      .handleExceptions(ExceptionType.TokenExpiredException)),
+                  completer.completeError(ExceptionHelper().handleExceptions(ExceptionType.TokenExpiredException)),
                 }
               else
                 {
-                  completer.completeError(ExceptionHelper()
-                      .handleExceptions(ExceptionType.HttpException)),
+                  completer.completeError(ExceptionHelper().handleExceptions(ExceptionType.HttpException)),
                 }
             })
         .catchError((error) {
@@ -411,22 +367,11 @@ class ApiManager {
   }
 
   Future<Baseresponse> createFeed(
-      String description,
-      String businessUserId,
-      String categoryId,
-      String latitude,
-      String longitude,
-      String locationName) {
+      String description, String businessUserId, String categoryId, String? latitude, String? longitude, String? locationName) {
     Completer<Baseresponse> completer = new Completer();
-    CreateFeedRequestBody createFeedRequestBody = new CreateFeedRequestBody(
-        description,
-        businessUserId,
-        categoryId,
-        latitude,
-        longitude,
-        locationName);
-    CreateFeedRequest createFeedRequest =
-        new CreateFeedRequest(createFeedRequestBody);
+    CreateFeedRequestBody createFeedRequestBody =
+        new CreateFeedRequestBody(description, businessUserId, categoryId, latitude, longitude, locationName);
+    CreateFeedRequest createFeedRequest = new CreateFeedRequest(createFeedRequestBody);
     Api(context: context)
         .request(createFeedRequest)
         .then((response) => {
@@ -437,17 +382,13 @@ class ApiManager {
                       // Baseresponse.fromJson(json.decode(response.body))),
                       Baseresponse(json.decode(response.body))),
                 }
-              else if (AccessToken()
-                      .checkTokenExpiry(context: context, response: response) ==
-                  true)
+              else if (AccessToken().checkTokenExpiry(context: context, response: response) == true)
                 {
-                  completer.completeError(ExceptionHelper()
-                      .handleExceptions(ExceptionType.TokenExpiredException)),
+                  completer.completeError(ExceptionHelper().handleExceptions(ExceptionType.TokenExpiredException)),
                 }
               else
                 {
-                  completer.completeError(ExceptionHelper()
-                      .handleExceptions(ExceptionType.HttpException)),
+                  completer.completeError(ExceptionHelper().handleExceptions(ExceptionType.HttpException)),
                 }
             })
         .catchError((error) {
@@ -460,37 +401,26 @@ class ApiManager {
   }
 
   Future<HomeFeedResponse> getHomeFeedList(
-      String page,
-      String categoryId,
-      String latitude,
-      String longitude,
-      String distance,
-      String cityName) async {
+      String page, String categoryId, String latitude, String longitude, String? distance, String? cityName) async {
     Completer<HomeFeedResponse> completer = new Completer();
-    GetHomeFeedRequest getHomeFeedRequest = new GetHomeFeedRequest(
-        page, categoryId, latitude, longitude, distance, cityName);
+    GetHomeFeedRequest getHomeFeedRequest = new GetHomeFeedRequest(page, categoryId, latitude, longitude, distance, cityName);
     Api(context: context)
         .request(getHomeFeedRequest)
         .then((response) => {
               print("RESPONSE-> $response"),
               if (response.statusCode == 200)
                 {
-                  completer.complete(
-                      HomeFeedResponse.fromJson(json.decode(response.body))),
+                  completer.complete(HomeFeedResponse.fromJson(json.decode(response.body))),
                 }
-              else if (AccessToken()
-                      .checkTokenExpiry(context: context, response: response) ==
-                  true)
+              else if (AccessToken().checkTokenExpiry(context: context, response: response) == true)
                 {
                   // completer
                   //     .completeError(Exception(AppMessages.token_expired_text)),
-                  completer.completeError(ExceptionHelper()
-                      .handleExceptions(ExceptionType.TokenExpiredException)),
+                  completer.completeError(ExceptionHelper().handleExceptions(ExceptionType.TokenExpiredException)),
                 }
               else
                 {
-                  completer.completeError(ExceptionHelper()
-                      .handleExceptions(ExceptionType.HttpException)),
+                  completer.completeError(ExceptionHelper().handleExceptions(ExceptionType.HttpException)),
                 }
             })
         .catchError((error) {
@@ -505,28 +435,22 @@ class ApiManager {
 
   Future<CategoriesListResponse> getCategoriesList() {
     Completer<CategoriesListResponse> completer = new Completer();
-    GetCategoriesListRequest getCategoriesListRequest =
-        new GetCategoriesListRequest();
+    GetCategoriesListRequest getCategoriesListRequest = new GetCategoriesListRequest();
     Api(context: context)
         .request(getCategoriesListRequest)
         .then((response) => {
               print("RESPONSE-> $response"),
               if (response.statusCode == 200)
                 {
-                  completer.complete(CategoriesListResponse.fromJson(
-                      json.decode(response.body))),
+                  completer.complete(CategoriesListResponse.fromJson(json.decode(response.body))),
                 }
-              else if (AccessToken()
-                      .checkTokenExpiry(context: context, response: response) ==
-                  true)
+              else if (AccessToken().checkTokenExpiry(context: context, response: response) == true)
                 {
-                  completer.completeError(ExceptionHelper()
-                      .handleExceptions(ExceptionType.TokenExpiredException)),
+                  completer.completeError(ExceptionHelper().handleExceptions(ExceptionType.TokenExpiredException)),
                 }
               else
                 {
-                  completer.completeError(ExceptionHelper()
-                      .handleExceptions(ExceptionType.HttpException)),
+                  completer.completeError(ExceptionHelper().handleExceptions(ExceptionType.HttpException)),
                 }
             })
         .catchError((error) {
@@ -547,20 +471,15 @@ class ApiManager {
               print("RESPONSE-> $response"),
               if (response.statusCode == 200)
                 {
-                  completer.complete(
-                      HomeFeedResponse.fromJson(json.decode(response.body))),
+                  completer.complete(HomeFeedResponse.fromJson(json.decode(response.body))),
                 }
-              else if (AccessToken()
-                      .checkTokenExpiry(context: context, response: response) ==
-                  true)
+              else if (AccessToken().checkTokenExpiry(context: context, response: response) == true)
                 {
-                  completer.completeError(ExceptionHelper()
-                      .handleExceptions(ExceptionType.TokenExpiredException)),
+                  completer.completeError(ExceptionHelper().handleExceptions(ExceptionType.TokenExpiredException)),
                 }
               else
                 {
-                  completer.completeError(ExceptionHelper()
-                      .handleExceptions(ExceptionType.HttpException)),
+                  completer.completeError(ExceptionHelper().handleExceptions(ExceptionType.HttpException)),
                 }
             })
         .catchError((error) {
@@ -585,17 +504,13 @@ class ApiManager {
                       // Baseresponse.fromJson(json.decode(response.body))),
                       Baseresponse(json.decode(response.body))),
                 }
-              else if (AccessToken()
-                      .checkTokenExpiry(context: context, response: response) ==
-                  true)
+              else if (AccessToken().checkTokenExpiry(context: context, response: response) == true)
                 {
-                  completer.completeError(ExceptionHelper()
-                      .handleExceptions(ExceptionType.TokenExpiredException)),
+                  completer.completeError(ExceptionHelper().handleExceptions(ExceptionType.TokenExpiredException)),
                 }
               else
                 {
-                  completer.completeError(ExceptionHelper()
-                      .handleExceptions(ExceptionType.HttpException)),
+                  completer.completeError(ExceptionHelper().handleExceptions(ExceptionType.HttpException)),
                 }
             })
         .catchError((error) {
@@ -609,28 +524,22 @@ class ApiManager {
 
   Future<HomeFeedResponse> getBusinessHomeFeedList(String page) {
     Completer<HomeFeedResponse> completer = new Completer();
-    GetListBusinessHomeFeedRequest getListBusinessHomeFeedRequest =
-        new GetListBusinessHomeFeedRequest(page);
+    GetListBusinessHomeFeedRequest getListBusinessHomeFeedRequest = new GetListBusinessHomeFeedRequest(page);
     Api(context: context)
         .request(getListBusinessHomeFeedRequest)
         .then((response) => {
               print("RESPONSE-> $response"),
               if (response.statusCode == 200)
                 {
-                  completer.complete(
-                      HomeFeedResponse.fromJson(json.decode(response.body))),
+                  completer.complete(HomeFeedResponse.fromJson(json.decode(response.body))),
                 }
-              else if (AccessToken()
-                      .checkTokenExpiry(context: context, response: response) ==
-                  true)
+              else if (AccessToken().checkTokenExpiry(context: context, response: response) == true)
                 {
-                  completer.completeError(ExceptionHelper()
-                      .handleExceptions(ExceptionType.TokenExpiredException)),
+                  completer.completeError(ExceptionHelper().handleExceptions(ExceptionType.TokenExpiredException)),
                 }
               else
                 {
-                  completer.completeError(ExceptionHelper()
-                      .handleExceptions(ExceptionType.HttpException)),
+                  completer.completeError(ExceptionHelper().handleExceptions(ExceptionType.HttpException)),
                 }
             })
         .catchError((error) {
@@ -644,28 +553,22 @@ class ApiManager {
 
   Future<CommentListResponse> getCommentList(String feedId) {
     Completer<CommentListResponse> completer = new Completer();
-    GetCommentListRequest getCommentListRequest =
-        new GetCommentListRequest(feedId);
+    GetCommentListRequest getCommentListRequest = new GetCommentListRequest(feedId);
     Api(context: context)
         .request(getCommentListRequest)
         .then((response) => {
               print("RESPONSE-> $response"),
               if (response.statusCode == 200)
                 {
-                  completer.complete(
-                      CommentListResponse.fromJson(json.decode(response.body))),
+                  completer.complete(CommentListResponse.fromJson(json.decode(response.body))),
                 }
-              else if (AccessToken()
-                      .checkTokenExpiry(context: context, response: response) ==
-                  true)
+              else if (AccessToken().checkTokenExpiry(context: context, response: response) == true)
                 {
-                  completer.completeError(ExceptionHelper()
-                      .handleExceptions(ExceptionType.TokenExpiredException)),
+                  completer.completeError(ExceptionHelper().handleExceptions(ExceptionType.TokenExpiredException)),
                 }
               else
                 {
-                  completer.completeError(ExceptionHelper()
-                      .handleExceptions(ExceptionType.HttpException)),
+                  completer.completeError(ExceptionHelper().handleExceptions(ExceptionType.HttpException)),
                 }
             })
         .catchError((error) {
@@ -679,30 +582,23 @@ class ApiManager {
 
   Future<CommentListResponse> createComment(String feedId, String comment) {
     Completer<CommentListResponse> completer = new Completer();
-    CreateCommentRequestBody createCommentRequestBody =
-        new CreateCommentRequestBody(feedId, comment);
-    CreateCommentRequest createCommentRequest =
-        new CreateCommentRequest(createCommentRequestBody);
+    CreateCommentRequestBody createCommentRequestBody = new CreateCommentRequestBody(feedId, comment);
+    CreateCommentRequest createCommentRequest = new CreateCommentRequest(createCommentRequestBody);
     Api(context: context)
         .request(createCommentRequest)
         .then((response) => {
               print("RESPONSE-> $response"),
               if (response.statusCode == 200)
                 {
-                  completer.complete(
-                      CommentListResponse.fromJson(json.decode(response.body))),
+                  completer.complete(CommentListResponse.fromJson(json.decode(response.body))),
                 }
-              else if (AccessToken()
-                      .checkTokenExpiry(context: context, response: response) ==
-                  true)
+              else if (AccessToken().checkTokenExpiry(context: context, response: response) == true)
                 {
-                  completer.completeError(ExceptionHelper()
-                      .handleExceptions(ExceptionType.TokenExpiredException)),
+                  completer.completeError(ExceptionHelper().handleExceptions(ExceptionType.TokenExpiredException)),
                 }
               else
                 {
-                  completer.completeError(ExceptionHelper()
-                      .handleExceptions(ExceptionType.HttpException)),
+                  completer.completeError(ExceptionHelper().handleExceptions(ExceptionType.HttpException)),
                 }
             })
         .catchError((error) {
@@ -716,28 +612,22 @@ class ApiManager {
 
   Future<MetropolitanAreasListResponse> getMetropolitanAreasList() {
     Completer<MetropolitanAreasListResponse> completer = new Completer();
-    GetMetropolitanAreasListRequest getMetropolitanAreasListRequest =
-        new GetMetropolitanAreasListRequest();
+    GetMetropolitanAreasListRequest getMetropolitanAreasListRequest = new GetMetropolitanAreasListRequest();
     Api(context: context)
         .request(getMetropolitanAreasListRequest)
         .then((response) => {
               print("RESPONSE-> $response"),
               if (response.statusCode == 200)
                 {
-                  completer.complete(MetropolitanAreasListResponse.fromJson(
-                      json.decode(response.body))),
+                  completer.complete(MetropolitanAreasListResponse.fromJson(json.decode(response.body))),
                 }
-              else if (AccessToken()
-                      .checkTokenExpiry(context: context, response: response) ==
-                  true)
+              else if (AccessToken().checkTokenExpiry(context: context, response: response) == true)
                 {
-                  completer.completeError(ExceptionHelper()
-                      .handleExceptions(ExceptionType.TokenExpiredException)),
+                  completer.completeError(ExceptionHelper().handleExceptions(ExceptionType.TokenExpiredException)),
                 }
               else
                 {
-                  completer.completeError(ExceptionHelper()
-                      .handleExceptions(ExceptionType.HttpException)),
+                  completer.completeError(ExceptionHelper().handleExceptions(ExceptionType.HttpException)),
                 }
             })
         .catchError((error) {
@@ -749,12 +639,10 @@ class ApiManager {
     return completer.future;
   }
 
-  Future<Baseresponse> homeFeedLike(int feedId, int isLike) {
+  Future<Baseresponse> homeFeedLike(int? feedId, int isLike) {
     Completer<Baseresponse> completer = new Completer();
-    HomeFeedLikeRequestBody homeFeedLikeRequestBody =
-        new HomeFeedLikeRequestBody(feedId, isLike);
-    HomeFeedLikeRequest homeFeedLikeRequest =
-        new HomeFeedLikeRequest(homeFeedLikeRequestBody);
+    HomeFeedLikeRequestBody homeFeedLikeRequestBody = new HomeFeedLikeRequestBody(feedId, isLike);
+    HomeFeedLikeRequest homeFeedLikeRequest = new HomeFeedLikeRequest(homeFeedLikeRequestBody);
     Api(context: context)
         .request(homeFeedLikeRequest)
         .then((response) => {
@@ -765,17 +653,13 @@ class ApiManager {
                       // Baseresponse.fromJson(json.decode(response.body))),
                       Baseresponse(json.decode(response.body))),
                 }
-              else if (AccessToken()
-                      .checkTokenExpiry(context: context, response: response) ==
-                  true)
+              else if (AccessToken().checkTokenExpiry(context: context, response: response) == true)
                 {
-                  completer.completeError(ExceptionHelper()
-                      .handleExceptions(ExceptionType.TokenExpiredException)),
+                  completer.completeError(ExceptionHelper().handleExceptions(ExceptionType.TokenExpiredException)),
                 }
               else
                 {
-                  completer.completeError(ExceptionHelper()
-                      .handleExceptions(ExceptionType.HttpException)),
+                  completer.completeError(ExceptionHelper().handleExceptions(ExceptionType.HttpException)),
                 }
             })
         .catchError((error) {
@@ -789,28 +673,22 @@ class ApiManager {
 
   Future<BusinessUserProfileResponse> getBusinessUserProfile() {
     Completer<BusinessUserProfileResponse> completer = new Completer();
-    GetBusinessUserProfileRequest getBusinessUserProfileRequest =
-        new GetBusinessUserProfileRequest();
+    GetBusinessUserProfileRequest getBusinessUserProfileRequest = new GetBusinessUserProfileRequest();
     Api(context: context)
         .request(getBusinessUserProfileRequest)
         .then((response) => {
               print("RESPONSE-> $response"),
               if (response.statusCode == 200)
                 {
-                  completer.complete(BusinessUserProfileResponse.fromJson(
-                      json.decode(response.body))),
+                  completer.complete(BusinessUserProfileResponse.fromJson(json.decode(response.body))),
                 }
-              else if (AccessToken()
-                      .checkTokenExpiry(context: context, response: response) ==
-                  true)
+              else if (AccessToken().checkTokenExpiry(context: context, response: response) == true)
                 {
-                  completer.completeError(ExceptionHelper()
-                      .handleExceptions(ExceptionType.TokenExpiredException)),
+                  completer.completeError(ExceptionHelper().handleExceptions(ExceptionType.TokenExpiredException)),
                 }
               else
                 {
-                  completer.completeError(ExceptionHelper()
-                      .handleExceptions(ExceptionType.HttpException)),
+                  completer.completeError(ExceptionHelper().handleExceptions(ExceptionType.HttpException)),
                 }
             })
         .catchError((error) {
@@ -823,37 +701,25 @@ class ApiManager {
   }
 
   Future<SearchByBusinessResponse> getSearchByBusinessList(
-      String page,
-      String searchValue,
-      String categoryId,
-      String latitude,
-      String longitude,
-      String distance,
-      String cityName) {
+      String page, String searchValue, String categoryId, String latitude, String longitude, String? distance, String? cityName) {
     Completer<SearchByBusinessResponse> completer = new Completer();
     GetSearchByBusinessRequest getSearchByBusinessRequest =
-        new GetSearchByBusinessRequest(page, searchValue, categoryId, latitude,
-            longitude, distance, cityName);
+        new GetSearchByBusinessRequest(page, searchValue, categoryId, latitude, longitude, distance, cityName);
     Api(context: context)
         .request(getSearchByBusinessRequest)
         .then((response) => {
               print("RESPONSE-> $response"),
               if (response.statusCode == 200)
                 {
-                  completer.complete(SearchByBusinessResponse.fromJson(
-                      json.decode(response.body))),
+                  completer.complete(SearchByBusinessResponse.fromJson(json.decode(response.body))),
                 }
-              else if (AccessToken()
-                      .checkTokenExpiry(context: context, response: response) ==
-                  true)
+              else if (AccessToken().checkTokenExpiry(context: context, response: response) == true)
                 {
-                  completer.completeError(ExceptionHelper()
-                      .handleExceptions(ExceptionType.TokenExpiredException)),
+                  completer.completeError(ExceptionHelper().handleExceptions(ExceptionType.TokenExpiredException)),
                 }
               else
                 {
-                  completer.completeError(ExceptionHelper()
-                      .handleExceptions(ExceptionType.HttpException)),
+                  completer.completeError(ExceptionHelper().handleExceptions(ExceptionType.HttpException)),
                 }
             })
         .catchError((error) {
@@ -867,8 +733,7 @@ class ApiManager {
 
   Future<Baseresponse> followBusiness(String businessId) {
     Completer<Baseresponse> completer = new Completer();
-    FollowBusinessRequest followBusinessRequest =
-        new FollowBusinessRequest(businessId);
+    FollowBusinessRequest followBusinessRequest = new FollowBusinessRequest(businessId);
     Api(context: context)
         .request(followBusinessRequest)
         .then((response) => {
@@ -879,17 +744,13 @@ class ApiManager {
                       // Baseresponse.fromJson(json.decode(response.body))),
                       Baseresponse(json.decode(response.body))),
                 }
-              else if (AccessToken()
-                      .checkTokenExpiry(context: context, response: response) ==
-                  true)
+              else if (AccessToken().checkTokenExpiry(context: context, response: response) == true)
                 {
-                  completer.completeError(ExceptionHelper()
-                      .handleExceptions(ExceptionType.TokenExpiredException)),
+                  completer.completeError(ExceptionHelper().handleExceptions(ExceptionType.TokenExpiredException)),
                 }
               else
                 {
-                  completer.completeError(ExceptionHelper()
-                      .handleExceptions(ExceptionType.HttpException)),
+                  completer.completeError(ExceptionHelper().handleExceptions(ExceptionType.HttpException)),
                 }
             })
         .catchError((error) {
@@ -903,28 +764,22 @@ class ApiManager {
 
   Future<NotificationListResponse> getNotificationsList(int page) {
     Completer<NotificationListResponse> completer = new Completer();
-    GetNotificationsListRequest getNotificationsListRequest =
-        new GetNotificationsListRequest(page);
+    GetNotificationsListRequest getNotificationsListRequest = new GetNotificationsListRequest(page);
     Api(context: context)
         .request(getNotificationsListRequest)
         .then((response) => {
               print("RESPONSE-> $response"),
               if (response.statusCode == 200)
                 {
-                  completer.complete(NotificationListResponse.fromJson(
-                      json.decode(response.body))),
+                  completer.complete(NotificationListResponse.fromJson(json.decode(response.body))),
                 }
-              else if (AccessToken()
-                      .checkTokenExpiry(context: context, response: response) ==
-                  true)
+              else if (AccessToken().checkTokenExpiry(context: context, response: response) == true)
                 {
-                  completer.completeError(ExceptionHelper()
-                      .handleExceptions(ExceptionType.TokenExpiredException)),
+                  completer.completeError(ExceptionHelper().handleExceptions(ExceptionType.TokenExpiredException)),
                 }
               else
                 {
-                  completer.completeError(ExceptionHelper()
-                      .handleExceptions(ExceptionType.HttpException)),
+                  completer.completeError(ExceptionHelper().handleExceptions(ExceptionType.HttpException)),
                 }
             })
         .catchError((error) {
@@ -938,8 +793,7 @@ class ApiManager {
 
   Future<Baseresponse> unFollowBusiness(String businessId) {
     Completer<Baseresponse> completer = new Completer();
-    UnfollowBusinessRequest unfollowBusinessRequest =
-        new UnfollowBusinessRequest(businessId);
+    UnfollowBusinessRequest unfollowBusinessRequest = new UnfollowBusinessRequest(businessId);
     Api(context: context)
         .request(unfollowBusinessRequest)
         .then((response) => {
@@ -950,17 +804,13 @@ class ApiManager {
                       // Baseresponse.fromJson(json.decode(response.body))),
                       Baseresponse(json.decode(response.body))),
                 }
-              else if (AccessToken()
-                      .checkTokenExpiry(context: context, response: response) ==
-                  true)
+              else if (AccessToken().checkTokenExpiry(context: context, response: response) == true)
                 {
-                  completer.completeError(ExceptionHelper()
-                      .handleExceptions(ExceptionType.TokenExpiredException)),
+                  completer.completeError(ExceptionHelper().handleExceptions(ExceptionType.TokenExpiredException)),
                 }
               else
                 {
-                  completer.completeError(ExceptionHelper()
-                      .handleExceptions(ExceptionType.HttpException)),
+                  completer.completeError(ExceptionHelper().handleExceptions(ExceptionType.HttpException)),
                 }
             })
         .catchError((error) {
@@ -974,28 +824,22 @@ class ApiManager {
 
   Future<BusinessLikedListResponse> getBusinessLikedList(String page) {
     Completer<BusinessLikedListResponse> completer = new Completer();
-    GetBusinessLikedListRequest getBusinessLikedListRequest =
-        new GetBusinessLikedListRequest(page);
+    GetBusinessLikedListRequest getBusinessLikedListRequest = new GetBusinessLikedListRequest(page);
     Api(context: context)
         .request(getBusinessLikedListRequest)
         .then((response) => {
               print("RESPONSE-> $response"),
               if (response.statusCode == 200)
                 {
-                  completer.complete(BusinessLikedListResponse.fromJson(
-                      json.decode(response.body))),
+                  completer.complete(BusinessLikedListResponse.fromJson(json.decode(response.body))),
                 }
-              else if (AccessToken()
-                      .checkTokenExpiry(context: context, response: response) ==
-                  true)
+              else if (AccessToken().checkTokenExpiry(context: context, response: response) == true)
                 {
-                  completer.completeError(ExceptionHelper()
-                      .handleExceptions(ExceptionType.TokenExpiredException)),
+                  completer.completeError(ExceptionHelper().handleExceptions(ExceptionType.TokenExpiredException)),
                 }
               else
                 {
-                  completer.completeError(ExceptionHelper()
-                      .handleExceptions(ExceptionType.HttpException)),
+                  completer.completeError(ExceptionHelper().handleExceptions(ExceptionType.HttpException)),
                 }
             })
         .catchError((error) {
@@ -1020,17 +864,13 @@ class ApiManager {
                       // Baseresponse.fromJson(json.decode(response.body))),
                       Baseresponse(json.decode(response.body))),
                 }
-              else if (AccessToken()
-                      .checkTokenExpiry(context: context, response: response) ==
-                  true)
+              else if (AccessToken().checkTokenExpiry(context: context, response: response) == true)
                 {
-                  completer.completeError(ExceptionHelper()
-                      .handleExceptions(ExceptionType.TokenExpiredException)),
+                  completer.completeError(ExceptionHelper().handleExceptions(ExceptionType.TokenExpiredException)),
                 }
               else
                 {
-                  completer.completeError(ExceptionHelper()
-                      .handleExceptions(ExceptionType.HttpException)),
+                  completer.completeError(ExceptionHelper().handleExceptions(ExceptionType.HttpException)),
                 }
             })
         .catchError((error) {
@@ -1044,10 +884,8 @@ class ApiManager {
 
   Future<Baseresponse> unlikeBusiness(String businessId) {
     Completer<Baseresponse> completer = new Completer();
-    UnlikeBusinessRequestBody unlikeBusinessRequestBody =
-        new UnlikeBusinessRequestBody(businessId);
-    UnlikeBusinessRequest unlikeBusinessRequest =
-        new UnlikeBusinessRequest(unlikeBusinessRequestBody);
+    UnlikeBusinessRequestBody unlikeBusinessRequestBody = new UnlikeBusinessRequestBody(businessId);
+    UnlikeBusinessRequest unlikeBusinessRequest = new UnlikeBusinessRequest(unlikeBusinessRequestBody);
     Api(context: context)
         .request(unlikeBusinessRequest)
         .then((response) => {
@@ -1058,17 +896,13 @@ class ApiManager {
                       // Baseresponse.fromJson(json.decode(response.body))),
                       Baseresponse(json.decode(response.body))),
                 }
-              else if (AccessToken()
-                      .checkTokenExpiry(context: context, response: response) ==
-                  true)
+              else if (AccessToken().checkTokenExpiry(context: context, response: response) == true)
                 {
-                  completer.completeError(ExceptionHelper()
-                      .handleExceptions(ExceptionType.TokenExpiredException)),
+                  completer.completeError(ExceptionHelper().handleExceptions(ExceptionType.TokenExpiredException)),
                 }
               else
                 {
-                  completer.completeError(ExceptionHelper()
-                      .handleExceptions(ExceptionType.HttpException)),
+                  completer.completeError(ExceptionHelper().handleExceptions(ExceptionType.HttpException)),
                 }
             })
         .catchError((error) {
@@ -1082,10 +916,8 @@ class ApiManager {
 
   Future<Baseresponse> likeBusiness(String businessId) {
     Completer<Baseresponse> completer = new Completer();
-    LikeBusinessRequestBody likeBusinessRequestBody =
-        new LikeBusinessRequestBody(businessId);
-    LikeBusinessRequest likeBusinessRequest =
-        new LikeBusinessRequest(likeBusinessRequestBody);
+    LikeBusinessRequestBody likeBusinessRequestBody = new LikeBusinessRequestBody(businessId);
+    LikeBusinessRequest likeBusinessRequest = new LikeBusinessRequest(likeBusinessRequestBody);
     Api(context: context)
         .request(likeBusinessRequest)
         .then((response) => {
@@ -1096,17 +928,13 @@ class ApiManager {
                       // Baseresponse.fromJson(json.decode(response.body))),
                       Baseresponse(json.decode(response.body))),
                 }
-              else if (AccessToken()
-                      .checkTokenExpiry(context: context, response: response) ==
-                  true)
+              else if (AccessToken().checkTokenExpiry(context: context, response: response) == true)
                 {
-                  completer.completeError(ExceptionHelper()
-                      .handleExceptions(ExceptionType.TokenExpiredException)),
+                  completer.completeError(ExceptionHelper().handleExceptions(ExceptionType.TokenExpiredException)),
                 }
               else
                 {
-                  completer.completeError(ExceptionHelper()
-                      .handleExceptions(ExceptionType.HttpException)),
+                  completer.completeError(ExceptionHelper().handleExceptions(ExceptionType.HttpException)),
                 }
             })
         .catchError((error) {
@@ -1120,11 +948,8 @@ class ApiManager {
 
   Future<Baseresponse> saveNotificationSettings(int allowNotification) {
     Completer<Baseresponse> completer = new Completer();
-    SaveNotificationSettingsRequestBody saveNotificationSettingsRequestBody =
-        new SaveNotificationSettingsRequestBody(allowNotification);
-    SaveNotificationSettingsRequest saveNotificationSettingsRequest =
-        new SaveNotificationSettingsRequest(
-            saveNotificationSettingsRequestBody);
+    SaveNotificationSettingsRequestBody saveNotificationSettingsRequestBody = new SaveNotificationSettingsRequestBody(allowNotification);
+    SaveNotificationSettingsRequest saveNotificationSettingsRequest = new SaveNotificationSettingsRequest(saveNotificationSettingsRequestBody);
     Api(context: context)
         .request(saveNotificationSettingsRequest)
         .then((response) => {
@@ -1135,17 +960,13 @@ class ApiManager {
                       // Baseresponse.fromJson(json.decode(response.body))),
                       Baseresponse(json.decode(response.body))),
                 }
-              else if (AccessToken()
-                      .checkTokenExpiry(context: context, response: response) ==
-                  true)
+              else if (AccessToken().checkTokenExpiry(context: context, response: response) == true)
                 {
-                  completer.completeError(ExceptionHelper()
-                      .handleExceptions(ExceptionType.TokenExpiredException)),
+                  completer.completeError(ExceptionHelper().handleExceptions(ExceptionType.TokenExpiredException)),
                 }
               else
                 {
-                  completer.completeError(ExceptionHelper()
-                      .handleExceptions(ExceptionType.HttpException)),
+                  completer.completeError(ExceptionHelper().handleExceptions(ExceptionType.HttpException)),
                 }
             })
         .catchError((error) {
@@ -1159,8 +980,7 @@ class ApiManager {
 
   Future<Baseresponse> deactivateAccount() async {
     Completer<Baseresponse> completer = new Completer();
-    DeactivateAccountRequest deactivateAccountRequest =
-        new DeactivateAccountRequest();
+    DeactivateAccountRequest deactivateAccountRequest = new DeactivateAccountRequest();
     Api(context: context)
         .request(deactivateAccountRequest)
         .then((response) => {
@@ -1171,17 +991,13 @@ class ApiManager {
                       // Baseresponse.fromJson(json.decode(response.body))),
                       Baseresponse(json.decode(response.body))),
                 }
-              else if (AccessToken()
-                      .checkTokenExpiry(context: context, response: response) ==
-                  true)
+              else if (AccessToken().checkTokenExpiry(context: context, response: response) == true)
                 {
-                  completer.completeError(ExceptionHelper()
-                      .handleExceptions(ExceptionType.TokenExpiredException)),
+                  completer.completeError(ExceptionHelper().handleExceptions(ExceptionType.TokenExpiredException)),
                 }
               else
                 {
-                  completer.completeError(ExceptionHelper()
-                      .handleExceptions(ExceptionType.HttpException)),
+                  completer.completeError(ExceptionHelper().handleExceptions(ExceptionType.HttpException)),
                 }
             })
         .catchError((error) {
@@ -1206,17 +1022,13 @@ class ApiManager {
                       // Baseresponse.fromJson(json.decode(response.body))),
                       Baseresponse(json.decode(response.body))),
                 }
-              else if (AccessToken()
-                      .checkTokenExpiry(context: context, response: response) ==
-                  true)
+              else if (AccessToken().checkTokenExpiry(context: context, response: response) == true)
                 {
-                  completer.completeError(ExceptionHelper()
-                      .handleExceptions(ExceptionType.TokenExpiredException)),
+                  completer.completeError(ExceptionHelper().handleExceptions(ExceptionType.TokenExpiredException)),
                 }
               else
                 {
-                  completer.completeError(ExceptionHelper()
-                      .handleExceptions(ExceptionType.HttpException)),
+                  completer.completeError(ExceptionHelper().handleExceptions(ExceptionType.HttpException)),
                 }
             })
         .catchError((error) {
@@ -1241,17 +1053,13 @@ class ApiManager {
                       // Baseresponse.fromJson(json.decode(response.body))),
                       Baseresponse(json.decode(response.body))),
                 }
-              else if (AccessToken()
-                      .checkTokenExpiry(context: context, response: response) ==
-                  true)
+              else if (AccessToken().checkTokenExpiry(context: context, response: response) == true)
                 {
-                  completer.completeError(ExceptionHelper()
-                      .handleExceptions(ExceptionType.TokenExpiredException)),
+                  completer.completeError(ExceptionHelper().handleExceptions(ExceptionType.TokenExpiredException)),
                 }
               else
                 {
-                  completer.completeError(ExceptionHelper()
-                      .handleExceptions(ExceptionType.HttpException)),
+                  completer.completeError(ExceptionHelper().handleExceptions(ExceptionType.HttpException)),
                 }
             })
         .catchError((error) {
@@ -1263,31 +1071,24 @@ class ApiManager {
     return completer.future;
   }
 
-  Future<UpdateListKeywordsResponse> updateListKeywords(
-      String businessKeywords) {
+  Future<UpdateListKeywordsResponse> updateListKeywords(String businessKeywords) {
     Completer<UpdateListKeywordsResponse> completer = new Completer();
-    UpdateListKeywordsRequest updateListKeywordsRequest =
-        new UpdateListKeywordsRequest(businessKeywords);
+    UpdateListKeywordsRequest updateListKeywordsRequest = new UpdateListKeywordsRequest(businessKeywords);
     Api(context: context)
         .request(updateListKeywordsRequest)
         .then((response) => {
               print("RESPONSE-> $response"),
               if (response.statusCode == 200)
                 {
-                  completer.complete(UpdateListKeywordsResponse.fromJson(
-                      json.decode(response.body))),
+                  completer.complete(UpdateListKeywordsResponse.fromJson(json.decode(response.body))),
                 }
-              else if (AccessToken()
-                      .checkTokenExpiry(context: context, response: response) ==
-                  true)
+              else if (AccessToken().checkTokenExpiry(context: context, response: response) == true)
                 {
-                  completer.completeError(ExceptionHelper()
-                      .handleExceptions(ExceptionType.TokenExpiredException)),
+                  completer.completeError(ExceptionHelper().handleExceptions(ExceptionType.TokenExpiredException)),
                 }
               else
                 {
-                  completer.completeError(ExceptionHelper()
-                      .handleExceptions(ExceptionType.HttpException)),
+                  completer.completeError(ExceptionHelper().handleExceptions(ExceptionType.HttpException)),
                 }
             })
         .catchError((error) {
@@ -1301,8 +1102,7 @@ class ApiManager {
 
   Future<GraphResponse> graphLike(int businessUserId, String graphRange) {
     Completer<GraphResponse> completer = new Completer();
-    GraphLikeRequest graphLikeRequest =
-        new GraphLikeRequest(businessUserId, graphRange);
+    GraphLikeRequest graphLikeRequest = new GraphLikeRequest(businessUserId, graphRange);
     Api(context: context)
         .request(graphLikeRequest)
         .then((response) => {
@@ -1313,17 +1113,13 @@ class ApiManager {
                       // Baseresponse.fromJson(json.decode(response.body))),
                       GraphResponse.fromJson(json.decode(response.body))),
                 }
-              else if (AccessToken()
-                      .checkTokenExpiry(context: context, response: response) ==
-                  true)
+              else if (AccessToken().checkTokenExpiry(context: context, response: response) == true)
                 {
-                  completer.completeError(ExceptionHelper()
-                      .handleExceptions(ExceptionType.TokenExpiredException)),
+                  completer.completeError(ExceptionHelper().handleExceptions(ExceptionType.TokenExpiredException)),
                 }
               else
                 {
-                  completer.completeError(ExceptionHelper()
-                      .handleExceptions(ExceptionType.HttpException)),
+                  completer.completeError(ExceptionHelper().handleExceptions(ExceptionType.HttpException)),
                 }
             })
         .catchError((error) {
@@ -1337,8 +1133,7 @@ class ApiManager {
 
   Future<GraphResponse> graphView(int businessUserId, String graphRange) {
     Completer<GraphResponse> completer = new Completer();
-    GraphViewRequest graphViewRequest =
-        new GraphViewRequest(businessUserId, graphRange);
+    GraphViewRequest graphViewRequest = new GraphViewRequest(businessUserId, graphRange);
     Api(context: context)
         .request(graphViewRequest)
         .then((response) => {
@@ -1349,17 +1144,13 @@ class ApiManager {
                       // Baseresponse.fromJson(json.decode(response.body))),
                       GraphResponse.fromJson(json.decode(response.body))),
                 }
-              else if (AccessToken()
-                      .checkTokenExpiry(context: context, response: response) ==
-                  true)
+              else if (AccessToken().checkTokenExpiry(context: context, response: response) == true)
                 {
-                  completer.completeError(ExceptionHelper()
-                      .handleExceptions(ExceptionType.TokenExpiredException)),
+                  completer.completeError(ExceptionHelper().handleExceptions(ExceptionType.TokenExpiredException)),
                 }
               else
                 {
-                  completer.completeError(ExceptionHelper()
-                      .handleExceptions(ExceptionType.HttpException)),
+                  completer.completeError(ExceptionHelper().handleExceptions(ExceptionType.HttpException)),
                 }
             })
         .catchError((error) {
@@ -1373,8 +1164,7 @@ class ApiManager {
 
   Future<GraphResponse> graphClick(int businessUserId, String graphRange) {
     Completer<GraphResponse> completer = new Completer();
-    GraphClickRequest graphClickRequest =
-        new GraphClickRequest(businessUserId, graphRange);
+    GraphClickRequest graphClickRequest = new GraphClickRequest(businessUserId, graphRange);
     Api(context: context)
         .request(graphClickRequest)
         .then((response) => {
@@ -1385,17 +1175,13 @@ class ApiManager {
                       // Baseresponse.fromJson(json.decode(response.body))),
                       GraphResponse.fromJson(json.decode(response.body))),
                 }
-              else if (AccessToken()
-                      .checkTokenExpiry(context: context, response: response) ==
-                  true)
+              else if (AccessToken().checkTokenExpiry(context: context, response: response) == true)
                 {
-                  completer.completeError(ExceptionHelper()
-                      .handleExceptions(ExceptionType.TokenExpiredException)),
+                  completer.completeError(ExceptionHelper().handleExceptions(ExceptionType.TokenExpiredException)),
                 }
               else
                 {
-                  completer.completeError(ExceptionHelper()
-                      .handleExceptions(ExceptionType.HttpException)),
+                  completer.completeError(ExceptionHelper().handleExceptions(ExceptionType.HttpException)),
                 }
             })
         .catchError((error) {
@@ -1407,11 +1193,9 @@ class ApiManager {
     return completer.future;
   }
 
-  Future<BusinessDetailsResponse> businessDetails(
-      int businessId, String latitude, String longitude) async {
+  Future<BusinessDetailsResponse> businessDetails(int? businessId, String latitude, String longitude) async {
     Completer<BusinessDetailsResponse> completer = new Completer();
-    BusinessDetailsRequest businessDetailsRequest =
-        new BusinessDetailsRequest(businessId, latitude, longitude);
+    BusinessDetailsRequest businessDetailsRequest = new BusinessDetailsRequest(businessId, latitude, longitude);
     // Response response =
     //     await Api(context: context).request(businessDetailsRequest);
     // try {
@@ -1431,21 +1215,16 @@ class ApiManager {
               if (response.statusCode == 200)
                 {
                   // log("BUSINESS DETAILS-> ${response.body}"),
-                  // log("BUSINESS DETAILS2-> ${BusinessDetailsResponse.fromJson(json.decode(response.body))}"),
-                  completer.complete(BusinessDetailsResponse.fromJson(
-                      json.decode(response.body))),
+                  log("BUSINESS DETAILS2-> ${BusinessDetailsResponse.fromJson(json.decode(response.body))}"),
+                  completer.complete(BusinessDetailsResponse.fromJson(json.decode(response.body))),
                 }
-              else if (AccessToken()
-                      .checkTokenExpiry(context: context, response: response) ==
-                  true)
+              else if (AccessToken().checkTokenExpiry(context: context, response: response) == true)
                 {
-                  completer.completeError(ExceptionHelper()
-                      .handleExceptions(ExceptionType.TokenExpiredException)),
+                  completer.completeError(ExceptionHelper().handleExceptions(ExceptionType.TokenExpiredException)),
                 }
               else
                 {
-                  completer.completeError(ExceptionHelper()
-                      .handleExceptions(ExceptionType.HttpException)),
+                  completer.completeError(ExceptionHelper().handleExceptions(ExceptionType.HttpException)),
                 }
             })
         .catchError((error) {
@@ -1457,13 +1236,10 @@ class ApiManager {
     return completer.future;
   }
 
-  Future<Baseresponse> dislikeBusiness(
-      int businessId, String reason, int action) {
+  Future<Baseresponse> dislikeBusiness(int? businessId, String reason, int action) {
     Completer<Baseresponse> completer = new Completer();
-    DislikeBusinessRequestBody dislikeBusinessRequestBody =
-        new DislikeBusinessRequestBody(businessId, reason, action);
-    DislikeBusinessRequest dislikeBusinessRequest =
-        new DislikeBusinessRequest(dislikeBusinessRequestBody);
+    DislikeBusinessRequestBody dislikeBusinessRequestBody = new DislikeBusinessRequestBody(businessId, reason, action);
+    DislikeBusinessRequest dislikeBusinessRequest = new DislikeBusinessRequest(dislikeBusinessRequestBody);
     Api(context: context)
         .request(dislikeBusinessRequest)
         .then((response) => {
@@ -1474,17 +1250,13 @@ class ApiManager {
                       // Baseresponse.fromJson(json.decode(response.body))),
                       Baseresponse(json.decode(response.body))),
                 }
-              else if (AccessToken()
-                      .checkTokenExpiry(context: context, response: response) ==
-                  true)
+              else if (AccessToken().checkTokenExpiry(context: context, response: response) == true)
                 {
-                  completer.completeError(ExceptionHelper()
-                      .handleExceptions(ExceptionType.TokenExpiredException)),
+                  completer.completeError(ExceptionHelper().handleExceptions(ExceptionType.TokenExpiredException)),
                 }
               else
                 {
-                  completer.completeError(ExceptionHelper()
-                      .handleExceptions(ExceptionType.HttpException)),
+                  completer.completeError(ExceptionHelper().handleExceptions(ExceptionType.HttpException)),
                 }
             })
         .catchError((error) {
@@ -1496,11 +1268,9 @@ class ApiManager {
     return completer.future;
   }
 
-  Future<DislikedCommentsResponse> dislikedCommentList(
-      int page, int businessId) {
+  Future<DislikedCommentsResponse> dislikedCommentList(int page, int? businessId) {
     Completer<DislikedCommentsResponse> completer = new Completer();
-    DislikedCommentsRequest dislikedCommentsRequest =
-        new DislikedCommentsRequest(page, businessId);
+    DislikedCommentsRequest dislikedCommentsRequest = new DislikedCommentsRequest(page, businessId);
     Api(context: context)
         .request(dislikedCommentsRequest)
         .then((response) => {
@@ -1509,20 +1279,15 @@ class ApiManager {
                 {
                   completer.complete(
                       // Baseresponse.fromJson(json.decode(response.body))),
-                      DislikedCommentsResponse.fromJson(
-                          json.decode(response.body))),
+                      DislikedCommentsResponse.fromJson(json.decode(response.body))),
                 }
-              else if (AccessToken()
-                      .checkTokenExpiry(context: context, response: response) ==
-                  true)
+              else if (AccessToken().checkTokenExpiry(context: context, response: response) == true)
                 {
-                  completer.completeError(ExceptionHelper()
-                      .handleExceptions(ExceptionType.TokenExpiredException)),
+                  completer.completeError(ExceptionHelper().handleExceptions(ExceptionType.TokenExpiredException)),
                 }
               else
                 {
-                  completer.completeError(ExceptionHelper()
-                      .handleExceptions(ExceptionType.HttpException)),
+                  completer.completeError(ExceptionHelper().handleExceptions(ExceptionType.HttpException)),
                 }
             })
         .catchError((error) {
@@ -1534,18 +1299,11 @@ class ApiManager {
     return completer.future;
   }
 
-  Future<BusinessLatlongResponse> addBusinessLatlong(
-      String latitude,
-      String longitude,
-      int isDefault,
-      String locationName,
-      String businessUserId) {
+  Future<BusinessLatlongResponse> addBusinessLatlong(String? latitude, String? longitude, int isDefault, String locationName, String businessUserId) {
     Completer<BusinessLatlongResponse> completer = new Completer();
     AddBusinessLatlongRequestBody addBusinessLatlongRequestBody =
-        new AddBusinessLatlongRequestBody(
-            latitude, longitude, isDefault, locationName, businessUserId);
-    AddBusinessLatlongRequest addBusinessLatlongRequest =
-        new AddBusinessLatlongRequest(addBusinessLatlongRequestBody);
+        new AddBusinessLatlongRequestBody(latitude, longitude, isDefault, locationName, businessUserId);
+    AddBusinessLatlongRequest addBusinessLatlongRequest = new AddBusinessLatlongRequest(addBusinessLatlongRequestBody);
     Api(context: context)
         .request(addBusinessLatlongRequest)
         .then((response) => {
@@ -1559,17 +1317,13 @@ class ApiManager {
                     ),
                   ),
                 }
-              else if (AccessToken()
-                      .checkTokenExpiry(context: context, response: response) ==
-                  true)
+              else if (AccessToken().checkTokenExpiry(context: context, response: response) == true)
                 {
-                  completer.completeError(ExceptionHelper()
-                      .handleExceptions(ExceptionType.TokenExpiredException)),
+                  completer.completeError(ExceptionHelper().handleExceptions(ExceptionType.TokenExpiredException)),
                 }
               else
                 {
-                  completer.completeError(ExceptionHelper()
-                      .handleExceptions(ExceptionType.HttpException)),
+                  completer.completeError(ExceptionHelper().handleExceptions(ExceptionType.HttpException)),
                 }
             })
         .catchError((error) {
@@ -1582,13 +1336,11 @@ class ApiManager {
   }
 
   Future<Baseresponse> deleteBusinessLatlong(
-    int businessLocationId,
+    int? businessLocationId,
   ) {
     Completer<Baseresponse> completer = new Completer();
-    DeleteBusinessLatlongRequestBody deleteBusinessLatlongRequestBody =
-        new DeleteBusinessLatlongRequestBody(businessLocationId);
-    DeleteBusinessLatlongRequest deleteBusinessLatlongRequest =
-        new DeleteBusinessLatlongRequest(deleteBusinessLatlongRequestBody);
+    DeleteBusinessLatlongRequestBody deleteBusinessLatlongRequestBody = new DeleteBusinessLatlongRequestBody(businessLocationId);
+    DeleteBusinessLatlongRequest deleteBusinessLatlongRequest = new DeleteBusinessLatlongRequest(deleteBusinessLatlongRequestBody);
     Api(context: context)
         .request(deleteBusinessLatlongRequest)
         .then((response) => {
@@ -1599,17 +1351,13 @@ class ApiManager {
                       // Baseresponse.fromJson(json.decode(response.body))),
                       Baseresponse(json.decode(response.body))),
                 }
-              else if (AccessToken()
-                      .checkTokenExpiry(context: context, response: response) ==
-                  true)
+              else if (AccessToken().checkTokenExpiry(context: context, response: response) == true)
                 {
-                  completer.completeError(ExceptionHelper()
-                      .handleExceptions(ExceptionType.TokenExpiredException)),
+                  completer.completeError(ExceptionHelper().handleExceptions(ExceptionType.TokenExpiredException)),
                 }
               else
                 {
-                  completer.completeError(ExceptionHelper()
-                      .handleExceptions(ExceptionType.HttpException)),
+                  completer.completeError(ExceptionHelper().handleExceptions(ExceptionType.HttpException)),
                 }
             })
         .catchError((error) {
@@ -1621,31 +1369,24 @@ class ApiManager {
     return completer.future;
   }
 
-  Future<BusinessListResponse> getBusinessByNameList(
-      int page, String searchValue) {
+  Future<BusinessListResponse> getBusinessByNameList(int page, String searchValue) {
     Completer<BusinessListResponse> completer = new Completer();
-    GetBusinessListByNameRequest getBusinessListByNameRequest =
-        new GetBusinessListByNameRequest(page, searchValue);
+    GetBusinessListByNameRequest getBusinessListByNameRequest = new GetBusinessListByNameRequest(page, searchValue);
     Api(context: context)
         .request(getBusinessListByNameRequest)
         .then((response) => {
               print("RESPONSE-> $response"),
               if (response.statusCode == 200)
                 {
-                  completer.complete(BusinessListResponse.fromJson(
-                      json.decode(response.body))),
+                  completer.complete(BusinessListResponse.fromJson(json.decode(response.body))),
                 }
-              else if (AccessToken()
-                      .checkTokenExpiry(context: context, response: response) ==
-                  true)
+              else if (AccessToken().checkTokenExpiry(context: context, response: response) == true)
                 {
-                  completer.completeError(ExceptionHelper()
-                      .handleExceptions(ExceptionType.TokenExpiredException)),
+                  completer.completeError(ExceptionHelper().handleExceptions(ExceptionType.TokenExpiredException)),
                 }
               else
                 {
-                  completer.completeError(ExceptionHelper()
-                      .handleExceptions(ExceptionType.HttpException)),
+                  completer.completeError(ExceptionHelper().handleExceptions(ExceptionType.HttpException)),
                 }
             })
         .catchError((error) {
@@ -1657,12 +1398,10 @@ class ApiManager {
     return completer.future;
   }
 
-  Future<Baseresponse> saveUserTokenForNotification(String token) {
+  Future<Baseresponse> saveUserTokenForNotification(String? token) {
     Completer<Baseresponse> completer = new Completer();
-    SaveUserTokenRequestBody saveUserTokenRequestBody =
-        new SaveUserTokenRequestBody(Platform.isAndroid ? 0 : 1, token);
-    SaveUserTokenRequest saveUserTokenRequest =
-        new SaveUserTokenRequest(saveUserTokenRequestBody);
+    SaveUserTokenRequestBody saveUserTokenRequestBody = new SaveUserTokenRequestBody(Platform.isAndroid ? 0 : 1, token);
+    SaveUserTokenRequest saveUserTokenRequest = new SaveUserTokenRequest(saveUserTokenRequestBody);
     Api(context: context)
         .request(saveUserTokenRequest)
         .then((response) => {
@@ -1673,17 +1412,13 @@ class ApiManager {
                       // Baseresponse.fromJson(json.decode(response.body))),
                       Baseresponse(json.decode(response.body))),
                 }
-              else if (AccessToken()
-                      .checkTokenExpiry(context: context, response: response) ==
-                  true)
+              else if (AccessToken().checkTokenExpiry(context: context, response: response) == true)
                 {
-                  completer.completeError(ExceptionHelper()
-                      .handleExceptions(ExceptionType.TokenExpiredException)),
+                  completer.completeError(ExceptionHelper().handleExceptions(ExceptionType.TokenExpiredException)),
                 }
               else
                 {
-                  completer.completeError(ExceptionHelper()
-                      .handleExceptions(ExceptionType.HttpException)),
+                  completer.completeError(ExceptionHelper().handleExceptions(ExceptionType.HttpException)),
                 }
             })
         .catchError((error) {
@@ -1695,18 +1430,11 @@ class ApiManager {
     return completer.future;
   }
 
-  Future<Baseresponse> addUnregisteredBusiness(
-      String businessName,
-      String latitude,
-      String longitude,
-      String categoryId,
-      String businessUsername) {
+  Future<Baseresponse> addUnregisteredBusiness(String businessName, String latitude, String longitude, String categoryId, String businessUsername) {
     Completer<Baseresponse> completer = new Completer();
     AddUnregisteredBusinessRequestBody addUnregisteredBusinessRequestBody =
-        AddUnregisteredBusinessRequestBody(
-            businessName, latitude, longitude, categoryId, businessUsername);
-    AddUnregisteredBusinessRequest addUnregisteredBusinessRequest =
-        AddUnregisteredBusinessRequest(addUnregisteredBusinessRequestBody);
+        AddUnregisteredBusinessRequestBody(businessName, latitude, longitude, categoryId, businessUsername);
+    AddUnregisteredBusinessRequest addUnregisteredBusinessRequest = AddUnregisteredBusinessRequest(addUnregisteredBusinessRequestBody);
     Api(context: context)
         .request(addUnregisteredBusinessRequest)
         .then((response) => {
@@ -1717,17 +1445,13 @@ class ApiManager {
                       // Baseresponse.fromJson(json.decode(response.body))),
                       Baseresponse(json.decode(response.body))),
                 }
-              else if (AccessToken()
-                      .checkTokenExpiry(context: context, response: response) ==
-                  true)
+              else if (AccessToken().checkTokenExpiry(context: context, response: response) == true)
                 {
-                  completer.completeError(ExceptionHelper()
-                      .handleExceptions(ExceptionType.TokenExpiredException)),
+                  completer.completeError(ExceptionHelper().handleExceptions(ExceptionType.TokenExpiredException)),
                 }
               else
                 {
-                  completer.completeError(ExceptionHelper()
-                      .handleExceptions(ExceptionType.HttpException)),
+                  completer.completeError(ExceptionHelper().handleExceptions(ExceptionType.HttpException)),
                 }
             })
         .catchError((error) {
@@ -1739,14 +1463,10 @@ class ApiManager {
     return completer.future;
   }
 
-  Future<Baseresponse> addBusinessHours(String userId, String startTimes,
-      String endTimes, String businessTimeZone) {
+  Future<Baseresponse> addBusinessHours(String userId, String startTimes, String endTimes, String? businessTimeZone) {
     Completer<Baseresponse> completer = new Completer();
-    AddBusinessHoursRequestBody addBusinessHoursRequestBody =
-        AddBusinessHoursRequestBody(
-            "0,1,2,3,4,5,6", startTimes, endTimes, businessTimeZone);
-    AddBusinessHoursRequest addBusinessHoursRequest =
-        AddBusinessHoursRequest(addBusinessHoursRequestBody);
+    AddBusinessHoursRequestBody addBusinessHoursRequestBody = AddBusinessHoursRequestBody("0,1,2,3,4,5,6", startTimes, endTimes, businessTimeZone);
+    AddBusinessHoursRequest addBusinessHoursRequest = AddBusinessHoursRequest(addBusinessHoursRequestBody);
     Api(context: context)
         .request(addBusinessHoursRequest)
         .then((response) => {
@@ -1757,17 +1477,13 @@ class ApiManager {
                       // Baseresponse.fromJson(json.decode(response.body))),
                       Baseresponse(json.decode(response.body))),
                 }
-              else if (AccessToken()
-                      .checkTokenExpiry(context: context, response: response) ==
-                  true)
+              else if (AccessToken().checkTokenExpiry(context: context, response: response) == true)
                 {
-                  completer.completeError(ExceptionHelper()
-                      .handleExceptions(ExceptionType.TokenExpiredException)),
+                  completer.completeError(ExceptionHelper().handleExceptions(ExceptionType.TokenExpiredException)),
                 }
               else
                 {
-                  completer.completeError(ExceptionHelper()
-                      .handleExceptions(ExceptionType.HttpException)),
+                  completer.completeError(ExceptionHelper().handleExceptions(ExceptionType.HttpException)),
                 }
             })
         .catchError((error) {
@@ -1788,21 +1504,16 @@ class ApiManager {
               print("RESPONSE-> $response"),
               if (response.statusCode == 200)
                 {
-                  completer.complete(BusinessCityResponse.fromJson(
-                      json.decode(response.body))),
+                  completer.complete(BusinessCityResponse.fromJson(json.decode(response.body))),
                   // Baseresponse(json.decode(response.body))),
                 }
-              else if (AccessToken()
-                      .checkTokenExpiry(context: context, response: response) ==
-                  true)
+              else if (AccessToken().checkTokenExpiry(context: context, response: response) == true)
                 {
-                  completer.completeError(ExceptionHelper()
-                      .handleExceptions(ExceptionType.TokenExpiredException)),
+                  completer.completeError(ExceptionHelper().handleExceptions(ExceptionType.TokenExpiredException)),
                 }
               else
                 {
-                  completer.completeError(ExceptionHelper()
-                      .handleExceptions(ExceptionType.HttpException)),
+                  completer.completeError(ExceptionHelper().handleExceptions(ExceptionType.HttpException)),
                 }
             })
         .catchError((error) {
@@ -1814,30 +1525,24 @@ class ApiManager {
     return completer.future;
   }
 
-  Future<ProfileResponse> getUserByIdToken(int userId) {
+  Future<ProfileResponse> getUserByIdToken(int? userId) {
     Completer<ProfileResponse> completer = new Completer();
-    GetUserByIdTokenRequest getUserByIdTokenRequest =
-        GetUserByIdTokenRequest(userId);
+    GetUserByIdTokenRequest getUserByIdTokenRequest = GetUserByIdTokenRequest(userId);
     Api(context: context)
         .request(getUserByIdTokenRequest)
         .then((response) => {
               print("RESPONSE-> $response"),
               if (response.statusCode == 200)
                 {
-                  completer.complete(
-                      ProfileResponse.fromJson(json.decode(response.body))),
+                  completer.complete(ProfileResponse.fromJson(json.decode(response.body))),
                 }
-              else if (AccessToken()
-                      .checkTokenExpiry(context: context, response: response) ==
-                  true)
+              else if (AccessToken().checkTokenExpiry(context: context, response: response) == true)
                 {
-                  completer.completeError(ExceptionHelper()
-                      .handleExceptions(ExceptionType.TokenExpiredException)),
+                  completer.completeError(ExceptionHelper().handleExceptions(ExceptionType.TokenExpiredException)),
                 }
               else
                 {
-                  completer.completeError(ExceptionHelper()
-                      .handleExceptions(ExceptionType.HttpException)),
+                  completer.completeError(ExceptionHelper().handleExceptions(ExceptionType.HttpException)),
                 }
             })
         .catchError((error) {
@@ -1852,8 +1557,7 @@ class ApiManager {
   Future<Baseresponse> sendOtpByBusinessID(int businessId) {
     log("businessId FROM Api manager $businessId");
     Completer<Baseresponse> completer = new Completer();
-    SendOtpByBusinessIdRequest sendOtpByIdRequest =
-        SendOtpByBusinessIdRequest(businessId: businessId);
+    SendOtpByBusinessIdRequest sendOtpByIdRequest = SendOtpByBusinessIdRequest(businessId: businessId);
     Api(context: context)
         .request(sendOtpByIdRequest)
         .then((response) => {
@@ -1862,17 +1566,13 @@ class ApiManager {
                 {
                   completer.complete(Baseresponse(json.decode(response.body))),
                 }
-              else if (AccessToken()
-                      .checkTokenExpiry(context: context, response: response) ==
-                  true)
+              else if (AccessToken().checkTokenExpiry(context: context, response: response) == true)
                 {
-                  completer.completeError(ExceptionHelper()
-                      .handleExceptions(ExceptionType.TokenExpiredException)),
+                  completer.completeError(ExceptionHelper().handleExceptions(ExceptionType.TokenExpiredException)),
                 }
               else
                 {
-                  completer.completeError(ExceptionHelper()
-                      .handleExceptions(ExceptionType.HttpException)),
+                  completer.completeError(ExceptionHelper().handleExceptions(ExceptionType.HttpException)),
                 }
             })
         .catchError((error) {
@@ -1886,30 +1586,23 @@ class ApiManager {
 
   Future<VerifiedOtpResponse> verifyOTPByBusinessID(int businessId, int otp) {
     Completer<VerifiedOtpResponse> completer = new Completer();
-    VerifyOtpByBusinessIdRequestBody verifyOtpByBusinessIdRequestBody =
-        VerifyOtpByBusinessIdRequestBody(businessId: businessId, otp: otp);
-    VerifyOtpByBusinessIdRequest verifyOtpByBusinessIdRequest =
-        VerifyOtpByBusinessIdRequest(verifyOtpByBusinessIdRequestBody);
+    VerifyOtpByBusinessIdRequestBody verifyOtpByBusinessIdRequestBody = VerifyOtpByBusinessIdRequestBody(businessId: businessId, otp: otp);
+    VerifyOtpByBusinessIdRequest verifyOtpByBusinessIdRequest = VerifyOtpByBusinessIdRequest(verifyOtpByBusinessIdRequestBody);
     Api(context: context)
         .request(verifyOtpByBusinessIdRequest)
         .then((response) => {
               print("RESPONSE-> $response"),
               if (response.statusCode == 200)
                 {
-                  completer.complete(
-                      VerifiedOtpResponse.fromJson(json.decode(response.body))),
+                  completer.complete(VerifiedOtpResponse.fromJson(json.decode(response.body))),
                 }
-              else if (AccessToken()
-                      .checkTokenExpiry(context: context, response: response) ==
-                  true)
+              else if (AccessToken().checkTokenExpiry(context: context, response: response) == true)
                 {
-                  completer.completeError(ExceptionHelper()
-                      .handleExceptions(ExceptionType.TokenExpiredException)),
+                  completer.completeError(ExceptionHelper().handleExceptions(ExceptionType.TokenExpiredException)),
                 }
               else
                 {
-                  completer.completeError(ExceptionHelper()
-                      .handleExceptions(ExceptionType.HttpException)),
+                  completer.completeError(ExceptionHelper().handleExceptions(ExceptionType.HttpException)),
                 }
             })
         .catchError((error) {
@@ -1921,33 +1614,26 @@ class ApiManager {
     return completer.future;
   }
 
-  Future<HomeFeedResponse> getFeedsByBusinessID(
-      String businessUserId, int page) async {
+  Future<HomeFeedResponse> getFeedsByBusinessID(String businessUserId, int page) async {
     Completer<HomeFeedResponse> completer = new Completer();
-    GetFeedsByIdRequest getFeedsByIdRequest =
-        GetFeedsByIdRequest(businessUserId: businessUserId, page: page);
+    GetFeedsByIdRequest getFeedsByIdRequest = GetFeedsByIdRequest(businessUserId: businessUserId, page: page);
     Api(context: context)
         .request(getFeedsByIdRequest)
         .then((response) => {
               print("RESPONSE-> $response"),
               if (response.statusCode == 200)
                 {
-                  completer.complete(
-                      HomeFeedResponse.fromJson(json.decode(response.body))),
+                  completer.complete(HomeFeedResponse.fromJson(json.decode(response.body))),
                 }
-              else if (AccessToken()
-                      .checkTokenExpiry(context: context, response: response) ==
-                  true)
+              else if (AccessToken().checkTokenExpiry(context: context, response: response) == true)
                 {
                   // completer
                   //     .completeError(Exception(AppMessages.token_expired_text)),
-                  completer.completeError(ExceptionHelper()
-                      .handleExceptions(ExceptionType.TokenExpiredException)),
+                  completer.completeError(ExceptionHelper().handleExceptions(ExceptionType.TokenExpiredException)),
                 }
               else
                 {
-                  completer.completeError(ExceptionHelper()
-                      .handleExceptions(ExceptionType.HttpException)),
+                  completer.completeError(ExceptionHelper().handleExceptions(ExceptionType.HttpException)),
                 }
             })
         .catchError((error) {
@@ -1960,33 +1646,26 @@ class ApiManager {
     return completer.future;
   }
 
-  Future<SearchBusinessKeywordsResponse> searchBusinessKeywords(
-      String searchValue) async {
+  Future<SearchBusinessKeywordsResponse> searchBusinessKeywords(String searchValue) async {
     Completer<SearchBusinessKeywordsResponse> completer = new Completer();
-    SearchBusinessKeywordsRequest searchBusinessKeywordsRequest =
-        SearchBusinessKeywordsRequest(searchValue: searchValue);
+    SearchBusinessKeywordsRequest searchBusinessKeywordsRequest = SearchBusinessKeywordsRequest(searchValue: searchValue);
     Api(context: context)
         .request(searchBusinessKeywordsRequest)
         .then((response) => {
               print("RESPONSE-> $response"),
               if (response.statusCode == 200)
                 {
-                  completer.complete(SearchBusinessKeywordsResponse.fromJson(
-                      json.decode(response.body))),
+                  completer.complete(SearchBusinessKeywordsResponse.fromJson(json.decode(response.body))),
                 }
-              else if (AccessToken()
-                      .checkTokenExpiry(context: context, response: response) ==
-                  true)
+              else if (AccessToken().checkTokenExpiry(context: context, response: response) == true)
                 {
                   // completer
                   //     .completeError(Exception(AppMessages.token_expired_text)),
-                  completer.completeError(ExceptionHelper()
-                      .handleExceptions(ExceptionType.TokenExpiredException)),
+                  completer.completeError(ExceptionHelper().handleExceptions(ExceptionType.TokenExpiredException)),
                 }
               else
                 {
-                  completer.completeError(ExceptionHelper()
-                      .handleExceptions(ExceptionType.HttpException)),
+                  completer.completeError(ExceptionHelper().handleExceptions(ExceptionType.HttpException)),
                 }
             })
         .catchError((error) {
@@ -1999,32 +1678,25 @@ class ApiManager {
     return completer.future;
   }
 
-  Future<VerifiedOtpResponse> verifyPasscode(String email, String passcode) {
+  Future<VerifiedOtpResponse> verifyPasscode(String? email, String passcode) {
     Completer<VerifiedOtpResponse> completer = new Completer();
-    VerifyPasscodeRequestBody verifyPasscodeRequestBody =
-        VerifyPasscodeRequestBody(email, passcode);
-    VerifyPasscodeRequest verifyPasscodeRequest =
-        VerifyPasscodeRequest(verifyPasscodeRequestBody);
+    VerifyPasscodeRequestBody verifyPasscodeRequestBody = VerifyPasscodeRequestBody(email, passcode);
+    VerifyPasscodeRequest verifyPasscodeRequest = VerifyPasscodeRequest(verifyPasscodeRequestBody);
     Api(context: context)
         .request(verifyPasscodeRequest)
         .then((response) => {
               print("RESPONSE-> $response"),
               if (response.statusCode == 200)
                 {
-                  completer.complete(
-                      VerifiedOtpResponse.fromJson(json.decode(response.body))),
+                  completer.complete(VerifiedOtpResponse.fromJson(json.decode(response.body))),
                 }
-              else if (AccessToken()
-                      .checkTokenExpiry(context: context, response: response) ==
-                  true)
+              else if (AccessToken().checkTokenExpiry(context: context, response: response) == true)
                 {
-                  completer.completeError(ExceptionHelper()
-                      .handleExceptions(ExceptionType.TokenExpiredException)),
+                  completer.completeError(ExceptionHelper().handleExceptions(ExceptionType.TokenExpiredException)),
                 }
               else
                 {
-                  completer.completeError(ExceptionHelper()
-                      .handleExceptions(ExceptionType.HttpException)),
+                  completer.completeError(ExceptionHelper().handleExceptions(ExceptionType.HttpException)),
                 }
             })
         .catchError((error) {
@@ -2036,36 +1708,26 @@ class ApiManager {
     return completer.future;
   }
 
-  Future<VerifiedOtpResponse> verifyPasscodeByBusinessID(
-      int businessId, int passcode) {
+  Future<VerifiedOtpResponse> verifyPasscodeByBusinessID(int businessId, int passcode) {
     Completer<VerifiedOtpResponse> completer = new Completer();
-    VerifyPasscodeByBusinessIdRequestBody
-        verifyPasscodeByBusinessIdRequestBody =
-        VerifyPasscodeByBusinessIdRequestBody(
-            businessId: businessId, passcode: passcode);
-    VerifyPasscodeByBusinessIdRequest verifyPasscodeByBusinessIdRequest =
-        VerifyPasscodeByBusinessIdRequest(
-            verifyPasscodeByBusinessIdRequestBody);
+    VerifyPasscodeByBusinessIdRequestBody verifyPasscodeByBusinessIdRequestBody =
+        VerifyPasscodeByBusinessIdRequestBody(businessId: businessId, passcode: passcode);
+    VerifyPasscodeByBusinessIdRequest verifyPasscodeByBusinessIdRequest = VerifyPasscodeByBusinessIdRequest(verifyPasscodeByBusinessIdRequestBody);
     Api(context: context)
         .request(verifyPasscodeByBusinessIdRequest)
         .then((response) => {
               print("RESPONSE-> $response"),
               if (response.statusCode == 200)
                 {
-                  completer.complete(
-                      VerifiedOtpResponse.fromJson(json.decode(response.body))),
+                  completer.complete(VerifiedOtpResponse.fromJson(json.decode(response.body))),
                 }
-              else if (AccessToken()
-                      .checkTokenExpiry(context: context, response: response) ==
-                  true)
+              else if (AccessToken().checkTokenExpiry(context: context, response: response) == true)
                 {
-                  completer.completeError(ExceptionHelper()
-                      .handleExceptions(ExceptionType.TokenExpiredException)),
+                  completer.completeError(ExceptionHelper().handleExceptions(ExceptionType.TokenExpiredException)),
                 }
               else
                 {
-                  completer.completeError(ExceptionHelper()
-                      .handleExceptions(ExceptionType.HttpException)),
+                  completer.completeError(ExceptionHelper().handleExceptions(ExceptionType.HttpException)),
                 }
             })
         .catchError((error) {
@@ -2079,11 +1741,8 @@ class ApiManager {
 
   Future<Baseresponse> changePasscode(String oldPasscode, String newPasscode) {
     Completer<Baseresponse> completer = new Completer();
-    ChangePasscodeRequestBody changePasscodeRequestBody =
-        ChangePasscodeRequestBody(
-            oldPasscode: oldPasscode, newPasscode: newPasscode);
-    ChangePasscodeRequest changePasscodeRequest =
-        ChangePasscodeRequest(changePasscodeRequestBody);
+    ChangePasscodeRequestBody changePasscodeRequestBody = ChangePasscodeRequestBody(oldPasscode: oldPasscode, newPasscode: newPasscode);
+    ChangePasscodeRequest changePasscodeRequest = ChangePasscodeRequest(changePasscodeRequestBody);
     Api(context: context)
         .request(changePasscodeRequest)
         .then((response) => {
@@ -2092,17 +1751,13 @@ class ApiManager {
                 {
                   completer.complete(Baseresponse(json.decode(response.body))),
                 }
-              else if (AccessToken()
-                      .checkTokenExpiry(context: context, response: response) ==
-                  true)
+              else if (AccessToken().checkTokenExpiry(context: context, response: response) == true)
                 {
-                  completer.completeError(ExceptionHelper()
-                      .handleExceptions(ExceptionType.TokenExpiredException)),
+                  completer.completeError(ExceptionHelper().handleExceptions(ExceptionType.TokenExpiredException)),
                 }
               else
                 {
-                  completer.completeError(ExceptionHelper()
-                      .handleExceptions(ExceptionType.HttpException)),
+                  completer.completeError(ExceptionHelper().handleExceptions(ExceptionType.HttpException)),
                 }
             })
         .catchError((error) {
@@ -2114,32 +1769,25 @@ class ApiManager {
     return completer.future;
   }
 
-  Future<VerifiedOtpResponse> setPasscode(String email, String passcode) {
+  Future<VerifiedOtpResponse> setPasscode(String? email, String passcode) {
     Completer<VerifiedOtpResponse> completer = new Completer();
-    SetPasscodeRequestBody setPasscodeRequestBody =
-        SetPasscodeRequestBody(email, passcode);
-    SetPasscodeRequest setPasscodeRequest =
-        SetPasscodeRequest(setPasscodeRequestBody);
+    SetPasscodeRequestBody setPasscodeRequestBody = SetPasscodeRequestBody(email, passcode);
+    SetPasscodeRequest setPasscodeRequest = SetPasscodeRequest(setPasscodeRequestBody);
     Api(context: context)
         .request(setPasscodeRequest)
         .then((response) => {
               print("RESPONSE-> $response"),
               if (response.statusCode == 200)
                 {
-                  completer.complete(
-                      VerifiedOtpResponse.fromJson(json.decode(response.body))),
+                  completer.complete(VerifiedOtpResponse.fromJson(json.decode(response.body))),
                 }
-              else if (AccessToken()
-                      .checkTokenExpiry(context: context, response: response) ==
-                  true)
+              else if (AccessToken().checkTokenExpiry(context: context, response: response) == true)
                 {
-                  completer.completeError(ExceptionHelper()
-                      .handleExceptions(ExceptionType.TokenExpiredException)),
+                  completer.completeError(ExceptionHelper().handleExceptions(ExceptionType.TokenExpiredException)),
                 }
               else
                 {
-                  completer.completeError(ExceptionHelper()
-                      .handleExceptions(ExceptionType.HttpException)),
+                  completer.completeError(ExceptionHelper().handleExceptions(ExceptionType.HttpException)),
                 }
             })
         .catchError((error) {

@@ -13,7 +13,7 @@ import 'package:trendoapp/global/view/global_view.dart';
 import 'package:trendoapp/providers/settings/account_settings_provider.dart';
 
 class ChangePasscodeScreen extends StatelessWidget {
-  ChangePasscodeScreen({Key key}) : super(key: key);
+  ChangePasscodeScreen({Key? key}) : super(key: key);
   TextEditingController oldPasscodeController = TextEditingController();
   TextEditingController newPasscodeController = TextEditingController();
   TextEditingController reEnterPasscodeController = TextEditingController();

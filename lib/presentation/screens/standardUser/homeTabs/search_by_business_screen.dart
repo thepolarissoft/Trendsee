@@ -29,27 +29,24 @@ class SearchByBusinessScreen extends StatefulWidget {
   _SearchByBusinessScreenState createState() => _SearchByBusinessScreenState();
 }
 
-class _SearchByBusinessScreenState extends State<SearchByBusinessScreen>
-    with TickerProviderStateMixin {
+class _SearchByBusinessScreenState extends State<SearchByBusinessScreen> with TickerProviderStateMixin {
   // TabController _tabController;
   TextEditingController searchEditingController = new TextEditingController();
   int page = 1;
   ScrollController scrollController = new ScrollController();
   TextEditingController reasonEditingController = new TextEditingController();
-  FilterProvider filterProvider;
+  FilterProvider? filterProvider;
 
   @override
   void initState() {
     super.initState();
     Future.delayed(Duration.zero, () {
-      SearchListData()
-          .initSearchData(context, searchEditingController.text, page);
+      SearchListData().initSearchData(context, searchEditingController.text, page);
     });
     // focusNode.addListener(() {});
     scrollController.addListener(() {
       // print("pixels ${scrollController.position.pixels}");
-      if (scrollController.position.pixels ==
-          scrollController.position.maxScrollExtent) {
+      if (scrollController.position.pixels == scrollController.position.maxScrollExtent) {
         getMoreBusinessData();
       }
     });
@@ -58,8 +55,7 @@ class _SearchByBusinessScreenState extends State<SearchByBusinessScreen>
   @override
   Widget build(BuildContext context) {
     filterProvider = Provider.of<FilterProvider>(context, listen: false);
-    print(
-        "IS INTERNET Search->${Provider.of<ConnectionProvider>(context).isInternetConnection} ");
+    print("IS INTERNET Search->${Provider.of<ConnectionProvider>(context).isInternetConnection} ");
     // filterModel.page = page;
     // filterModel.searchValue = searchEditingController.text;
     // filterModel.categoryId =
@@ -134,8 +130,7 @@ class _SearchByBusinessScreenState extends State<SearchByBusinessScreen>
                         //     // ),
                         //   ],
                         // ),
-                        Consumer<SearchByBusinessProvider>(
-                            builder: (ctx, provider, child) {
+                        Consumer<SearchByBusinessProvider>(builder: (ctx, provider, child) {
                           return Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 22),
                             child: Theme(
@@ -149,75 +144,51 @@ class _SearchByBusinessScreenState extends State<SearchByBusinessScreen>
                                   elevation: 4,
                                   borderRadius: BorderRadius.circular(25),
                                   child: TypeAheadField<String>(
-                                    textFieldConfiguration:
-                                        TextFieldConfiguration(
+                                    textFieldConfiguration: TextFieldConfiguration(
                                       controller: searchEditingController,
                                       autocorrect: false,
                                       enableSuggestions: false,
                                       style: TextStyle(
                                         color: BaseColor.hint_color,
-                                        fontFamily:
-                                            AppTextStyle.inter_font_family,
+                                        fontFamily: AppTextStyle.inter_font_family,
                                         fontSize: 14,
                                       ),
                                       decoration: InputDecoration(
                                         isDense: true,
                                         // filled: true,
                                         focusColor: BaseColor.pure_white_color,
-                                        contentPadding: EdgeInsets.only(
-                                            left: 60, right: -40),
-                                        prefixIcon: GlobalView().prefixIconView(
-                                            AppImages.ic_search),
+                                        contentPadding: EdgeInsets.only(left: 60, right: -40),
+                                        prefixIcon: GlobalView().prefixIconView(AppImages.ic_search),
                                         enabledBorder: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(25),
-                                          borderSide: BorderSide(
-                                              color: BaseColor
-                                                  .border_txtfield_color),
+                                          borderRadius: BorderRadius.circular(25),
+                                          borderSide: BorderSide(color: BaseColor.border_txtfield_color),
                                           // gapPadding: 50,
                                         ),
                                         disabledBorder: OutlineInputBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(25),
-                                            borderSide: BorderSide(
-                                                color: BaseColor
-                                                    .border_txtfield_color)),
+                                            borderRadius: BorderRadius.circular(25), borderSide: BorderSide(color: BaseColor.border_txtfield_color)),
                                         border: OutlineInputBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(25),
-                                            borderSide: BorderSide(
-                                                color: BaseColor
-                                                    .border_txtfield_color)),
+                                            borderRadius: BorderRadius.circular(25), borderSide: BorderSide(color: BaseColor.border_txtfield_color)),
                                         focusedBorder: OutlineInputBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(25),
-                                            borderSide: BorderSide(
-                                                color: BaseColor
-                                                    .border_txtfield_color)),
-                                        hintText: AppMessages
-                                            .hint_search_by_business_name,
+                                            borderRadius: BorderRadius.circular(25), borderSide: BorderSide(color: BaseColor.border_txtfield_color)),
+                                        hintText: AppMessages.hint_search_by_business_name,
                                         hintStyle: TextStyle(
-                                          color: BaseColor.hint_color
-                                              .withOpacity(0.6),
-                                          fontFamily:
-                                              AppTextStyle.inter_font_family,
+                                          color: BaseColor.hint_color.withOpacity(0.6),
+                                          fontFamily: AppTextStyle.inter_font_family,
                                           fontSize: 14,
                                         ),
                                       ),
                                     ),
-                                    suggestionsBoxDecoration:
-                                        SuggestionsBoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(20)),
-                                    suggestionsCallback: (pattern) async {
-                                      print(
-                                          "suggestionsCallback pattern--> $pattern");
+                                    suggestionsBoxDecoration: SuggestionsBoxDecoration(borderRadius: BorderRadius.circular(20)),
+                                    suggestionsCallback: (String? pattern) async {
+                                      print("suggestionsCallback pattern--> $pattern");
                                       // if (pattern.length == 0) {
                                       //   getSearchData();
                                       // }
-                                      if (pattern.length >= 3)
-                                        return provider.searchBusinessKeywords(
-                                            context, pattern);
+                                      if (pattern!.length >= 3) {
+                                        return provider.searchBusinessKeywords(context, pattern);
+                                      } else {
+                                        return [''];
+                                      }
                                     },
                                     hideOnEmpty: true,
                                     getImmediateSuggestions: true,
@@ -227,19 +198,15 @@ class _SearchByBusinessScreenState extends State<SearchByBusinessScreen>
                                     onSuggestionSelected: (item) {
                                       print("ITEM NAME-> $item");
                                       searchEditingController.text = item;
-                                      Provider.of<FilterProvider>(context,
-                                              listen: false)
-                                          .setSearchValue(item);
+                                      Provider.of<FilterProvider>(context, listen: false).setSearchValue(item);
                                       // getSearchData();
-                                      print(
-                                          "AREA TEXT->${searchEditingController.text}");
+                                      print("AREA TEXT->${searchEditingController.text}");
                                       // provider.searchByCity(context);
                                       // provider.changeEditableCityValue();
                                       print("Suggestion-> $item");
-                                      filterProvider.selectedCity("");
-                                      filterProvider.setDistanceRadius("5");
-                                      filterProvider.citySearchController.text =
-                                          "";
+                                      filterProvider!.selectedCity("");
+                                      filterProvider!.setDistanceRadius("5");
+                                      filterProvider!.citySearchController.text = "";
                                       openFilterBottomSheet(
                                         context: context,
                                         route: "search",
@@ -287,59 +254,41 @@ class _SearchByBusinessScreenState extends State<SearchByBusinessScreen>
   }
 
   void getMoreBusinessData() async {
-    SearchByBusinessResponse searchByBusinessResponse =
-        Provider.of<SearchByBusinessProvider>(context, listen: false)
-            .searchByBusinessResponse;
-    if (searchByBusinessResponse != null &&
-        searchByBusinessResponse.place != null &&
-        searchByBusinessResponse.place.nextPageUrl != null) {
+    SearchByBusinessResponse? searchByBusinessResponse = Provider.of<SearchByBusinessProvider>(context, listen: false).searchByBusinessResponse;
+    if (searchByBusinessResponse != null && searchByBusinessResponse.place != null && searchByBusinessResponse.place!.nextPageUrl != null) {
       page++;
-      Provider.of<SearchByBusinessProvider>(context, listen: false)
-          .getSearchByBusinessList(
+      Provider.of<SearchByBusinessProvider>(context, listen: false).getSearchByBusinessList(
         context,
         page,
         searchEditingController.text,
-        Provider.of<CategoriesListProvider>(context, listen: false)
-            .selectedCategoryResponse
-            .id
-            .toString(),
+        Provider.of<CategoriesListProvider>(context, listen: false).selectedCategoryResponse!.id.toString(),
         // filterModel.categoryId,
         StorageUtils.readStringValue(StorageUtils.keyLatitude),
         StorageUtils.readStringValue(StorageUtils.keyLongitude),
         Provider.of<FilterProvider>(context, listen: false).distanceRadius,
-        Provider.of<FilterProvider>(context, listen: false)
-            .selectedMetropolitanCityInfo,
+        Provider.of<FilterProvider>(context, listen: false).selectedMetropolitanCityInfo,
       );
     } else {
-      GlobalView()
-          .showToast(AppMessages.no_feeds_available_with_filters_message);
+      GlobalView().showToast(AppMessages.no_feeds_available_with_filters_message);
     }
   }
 
   // void onClickLikedButton(){}
 
   void getSearchData() {
-    print(
-        "Distance radius provider value From UI--> ${Provider.of<FilterProvider>(context, listen: false).distanceRadius}");
+    print("Distance radius provider value From UI--> ${Provider.of<FilterProvider>(context, listen: false).distanceRadius}");
     page = 1;
-    Provider.of<SearchByBusinessProvider>(context, listen: false)
-        .listBusiness
-        .clear();
-    Provider.of<SearchByBusinessProvider>(context, listen: false)
-        .getSearchByBusinessList(
+    Provider.of<SearchByBusinessProvider>(context, listen: false).listBusiness.clear();
+    Provider.of<SearchByBusinessProvider>(context, listen: false).getSearchByBusinessList(
       context,
       page,
       searchEditingController.text,
-      Provider.of<CategoriesListProvider>(context, listen: false)
-          .selectedCategoryResponse
-          .id
-          .toString(),
+      Provider.of<CategoriesListProvider>(context, listen: false).selectedCategoryResponse!.id.toString(),
       // filterModel.categoryId,
       StorageUtils.readStringValue(StorageUtils.keyLatitude),
       StorageUtils.readStringValue(StorageUtils.keyLongitude),
       Provider.of<FilterProvider>(context, listen: false).distanceRadius,
-      Provider.of<FilterProvider>(context, listen: false)
-          .selectedMetropolitanCityInfo,
+      Provider.of<FilterProvider>(context, listen: false).selectedMetropolitanCityInfo,
     );
   }
 
@@ -354,10 +303,8 @@ class _SearchByBusinessScreenState extends State<SearchByBusinessScreen>
             height: 30,
             width: 30,
             padding: EdgeInsets.all(6),
-            decoration: BoxDecoration(
-                shape: BoxShape.circle, color: BaseColor.border_txtfield_color),
-            child: Image.asset(AppImages.ic_business,
-                height: 20, width: 20, color: BaseColor.pure_white_color),
+            decoration: BoxDecoration(shape: BoxShape.circle, color: BaseColor.border_txtfield_color),
+            child: Image.asset(AppImages.ic_business, height: 20, width: 20, color: BaseColor.pure_white_color),
           ),
           SizedBox(width: 10),
           Expanded(
@@ -382,16 +329,14 @@ class _SearchByBusinessScreenState extends State<SearchByBusinessScreen>
               ),
             ),
           ),
-          Image.asset(AppImages.ic_back_search2,
-              height: 15, width: 15, color: BaseColor.black_color),
+          Image.asset(AppImages.ic_back_search2, height: 15, width: 15, color: BaseColor.black_color),
           SizedBox(width: 10),
         ],
       ),
     );
   }
 
-  Widget listBusinesses() =>
-      Consumer<SearchByBusinessProvider>(builder: (_, provider, child) {
+  Widget listBusinesses() => Consumer<SearchByBusinessProvider>(builder: (_, provider, child) {
         return Stack(
           children: [
             Padding(
@@ -402,8 +347,7 @@ class _SearchByBusinessScreenState extends State<SearchByBusinessScreen>
                       ? RefreshIndicator(
                           color: BaseColor.btn_gradient_end_color1,
                           onRefresh: () async {
-                            SearchListData().initSearchData(
-                                context, searchEditingController.text, page);
+                            SearchListData().initSearchData(context, searchEditingController.text, page);
                           },
                           child: MediaQuery.removePadding(
                             context: context,
@@ -412,8 +356,7 @@ class _SearchByBusinessScreenState extends State<SearchByBusinessScreen>
                             child: ListView.builder(
                               shrinkWrap: true,
                               controller: scrollController,
-                              keyboardDismissBehavior:
-                                  ScrollViewKeyboardDismissBehavior.onDrag,
+                              keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
                               itemCount: provider.listBusiness.length,
                               physics: AlwaysScrollableScrollPhysics(),
                               itemBuilder: (_, index) =>
@@ -456,23 +399,17 @@ class _SearchByBusinessScreenState extends State<SearchByBusinessScreen>
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) =>
-                                          BusinessDetailsScreen(
-                                        businessId:
-                                            provider.listBusiness[index].id,
+                                      builder: (context) => BusinessDetailsScreen(
+                                        businessId: provider.listBusiness[index].id,
                                       ),
                                     ),
                                   );
                                 },
                                 child: BusinessItemView(
-                                    verifiedUserResponse:
-                                        provider.listBusiness[index],
+                                    verifiedUserResponse: provider.listBusiness[index],
                                     onClickLikeButton: () {
-                                      if (provider
-                                              .listBusiness[index].isLiked ==
-                                          0) {
-                                        provider.likeBusiness(context,
-                                            provider.listBusiness[index]);
+                                      if (provider.listBusiness[index].isLiked == 0) {
+                                        provider.likeBusiness(context, provider.listBusiness[index]);
                                       } else {
                                         // DialogUtils().onClickLikedBusiness(
                                         //     context,
@@ -484,19 +421,10 @@ class _SearchByBusinessScreenState extends State<SearchByBusinessScreen>
                                           context,
                                           reasonEditingController,
                                           () {
-                                            if (reasonEditingController
-                                                .text.isNotEmpty) {
-                                              provider.dislikeBusiness(
-                                                  context,
-                                                  provider.listBusiness[index],
-                                                  reasonEditingController.text,
-                                                  1,
-                                                  "");
-                                            } else if (reasonEditingController
-                                                .text.isEmpty) {
-                                              GlobalView().showToast(
-                                                  AppToastMessages
-                                                      .valid_reason_message);
+                                            if (reasonEditingController.text.isNotEmpty) {
+                                              provider.dislikeBusiness(context, provider.listBusiness[index], reasonEditingController.text, 1, "");
+                                            } else if (reasonEditingController.text.isEmpty) {
+                                              GlobalView().showToast(AppToastMessages.valid_reason_message);
                                             }
                                           },
                                         );
@@ -508,20 +436,13 @@ class _SearchByBusinessScreenState extends State<SearchByBusinessScreen>
                         )
                       : Container(
                           child: Center(
-                          child: GlobalView().textViewWithCenterAlign(
-                              AppMessages
-                                  .no_feeds_available_with_filters_message,
-                              AppTextStyle.inter_font_family,
-                              AppTextStyle.semi_bold_font_weight,
-                              BaseColor.black_color,
-                              18),
+                          child: GlobalView().textViewWithCenterAlign(AppMessages.no_feeds_available_with_filters_message,
+                              AppTextStyle.inter_font_family, AppTextStyle.semi_bold_font_weight, BaseColor.black_color, 18),
                         )),
                 )),
             Positioned(
               child: Visibility(
-                visible: Provider.of<SearchByBusinessProvider>(context,
-                        listen: false)
-                    .isLoading,
+                visible: Provider.of<SearchByBusinessProvider>(context, listen: false).isLoading,
                 child: Container(
                   color: BaseColor.home_bg_color,
                   child: GlobalView().loaderView(),
@@ -532,12 +453,7 @@ class _SearchByBusinessScreenState extends State<SearchByBusinessScreen>
         );
       });
 
-  Widget textfieldViewForSearchPeople(
-          String image,
-          TextEditingController controller,
-          String hintText,
-          TextAlign textAlign) =>
-      Material(
+  Widget textfieldViewForSearchPeople(String image, TextEditingController controller, String hintText, TextAlign textAlign) => Material(
         shadowColor: BaseColor.shadow_color,
         elevation: 4,
         borderRadius: BorderRadius.circular(25),
@@ -568,31 +484,21 @@ class _SearchByBusinessScreenState extends State<SearchByBusinessScreen>
                 controller.text = controller.text.replaceAll('  ', '');
               }
             }
-            controller.selection = TextSelection.fromPosition(
-                TextPosition(offset: controller.text.length));
+            controller.selection = TextSelection.fromPosition(TextPosition(offset: controller.text.length));
             print(" controller.text-> ${controller.text}");
-            Provider.of<SearchByBusinessProvider>(context, listen: false)
-                .listBusiness
-                .clear();
+            Provider.of<SearchByBusinessProvider>(context, listen: false).listBusiness.clear();
             // if (controller.text.length > 0) {
-            Provider.of<FilterProvider>(context, listen: false)
-                .setSearchValue(controller.text);
+            Provider.of<FilterProvider>(context, listen: false).setSearchValue(controller.text);
 
-            Provider.of<SearchByBusinessProvider>(context, listen: false)
-                .getSearchByBusinessList(
+            Provider.of<SearchByBusinessProvider>(context, listen: false).getSearchByBusinessList(
               context,
               page,
               controller.text,
-              Provider.of<CategoriesListProvider>(context, listen: false)
-                  .selectedCategoryResponse
-                  .id
-                  .toString(),
+              Provider.of<CategoriesListProvider>(context, listen: false).selectedCategoryResponse!.id.toString(),
               StorageUtils.readStringValue(StorageUtils.keyLatitude),
               StorageUtils.readStringValue(StorageUtils.keyLongitude),
-              Provider.of<FilterProvider>(context, listen: false)
-                  .distanceRadius,
-              Provider.of<FilterProvider>(context, listen: false)
-                  .selectedMetropolitanCityInfo,
+              Provider.of<FilterProvider>(context, listen: false).distanceRadius,
+              Provider.of<FilterProvider>(context, listen: false).selectedMetropolitanCityInfo,
             );
             // }
           },
@@ -610,8 +516,7 @@ class _SearchByBusinessScreenState extends State<SearchByBusinessScreen>
               // height: 50,
               // width: 58,
               child: Padding(
-                padding:
-                    EdgeInsets.only(top: 13, bottom: 13, left: 13, right: 13),
+                padding: EdgeInsets.only(top: 13, bottom: 13, left: 13, right: 13),
                 child: Image.asset(
                   image,
                   height: 24,
@@ -624,15 +529,11 @@ class _SearchByBusinessScreenState extends State<SearchByBusinessScreen>
               borderRadius: BorderRadius.circular(25),
               borderSide: BorderSide(color: BaseColor.border_txtfield_color),
             ),
-            disabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(25),
-                borderSide: BorderSide(color: BaseColor.border_txtfield_color)),
-            border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(25),
-                borderSide: BorderSide(color: BaseColor.border_txtfield_color)),
-            focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(25),
-                borderSide: BorderSide(color: BaseColor.border_txtfield_color)),
+            disabledBorder:
+                OutlineInputBorder(borderRadius: BorderRadius.circular(25), borderSide: BorderSide(color: BaseColor.border_txtfield_color)),
+            border: OutlineInputBorder(borderRadius: BorderRadius.circular(25), borderSide: BorderSide(color: BaseColor.border_txtfield_color)),
+            focusedBorder:
+                OutlineInputBorder(borderRadius: BorderRadius.circular(25), borderSide: BorderSide(color: BaseColor.border_txtfield_color)),
             hintText: hintText,
             hintStyle: TextStyle(
               color: BaseColor.hint_color.withOpacity(0.6),

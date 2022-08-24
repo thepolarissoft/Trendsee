@@ -13,7 +13,7 @@ String updateListKeywordsResponseToJson(UpdateListKeywordsResponse data) =>
     json.encode(data.toJson());
 
 class UpdateListKeywordsResponse extends Baseresponse {
-  String businessKeywords;
+  String? businessKeywords;
 
   // factory UpdateListKeywordsResponse.fromJson(Map<String, dynamic> json) =>
   //     UpdateListKeywordsResponse(

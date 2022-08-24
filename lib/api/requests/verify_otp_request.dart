@@ -4,13 +4,13 @@ import 'package:trendoapp/constants/api_urls.dart';
 
 class VerifyOtpRequest implements IHttpRequest {
   @override
-  String absolutePath = ApiUrls.verify_otp_url;
+  String? absolutePath = ApiUrls.verify_otp_url;
 
   @override
-  Object body;
+  Object? body;
 
   @override
-  HttpMethod httpMethod = HttpMethod.POST;
+  HttpMethod? httpMethod = HttpMethod.POST;
 
   @override
   Map<String, dynamic> get headers {
@@ -23,7 +23,7 @@ class VerifyOtpRequest implements IHttpRequest {
   }
 
   VerifyOtpRequest(VerifyOtpRequestBody verifyOtpRequestBody) {
-    var map = new Map<String, String>();
+    var map = new Map<String, String?>();
     map["email"] = verifyOtpRequestBody.email;
     map["otp"] = verifyOtpRequestBody.otp;
 

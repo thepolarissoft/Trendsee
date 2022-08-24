@@ -12,9 +12,9 @@ import 'package:trendoapp/utils/dialog_utils.dart';
 import 'package:trendoapp/utils/preference_utils.dart';
 
 class StandardUserProvider extends ChangeNotifier {
-  Baseresponse baseresponse;
+  Baseresponse? baseresponse;
   bool isLoading = false;
-  File userImage;
+  File? userImage;
   bool isPrivacyCheckBoxValue = false;
   bool isAgeCheckBoxValue = false;
 
@@ -38,11 +38,11 @@ class StandardUserProvider extends ChangeNotifier {
             isEighteen, isAcceptedTac, passcode)
         .then((response) {
       baseresponse = response;
-      print("RESPONSE->> ${baseresponse.toJsonData()}");
-      if (baseresponse.statuscode == 200) {
+      print("RESPONSE->> ${baseresponse!.toJsonData()}");
+      if (baseresponse!.statuscode == 200) {
         if (baseresponse != null) {
           isLoading = false;
-          print("baseresponse--->>== ${baseresponse.msg}");
+          print("baseresponse--->>== ${baseresponse!.msg}");
           GlobalView().showToast(AppToastMessages.create_account_message);
           PreferenceUtils.setStringValue(PreferenceUtils.keyEmail, email);
           print(
@@ -73,12 +73,12 @@ class StandardUserProvider extends ChangeNotifier {
           //     MaterialPageRoute(
           //         builder: (context) => EmailVerificationScreen(email: email)));
         }
-      } else if (baseresponse.statuscode == 400) {
+      } else if (baseresponse!.statuscode == 400) {
         DialogUtils.displayDialogCallBack(
             context,
             "",
             AppMessages.already_registered_title,
-            baseresponse.msg,
+            baseresponse!.msg,
             "",
             AppMessages.cancel_text,
             AppMessages.ok_text);
@@ -129,7 +129,7 @@ class StandardUserProvider extends ChangeNotifier {
     }
   }
 
-  void setStandardUserImage(File images) {
+  void setStandardUserImage(File? images) {
     StandardUserImageModel standardUserImageModel =
         new StandardUserImageModel(images);
     // standardUserImageModel.standardUserImage = images;

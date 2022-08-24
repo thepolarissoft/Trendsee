@@ -1,5 +1,5 @@
 class SignInRequestBody {
-  String userInput;
+  String? userInput;
   SignInRequestBody(String userInput) {
     this.userInput = userInput;
    

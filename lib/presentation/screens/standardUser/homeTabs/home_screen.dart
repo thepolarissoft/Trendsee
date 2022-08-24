@@ -51,12 +51,12 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
         // scrollToIndex();
         final provider =
             Provider.of<HomeFeedResponseProvider>(context, listen: false);
-        if (provider.homeFeedResponse.data.currentPage <
-            provider.homeFeedResponse.data.lastPage) {
+        if (provider.homeFeedResponse!.data!.currentPage! <
+            provider.homeFeedResponse!.data!.lastPage!) {
           provider.getHomeFeedList(
             context,
             Provider.of<CategoriesListProvider>(context, listen: false)
-                .selectedCategoryResponse
+                .selectedCategoryResponse!
                 .id
                 .toString(),
             StorageUtils.readStringValue(StorageUtils.keyLatitude),
@@ -182,7 +182,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                   .getHomeFeedList(
                 context,
                 Provider.of<CategoriesListProvider>(context, listen: false)
-                    .selectedCategoryResponse
+                    .selectedCategoryResponse!
                     .id
                     .toString(),
                 StorageUtils.readStringValue(StorageUtils.keyLatitude),

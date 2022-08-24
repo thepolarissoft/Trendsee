@@ -18,10 +18,10 @@ class BusinessCityResponse {
     this.data,
   });
 
-  int status;
-  int statuscode;
-  String msg;
-  List<String> data;
+  int? status;
+  int? statuscode;
+  String? msg;
+  List<String>? data;
 
   factory BusinessCityResponse.fromJson(Map<String, dynamic> json) =>
       BusinessCityResponse(
@@ -37,6 +37,6 @@ class BusinessCityResponse {
         "status": status == null ? null : status,
         "statuscode": statuscode == null ? null : statuscode,
         "msg": msg == null ? null : msg,
-        "data": data == null ? null : List<dynamic>.from(data.map((x) => x)),
+        "data": data == null ? null : List<dynamic>.from(data!.map((x) => x)),
       };
 }

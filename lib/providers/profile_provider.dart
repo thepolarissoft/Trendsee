@@ -14,13 +14,13 @@ import 'package:trendoapp/utils/dialog_utils.dart';
 import 'package:trendoapp/utils/preference_utils.dart';
 
 class ProfileProvider extends ChangeNotifier {
-  ProfileResponse profileResponse;
+  ProfileResponse? profileResponse;
   bool isLoading = false;
   bool isVisible = false;
-  LikeDislikeResponse likeDislikeResponse;
+  late LikeDislikeResponse likeDislikeResponse;
   int current = 0;
   // List<String> listMediaImages = [];
-  Baseresponse baseresponse;
+  Baseresponse? baseresponse;
 
   void getProfile(BuildContext context) async {
     isLoading = true;
@@ -32,9 +32,9 @@ class ProfileProvider extends ChangeNotifier {
             json.encode(profileResponse));
         if (response != null) {
           isLoading = false;
-          if (response.user.businessMedia.isNotEmpty) {}
+          if (response.user!.businessMedia!.isNotEmpty) {}
           // notifyListeners();
-          print("PROFILE RESPONSE-->> ${response.user.avatar}");
+          print("PROFILE RESPONSE-->> ${response.user!.avatar}");
         } else {
           isLoading = true;
         }
@@ -64,14 +64,14 @@ class ProfileProvider extends ChangeNotifier {
       baseresponse = response;
       if (baseresponse != null) {
         // isLoading = false;
-        print("baseresponse--->>== ${baseresponse.msg}");
-        if (baseresponse.statuscode == 200) {
-          GlobalView().showToast(baseresponse.msg);
-          profileResponse.user.totalFeeds = profileResponse.user.totalFeeds - 1;
-          profileResponse.user.feed.removeAt(0);
+        print("baseresponse--->>== ${baseresponse!.msg}");
+        if (baseresponse!.statuscode == 200) {
+          GlobalView().showToast(baseresponse!.msg!);
+          profileResponse!.user!.totalFeeds = profileResponse!.user!.totalFeeds! - 1;
+          profileResponse!.user!.feed!.removeAt(0);
         } else {
-          print("baseresponse-> ${baseresponse.statuscode}");
-          GlobalView().showToast(baseresponse.msg);
+          print("baseresponse-> ${baseresponse!.statuscode}");
+          GlobalView().showToast(baseresponse!.msg!);
         }
       }
       notifyListeners();
@@ -116,21 +116,21 @@ class ProfileProvider extends ChangeNotifier {
     ApiManager(context).homeFeedLike(feedId, isLike).then((response) {
       baseresponse = response;
       if (baseresponse != null) {
-        print("baseresponse--->>== ${baseresponse.msg}");
-        if (baseresponse.statuscode == 200 || baseresponse.statuscode == 201) {
+        print("baseresponse--->>== ${baseresponse!.msg}");
+        if (baseresponse!.statuscode == 200 || baseresponse!.statuscode == 201) {
           if (isLike == 1) {
-            profileResponse.user.feed[index].isLiked = 1;
-            profileResponse.user.feed[index].totalLikes =
-                profileResponse.user.feed[index].totalLikes + 1;
+            profileResponse!.user!.feed![index].isLiked = 1;
+            profileResponse!.user!.feed![index].totalLikes =
+                profileResponse!.user!.feed![index].totalLikes! + 1;
           } else {
-            profileResponse.user.feed[index].isLiked = 0;
-            profileResponse.user.feed[index].totalLikes =
-                profileResponse.user.feed[index].totalLikes - 1;
+            profileResponse!.user!.feed![index].isLiked = 0;
+            profileResponse!.user!.feed![index].totalLikes =
+                profileResponse!.user!.feed![index].totalLikes! - 1;
           }
           GlobalView().showToast(AppMessages.like_business_text);
         } else {
-          print("baseresponse-> ${baseresponse.statuscode}");
-          GlobalView().showToast(baseresponse.msg);
+          print("baseresponse-> ${baseresponse!.statuscode}");
+          GlobalView().showToast(baseresponse!.msg!);
         }
       }
       notifyListeners();
@@ -150,32 +150,32 @@ class ProfileProvider extends ChangeNotifier {
 
   void changeCheckInsikeDislikeValue(
       String event, String isLike, String isDislike, int index) {
-    profileResponse.user.feed[index].totalLikes = 0;
-    profileResponse.user.feed[index].totalDislikes = 0;
+    profileResponse!.user!.feed![index].totalLikes = 0;
+    profileResponse!.user!.feed![index].totalDislikes = 0;
     if (event.toLowerCase() == "like") {
       if (isLike == "1") {
-        profileResponse.user.feed[index].isLiked = 1;
-        profileResponse.user.feed[index].isDisliked = 0;
+        profileResponse!.user!.feed![index].isLiked = 1;
+        profileResponse!.user!.feed![index].isDisliked = 0;
       } else {
-        profileResponse.user.feed[index].isLiked = 0;
-        profileResponse.user.feed[index].isDisliked = 0;
+        profileResponse!.user!.feed![index].isLiked = 0;
+        profileResponse!.user!.feed![index].isDisliked = 0;
       }
-      profileResponse.user.feed[index].totalLikes =
-          likeDislikeResponse.feed.totalLikes;
-      profileResponse.user.feed[index].totalDislikes =
-          likeDislikeResponse.feed.totalDislikes;
+      profileResponse!.user!.feed![index].totalLikes =
+          likeDislikeResponse.feed!.totalLikes;
+      profileResponse!.user!.feed![index].totalDislikes =
+          likeDislikeResponse.feed!.totalDislikes;
     } else if (event.toLowerCase() == "dislike") {
       if (isDislike == "1") {
-        profileResponse.user.feed[index].isLiked = 0;
-        profileResponse.user.feed[index].isDisliked = 1;
+        profileResponse!.user!.feed![index].isLiked = 0;
+        profileResponse!.user!.feed![index].isDisliked = 1;
       } else {
-        profileResponse.user.feed[index].isLiked = 0;
-        profileResponse.user.feed[index].isDisliked = 0;
+        profileResponse!.user!.feed![index].isLiked = 0;
+        profileResponse!.user!.feed![index].isDisliked = 0;
       }
-      profileResponse.user.feed[index].totalDislikes =
-          likeDislikeResponse.feed.totalDislikes;
-      profileResponse.user.feed[index].totalLikes =
-          likeDislikeResponse.feed.totalLikes;
+      profileResponse!.user!.feed![index].totalDislikes =
+          likeDislikeResponse.feed!.totalDislikes;
+      profileResponse!.user!.feed![index].totalLikes =
+          likeDislikeResponse.feed!.totalLikes;
     }
     notifyListeners();
   }
@@ -194,11 +194,11 @@ class ProfileProvider extends ChangeNotifier {
     notifyListeners();
     ApiManager(context).signIn(userInput).then((response) {
       profileResponse = response;
-      print("STATUS CODE-> ${profileResponse.statuscode}");
-      print("MSG-> ${profileResponse.msg}");
+      print("STATUS CODE-> ${profileResponse!.statuscode}");
+      print("MSG-> ${profileResponse!.msg}");
       if (profileResponse != null) {
         isLoading = false;
-        if (profileResponse.statuscode == 200) {
+        if (profileResponse!.statuscode == 200) {
           // Navigator.push(
           //     context,
           //     MaterialPageRoute(
@@ -206,21 +206,21 @@ class ProfileProvider extends ChangeNotifier {
           //             email: profileResponse.user.email)));
           Navigator.pushNamed(context, AppRoutes.passcodeVerification,
               arguments:
-                  PasscodeVerificationArgs(email: profileResponse.user.email));
-        } else if ((profileResponse.statuscode == 403 &&
-                profileResponse.msg == "User is suspended") ||
-            (profileResponse.statuscode == 405 &&
-                profileResponse.msg == "User is deactivated")) {
+                  PasscodeVerificationArgs(email: profileResponse!.user!.email));
+        } else if ((profileResponse!.statuscode == 403 &&
+                profileResponse!.msg == "User is suspended") ||
+            (profileResponse!.statuscode == 405 &&
+                profileResponse!.msg == "User is deactivated")) {
           DialogUtils().showSupportAlertDialog(context, "deactivate");
-        } else if (profileResponse.statuscode == 406 &&
-            profileResponse.msg == "User is deleted") {
+        } else if (profileResponse!.statuscode == 406 &&
+            profileResponse!.msg == "User is deleted") {
           DialogUtils().showSupportAlertDialog(context, "delete");
-        } else if (profileResponse.statuscode == 402 &&
-            profileResponse.msg == "Business needs approval by admin") {
+        } else if (profileResponse!.statuscode == 402 &&
+            profileResponse!.msg == "Business needs approval by admin") {
           DialogUtils().showSupportAlertDialog(context, "approval");
         } else {
           isLoading = false;
-          GlobalView().showToast(profileResponse.msg);
+          GlobalView().showToast(profileResponse!.msg!);
         }
       }
       notifyListeners();

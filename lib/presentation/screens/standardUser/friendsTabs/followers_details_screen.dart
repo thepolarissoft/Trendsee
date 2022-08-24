@@ -8,7 +8,7 @@ import 'package:trendoapp/constants/device_size.dart';
 import 'package:trendoapp/global/view/global_view.dart';
 
 class FollowersDetailsScreen extends StatelessWidget {
-  const FollowersDetailsScreen({Key key}) : super(key: key);
+  const FollowersDetailsScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -10,14 +10,14 @@ import 'package:trendoapp/utils/dialog_utils.dart';
 import 'package:trendoapp/utils/storage_utils.dart';
 
 class ShowAlertView {
-  BuildContext context;
+  BuildContext? context;
   VoidCallback onCallBack;
   Exception exception;
 
   ShowAlertView(
-      {@required this.context,
-      @required this.onCallBack,
-      @required this.exception});
+      {required this.context,
+      required this.onCallBack,
+      required this.exception});
 
   void showAlertDialog() {
     print("exception-> $exception");
@@ -37,7 +37,7 @@ class ShowAlertView {
 
   void showNetworkAlertDialog() {
     DialogUtils.displayDialogCallBack(
-            context,
+            context!,
             AppImages.icon_finder_no_internet,
             AppMessages.no_internet_title,
             AppMessages.no_internet_msg,
@@ -57,7 +57,7 @@ class ShowAlertView {
   }
 
   void showRequestFailedAlertDialog() {
-    DialogUtils.displayDialogCallBack(context, "", AppMessages.oops_text,
+    DialogUtils.displayDialogCallBack(context!, "", AppMessages.oops_text,
             AppMessages.something_went_wrong_msg, "", AppMessages.ok_text, "")
         .then((value) {
       print("Clicked Value-> $value");
@@ -72,13 +72,13 @@ class ShowAlertView {
   }
 
   void showTokenExpiredAlertDialog() {
-    DialogUtils.displayDialogCallBack(context, "", AppMessages.oops_text,
+    DialogUtils.displayDialogCallBack(context!, "", AppMessages.oops_text,
             AppMessages.token_expired_text, "", AppMessages.ok_text, "")
         .then((value) {
       print(value);
       AccessToken().setTokenValue("");
       StorageUtils.removeKey(StorageUtils.keyToken);
-      Navigator.pushNamed(context, AppRoutes.signin_route_name);
+      Navigator.pushNamed(context!, AppRoutes.signin_route_name);
     });
   }
 }

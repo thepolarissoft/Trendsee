@@ -1,5 +1,5 @@
 class UnlikeBusinessRequestBody {
-  String businessId;
+  String? businessId;
 
   UnlikeBusinessRequestBody(String businessId) {
     this.businessId = businessId;

@@ -13,8 +13,8 @@ import 'package:trendoapp/global/view/global_view.dart';
 import 'package:trendoapp/providers/verify_otp_provider.dart';
 
 class SetPasscodeScreen extends StatefulWidget {
-  SetPasscodeScreen({Key key, @required this.args}) : super(key: key);
-  SetPasscodeArgs args;
+  SetPasscodeScreen({Key? key, required this.args}) : super(key: key);
+  SetPasscodeArgs? args;
   @override
   State<SetPasscodeScreen> createState() => _SetPasscodeScreenState();
 }
@@ -93,7 +93,7 @@ class _SetPasscodeScreenState extends State<SetPasscodeScreen> {
                                 Provider.of<VerifyOtpProvider>(context,
                                         listen: false)
                                     .setPasscode(
-                                        context, widget.args.email, otp);
+                                        context, widget.args!.email, otp);
                               } else {
                                 GlobalView().showToast(
                                     AppToastMessages.empty_value_message);
@@ -194,6 +194,6 @@ class _SetPasscodeScreenState extends State<SetPasscodeScreen> {
 }
 
 class SetPasscodeArgs {
-  String email;
+  String? email;
   SetPasscodeArgs({this.email});
 }

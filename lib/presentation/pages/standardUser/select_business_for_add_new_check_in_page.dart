@@ -32,7 +32,7 @@ class _SelectBusinessForAddNewCheckInPageState
       new TextEditingController();
   List<String> listLocation = [];
   ScrollController scrollController = new ScrollController();
-  ProfileResponse profileResponse;
+  ProfileResponse? profileResponse;
   // VerifiedUserResponse verifiedUserResponse = new VerifiedUserResponse();
 
   @override
@@ -61,8 +61,8 @@ class _SelectBusinessForAddNewCheckInPageState
     scrollController.addListener(() {
       if (scrollController.position.pixels ==
           scrollController.position.maxScrollExtent) {
-        if (businessListProvider.businessListResponse.business.currentPage <
-            businessListProvider.businessListResponse.business.lastPage) {
+        if (businessListProvider.businessListResponse!.business!.currentPage! <
+            businessListProvider.businessListResponse!.business!.lastPage!) {
           businessListProvider.getBusinessList(
             context,
             StorageUtils.readStringValue(StorageUtils.keyLatitude),
@@ -148,7 +148,7 @@ class _SelectBusinessForAddNewCheckInPageState
                                         .listBusinessLiked
                                         .isNotEmpty
                                     ? Provider.of<BusinessListProvider>(context)
-                                            .isChecked
+                                            .isChecked!
                                         ? GestureDetector(
                                             onTap: () {
                                               Navigator.pushNamed(
@@ -182,8 +182,8 @@ class _SelectBusinessForAddNewCheckInPageState
                   GlobalView().sizedBoxView(5),
                   Visibility(
                     visible: profileResponse != null &&
-                            profileResponse.user != null &&
-                            profileResponse.user.isAdmin == 1
+                            profileResponse!.user != null &&
+                            profileResponse!.user!.isAdmin == 1
                         ? true
                         : false,
                     child: Column(

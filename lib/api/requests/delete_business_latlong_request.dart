@@ -6,13 +6,13 @@ import 'package:trendoapp/constants/api_urls.dart';
 
 class DeleteBusinessLatlongRequest implements IHttpRequest {
   @override
-  String absolutePath = ApiUrls.delete_business_latlong_url;
+  String? absolutePath = ApiUrls.delete_business_latlong_url;
 
   @override
-  Object body;
+  Object? body;
 
   @override
-  HttpMethod httpMethod = HttpMethod.POST;
+  HttpMethod? httpMethod = HttpMethod.POST;
 
   @override
   Map<String, dynamic> get headers {

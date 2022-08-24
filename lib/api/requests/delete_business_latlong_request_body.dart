@@ -1,5 +1,5 @@
 class DeleteBusinessLatlongRequestBody {
-  int businessLocationId;
+  int? businessLocationId;
   DeleteBusinessLatlongRequestBody(
     this.businessLocationId,
   );

@@ -27,14 +27,14 @@ class FilterView extends StatefulWidget {
 
 class _FilterViewState extends State<FilterView> {
   double value = 40;
-  int selectedRadiusValue = 1;
-  String distanceRadius = "5";
-  AutoCompleteTextField searchCityTextField;
+  int? selectedRadiusValue = 1;
+  String? distanceRadius = "5";
+  AutoCompleteTextField? searchCityTextField;
   GlobalKey<AutoCompleteTextFieldState<String>> keyCity = new GlobalKey();
   TextEditingController cityTextEditingController = new TextEditingController();
   int selectedFilterValue = 0;
   String filterText = AppMessages.by_city_text;
-  FilterProvider filterProvider;
+  FilterProvider? filterProvider;
   // TextEditingController citySearchController = TextEditingController();
   final Map<int, Widget> myTabs = <int, Widget>{
     0: GlobalView().textViewWithCenterAlign(
@@ -191,7 +191,7 @@ class _FilterViewState extends State<FilterView> {
                           controlAffinity: ListTileControlAffinity.leading,
                           contentPadding: EdgeInsets.zero,
                           title: GlobalView().textViewWithStartAlign(
-                              item.name,
+                              item.name!,
                               AppTextStyle.inter_font_family,
                               AppTextStyle.medium_font_weight,
                               BaseColor.black_color,
@@ -233,11 +233,11 @@ class _FilterViewState extends State<FilterView> {
                       unselectedWidgetColor: BaseColor.btn_gradient_end_color1,
                       backgroundColor: BaseColor.btn_gradient_end_color1),
                   child: Checkbox(
-                    value: filterProvider.isCitySelected,
+                    value: filterProvider!.isCitySelected,
                     checkColor: BaseColor.pure_white_color,
                     activeColor: BaseColor.btn_gradient_end_color1,
-                    onChanged: (bool value) {
-                      if (filterProvider.isDistanceRadiusSelected) {}
+                    onChanged: (bool? value) {
+                      if (filterProvider!.isDistanceRadiusSelected) {}
                       cityTextEditingController.text = "";
                       businessProvider.changeFilterCheckBoxValue(
                           route: AppMessages.city_text, value: value);
@@ -247,7 +247,7 @@ class _FilterViewState extends State<FilterView> {
               ),
               Expanded(
                 child: AbsorbPointer(
-                  absorbing: filterProvider.isCitySelected ? false : true,
+                  absorbing: filterProvider!.isCitySelected ? false : true,
                   child: GlobalView().textFieldView(
                       AppImages.ic_location,
                       cityTextEditingController,
@@ -286,11 +286,11 @@ class _FilterViewState extends State<FilterView> {
                             BaseColor.btn_gradient_end_color1,
                         backgroundColor: BaseColor.btn_gradient_end_color1),
                     child: Checkbox(
-                        value: filterProvider.isDistanceRadiusSelected,
+                        value: filterProvider!.isDistanceRadiusSelected,
                         checkColor: BaseColor.pure_white_color,
                         activeColor: BaseColor.btn_gradient_end_color1,
-                        onChanged: (bool value) {
-                          if (filterProvider.isDistanceRadiusSelected) {}
+                        onChanged: (bool? value) {
+                          if (filterProvider!.isDistanceRadiusSelected) {}
                           cityTextEditingController.text = "";
                           // provider.changeSegmentValue(
                           //     route: AppMessages.radius_text);
@@ -343,12 +343,12 @@ class _FilterViewState extends State<FilterView> {
                           children: myTabs,
                           // backgroundColor: BaseColor.btn_gradient_start_color2,
                           // thumbColor: BaseColor.btn_gradient_end_color1,
-                          onValueChanged: (i) {
+                          onValueChanged: (dynamic i) {
                             setState(
                               () {
                                 selectedRadiusValue = i;
                                 // print("Value-> ${myTabs[i]}");
-                                Text list = myTabs[i];
+                                Text list = myTabs[i] as Text;
                                 distanceRadius = list.data;
                                 print("Distance Radius-> $distanceRadius");
                                 Provider.of<FilterProvider>(context,
@@ -392,7 +392,7 @@ class _FilterViewState extends State<FilterView> {
                           controlAffinity: ListTileControlAffinity.leading,
                           contentPadding: EdgeInsets.zero,
                           title: GlobalView().textViewWithStartAlign(
-                              item.name,
+                              item.name!,
                               AppTextStyle.inter_font_family,
                               AppTextStyle.medium_font_weight,
                               BaseColor.black_color,
@@ -612,13 +612,13 @@ class _FilterViewState extends State<FilterView> {
 
 class CustomTrackShape extends RoundedRectSliderTrackShape {
   Rect getPreferredRect({
-    @required RenderBox parentBox,
+    required RenderBox parentBox,
     Offset offset = Offset.zero,
-    @required SliderThemeData sliderTheme,
+    required SliderThemeData sliderTheme,
     bool isEnabled = false,
     bool isDiscrete = false,
   }) {
-    final double trackHeight = sliderTheme.trackHeight;
+    final double trackHeight = sliderTheme.trackHeight!;
     final double trackLeft = offset.dx;
     final double trackTop =
         offset.dy + (parentBox.size.height - trackHeight) / 2;

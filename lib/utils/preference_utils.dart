@@ -11,49 +11,48 @@ class PreferenceUtils {
   static final String keyBusinessUserProfileObject = 'business_user_profile';
   static final String keyUserId = 'user_id';
 
-  static SharedPreferences prefs;
+  static SharedPreferences? prefs;
 
-  static Future<SharedPreferences> get _instance async =>
-      prefs ??= await SharedPreferences.getInstance();
+  static Future<SharedPreferences> get _instance async => prefs ??= await SharedPreferences.getInstance();
 
-  static Future<SharedPreferences> init() async {
+  static Future<SharedPreferences?> init() async {
     prefs = await _instance;
     return prefs;
   }
 
   static setStringValue(String key, String value) {
-    return prefs.setString(key, value) ?? null;
+    return prefs!.setString(key, value);
   }
 
-  static String getStringValue(String key) {
-    return prefs.getString(key) ?? null;
+  static String? getStringValue(String key) {
+    return prefs!.getString(key) ?? null;
   }
 
   static setIntValue(String key, int value) {
-    return prefs.setInt(key, value);
+    return prefs!.setInt(key, value);
   }
 
   static int getIntValue(String key) {
-    return prefs.getInt(key) ?? 0;
+    return prefs!.getInt(key) ?? 0;
   }
 
   static setBoolValue(String key, bool value) {
-    return prefs.setBool(key, value);
+    return prefs!.setBool(key, value);
   }
 
   static bool getBoolValue(String key) {
-    return prefs.getBool(key) ?? true;
+    return prefs!.getBool(key) ?? true;
   }
 
   static setObject(String key, String value) {
-    return prefs.setString(key, value);
+    return prefs!.setString(key, value);
   }
 
   static getObject(String key) {
-    return prefs.getString(key) ?? null;
+    return prefs!.getString(key) ?? null;
   }
 
   static clearPrefs() async {
-    await prefs.clear();
+    await prefs!.clear();
   }
 }

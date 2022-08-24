@@ -33,15 +33,15 @@ class _AddNewCheckInPageState extends State<AddNewCheckInPage> {
   TextEditingController commentTextEditingController =
       new TextEditingController();
 
-  CameraPosition _cameraPosition;
+  late CameraPosition _cameraPosition;
 
-  GoogleMapController _controller;
+  GoogleMapController? _controller;
 
   Set<Marker> _markers = {};
 
-  BitmapDescriptor pinLocationIcon;
+  late BitmapDescriptor pinLocationIcon;
 
-  LatLng latlong;
+  late LatLng latlong;
 
   VerifiedUserResponse verifiedUserResponse = new VerifiedUserResponse();
 
@@ -79,15 +79,15 @@ class _AddNewCheckInPageState extends State<AddNewCheckInPage> {
     if (verifiedUserResponse.latitude != null &&
         // ignore: unrelated_type_equality_checks
         verifiedUserResponse.latitude != null) {
-      latlong = new LatLng(double.parse(verifiedUserResponse.latitude),
-          double.parse(verifiedUserResponse.longitude));
+      latlong = new LatLng(double.parse(verifiedUserResponse.latitude!),
+          double.parse(verifiedUserResponse.longitude!));
     } else {
       latlong = new LatLng(position.latitude, position.longitude);
     }
 
     _cameraPosition = CameraPosition(target: latlong, zoom: 10.0);
     if (_controller != null)
-      _controller
+      _controller!
           .animateCamera(CameraUpdate.newCameraPosition(_cameraPosition));
     // final Uint8List markerIcon =
     //     await getBytesFromAsset(AppImages.marker_map_icon, 100);
@@ -120,7 +120,7 @@ class _AddNewCheckInPageState extends State<AddNewCheckInPage> {
     // setCustomMapPin();
     // _cameraPosition = CameraPosition(target: LatLng(0, 0), zoom: 10.0);
     // getCurrentLocation();
-    businessNameTextEditingController.text = verifiedUserResponse.businessName;
+    businessNameTextEditingController.text = verifiedUserResponse.businessName!;
     print("verifiedUserResponse->> ${verifiedUserResponse.businessName}");
     return GestureDetector(
       onTap: () {
@@ -170,7 +170,7 @@ class _AddNewCheckInPageState extends State<AddNewCheckInPage> {
                                     Consumer<BusinessListProvider>(
                                       builder: (_, provider, child) {
                                         return Visibility(
-                                          visible: !provider.isChecked,
+                                          visible: !provider.isChecked!,
                                           child: Padding(
                                             padding: const EdgeInsets.symmetric(
                                                 horizontal: 30),
@@ -188,7 +188,7 @@ class _AddNewCheckInPageState extends State<AddNewCheckInPage> {
                                     Consumer<BusinessListProvider>(
                                       builder: (_, provider, child) {
                                         return Visibility(
-                                          visible: provider.isChecked,
+                                          visible: provider.isChecked!,
                                           child: businessNameView(
                                               context, provider),
                                         );
@@ -283,7 +283,7 @@ class _AddNewCheckInPageState extends State<AddNewCheckInPage> {
                                         builder: (_, provider, child) {
                                       return GestureDetector(
                                         onTap: () {
-                                          if (provider.isChecked) {
+                                          if (provider.isChecked!) {
                                             if (businessNameTextEditingController
                                                     .text.isNotEmpty &&
                                                 verifiedUserResponse.id !=
@@ -305,7 +305,7 @@ class _AddNewCheckInPageState extends State<AddNewCheckInPage> {
                                                       verifiedUserResponse.id
                                                           .toString(),
                                                       verifiedUserResponse
-                                                          .categories[0].id
+                                                          .categories![0].id
                                                           .toString(),
                                                       verifiedUserResponse
                                                           .businessLatitude,
@@ -327,7 +327,7 @@ class _AddNewCheckInPageState extends State<AddNewCheckInPage> {
                                               left: 30,
                                               right: 30,
                                             ),
-                                            child: provider.isChecked
+                                            child: provider.isChecked!
                                                 ? GlobalView().buttonFilled(
                                                     context,
                                                     AppMessages.submit_btn_text)
@@ -544,7 +544,7 @@ class _AddNewCheckInPageState extends State<AddNewCheckInPage> {
                         provider.verifiedUserResponse != null &&
                                 provider.verifiedUserResponse.categories != null
                             ? CategoryUtils().getCategoryName(
-                                provider.verifiedUserResponse.categories)
+                                provider.verifiedUserResponse.categories!)
                             : "Cafe",
                         AppTextStyle.inter_font_family,
                         AppTextStyle.normal_font_weight,

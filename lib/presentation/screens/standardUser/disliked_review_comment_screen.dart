@@ -11,8 +11,8 @@ import 'package:trendoapp/providers/search_by_business_provider.dart';
 
 // ignore: must_be_immutable
 class DislikedReviewCommentScreen extends StatefulWidget {
-  int businessId;
-  DislikedReviewCommentScreen({Key key, @required this.businessId})
+  int? businessId;
+  DislikedReviewCommentScreen({Key? key, required this.businessId})
       : super(key: key);
 
   @override
@@ -35,7 +35,7 @@ class _DislikedReviewCommentScreenState
     DislikedCommentsResponse dislikedCommentsResponse =
         provider.dislikedCommentsResponse;
     if (dislikedCommentsResponse != null &&
-        dislikedCommentsResponse.dislike.nextPageUrl != null) {
+        dislikedCommentsResponse.dislike!.nextPageUrl != null) {
       page++;
       getDislikedData();
     } else {

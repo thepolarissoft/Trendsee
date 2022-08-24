@@ -14,7 +14,7 @@ import 'package:trendoapp/utils/preference_utils.dart';
 import 'package:trendoapp/utils/storage_utils.dart';
 
 class BaseResponseProvider extends ChangeNotifier {
-  Baseresponse baseresponse;
+  Baseresponse? baseresponse;
   bool isLoading = false;
   bool isFeedLiked = false;
   bool isFeedDisliked = false;
@@ -24,7 +24,7 @@ class BaseResponseProvider extends ChangeNotifier {
     notifyListeners();
     ApiManager(context).logout().then((response) {
       baseresponse = response;
-      if (baseresponse.statuscode == 200) {
+      if (baseresponse!.statuscode == 200) {
         if (baseresponse != null) {
           isLoading = false;
           OneSignal.shared.setSubscriptionObserver((changes) {
@@ -33,7 +33,7 @@ class BaseResponseProvider extends ChangeNotifier {
           });
           AccessToken().setTokenValue("");
           StorageUtils.removeKey(StorageUtils.keyToken);
-          PreferenceUtils.prefs.clear();
+          PreferenceUtils.prefs!.clear();
           Navigator.pushNamed(context, AppRoutes.signin_route_name);
         }
       }
@@ -68,10 +68,10 @@ class BaseResponseProvider extends ChangeNotifier {
         .updateProfile(context, firstName, lastName, username, email, avatar)
         .then((response) {
       baseresponse = response;
-      if (baseresponse.statuscode == 200) {
+      if (baseresponse!.statuscode == 200) {
         if (baseresponse != null) {
           isLoading = false;
-          print("baseresponse--->>== ${baseresponse.msg}");
+          print("baseresponse--->>== ${baseresponse!.msg}");
           PreferenceUtils.setStringValue(PreferenceUtils.keyEmail, email);
           print(
               "EMAIL-->> ${PreferenceUtils.getStringValue(PreferenceUtils.keyEmail)}");
@@ -99,9 +99,9 @@ class BaseResponseProvider extends ChangeNotifier {
       String description,
       String businessUserId,
       String categoryId,
-      String latitude,
-      String longitude,
-      String locationName) async {
+      String? latitude,
+      String? longitude,
+      String? locationName) async {
     isLoading = true;
     notifyListeners();
     ApiManager(context)
@@ -109,19 +109,19 @@ class BaseResponseProvider extends ChangeNotifier {
             longitude, locationName)
         .then((response) {
       baseresponse = response;
-      print("STATUS CODE-> ${baseresponse.statuscode}");
-      print("Msg-> ${baseresponse.msg}");
-      if (baseresponse.statuscode == 200) {
+      print("STATUS CODE-> ${baseresponse!.statuscode}");
+      print("Msg-> ${baseresponse!.msg}");
+      if (baseresponse!.statuscode == 200) {
         if (baseresponse != null) {
           isLoading = false;
-          print("baseresponse--->>== ${baseresponse.msg}");
+          print("baseresponse--->>== ${baseresponse!.msg}");
           print(
               "EMAIL-->> ${PreferenceUtils.getStringValue(PreferenceUtils.keyEmail)}");
           Navigator.pushNamed(context, AppRoutes.timeline_route_name);
         }
-      } else if (baseresponse.statuscode == 400) {
+      } else if (baseresponse!.statuscode == 400) {
         DialogUtils.displayDialogCallBack(context, "", AppMessages.sorry_text,
-            baseresponse.msg, "", "", AppMessages.ok_text);
+            baseresponse!.msg, "", "", AppMessages.ok_text);
       }
       isLoading = false;
       notifyListeners();
@@ -145,10 +145,10 @@ class BaseResponseProvider extends ChangeNotifier {
     notifyListeners();
     ApiManager(context).viewFeed(feedId).then((response) {
       baseresponse = response;
-      if (baseresponse.statuscode == 200) {
+      if (baseresponse!.statuscode == 200) {
         if (baseresponse != null) {
           isLoading = false;
-          print("baseresponse--->>== ${baseresponse.msg}");
+          print("baseresponse--->>== ${baseresponse!.msg}");
         } else {
           isLoading = true;
         }
@@ -171,10 +171,10 @@ class BaseResponseProvider extends ChangeNotifier {
   void clickFeed(String feedId, BuildContext context) async {
     ApiManager(context).clickFeed(feedId).then((response) {
       baseresponse = response;
-      if (baseresponse.statuscode == 200) {
+      if (baseresponse!.statuscode == 200) {
         if (baseresponse != null) {
           // isLoading = false;
-          print("baseresponse--->>== ${baseresponse.msg}");
+          print("baseresponse--->>== ${baseresponse!.msg}");
         }
       }
       notifyListeners();
@@ -203,12 +203,12 @@ class BaseResponseProvider extends ChangeNotifier {
             businessName, latitude, longitude, categoryId, businessUsername)
         .then((response) {
       baseresponse = response;
-      print("RESPONSE-> ${baseresponse.toJsonData()}");
-      if (baseresponse.statuscode == 200) {
+      print("RESPONSE-> ${baseresponse!.toJsonData()}");
+      if (baseresponse!.statuscode == 200) {
         if (baseresponse != null) {
           // isLoading = false;
-          print("baseresponse--->>== ${baseresponse.msg}");
-          GlobalView().showToast(baseresponse.msg);
+          print("baseresponse--->>== ${baseresponse!.msg}");
+          GlobalView().showToast(baseresponse!.msg!);
           DialogUtils.displayDialogCallBack(
                   context,
                   "",

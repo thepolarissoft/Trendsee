@@ -2,15 +2,15 @@ import 'package:trendoapp/api/common/i_http_request.dart';
 import 'package:trendoapp/constants/api_urls.dart';
 
 class GetUserByIdTokenRequest implements IHttpRequest {
-  int userId;
+  int? userId;
   @override
-  String absolutePath = ApiUrls.user_by_id_with_token_url;
+  String? absolutePath = ApiUrls.user_by_id_with_token_url;
 
   @override
-  Object body;
+  Object? body;
 
   @override
-  HttpMethod httpMethod = HttpMethod.GET;
+  HttpMethod? httpMethod = HttpMethod.GET;
 
   @override
   Map<String, dynamic> get headers {
@@ -25,7 +25,7 @@ class GetUserByIdTokenRequest implements IHttpRequest {
     return map;
   }
 
-  GetUserByIdTokenRequest(int userId) {
+  GetUserByIdTokenRequest(int? userId) {
     this.userId = userId;
   }
 }

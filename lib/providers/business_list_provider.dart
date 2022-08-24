@@ -5,9 +5,9 @@ import 'package:trendoapp/data/models/verified_user_response.dart';
 import 'package:trendoapp/global/view/show_alert_view.dart';
 
 class BusinessListProvider extends ChangeNotifier {
-  BusinessListResponse businessListResponse;
+  BusinessListResponse? businessListResponse;
   bool isLoading = false;
-  bool isChecked = false;
+  bool? isChecked = false;
   VerifiedUserResponse verifiedUserResponse = new VerifiedUserResponse();
   // BusinessLikedListResponse businessLikedListResponse =
   //     new BusinessLikedListResponse();
@@ -25,10 +25,10 @@ class BusinessListProvider extends ChangeNotifier {
   }
 
   void getBusinessList(BuildContext context, String latitude, String longitude,
-      String distance) async {
+      String? distance) async {
     int page = businessListResponse == null
         ? 1
-        : businessListResponse.business.currentPage + 1;
+        : businessListResponse!.business!.currentPage! + 1;
     // int page;
     // if (businessListResponse == null) {
     //   page = 1;
@@ -49,14 +49,14 @@ class BusinessListProvider extends ChangeNotifier {
         .getBusinessList(page, latitude, longitude, distance)
         .then((response) {
       businessListResponse = response;
-      if (businessListResponse.statuscode == 200) {
+      if (businessListResponse!.statuscode == 200) {
         if (businessListResponse != null &&
-            businessListResponse.business != null &&
-            businessListResponse.business.data.isNotEmpty) {
+            businessListResponse!.business != null &&
+            businessListResponse!.business!.data!.isNotEmpty) {
           if (page == 1) {
             listBusinessLiked.clear();
           }
-          listBusinessLiked.addAll(businessListResponse.business.data);
+          listBusinessLiked.addAll(businessListResponse!.business!.data!);
           isAvailableData = true;
         } else {
           isAvailableData = false;
@@ -78,23 +78,23 @@ class BusinessListProvider extends ChangeNotifier {
     });
   }
 
-  void changeCheckBoxValue(int index, bool value) {
+  void changeCheckBoxValue(int index, bool? value) {
     isChecked = value;
     if (businessListResponse != null &&
-        businessListResponse.business != null &&
-        businessListResponse.business.data != null) {
-      for (var i = 0; i < businessListResponse.business.data.length; i++) {
+        businessListResponse!.business != null &&
+        businessListResponse!.business!.data != null) {
+      for (var i = 0; i < businessListResponse!.business!.data!.length; i++) {
         // ignore: unrelated_type_equality_checks
-        if (businessListResponse.business.data[i] == index) {
-          businessListResponse.business.data[index].isChecked = true;
+        if (businessListResponse!.business!.data![i] == index) {
+          businessListResponse!.business!.data![index].isChecked = true;
           // verifiedUserResponse = businessListResponse.business.data[index];
         } else {
-          businessListResponse.business.data[i].isChecked = false;
+          businessListResponse!.business!.data![i].isChecked = false;
         }
       }
     }
     // businessListResponse.business.data[index].isChecked = value;
-    verifiedUserResponse = businessListResponse.business.data[index];
+    verifiedUserResponse = businessListResponse!.business!.data![index];
     // if (businessListResponse != null &&
     //     businessListResponse.business != null &&
     //     businessListResponse.business.data != null) {
@@ -117,7 +117,7 @@ class BusinessListProvider extends ChangeNotifier {
   void getBusinessListByName(BuildContext context, String searchValue) async {
     int page = businessListResponse == null
         ? 1
-        : businessListResponse.business.currentPage + 1;
+        : businessListResponse!.business!.currentPage! + 1;
     isLoading = true;
     isAvailableOnlineData = true;
     // notifyListeners();
@@ -125,15 +125,15 @@ class BusinessListProvider extends ChangeNotifier {
         .getBusinessByNameList(page, searchValue)
         .then((response) {
       businessListResponse = response;
-      if (businessListResponse.statuscode == 200) {
+      if (businessListResponse!.statuscode == 200) {
         if (businessListResponse != null &&
-            businessListResponse.business != null &&
-            businessListResponse.business.data != null) {
+            businessListResponse!.business != null &&
+            businessListResponse!.business!.data != null) {
           if (page == 1) {
             listBusinessLikedByName.clear();
           }
-          if (businessListResponse.business.data.isNotEmpty) {
-            listBusinessLikedByName.addAll(businessListResponse.business.data);
+          if (businessListResponse!.business!.data!.isNotEmpty) {
+            listBusinessLikedByName.addAll(businessListResponse!.business!.data!);
             isAvailableOnlineData = true;
           } else {
             isAvailableOnlineData = false;

@@ -27,7 +27,7 @@ class _BusinessHomeScreenState extends State<BusinessHomeScreen> {
   TooltipBehavior _tooltipBehavior = TooltipBehavior(enable: true);
   int page = 1;
   ScrollController scrollController = new ScrollController();
-  BusinessUserResponse businessUserResponse;
+  BusinessUserResponse? businessUserResponse;
   @override
   void initState() {
     super.initState();
@@ -61,7 +61,7 @@ class _BusinessHomeScreenState extends State<BusinessHomeScreen> {
   }
 
   void getBusinessProfileData() {
-    String profile = PreferenceUtils.getStringValue(
+    String? profile = PreferenceUtils.getStringValue(
         PreferenceUtils.keyBusinessUserProfileObject);
     print("Profile-> $profile");
     // businessUserResponse =
@@ -96,10 +96,10 @@ class _BusinessHomeScreenState extends State<BusinessHomeScreen> {
   void getMoreHomeFeedData() {
     HomeFeedResponse homeFeedResponse =
         Provider.of<HomeFeedResponseProvider>(context, listen: false)
-            .homeFeedResponse;
-    print("nextPageUrl-->> ${homeFeedResponse.data.nextPageUrl}");
+            .homeFeedResponse!;
+    print("nextPageUrl-->> ${homeFeedResponse.data!.nextPageUrl}");
     if (homeFeedResponse != null) {
-      if (homeFeedResponse.data.nextPageUrl != null) {
+      if (homeFeedResponse.data!.nextPageUrl != null) {
         page++;
         Provider.of<HomeFeedResponseProvider>(context, listen: false)
             .getHomeFeedList(context, "0", "", "", "", "");
@@ -114,7 +114,7 @@ class _BusinessHomeScreenState extends State<BusinessHomeScreen> {
     }
   }
 
-  void onChangedGropDownValue(BusinessUserProvider provider, String value) {
+  void onChangedGropDownValue(BusinessUserProvider provider, String? value) {
     print("VALUE=-=> $value");
     provider.setSelectedDropDownValue(value);
     getGraphRange(value);
@@ -136,28 +136,28 @@ class _BusinessHomeScreenState extends State<BusinessHomeScreen> {
     }
   }
 
-  int getTotalValue(int i, HomeFeedResponseProvider homeFeed) {
+  int? getTotalValue(int i, HomeFeedResponseProvider homeFeed) {
     if (homeFeed.homeFeedResponse == null) {
       return 0;
     }
     switch (i) {
       case 1:
-        if (homeFeed.homeFeedResponse.totalViews != null) {
-          return homeFeed.homeFeedResponse.totalViews;
+        if (homeFeed.homeFeedResponse!.totalViews != null) {
+          return homeFeed.homeFeedResponse!.totalViews;
         } else {
           return 0;
         }
         break;
       case 2:
-        if (homeFeed.homeFeedResponse.totalLikes != null) {
-          return homeFeed.homeFeedResponse.totalLikes;
+        if (homeFeed.homeFeedResponse!.totalLikes != null) {
+          return homeFeed.homeFeedResponse!.totalLikes;
         } else {
           return 0;
         }
         break;
       case 3:
-        if (homeFeed.homeFeedResponse.totalClick != null) {
-          return homeFeed.homeFeedResponse.totalClick;
+        if (homeFeed.homeFeedResponse!.totalClick != null) {
+          return homeFeed.homeFeedResponse!.totalClick;
         } else {
           return 0;
         }
@@ -167,7 +167,7 @@ class _BusinessHomeScreenState extends State<BusinessHomeScreen> {
     }
   }
 
-  String getGraphRange(String value) {
+  String getGraphRange(String? value) {
     switch (value) {
       case "By Day":
         return "day";
@@ -368,14 +368,14 @@ class _BusinessHomeScreenState extends State<BusinessHomeScreen> {
                                                             children: [
                                                               GlobalView()
                                                                   .textViewWithStartAlign(
-                                                                      homeFeed.listFeedInfo[itemIndex].user.username ==
+                                                                      homeFeed.listFeedInfo[itemIndex].user!.username ==
                                                                               null
                                                                           ? "John Doe"
                                                                           : homeFeed
                                                                               .listFeedInfo[
                                                                                   itemIndex]
-                                                                              .user
-                                                                              .username,
+                                                                              .user!
+                                                                              .username!,
 
                                                                       // "John Doe",
                                                                       AppTextStyle
@@ -389,7 +389,7 @@ class _BusinessHomeScreenState extends State<BusinessHomeScreen> {
                                                                   DayTimeUtils().convertToAgo(homeFeed
                                                                       .listFeedInfo[
                                                                           itemIndex]
-                                                                      .createdAt),
+                                                                      .createdAt!),
                                                                   AppTextStyle
                                                                       .metropolis_font_family,
                                                                   AppTextStyle
@@ -439,20 +439,20 @@ class _BusinessHomeScreenState extends State<BusinessHomeScreen> {
                                                         shape: BoxShape.circle,
                                                         color: Colors.grey,
                                                         image: DecorationImage(
-                                                            image: homeFeed
+                                                            image: (homeFeed
                                                                         .listFeedInfo[
                                                                             itemIndex]
-                                                                        .businessUser
+                                                                        .businessUser!
                                                                         .avatar !=
                                                                     ""
                                                                 ? NetworkImage(homeFeed
                                                                     .listFeedInfo[
                                                                         itemIndex]
-                                                                    .businessUser
-                                                                    .avatar)
+                                                                    .businessUser!
+                                                                    .avatar!)
                                                                 : AssetImage(
                                                                     AppImages
-                                                                        .default_profile_Pic),
+                                                                        .default_profile_Pic)) as ImageProvider<Object>,
                                                             fit: BoxFit.cover),
                                                       ),
                                                     ),
@@ -471,14 +471,14 @@ class _BusinessHomeScreenState extends State<BusinessHomeScreen> {
                                                                     right: 10),
                                                             child: GlobalView()
                                                                 .textViewWithStartAlign(
-                                                                    homeFeed.listFeedInfo[itemIndex].businessUser.businessName ==
+                                                                    homeFeed.listFeedInfo[itemIndex].businessUser!.businessName ==
                                                                             null
                                                                         ? "ChoxBlast Cafe"
                                                                         : homeFeed
                                                                             .listFeedInfo[
                                                                                 itemIndex]
-                                                                            .businessUser
-                                                                            .businessName,
+                                                                            .businessUser!
+                                                                            .businessName!,
                                                                     // "ChoxBlast Cafe",
                                                                     AppTextStyle
                                                                         .metropolis_font_family,
@@ -501,13 +501,13 @@ class _BusinessHomeScreenState extends State<BusinessHomeScreen> {
                                                                     homeFeed
                                                                             .listFeedInfo[
                                                                                 itemIndex]
-                                                                            .categories
+                                                                            .categories!
                                                                             .isEmpty
                                                                         ? "Cafe"
                                                                         : CategoryUtils().getCategoryName(homeFeed
                                                                             .listFeedInfo[
                                                                                 itemIndex]
-                                                                            .categories),
+                                                                            .categories!),
                                                                     // "Cafe",
                                                                     AppTextStyle
                                                                         .metropolis_font_family,
@@ -539,7 +539,7 @@ class _BusinessHomeScreenState extends State<BusinessHomeScreen> {
                                                                           : homeFeed
                                                                               .listFeedInfo[
                                                                                   itemIndex]
-                                                                              .locationName,
+                                                                              .locationName!,
                                                                       // "Cafe",
                                                                       AppTextStyle
                                                                           .metropolis_font_family,
@@ -588,21 +588,21 @@ class _BusinessHomeScreenState extends State<BusinessHomeScreen> {
                                                                 homeFeed
                                                                             .listFeedInfo[
                                                                                 itemIndex]
-                                                                            .businessUser
+                                                                            .businessUser!
                                                                             .isMobile ==
                                                                         1
                                                                     ? AppMessages
                                                                         .mobile_business_text
-                                                                    : homeFeed.listFeedInfo[itemIndex].businessUser.isOnline ==
+                                                                    : homeFeed.listFeedInfo[itemIndex].businessUser!.isOnline ==
                                                                             0
-                                                                        ? homeFeed.listFeedInfo[itemIndex].businessUser.businessAddress ==
+                                                                        ? homeFeed.listFeedInfo[itemIndex].businessUser!.businessAddress ==
                                                                                 null
                                                                             ? "Abix Street, Main Road, San Fransisco, California"
                                                                             : homeFeed
                                                                                 .listFeedInfo[
                                                                                     itemIndex]
-                                                                                .businessUser
-                                                                                .businessAddress
+                                                                                .businessUser!
+                                                                                .businessAddress!
                                                                         : AppMessages
                                                                             .online_business_text,
                                                                 // "Abix Street",
@@ -646,7 +646,7 @@ class _BusinessHomeScreenState extends State<BusinessHomeScreen> {
                                                                 : homeFeed
                                                                     .listFeedInfo[
                                                                         itemIndex]
-                                                                    .description,
+                                                                    .description!,
                                                             // "Lorem ipsum dolor sit amet",
                                                             AppTextStyle
                                                                 .inter_font_family,
@@ -1186,7 +1186,7 @@ class _BusinessHomeScreenState extends State<BusinessHomeScreen> {
                     16),
               );
             }).toList(),
-            onChanged: (String value) {
+            onChanged: (String? value) {
               onChangedGropDownValue(provider, value);
             },
           ),

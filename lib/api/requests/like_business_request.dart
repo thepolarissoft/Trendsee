@@ -5,15 +5,15 @@ import 'package:trendoapp/api/requests/like_business_request_body.dart';
 import 'package:trendoapp/constants/api_urls.dart';
 
 class LikeBusinessRequest implements IHttpRequest {
-  String businessId;
+  String? businessId;
   @override
-  String absolutePath = ApiUrls.like_business_url;
+  String? absolutePath = ApiUrls.like_business_url;
 
   @override
-  Object body;
+  Object? body;
 
   @override
-  HttpMethod httpMethod = HttpMethod.POST;
+  HttpMethod? httpMethod = HttpMethod.POST;
 
   @override
   Map<String, dynamic> get headers {
@@ -26,7 +26,7 @@ class LikeBusinessRequest implements IHttpRequest {
   }
 
   LikeBusinessRequest(LikeBusinessRequestBody likeBusinessRequestBody) {
-    var map = Map<String, String>();
+    var map = Map<String, String?>();
     map["business_id"] = likeBusinessRequestBody.businessId;
     this.body = jsonEncode(map);
   }

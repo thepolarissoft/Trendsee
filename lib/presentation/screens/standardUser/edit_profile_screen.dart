@@ -41,12 +41,12 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   // TextEditingController dateofBirthTextEditingController =
   //     new TextEditingController();
 
-  PickedFile _imageFile;
+  PickedFile? _imageFile;
   dynamic pickImageError;
-  File imageFileBody;
-  String profilePic = "";
-  File profilePicFile;
-  ProfileResponse profileResponse;
+  File? imageFileBody;
+  String? profilePic = "";
+  late File profilePicFile;
+  ProfileResponse? profileResponse;
 
   @override
   void initState() {
@@ -86,21 +86,21 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     String model =
         PreferenceUtils.getObject(PreferenceUtils.keyStandardUserProfileObject);
     profileResponse = ProfileResponse.fromJson(json.decode(model));
-    print(profileResponse.user.avatar);
+    print(profileResponse!.user!.avatar);
     if (profileResponse != null) {
       print("PRefs is not empty");
-      profilePic = profileResponse.user.avatar;
-      firstNameTextEditingController.text = profileResponse.user.firstName;
-      lastNameTextEditingController.text = profileResponse.user.lastName;
-      userNameTextEditingController.text = profileResponse.user.username;
-      emailTextEditingController.text = profileResponse.user.email;
+      profilePic = profileResponse!.user!.avatar;
+      firstNameTextEditingController.text = profileResponse!.user!.firstName!;
+      lastNameTextEditingController.text = profileResponse!.user!.lastName!;
+      userNameTextEditingController.text = profileResponse!.user!.username!;
+      emailTextEditingController.text = profileResponse!.user!.email!;
     } else {
       print("PRefs is empty");
     }
     // setState(() {});
   }
 
-  void _onImageButtonPressed(ImageSource source, {BuildContext context}) async {
+  void _onImageButtonPressed(ImageSource source, {required BuildContext context}) async {
     try {
       final ImagePicker _picker = new ImagePicker();
       final pickedFile = await _picker.getImage(
@@ -109,8 +109,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       );
       // setState(() {
       _imageFile = pickedFile;
-      print("_imageFile-->> ${_imageFile.path.toString()}");
-      imageFileBody = File(_imageFile.path);
+      print("_imageFile-->> ${_imageFile!.path.toString()}");
+      imageFileBody = File(_imageFile!.path);
       // _imageFile.readAsString().then((value) => imageFileBody = value);
       print("imageFileBody->> $imageFileBody");
       // });
@@ -169,7 +169,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     // create a new file in temporary path with random file name.
     File file = new File('$tempPath' + (rng.nextInt(100)).toString() + '.png');
     // call http.get method and pass imageUrl into it to get response.
-    var response = await http.get(Uri.parse(profilePic));
+    var response = await http.get(Uri.parse(profilePic!));
     // write bodyBytes received in response to file.
     profilePicFile = await file.writeAsBytes(response.bodyBytes);
     print("profile_pic_file path-> ${profilePicFile.path}");
@@ -187,7 +187,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             lastNameTextEditingController.text,
             userNameTextEditingController.text,
             emailTextEditingController.text,
-            imageFileBody == null ? profilePicFile.path : imageFileBody.path);
+            imageFileBody == null ? profilePicFile.path : imageFileBody!.path);
       } else {
         GlobalView().showToast(AppToastMessages.valid_email_message);
       }

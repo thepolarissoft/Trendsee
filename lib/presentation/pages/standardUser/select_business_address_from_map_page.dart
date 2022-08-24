@@ -261,7 +261,6 @@
 
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:geocoder/geocoder.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -274,24 +273,21 @@ import 'package:trendoapp/global/view/global_view.dart';
 // ignore: must_be_immutable
 class SelectBusinessAddressFromMapPage extends StatefulWidget {
   @override
-  _SelectBusinessAddressFromMapPageState createState() =>
-      _SelectBusinessAddressFromMapPageState();
+  _SelectBusinessAddressFromMapPageState createState() => _SelectBusinessAddressFromMapPageState();
 }
 
-class _SelectBusinessAddressFromMapPageState
-    extends State<SelectBusinessAddressFromMapPage> {
-  TextEditingController businessAddressTextEditingController =
-      new TextEditingController();
+class _SelectBusinessAddressFromMapPageState extends State<SelectBusinessAddressFromMapPage> {
+  TextEditingController businessAddressTextEditingController = new TextEditingController();
 
-  LatLng latlong;
+  late LatLng latlong;
 
-  CameraPosition _cameraPosition;
+  late CameraPosition _cameraPosition;
 
-  GoogleMapController _controller;
+  GoogleMapController? _controller;
 
   Set<Marker> _markers = {};
 
-  BitmapDescriptor pinLocationIcon;
+  late BitmapDescriptor pinLocationIcon;
 
   Future getCurrentLocation() async {
     LocationPermission permission = await Geolocator.checkPermission();
@@ -306,18 +302,13 @@ class _SelectBusinessAddressFromMapPageState
   }
 
   void setCustomMapPin() async {
-    BitmapDescriptor.fromAssetImage(ImageConfiguration(devicePixelRatio: 2.5),
-            AppImages.marker_map_icon)
-        .then((onValue) {
+    BitmapDescriptor.fromAssetImage(ImageConfiguration(devicePixelRatio: 2.5), AppImages.marker_map_icon).then((onValue) {
       pinLocationIcon = onValue;
     });
   }
 
-  List<Address> results = [];
-
   getLocation() async {
-    Position position = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high);
+    Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
 
     print(position.latitude);
     print(position.longitude);
@@ -325,9 +316,7 @@ class _SelectBusinessAddressFromMapPageState
     latlong = new LatLng(position.latitude, position.longitude);
     _cameraPosition = CameraPosition(target: latlong, zoom: 10.0);
     print("_cameraPosition=-=-=-=>$_cameraPosition");
-    if (_controller != null)
-      _controller
-          .animateCamera(CameraUpdate.newCameraPosition(_cameraPosition));
+    if (_controller != null) _controller!.animateCamera(CameraUpdate.newCameraPosition(_cameraPosition));
     // final Uint8List markerIcon =
     //     await getBytesFromAsset(AppImages.marker_map_icon, 100);
 
@@ -388,12 +377,8 @@ class _SelectBusinessAddressFromMapPageState
                     GlobalView().sizedBoxView(47),
                     Container(
                       alignment: Alignment.topCenter,
-                      child: GlobalView().textViewWithCenterAlign(
-                          AppMessages.select_location_title,
-                          AppTextStyle.inter_font_family,
-                          AppTextStyle.semi_bold_font_weight,
-                          BaseColor.black_color,
-                          18),
+                      child: GlobalView().textViewWithCenterAlign(AppMessages.select_location_title, AppTextStyle.inter_font_family,
+                          AppTextStyle.semi_bold_font_weight, BaseColor.black_color, 18),
                     ),
                     GlobalView().sizedBoxView(20),
 
@@ -402,37 +387,22 @@ class _SelectBusinessAddressFromMapPageState
                       child: Container(
                         padding: EdgeInsets.symmetric(vertical: 5),
                         alignment: Alignment.centerLeft,
-                        child: GlobalView().textViewWithCenterAlign(
-                            AppMessages.title_business_address,
-                            AppTextStyle.inter_font_family,
-                            AppTextStyle.normal_font_weight,
-                            BaseColor.black_color.withOpacity(0.5),
-                            11),
+                        child: GlobalView().textViewWithCenterAlign(AppMessages.title_business_address, AppTextStyle.inter_font_family,
+                            AppTextStyle.normal_font_weight, BaseColor.black_color.withOpacity(0.5), 11),
                       ),
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 30),
-                      child: GlobalView().textFieldView(
-                          AppImages.ic_location,
-                          businessAddressTextEditingController,
-                          AppMessages.hint_business_address,
-                          AppTextStyle.start_text_align),
+                      child: GlobalView().textFieldView(AppImages.ic_location, businessAddressTextEditingController,
+                          AppMessages.hint_business_address, AppTextStyle.start_text_align),
                     ),
 
                     GlobalView().sizedBoxView(15),
-                    GlobalView().textViewWithCenterAlign(
-                        AppMessages.or_text,
-                        AppTextStyle.inter_font_family,
-                        AppTextStyle.normal_font_weight,
-                        BaseColor.black_color.withOpacity(0.5),
-                        11),
+                    GlobalView().textViewWithCenterAlign(AppMessages.or_text, AppTextStyle.inter_font_family, AppTextStyle.normal_font_weight,
+                        BaseColor.black_color.withOpacity(0.5), 11),
                     GlobalView().sizedBoxView(15),
                     GlobalView().textViewWithCenterAlign(
-                        AppMessages.add_from_map_text,
-                        AppTextStyle.inter_font_family,
-                        AppTextStyle.medium_font_weight,
-                        BaseColor.black_color,
-                        16),
+                        AppMessages.add_from_map_text, AppTextStyle.inter_font_family, AppTextStyle.medium_font_weight, BaseColor.black_color, 16),
                     GlobalView().sizedBoxView(15),
                     Expanded(
                       child: Container(
@@ -443,8 +413,7 @@ class _SelectBusinessAddressFromMapPageState
                         initialCameraPosition: _cameraPosition,
                         onMapCreated: (GoogleMapController controller) {
                           _controller = (controller);
-                          _controller.animateCamera(
-                              CameraUpdate.newCameraPosition(_cameraPosition));
+                          _controller!.animateCamera(CameraUpdate.newCameraPosition(_cameraPosition));
                           // _markers.add(Marker(
                           //     markerId: MarkerId("a"),
                           //     draggable: true,
@@ -491,8 +460,7 @@ class _SelectBusinessAddressFromMapPageState
                   // Navigator.pushNamed(context,
                   //     AppRoutes.emailVerificationRouteName);
                 },
-                child:
-                    GlobalView().buttonFilled(context, AppMessages.save_text),
+                child: GlobalView().buttonFilled(context, AppMessages.save_text),
               ),
             ),
           ],

@@ -29,35 +29,35 @@ import 'package:trendoapp/utils/preference_utils.dart';
 class BusinessUserProvider extends ChangeNotifier {
   // List<BusinessUserImagesModel> listBusinessUserImages = new List();
   List<String> listBusinessUserImages = [];
-  Baseresponse baseresponse;
+  Baseresponse? baseresponse;
   bool isLoading = false;
   bool isPrivacyCheckBoxValue = false;
   bool isAgeCheckBoxValue = false;
   // bool isOnlineBusinessValue = false;
   bool isMobileBusinessValue = false;
-  String selectedBusiness = AppMessages.physical_text;
+  String? selectedBusiness = AppMessages.physical_text;
   List<String> listBusiness = [
     AppMessages.physical_text,
     AppMessages.online_text,
     AppMessages.mobile_text
   ];
-  double centerLatitude;
-  double centerLongitude;
-  MetropolitanAreasListResponse metropolitanAreasListResponse;
+  double? centerLatitude;
+  double? centerLongitude;
+  MetropolitanAreasListResponse? metropolitanAreasListResponse;
   List<MetropolitanAreaInfo> listMetropolitanAreaInfo = [];
-  MetropolitanAreaInfo selectedMetropolitanAreaInfo =
+  MetropolitanAreaInfo? selectedMetropolitanAreaInfo =
       new MetropolitanAreaInfo();
-  MetropolitanCityInfo selectedMetroCityInfo = new MetropolitanCityInfo();
+  MetropolitanCityInfo? selectedMetroCityInfo = new MetropolitanCityInfo();
   String imageUrl = "";
-  List<String> listImageUrl = [];
-  BusinessUserProfileResponse businessUserProfileResponse;
-  List<String> listMediaImages = [];
+  List<String?> listImageUrl = [];
+  BusinessUserProfileResponse? businessUserProfileResponse;
+  List<String?> listMediaImages = [];
   int current = 0;
-  BusinessUserResponse editProfileResponse = new BusinessUserResponse();
-  UpdateListKeywordsResponse updateListKeywordsResponse;
+  BusinessUserResponse? editProfileResponse = new BusinessUserResponse();
+  UpdateListKeywordsResponse? updateListKeywordsResponse;
   List<String> listBusinessKeywords = [];
   bool isVisibleMetropolitanCity = false;
-  String selectedMetropolitanAreaName = "";
+  String? selectedMetropolitanAreaName = "";
   List<MetropolitanCityInfo> listCities = [];
   bool isEditableArea = false;
   bool isEditableCity = false;
@@ -67,14 +67,14 @@ class BusinessUserProvider extends ChangeNotifier {
   bool isViews = true;
   bool isLikes = false;
   bool isClicks = false;
-  File userImage;
-  BusinessLatlongResponse businessLatlongResponse;
-  List<LatLongInfo> listLatLong = [];
-  bool isCitySelected = true;
-  bool isDistanceRadiusSelected = false;
+  File? userImage;
+  BusinessLatlongResponse? businessLatlongResponse;
+  List<LatLongInfo>? listLatLong = [];
+  bool? isCitySelected = true;
+  bool? isDistanceRadiusSelected = false;
   List<String> dropDownItems = ["By Day", "By Month", "By Year"];
-  String selectedDropDownValue = "By Day";
-  TimezoneInfo selectedTimeZone = TimezoneInfo();
+  String? selectedDropDownValue = "By Day";
+  TimezoneInfo? selectedTimeZone = TimezoneInfo();
   TimeOfDay openTime = TimeOfDay.now();
   TimeOfDay closeTime = TimeOfDay.now();
   List<BusinessHoursResponse> listBusinessHours = [];
@@ -91,7 +91,7 @@ class BusinessUserProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void addArrayToBusinessUserImagesList(List<String> images) {
+  void addArrayToBusinessUserImagesList(List<String?> images) {
     isLoading = true;
     listImageUrl.clear();
     listImageUrl.addAll(images);
@@ -117,7 +117,7 @@ class BusinessUserProvider extends ChangeNotifier {
   //   notifyListeners();
   // }
 
-  void setBusinessTypeValue(String value) {
+  void setBusinessTypeValue(String? value) {
     selectedBusiness = value;
     // isMobileBusinessValue = value2;
     notifyListeners();
@@ -141,7 +141,7 @@ class BusinessUserProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void setCenterLocation(double latitude, double longitude) {
+  void setCenterLocation(double? latitude, double? longitude) {
     // centerLatitude = 0.0;
     // centerLongitude = 0.0;
     BusinessGPSCoordinatesModel businessGPSCoordinatesModel =
@@ -154,7 +154,7 @@ class BusinessUserProvider extends ChangeNotifier {
   }
 
   void getImageUrl(
-      BuildContext context, File file, String fileName, String ext) async {
+      BuildContext? context, File file, String fileName, String ext) async {
     isLoading = true;
     // imageUrl = await FileRequestManager()
     //     .uploadImageToS3(context, file, fileName, ext);
@@ -191,7 +191,7 @@ class BusinessUserProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void setStandardUserImage(File image) {
+  void setStandardUserImage(File? image) {
     // standardUserImageModel.standardUserImage = images;
     userImage = image;
     print("USER IMAGE====----->> $userImage");
@@ -218,8 +218,8 @@ class BusinessUserProvider extends ChangeNotifier {
     int isAcceptedTac,
     String categoryId,
     String advertiseMedia,
-    int metropolitanAreaId,
-    int cityId,
+    int? metropolitanAreaId,
+    int? cityId,
     String businessWebsite,
     int isOnline,
     int isMobile,
@@ -253,10 +253,10 @@ class BusinessUserProvider extends ChangeNotifier {
     )
         .then((response) {
       baseresponse = response;
-      if (baseresponse.statuscode == 200) {
+      if (baseresponse!.statuscode == 200) {
         if (baseresponse != null) {
           isLoading = false;
-          print("baseresponse--->>== ${baseresponse.msg}");
+          print("baseresponse--->>== ${baseresponse!.msg}");
           GlobalView().showToast(AppToastMessages.create_account_message);
           PreferenceUtils.setStringValue(PreferenceUtils.keyEmail, email);
           print(
@@ -272,12 +272,12 @@ class BusinessUserProvider extends ChangeNotifier {
                         ),
                       )));
         }
-      } else if (baseresponse.statuscode == 400) {
+      } else if (baseresponse!.statuscode == 400) {
         DialogUtils.displayDialogCallBack(
             context,
             "",
             AppMessages.already_registered_title,
-            baseresponse.msg,
+            baseresponse!.msg,
             "",
             AppMessages.cancel_text,
             AppMessages.ok_text);
@@ -336,8 +336,8 @@ class BusinessUserProvider extends ChangeNotifier {
     String contact,
     String categoryIds,
     String advertiseMedia,
-    int metropolitanAreaId,
-    int cityId,
+    int? metropolitanAreaId,
+    int? cityId,
     String cityName,
     String businessWebsite,
     int isOnline,
@@ -371,16 +371,16 @@ class BusinessUserProvider extends ChangeNotifier {
     )
         .then((response) {
       baseresponse = response;
-      if (baseresponse.statuscode == 200) {
+      if (baseresponse!.statuscode == 200) {
         if (baseresponse != null) {
           isLoading = false;
-          print("baseresponse--->>== ${baseresponse.msg}");
-          GlobalView().showToast(baseresponse.msg);
+          print("baseresponse--->>== ${baseresponse!.msg}");
+          GlobalView().showToast(baseresponse!.msg!);
           userImage = null;
           Navigator.pop(context);
         } else {
           isLoading = true;
-          GlobalView().showToast(baseresponse.msg);
+          GlobalView().showToast(baseresponse!.msg!);
         }
       }
       notifyListeners();
@@ -420,7 +420,7 @@ class BusinessUserProvider extends ChangeNotifier {
   }
 
   // ignore: missing_return
-  Future<MetropolitanAreasListResponse> getMetropolitanAreasList(
+  Future<MetropolitanAreasListResponse?> getMetropolitanAreasList(
     BuildContext context,
   ) async {
     isLoading = true;
@@ -428,26 +428,26 @@ class BusinessUserProvider extends ChangeNotifier {
     metropolitanAreasListResponse =
         await ApiManager(context).getMetropolitanAreasList();
 
-    print("STATUS CODE-> ${metropolitanAreasListResponse.statuscode}");
-    if (metropolitanAreasListResponse.statuscode == 200) {
+    print("STATUS CODE-> ${metropolitanAreasListResponse!.statuscode}");
+    if (metropolitanAreasListResponse!.statuscode == 200) {
       // if (metropolitanAreasListResponse != null &&
       //     metropolitanAreasListResponse.metropolitanAreas != null) {
       isLoading = false;
       print(
-          "metropolitanAreasList Length--->>== ${metropolitanAreasListResponse.metropolitanAreas.length}");
+          "metropolitanAreasList Length--->>== ${metropolitanAreasListResponse!.metropolitanAreas!.length}");
       listMetropolitanAreaInfo.clear();
       for (var i = 0;
-          i < metropolitanAreasListResponse.metropolitanAreas.length;
+          i < metropolitanAreasListResponse!.metropolitanAreas!.length;
           i++) {
-        if (metropolitanAreasListResponse
-            .metropolitanAreas[i].cities.isNotEmpty) {
+        if (metropolitanAreasListResponse!
+            .metropolitanAreas![i].cities!.isNotEmpty) {
           listMetropolitanAreaInfo
-              .add(metropolitanAreasListResponse.metropolitanAreas[i]);
+              .add(metropolitanAreasListResponse!.metropolitanAreas![i]);
           print(
               "listMetropolitanAreaInfo LENGTH-> ${listMetropolitanAreaInfo.length}");
           selectedMetropolitanAreaInfo = listMetropolitanAreaInfo[0];
-          selectedMetroCityInfo = selectedMetropolitanAreaInfo.cities[0];
-          listCities.addAll(selectedMetropolitanAreaInfo.cities);
+          selectedMetroCityInfo = selectedMetropolitanAreaInfo!.cities![0];
+          listCities.addAll(selectedMetropolitanAreaInfo!.cities!);
         }
       }
       // MetropolitanAreaInfo metropolitanAreaInfo = new MetropolitanAreaInfo();
@@ -481,7 +481,7 @@ class BusinessUserProvider extends ChangeNotifier {
     if (listMetropolitanAreaInfo.isNotEmpty) {
       for (var i = 0; i < listMetropolitanAreaInfo.length; i++) {
         if (listMetropolitanAreaInfo[i].name == selectedMetropolitanAreaName) {
-          listCities.addAll(listMetropolitanAreaInfo[i].cities);
+          listCities.addAll(listMetropolitanAreaInfo[i].cities!);
         }
       }
     }
@@ -513,10 +513,10 @@ class BusinessUserProvider extends ChangeNotifier {
     if (listMetropolitanAreaInfo.isNotEmpty) {
       for (var i = 0; i < listMetropolitanAreaInfo.length; i++) {
         if (listMetropolitanAreaInfo[i].name == selectedMetropolitanAreaName) {
-          listCities.addAll(listMetropolitanAreaInfo[i].cities);
+          listCities.addAll(listMetropolitanAreaInfo[i].cities!);
         }
       }
-      selectedMetroCityInfo = selectedMetropolitanAreaInfo.cities[0];
+      selectedMetroCityInfo = selectedMetropolitanAreaInfo!.cities![0];
       isVisibleMetropolitanCity = false;
     } else {
       selectedMetroCityInfo = null;
@@ -529,7 +529,7 @@ class BusinessUserProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void selectedCity(MetropolitanCityInfo value) {
+  void selectedCity(MetropolitanCityInfo? value) {
     print("MetropolitanCityInfo-> $value");
     selectedMetroCityInfo = null;
     // if (value.name == AppMessages.other_text) {
@@ -552,44 +552,44 @@ class BusinessUserProvider extends ChangeNotifier {
     isLoading = true;
     ApiManager(context).getBusinessUserProfile().then((response) {
       businessUserProfileResponse = response;
-      if (businessUserProfileResponse.statuscode == 200) {
+      if (businessUserProfileResponse!.statuscode == 200) {
         if (businessUserProfileResponse != null &&
-            businessUserProfileResponse.user != null) {
-          print("B NAME-> ${businessUserProfileResponse.user.businessName}");
+            businessUserProfileResponse!.user != null) {
+          print("B NAME-> ${businessUserProfileResponse!.user!.businessName}");
           isLoading = false;
           PreferenceUtils.setObject(
               PreferenceUtils.keyBusinessUserProfileObject,
-              json.encode(businessUserProfileResponse.user));
-          if (businessUserProfileResponse.user.businessKeywords != "" &&
-              businessUserProfileResponse.user.businessKeywords != null) {
+              json.encode(businessUserProfileResponse!.user));
+          if (businessUserProfileResponse!.user!.businessKeywords != "" &&
+              businessUserProfileResponse!.user!.businessKeywords != null) {
             listBusinessKeywords.addAll(
-                businessUserProfileResponse.user.businessKeywords.split(","));
+                businessUserProfileResponse!.user!.businessKeywords!.split(","));
             print(
-                "KEYWORD FROM API=> ${businessUserProfileResponse.user.businessKeywords}");
+                "KEYWORD FROM API=> ${businessUserProfileResponse!.user!.businessKeywords}");
           }
-          if (businessUserProfileResponse.latLong != null &&
-              businessUserProfileResponse.latLong.length > 0) {
+          if (businessUserProfileResponse!.latLong != null &&
+              businessUserProfileResponse!.latLong!.length > 0) {
             // listLatLong.addAll(businessUserProfileResponse.latLong);
-            listLatLong = businessUserProfileResponse.latLong;
+            listLatLong = businessUserProfileResponse!.latLong;
           }
           // if (businessUserProfileResponse.user.categories.isNotEmpty && businessUserProfileResponse.user.categories != null ) {
           //   Provide
           // }
-          if (businessUserProfileResponse.user.businessMedia.isNotEmpty) {
+          if (businessUserProfileResponse!.user!.businessMedia!.isNotEmpty) {
             listMediaImages.clear();
             for (var i = 0;
-                i < businessUserProfileResponse.user.businessMedia.length;
+                i < businessUserProfileResponse!.user!.businessMedia!.length;
                 i++) {
               listMediaImages
-                  .add(businessUserProfileResponse.user.businessMedia[i].media);
+                  .add(businessUserProfileResponse!.user!.businessMedia![i].media);
             }
           }
-          if (businessUserProfileResponse.user.businessHours.isNotEmpty) {
+          if (businessUserProfileResponse!.user!.businessHours!.isNotEmpty) {
             getTimezoneObject(
-                businessUserProfileResponse.user.businessTimeZone);
+                businessUserProfileResponse!.user!.businessTimeZone);
             listBusinessHours.clear();
             listBusinessHours
-                .addAll(businessUserProfileResponse.user.businessHours);
+                .addAll(businessUserProfileResponse!.user!.businessHours!);
             listOpenTime.clear();
             listCloseTime.clear();
             for (var i = 0; i < listBusinessHours.length; i++) {
@@ -624,16 +624,16 @@ class BusinessUserProvider extends ChangeNotifier {
     });
   }
 
-  void getTimezoneObject(String timezone) {
+  void getTimezoneObject(String? timezone) {
     if (timezone != "") {
-      for (var i = 0; i < timeZoneResponse.timeZone.length; i++) {
-        if (timeZoneResponse.timeZone[i].value == timezone) {
-          selectedTimeZone = timeZoneResponse.timeZone[i];
+      for (var i = 0; i < timeZoneResponse.timeZone!.length; i++) {
+        if (timeZoneResponse.timeZone![i].value == timezone) {
+          selectedTimeZone = timeZoneResponse.timeZone![i];
           break;
         }
       }
     } else {
-      selectedTimeZone = timeZoneResponse.timeZone[0];
+      selectedTimeZone = timeZoneResponse.timeZone![0];
     }
     // print("selectedTimeZone-> ${selectedTimeZone.toJson()}");
     notifyListeners();
@@ -650,16 +650,16 @@ class BusinessUserProvider extends ChangeNotifier {
     ApiManager(context).homeFeedLike(feedId, isLike).then((response) {
       baseresponse = response;
       if (baseresponse != null) {
-        print("baseresponse--->>== ${baseresponse.msg}");
-        if (baseresponse.statuscode == 200 || baseresponse.statuscode == 201) {
+        print("baseresponse--->>== ${baseresponse!.msg}");
+        if (baseresponse!.statuscode == 200 || baseresponse!.statuscode == 201) {
           if (isLike == 1) {
-            businessUserProfileResponse.user.feed[index].isLiked = 1;
-            businessUserProfileResponse.user.feed[index].totalLikes =
-                businessUserProfileResponse.user.feed[index].totalLikes + 1;
+            businessUserProfileResponse!.user!.feed![index].isLiked = 1;
+            businessUserProfileResponse!.user!.feed![index].totalLikes =
+                businessUserProfileResponse!.user!.feed![index].totalLikes! + 1;
           } else {
-            businessUserProfileResponse.user.feed[index].isLiked = 0;
-            businessUserProfileResponse.user.feed[index].totalLikes =
-                businessUserProfileResponse.user.feed[index].totalLikes - 1;
+            businessUserProfileResponse!.user!.feed![index].isLiked = 0;
+            businessUserProfileResponse!.user!.feed![index].totalLikes =
+                businessUserProfileResponse!.user!.feed![index].totalLikes! - 1;
           }
           GlobalView().showToast(AppMessages.like_business_text);
         }
@@ -684,16 +684,16 @@ class BusinessUserProvider extends ChangeNotifier {
       updateListKeywordsResponse = response;
       if (updateListKeywordsResponse != null) {
         print(
-            "updateListKeywordsResponse--->>== ${updateListKeywordsResponse.msg}");
-        if (updateListKeywordsResponse.statuscode == 200 ||
-            updateListKeywordsResponse.statuscode == 201) {
-          if (updateListKeywordsResponse.businessKeywords != "" &&
-              updateListKeywordsResponse.businessKeywords != null) {
+            "updateListKeywordsResponse--->>== ${updateListKeywordsResponse!.msg}");
+        if (updateListKeywordsResponse!.statuscode == 200 ||
+            updateListKeywordsResponse!.statuscode == 201) {
+          if (updateListKeywordsResponse!.businessKeywords != "" &&
+              updateListKeywordsResponse!.businessKeywords != null) {
             listBusinessKeywords.clear();
             listBusinessKeywords
-                .addAll(updateListKeywordsResponse.businessKeywords.split(","));
+                .addAll(updateListKeywordsResponse!.businessKeywords!.split(","));
             print(
-                " KEYWORD FROM API=> ${updateListKeywordsResponse.businessKeywords}");
+                " KEYWORD FROM API=> ${updateListKeywordsResponse!.businessKeywords}");
           }
         }
       }
@@ -745,11 +745,11 @@ class BusinessUserProvider extends ChangeNotifier {
             graphResponse.statuscode == 201) {
           if (graphResponse.data != null) {
             listGraphLikeData.clear();
-            for (var i = 0; i < graphResponse.data.month.length; i++) {
+            for (var i = 0; i < graphResponse.data!.month!.length; i++) {
               listGraphLikeData.add(
                 GraphData(
-                  graphResponse.data.month[i],
-                  graphResponse.data.value[i],
+                  graphResponse.data!.month![i],
+                  graphResponse.data!.value![i],
                 ),
               );
               // map.add(
@@ -788,11 +788,11 @@ class BusinessUserProvider extends ChangeNotifier {
             graphResponse.statuscode == 201) {
           if (graphResponse.data != null) {
             listGraphLikeData.clear();
-            for (var i = 0; i < graphResponse.data.month.length; i++) {
+            for (var i = 0; i < graphResponse.data!.month!.length; i++) {
               listGraphLikeData.add(
                 GraphData(
-                  graphResponse.data.month[i],
-                  graphResponse.data.value[i],
+                  graphResponse.data!.month![i],
+                  graphResponse.data!.value![i],
                 ),
               );
               // map.add(
@@ -831,11 +831,11 @@ class BusinessUserProvider extends ChangeNotifier {
             graphResponse.statuscode == 201) {
           if (graphResponse.data != null) {
             listGraphLikeData.clear();
-            for (var i = 0; i < graphResponse.data.month.length; i++) {
+            for (var i = 0; i < graphResponse.data!.month!.length; i++) {
               listGraphLikeData.add(
                 GraphData(
-                  graphResponse.data.month[i],
-                  graphResponse.data.value[i],
+                  graphResponse.data!.month![i],
+                  graphResponse.data!.value![i],
                 ),
               );
               // map.add(
@@ -864,8 +864,8 @@ class BusinessUserProvider extends ChangeNotifier {
 
   void addBusinessLatlong(
       BuildContext context,
-      String latitude,
-      String longitude,
+      String? latitude,
+      String? longitude,
       int isDefault,
       String locationName,
       String businessUserId) {
@@ -879,13 +879,13 @@ class BusinessUserProvider extends ChangeNotifier {
       businessLatlongResponse = response;
       print("updateBusinessLatlongResponse-> $businessLatlongResponse");
       if (businessLatlongResponse != null) {
-        print("graphLikeResponse--->>== ${businessLatlongResponse.msg}");
-        if (businessLatlongResponse.statuscode == 200 ||
-            businessLatlongResponse.statuscode == 201) {
-          if (businessLatlongResponse.latLong != null &&
-              businessLatlongResponse.latLong.length > 0) {
-            listLatLong.clear();
-            listLatLong.addAll(businessLatlongResponse.latLong);
+        print("graphLikeResponse--->>== ${businessLatlongResponse!.msg}");
+        if (businessLatlongResponse!.statuscode == 200 ||
+            businessLatlongResponse!.statuscode == 201) {
+          if (businessLatlongResponse!.latLong != null &&
+              businessLatlongResponse!.latLong!.length > 0) {
+            listLatLong!.clear();
+            listLatLong!.addAll(businessLatlongResponse!.latLong!);
           }
         }
       }
@@ -917,15 +917,15 @@ class BusinessUserProvider extends ChangeNotifier {
       baseresponse = response;
       print("updateBusinessLatlongResponse-> $baseresponse");
       if (baseresponse != null) {
-        print("graphLikeResponse--->>== ${baseresponse.msg}");
-        if (baseresponse.statuscode == 200 || baseresponse.statuscode == 201) {
+        print("graphLikeResponse--->>== ${baseresponse!.msg}");
+        if (baseresponse!.statuscode == 200 || baseresponse!.statuscode == 201) {
           if (latLongInfo != null) {
-            if (listLatLong.length > 0) {
-              listLatLong.remove(latLongInfo);
+            if (listLatLong!.length > 0) {
+              listLatLong!.remove(latLongInfo);
             }
           }
         } else {
-          GlobalView().showToast(baseresponse.msg);
+          GlobalView().showToast(baseresponse!.msg!);
         }
       }
       isLoading = false;
@@ -946,14 +946,14 @@ class BusinessUserProvider extends ChangeNotifier {
 
   void changeCheckBoxValue(int id, bool value, BuildContext context,
       String locationName, String businessUserId) {
-    if (listLatLong.isNotEmpty) {
-      for (var i = 0; i < listLatLong.length; i++) {
-        if (listLatLong[i].id == id) {
-          listLatLong[i].isDefault = 1;
-          addBusinessLatlong(context, listLatLong[i].latitude,
-              listLatLong[i].longitude, 1, locationName, businessUserId);
+    if (listLatLong!.isNotEmpty) {
+      for (var i = 0; i < listLatLong!.length; i++) {
+        if (listLatLong![i].id == id) {
+          listLatLong![i].isDefault = 1;
+          addBusinessLatlong(context, listLatLong![i].latitude,
+              listLatLong![i].longitude, 1, locationName, businessUserId);
         } else {
-          listLatLong[i].isDefault = 0;
+          listLatLong![i].isDefault = 0;
           // addBusinessLatlong(context, listLatLong[i].latitude,
           //     listLatLong[i].longitude, 0, listLatLong[i].id);
         }
@@ -980,13 +980,13 @@ class BusinessUserProvider extends ChangeNotifier {
   }
 
   void changeFilterCheckBoxValue(
-      {@required bool value, @required String route}) {
+      {required bool? value, required String route}) {
     if (route.toLowerCase() == AppMessages.city_text.toLowerCase()) {
       isCitySelected = value;
-      isDistanceRadiusSelected = !value;
+      isDistanceRadiusSelected = !value!;
     } else {
       isDistanceRadiusSelected = value;
-      isCitySelected = !value;
+      isCitySelected = !value!;
     }
     print("value-> $value");
     print("isDistanceRadiusSelected-> $isDistanceRadiusSelected");
@@ -994,12 +994,12 @@ class BusinessUserProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void setSelectedDropDownValue(String value) {
+  void setSelectedDropDownValue(String? value) {
     selectedDropDownValue = value;
     notifyListeners();
   }
 
-  void setTimezoneValue(TimezoneInfo value) {
+  void setTimezoneValue(TimezoneInfo? value) {
     selectedTimeZone = value;
     notifyListeners();
   }
@@ -1010,7 +1010,7 @@ class BusinessUserProvider extends ChangeNotifier {
       openTime = _time;
       date = new DateTime(
           date.year, date.month, date.day, openTime.hour, openTime.minute);
-      final timeZone = tz.getLocation(selectedTimeZone.utc[0]);
+      final timeZone = tz.getLocation(selectedTimeZone!.utc![0]);
       DateTime dateTimeConverted = tz.TZDateTime.from(date, timeZone);
       print("Time-> ${dateTimeConverted.hour}");
       print("Time-> ${dateTimeConverted.minute}");
@@ -1025,7 +1025,7 @@ class BusinessUserProvider extends ChangeNotifier {
       closeTime = _time;
       date = new DateTime(
           date.year, date.month, date.day, closeTime.hour, closeTime.minute);
-      final timeZone = tz.getLocation(selectedTimeZone.utc[0]);
+      final timeZone = tz.getLocation(selectedTimeZone!.utc![0]);
       DateTime dateTimeConverted = tz.TZDateTime.from(date, timeZone);
       print("Time-> ${dateTimeConverted.hour}");
       print("Time-> ${dateTimeConverted.minute}");
@@ -1045,8 +1045,8 @@ class BusinessUserProvider extends ChangeNotifier {
     final String response =
         await rootBundle.loadString(AppImages.timezone_json);
     timeZoneResponse = TimeZoneResponse.fromJson(json.decode(response));
-    selectedTimeZone = timeZoneResponse.timeZone[0];
-    print("Data-> ${timeZoneResponse.timeZone[0].utc[0]}");
+    selectedTimeZone = timeZoneResponse.timeZone![0];
+    print("Data-> ${timeZoneResponse.timeZone![0].utc![0]}");
     // listTimeZone = data["items"];
     // print("listTimeZone-> ${listTimeZone[0]["utc"][0]}");
     // for (var i = 0; i < listTimeZone.length; i++)
@@ -1058,21 +1058,21 @@ class BusinessUserProvider extends ChangeNotifier {
     notifyListeners();
     ApiManager(context)
         .addBusinessHours(
-            businessUserProfileResponse.user.id.toString(),
+            businessUserProfileResponse!.user!.id.toString(),
             listOpenTime.join(","),
             listCloseTime.join(","),
-            selectedTimeZone.value)
+            selectedTimeZone!.value)
         .then((response) {
       print("response-> $response");
       baseresponse = response;
       print("updateBusinessLatlongResponse-> $baseresponse");
       if (baseresponse != null) {
-        print("graphLikeResponse--->>== ${baseresponse.msg}");
-        if (baseresponse.statuscode == 200 || baseresponse.statuscode == 201) {
-          GlobalView().showToast(baseresponse.msg);
+        print("graphLikeResponse--->>== ${baseresponse!.msg}");
+        if (baseresponse!.statuscode == 200 || baseresponse!.statuscode == 201) {
+          GlobalView().showToast(baseresponse!.msg!);
           Navigator.pop(context);
         } else {
-          GlobalView().showToast(baseresponse.msg);
+          GlobalView().showToast(baseresponse!.msg!);
         }
       }
       isLoading = false;

@@ -16,7 +16,7 @@ import 'package:trendoapp/providers/verify_otp_provider.dart';
 import 'package:trendoapp/utils/dialog_utils.dart';
 
 class BusinessUserItem extends StatelessWidget {
-  BusinessUserItem({Key key, @required this.businessUser}) : super(key: key);
+  BusinessUserItem({Key? key, required this.businessUser}) : super(key: key);
   VerifiedUserResponse businessUser = VerifiedUserResponse();
   @override
   Widget build(BuildContext context) {
@@ -55,9 +55,9 @@ class BusinessUserItem extends StatelessWidget {
                       shape: BoxShape.circle,
                       color: Colors.grey,
                       image: DecorationImage(
-                          image: businessUser.avatar != ""
-                              ? NetworkImage(businessUser.avatar)
-                              : AssetImage(AppImages.default_profile_Pic),
+                          image: (businessUser.avatar != ""
+                              ? NetworkImage(businessUser.avatar!)
+                              : AssetImage(AppImages.default_profile_Pic)) as ImageProvider<Object>,
                           fit: BoxFit.cover),
                     ),
                   ),
@@ -69,13 +69,13 @@ class BusinessUserItem extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         GlobalView().textViewWithStartAlign(
-                            businessUser.businessName,
+                            businessUser.businessName!,
                             AppTextStyle.inter_font_family,
                             AppTextStyle.medium_font_weight,
                             BaseColor.btn_gradient_end_color1,
                             16),
                         GlobalView().textViewWithStartAlign(
-                            businessUser.username,
+                            businessUser.username!,
                             AppTextStyle.inter_font_family,
                             AppTextStyle.semi_bold_font_weight,
                             BaseColor.black_color,

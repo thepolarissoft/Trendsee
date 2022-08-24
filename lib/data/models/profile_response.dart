@@ -16,9 +16,9 @@ class ProfileResponse extends Baseresponse {
   //   int statuscode,
   //   this.user,
   // }) : super(status: status, msg: msg, statuscode: statuscode);
-  String tokenType;
-  String token;
-  VerifiedUserResponse user;
+  String? tokenType;
+  String? token;
+  VerifiedUserResponse? user;
 
   ProfileResponse.fromJson(Map<String, dynamic> json) : super(json) {
     tokenType = json["token_type"] == null ? null : json["token_type"];
@@ -32,6 +32,6 @@ class ProfileResponse extends Baseresponse {
         "status": status == null ? null : status,
         "statuscode": statuscode == null ? null : statuscode,
         "msg": msg == null ? null : msg,
-        "user": user == null ? null : user.toJson(),
+        "user": user == null ? null : user!.toJson(),
       };
 }

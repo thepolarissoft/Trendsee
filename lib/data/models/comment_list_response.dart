@@ -21,7 +21,7 @@ class CommentListResponse extends Baseresponse {
   //   this.feed,
   // }) : super(status: status, statuscode: statuscode, msg: msg);
 
-  FeedResponse feed;
+  FeedResponse? feed;
 
   // factory CommentListResponse.fromJson(Map<String, dynamic> json) =>
   //     CommentListResponse(
@@ -39,6 +39,6 @@ class CommentListResponse extends Baseresponse {
         "status": status == null ? null : status,
         "statuscode": statuscode == null ? null : statuscode,
         "msg": msg == null ? null : msg,
-        "feed": feed == null ? null : feed.toJson(),
+        "feed": feed == null ? null : feed!.toJson(),
       };
 }

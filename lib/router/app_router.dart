@@ -35,7 +35,7 @@ import 'package:trendoapp/presentation/screens/standardUser/select_business_addr
 import 'package:trendoapp/presentation/screens/standardUser/select_location_for_add_new_check_in_screen.dart';
 
 class AppRouter {
-  Route onGenerateRoute(RouteSettings routeSettings) {
+  Route? onGenerateRoute(RouteSettings routeSettings) {
     switch (routeSettings.name) {
       case AppRoutes.init_route_name:
         return MaterialPageRoute(builder: (_) => AppLauncherScreen());
@@ -112,10 +112,10 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => MediaScreen());
         break;
       case AppRoutes.map_route_name:
-        var args = routeSettings.arguments as TempLocationsArgs;
+        var args = routeSettings.arguments as TempLocationsArgs?;
         return MaterialPageRoute(
           builder: (_) => MapScreen(
-            isTemp: args.isTemp,
+            isTemp: args!.isTemp,
           ),
         );
         break;
@@ -161,7 +161,7 @@ class AppRouter {
       //   );
       // break;
       case AppRoutes.multiple_business_user_list_route_name:
-        var args = routeSettings.arguments as MultipleBusinessUserListArgs;
+        var args = routeSettings.arguments as MultipleBusinessUserListArgs?;
         return MaterialPageRoute(
             builder: (_) => MultipleBusinessUserListSreen(
                   args: args,
@@ -171,7 +171,7 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => ResetPasswordScreen());
         break;
       case AppRoutes.passcodeVerification:
-        var args = routeSettings.arguments as PasscodeVerificationArgs;
+        var args = routeSettings.arguments as PasscodeVerificationArgs?;
         return MaterialPageRoute(
             builder: (_) => PasscodeVerificationScreen(args: args));
         break;
@@ -179,7 +179,7 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => ChangePasscodeScreen());
         break;
       case AppRoutes.setPasscode:
-        var args = routeSettings.arguments as SetPasscodeArgs;
+        var args = routeSettings.arguments as SetPasscodeArgs?;
         return MaterialPageRoute(builder: (_) => SetPasscodeScreen(args: args));
         break;
       default:

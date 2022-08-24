@@ -33,10 +33,10 @@ class BusinessDetailsResponse {
     this.business,
   });
 
-  int status;
-  int statuscode;
-  String msg;
-  VerifiedUserResponse business;
+  int? status;
+  int? statuscode;
+  String? msg;
+  VerifiedUserResponse? business;
 
   factory BusinessDetailsResponse.fromJson(Map<String, dynamic> json) =>
       BusinessDetailsResponse(
@@ -52,6 +52,6 @@ class BusinessDetailsResponse {
         "status": status == null ? null : status,
         "statuscode": statuscode == null ? null : statuscode,
         "msg": msg == null ? null : msg,
-        "business": business == null ? null : business.toJson(),
+        "business": business == null ? null : business!.toJson(),
       };
 }

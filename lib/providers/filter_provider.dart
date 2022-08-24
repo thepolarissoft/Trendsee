@@ -8,21 +8,21 @@ class FilterProvider extends ChangeNotifier {
   String searchValue = "";
   String cityValue = "";
   List<String> listDistances = ["1", "5", "25"];
-  String distanceRadius = "5";
-  BusinessCityResponse businessCityResponse;
+  String? distanceRadius = "5";
+  late BusinessCityResponse businessCityResponse;
   List<String> listCities = [];
-  String selectedMetropolitanCityInfo = "";
+  String? selectedMetropolitanCityInfo = "";
   bool isCitySelected = true;
   bool isDistanceRadiusSelected = false;
   TextEditingController citySearchController = TextEditingController();
 
-  void setDistanceRadius(String radius) {
+  void setDistanceRadius(String? radius) {
     distanceRadius = radius;
     // selectedMetropolitanCityInfo = "";
     notifyListeners();
   }
 
-  String getHomeFilterText({@required String category}) {
+  String getHomeFilterText({required String category}) {
     return "Searching $category within $distanceRadius miles near me";
   }
 
@@ -55,9 +55,9 @@ class FilterProvider extends ChangeNotifier {
       businessCityResponse = response;
       if (businessCityResponse.statuscode == 200 ||
           businessCityResponse.statuscode == 201) {
-        if (businessCityResponse.data.isNotEmpty) {
+        if (businessCityResponse.data!.isNotEmpty) {
           listCities.clear();
-          listCities.addAll(businessCityResponse.data);
+          listCities.addAll(businessCityResponse.data!);
 
           // list.addAll(listCities);
           // print("List-> ${list.toList()}");
@@ -78,7 +78,7 @@ class FilterProvider extends ChangeNotifier {
     return listCities;
   }
 
-  void changeSegmentValue({@required String route}) {
+  void changeSegmentValue({required String route}) {
     if (route.toLowerCase() == AppMessages.city_text.toLowerCase()) {
       isCitySelected = true;
       isDistanceRadiusSelected = false;

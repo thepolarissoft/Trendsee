@@ -4,13 +4,13 @@ import 'package:trendoapp/constants/api_urls.dart';
 class GetMyCheckInsRequest implements IHttpRequest {
   String page = "";
   @override
-  String absolutePath = ApiUrls.mycheck_ins_list_url;
+  String? absolutePath = ApiUrls.mycheck_ins_list_url;
 
   @override
-  Object body;
+  Object? body;
 
   @override
-  HttpMethod httpMethod = HttpMethod.GET;
+  HttpMethod? httpMethod = HttpMethod.GET;
 
   @override
   Map<String, dynamic> get headers {

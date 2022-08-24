@@ -52,52 +52,52 @@ class BusinessUserResponse {
     this.currentPlanId,
     this.currentPlan,
   });
-  int id;
-  String firstName;
-  String lastName;
-  String username;
-  String email;
+  int? id;
+  String? firstName;
+  String? lastName;
+  String? username;
+  String? email;
   dynamic dob;
-  int userType;
-  int isApproved;
-  String businessName;
-  String businessAddress;
-  String businessPhone;
-  String businessWebsite;
-  String businessKeywords;
-  int isOnline;
-  int isMobile;
-  int categoryId;
-  String latitude;
-  String longitude;
-  int cityId;
-  int metropolitanAreaId;
-  String contact;
-  int isVerified;
-  String cityName;
-  String avatar;
-  int totalLikes;
-  int totalDislike;
-  int totalViews;
-  int totalClick;
-  DateTime createdAt;
-  DateTime updatedAt;
-  List<FeedResponse> feed;
-  int totalFeeds;
+  int? userType;
+  int? isApproved;
+  String? businessName;
+  String? businessAddress;
+  String? businessPhone;
+  String? businessWebsite;
+  String? businessKeywords;
+  int? isOnline;
+  int? isMobile;
+  int? categoryId;
+  String? latitude;
+  String? longitude;
+  int? cityId;
+  int? metropolitanAreaId;
+  String? contact;
+  int? isVerified;
+  String? cityName;
+  String? avatar;
+  int? totalLikes;
+  int? totalDislike;
+  int? totalViews;
+  int? totalClick;
+  DateTime? createdAt;
+  DateTime? updatedAt;
+  List<FeedResponse>? feed;
+  int? totalFeeds;
   // CategoryResponse category;
-  List<CategoryResponse> categories;
-  MetropolitanAreaInfo metropolitanArea;
-  MetropolitanCityInfo city;
-  List<BusinessMediaResponse> businessMedia;
-  int allowNotification;
-  int isLiked;
-  int isFollow;
-  List<BusinessHoursResponse> businessHours;
-  String businessTimeZone;
+  List<CategoryResponse>? categories;
+  MetropolitanAreaInfo? metropolitanArea;
+  MetropolitanCityInfo? city;
+  List<BusinessMediaResponse>? businessMedia;
+  int? allowNotification;
+  int? isLiked;
+  int? isFollow;
+  List<BusinessHoursResponse>? businessHours;
+  String? businessTimeZone;
   String businessStatus = "";
   // bool isShowClosingSoon = false;
-  int currentPlanId;
-  String currentPlan;
+  int? currentPlanId;
+  String? currentPlan;
 
   factory BusinessUserResponse.fromJson(Map<String, dynamic> json) =>
       BusinessUserResponse(
@@ -212,28 +212,28 @@ class BusinessUserResponse {
         "total_dislike": totalDislike == null ? null : totalDislike,
         "total_views": totalViews == null ? null : totalViews,
         "total_click": totalClick == null ? null : totalClick,
-        "created_at": createdAt == null ? null : createdAt.toIso8601String(),
-        "updated_at": updatedAt == null ? null : updatedAt.toIso8601String(),
+        "created_at": createdAt == null ? null : createdAt!.toIso8601String(),
+        "updated_at": updatedAt == null ? null : updatedAt!.toIso8601String(),
         "feed": feed == null
             ? null
-            : List<dynamic>.from(feed.map((x) => x.toJson())),
+            : List<dynamic>.from(feed!.map((x) => x.toJson())),
         "total_feeds": totalFeeds == null ? null : totalFeeds,
         // "category": category == null ? null : category.toJson(),
         "categories": categories == null
             ? null
-            : List<dynamic>.from(categories.map((x) => x.toJson())),
+            : List<dynamic>.from(categories!.map((x) => x.toJson())),
         "metropolitan_area":
-            metropolitanArea == null ? null : metropolitanArea.toJson(),
-        "city": city == null ? null : city.toJson(),
+            metropolitanArea == null ? null : metropolitanArea!.toJson(),
+        "city": city == null ? null : city!.toJson(),
         "city_name": cityName == null ? null : cityName,
         "business_media": businessMedia == null
             ? null
-            : List<dynamic>.from(businessMedia.map((x) => x.toJson())),
+            : List<dynamic>.from(businessMedia!.map((x) => x.toJson())),
         "allow_notification":
             allowNotification == null ? null : allowNotification,
         "business_time": businessHours == null
             ? null
-            : List<dynamic>.from(businessHours.map((x) => x.toJson())),
+            : List<dynamic>.from(businessHours!.map((x) => x.toJson())),
         "business_time_zone":
             businessTimeZone == null ? null : businessTimeZone,
         "current_plan_id": currentPlanId == null ? null : currentPlanId,
@@ -254,14 +254,14 @@ class BusinessHoursResponse {
       // this.isShowClosingSoon = false,
       this.businessStatus = ""});
 
-  int id;
-  int dayNumber;
-  int userId;
-  String openTime;
-  String closeTime;
-  DateTime createdAt;
-  DateTime updatedAt;
-  bool isOpen = false;
+  int? id;
+  int? dayNumber;
+  int? userId;
+  String? openTime;
+  String? closeTime;
+  DateTime? createdAt;
+  DateTime? updatedAt;
+  bool? isOpen = false;
   // bool isShowClosingSoon = false;
   String businessStatus = "";
 
@@ -286,7 +286,7 @@ class BusinessHoursResponse {
         "user_id": userId == null ? null : userId,
         "start_time": openTime == null ? null : openTime,
         "end_time": closeTime == null ? null : closeTime,
-        "created_at": createdAt == null ? null : createdAt.toIso8601String(),
-        "updated_at": updatedAt == null ? null : updatedAt.toIso8601String(),
+        "created_at": createdAt == null ? null : createdAt!.toIso8601String(),
+        "updated_at": updatedAt == null ? null : updatedAt!.toIso8601String(),
       };
 }

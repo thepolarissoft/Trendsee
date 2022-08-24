@@ -55,13 +55,13 @@ class _BusinessLikedPageState extends State<BusinessLikedPage> {
   }
 
   void getMoreLikedData() {
-    BusinessLikedListResponse businessLikedListResponse =
+    BusinessLikedListResponse? businessLikedListResponse =
         Provider.of<SearchByBusinessProvider>(context, listen: false)
             .businessLikedListResponse;
     print("businessLikedListResponse-> $businessLikedListResponse");
     if (businessLikedListResponse != null &&
         businessLikedListResponse.place != null &&
-        businessLikedListResponse.place.nextPageUrl != null) {
+        businessLikedListResponse.place!.nextPageUrl != null) {
       page++;
       Provider.of<SearchByBusinessProvider>(context, listen: false)
           .getBusinessLikedList(context, page);

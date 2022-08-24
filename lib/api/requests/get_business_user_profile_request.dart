@@ -3,13 +3,13 @@ import 'package:trendoapp/constants/api_urls.dart';
 
 class GetBusinessUserProfileRequest implements IHttpRequest {
   @override
-  String absolutePath = ApiUrls.business_profile_url;
+  String? absolutePath = ApiUrls.business_profile_url;
 
   @override
-  Object body;
+  Object? body;
 
   @override
-  HttpMethod httpMethod = HttpMethod.GET;
+  HttpMethod? httpMethod = HttpMethod.GET;
 
   @override
   Map<String, dynamic> get headers {

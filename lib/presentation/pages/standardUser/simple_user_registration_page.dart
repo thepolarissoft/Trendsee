@@ -31,26 +31,19 @@ class SimpleUserRegistrationPage extends StatefulWidget {
   SimpleUserRegistrationPage(this.isEditable);
 
   @override
-  _SimpleUserRegistrationPageState createState() =>
-      _SimpleUserRegistrationPageState();
+  _SimpleUserRegistrationPageState createState() => _SimpleUserRegistrationPageState();
 }
 
-class _SimpleUserRegistrationPageState
-    extends State<SimpleUserRegistrationPage> {
-  TextEditingController firstNameTextEditingController =
-      new TextEditingController();
+class _SimpleUserRegistrationPageState extends State<SimpleUserRegistrationPage> {
+  TextEditingController firstNameTextEditingController = new TextEditingController();
 
-  TextEditingController lastNameTextEditingController =
-      new TextEditingController();
+  TextEditingController lastNameTextEditingController = new TextEditingController();
 
-  TextEditingController userNameTextEditingController =
-      new TextEditingController();
+  TextEditingController userNameTextEditingController = new TextEditingController();
 
-  TextEditingController emailTextEditingController =
-      new TextEditingController();
+  TextEditingController emailTextEditingController = new TextEditingController();
 
-  TextEditingController dateofBirthTextEditingController =
-      new TextEditingController();
+  TextEditingController dateofBirthTextEditingController = new TextEditingController();
   TextEditingController passcodeController = TextEditingController();
   TextEditingController reEnterPasscodeController = TextEditingController();
 
@@ -58,18 +51,17 @@ class _SimpleUserRegistrationPageState
   bool isObscurePasscode = true;
   bool checkValue = true;
 
-  File image;
+  File? image;
 
-  PickedFile imageFile;
+  PickedFile? imageFile;
 
   dynamic pickImageError;
 
-  File imageFileBody;
-  File profilePicFile;
-  ProfileResponse profileResponse;
-  String profilePic = "";
-  TextEditingController passwordTextEditingController =
-      new TextEditingController();
+  File? imageFileBody;
+  late File profilePicFile;
+  ProfileResponse? profileResponse;
+  String? profilePic = "";
+  TextEditingController passwordTextEditingController = new TextEditingController();
 
   bool isObscure = true;
 
@@ -114,9 +106,7 @@ class _SimpleUserRegistrationPageState
                     child: Scrollbar(
                       child: SingleChildScrollView(
                         child: Padding(
-                          padding: EdgeInsets.symmetric(
-                              horizontal:
-                                  DeviceSize().deviceWidth(context) * 0.04),
+                          padding: EdgeInsets.symmetric(horizontal: DeviceSize().deviceWidth(context) * 0.04),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             mainAxisSize: MainAxisSize.max,
@@ -125,22 +115,18 @@ class _SimpleUserRegistrationPageState
                               Container(
                                 alignment: Alignment.topCenter,
                                 child: GlobalView().textViewWithCenterAlign(
-                                    widget.isEditable
-                                        ? AppMessages.edit_profile_title
-                                        : AppMessages.register_text,
+                                    widget.isEditable ? AppMessages.edit_profile_title : AppMessages.register_text,
                                     AppTextStyle.inter_font_family,
                                     AppTextStyle.semi_bold_font_weight,
                                     BaseColor.black_color,
                                     // 18
                                     DeviceSize().deviceHeight(context) * 0.024),
                               ),
-                              GlobalView().sizedBoxView(
-                                  DeviceSize().deviceHeight(context) * 0.02),
+                              GlobalView().sizedBoxView(DeviceSize().deviceHeight(context) * 0.02),
                               // widget.isEditable
                               //     ?
                               Image.asset(AppImages.trendsee_logo_transparent,
-                                  height: DeviceSize().deviceWidth(context) / 3,
-                                  width: DeviceSize().deviceWidth(context) / 3),
+                                  height: DeviceSize().deviceWidth(context) / 3, width: DeviceSize().deviceWidth(context) / 3),
                               // :
                               // Center(
                               //     child: Stack(
@@ -234,13 +220,9 @@ class _SimpleUserRegistrationPageState
                                     DeviceSize().deviceHeight(context) * 0.014),
                               ),
                               GlobalView().textFieldView(
-                                  AppImages.ic_user,
-                                  userNameTextEditingController,
-                                  AppMessages.hint_username_reg,
-                                  AppTextStyle.start_text_align,
+                                  AppImages.ic_user, userNameTextEditingController, AppMessages.hint_username_reg, AppTextStyle.start_text_align,
                                   textInputType: TextInputType.name),
-                              GlobalView().sizedBoxView(
-                                  DeviceSize().deviceHeight(context) * 0.01),
+                              GlobalView().sizedBoxView(DeviceSize().deviceHeight(context) * 0.01),
                               Container(
                                 padding: EdgeInsets.symmetric(vertical: 5),
                                 alignment: Alignment.centerLeft,
@@ -253,100 +235,64 @@ class _SimpleUserRegistrationPageState
                                     DeviceSize().deviceHeight(context) * 0.014),
                               ),
                               GlobalView().textFieldView(
-                                  AppImages.ic_email,
-                                  emailTextEditingController,
-                                  AppMessages.hint_email,
-                                  AppTextStyle.start_text_align,
+                                  AppImages.ic_email, emailTextEditingController, AppMessages.hint_email, AppTextStyle.start_text_align,
                                   textInputType: TextInputType.emailAddress),
                               Visibility(
                                 visible: !widget.isEditable,
-                                child:
-                                    StatefulBuilder(builder: (context, state) {
+                                child: StatefulBuilder(builder: (context, state) {
                                   return Column(
                                     children: [
-                                      GlobalView().sizedBoxView(
-                                          DeviceSize().deviceHeight(context) *
-                                              0.01),
+                                      GlobalView().sizedBoxView(DeviceSize().deviceHeight(context) * 0.01),
                                       Container(
-                                        padding:
-                                            EdgeInsets.symmetric(vertical: 5),
+                                        padding: EdgeInsets.symmetric(vertical: 5),
                                         alignment: Alignment.centerLeft,
-                                        child: GlobalView()
-                                            .textViewWithCenterAlign(
-                                                AppMessages.passcodeText,
-                                                AppTextStyle.inter_font_family,
-                                                AppTextStyle.normal_font_weight,
-                                                BaseColor.black_color
-                                                    .withOpacity(0.5),
-                                                // 11
-                                                DeviceSize()
-                                                        .deviceHeight(context) *
-                                                    0.014),
+                                        child: GlobalView().textViewWithCenterAlign(
+                                            AppMessages.passcodeText,
+                                            AppTextStyle.inter_font_family,
+                                            AppTextStyle.normal_font_weight,
+                                            BaseColor.black_color.withOpacity(0.5),
+                                            // 11
+                                            DeviceSize().deviceHeight(context) * 0.014),
                                       ),
                                       GlobalView().textFieldView(
-                                          AppImages.ic_password,
-                                          passcodeController,
-                                          AppMessages.createPasscodeText,
-                                          AppTextStyle.start_text_align,
+                                          AppImages.ic_password, passcodeController, AppMessages.createPasscodeText, AppTextStyle.start_text_align,
                                           isObscure: isObscurePasscode,
-                                          inputFormatters: [
-                                            LengthLimitingTextInputFormatter(5)
-                                          ],
+                                          inputFormatters: [LengthLimitingTextInputFormatter(5)],
                                           suffixIcon: IconButton(
                                               padding: EdgeInsets.zero,
                                               onPressed: () {
-                                                isObscurePasscode =
-                                                    !isObscurePasscode;
+                                                isObscurePasscode = !isObscurePasscode;
                                                 state(() {});
                                               },
                                               icon: Icon(
-                                                isObscurePasscode
-                                                    ? Icons.visibility_off
-                                                    : Icons.visibility,
-                                                color: BaseColor
-                                                    .btn_gradient_start_color1,
+                                                isObscurePasscode ? Icons.visibility_off : Icons.visibility,
+                                                color: BaseColor.btn_gradient_start_color1,
                                               ))),
-                                      GlobalView().sizedBoxView(
-                                          DeviceSize().deviceHeight(context) *
-                                              0.01),
+                                      GlobalView().sizedBoxView(DeviceSize().deviceHeight(context) * 0.01),
                                       Container(
-                                        padding:
-                                            EdgeInsets.symmetric(vertical: 5),
+                                        padding: EdgeInsets.symmetric(vertical: 5),
                                         alignment: Alignment.centerLeft,
-                                        child: GlobalView()
-                                            .textViewWithCenterAlign(
-                                                AppMessages.reEnterNewPasscode,
-                                                AppTextStyle.inter_font_family,
-                                                AppTextStyle.normal_font_weight,
-                                                BaseColor.black_color
-                                                    .withOpacity(0.5),
-                                                // 11
-                                                DeviceSize()
-                                                        .deviceHeight(context) *
-                                                    0.014),
+                                        child: GlobalView().textViewWithCenterAlign(
+                                            AppMessages.reEnterNewPasscode,
+                                            AppTextStyle.inter_font_family,
+                                            AppTextStyle.normal_font_weight,
+                                            BaseColor.black_color.withOpacity(0.5),
+                                            // 11
+                                            DeviceSize().deviceHeight(context) * 0.014),
                                       ),
-                                      GlobalView().textFieldView(
-                                          AppImages.ic_password,
-                                          reEnterPasscodeController,
-                                          AppMessages.reEnterNewPasscode,
+                                      GlobalView().textFieldView(AppImages.ic_password, reEnterPasscodeController, AppMessages.reEnterNewPasscode,
                                           AppTextStyle.start_text_align,
                                           isObscure: isObscureReEnterPasscode,
-                                          inputFormatters: [
-                                            LengthLimitingTextInputFormatter(5)
-                                          ],
+                                          inputFormatters: [LengthLimitingTextInputFormatter(5)],
                                           suffixIcon: IconButton(
                                               padding: EdgeInsets.zero,
                                               onPressed: () {
-                                                isObscureReEnterPasscode =
-                                                    !isObscureReEnterPasscode;
+                                                isObscureReEnterPasscode = !isObscureReEnterPasscode;
                                                 state(() {});
                                               },
                                               icon: Icon(
-                                                isObscureReEnterPasscode
-                                                    ? Icons.visibility_off
-                                                    : Icons.visibility,
-                                                color: BaseColor
-                                                    .btn_gradient_start_color1,
+                                                isObscureReEnterPasscode ? Icons.visibility_off : Icons.visibility,
+                                                color: BaseColor.btn_gradient_start_color1,
                                               ))),
                                     ],
                                   );
@@ -517,16 +463,13 @@ class _SimpleUserRegistrationPageState
                               //     ),
                               //   ),
                               // ),
-                              GlobalView().sizedBoxView(
-                                  DeviceSize().deviceHeight(context) * 0.05),
+                              GlobalView().sizedBoxView(DeviceSize().deviceHeight(context) * 0.05),
                               Visibility(
                                 visible: !widget.isEditable,
                                 child: Column(
                                   children: [
                                     ageConfirmationCheckBoxView(),
-                                    GlobalView().sizedBoxView(
-                                        DeviceSize().deviceHeight(context) *
-                                            0.012),
+                                    GlobalView().sizedBoxView(DeviceSize().deviceHeight(context) * 0.012),
                                     termsPolicyCheckBoxView(),
                                   ],
                                 ),
@@ -537,35 +480,23 @@ class _SimpleUserRegistrationPageState
                                 padding: EdgeInsets.only(
                                     left: 5,
                                     right: 5,
-                                    bottom: DeviceSize().deviceHeight(context) *
-                                        0.05,
-                                    top: DeviceSize().deviceHeight(context) *
-                                        0.05),
+                                    bottom: DeviceSize().deviceHeight(context) * 0.05,
+                                    top: DeviceSize().deviceHeight(context) * 0.05),
                                 child: widget.isEditable
                                     ? GestureDetector(
                                         onTap: () {
                                           onClickUpdateProfileButton();
                                         },
-                                        child: GlobalView().buttonFilled(
-                                            context,
-                                            AppMessages.save_changes_btn_text),
+                                        child: GlobalView().buttonFilled(context, AppMessages.save_changes_btn_text),
                                       )
                                     : GestureDetector(
                                         onTap: () {
                                           onClickRegisterBtn(context);
                                         },
-                                        child: (Provider.of<StandardUserProvider>(
-                                                        context)
-                                                    .isAgeCheckBoxValue &&
-                                                Provider.of<StandardUserProvider>(
-                                                        context)
-                                                    .isPrivacyCheckBoxValue)
-                                            ? GlobalView().buttonFilled(context,
-                                                AppMessages.create_account_text)
-                                            : GlobalView().buttonFilledDisabled(
-                                                context,
-                                                AppMessages
-                                                    .create_account_text),
+                                        child: (Provider.of<StandardUserProvider>(context).isAgeCheckBoxValue &&
+                                                Provider.of<StandardUserProvider>(context).isPrivacyCheckBoxValue)
+                                            ? GlobalView().buttonFilled(context, AppMessages.create_account_text)
+                                            : GlobalView().buttonFilledDisabled(context, AppMessages.create_account_text),
                                       ),
                               ),
                             ],
@@ -585,16 +516,12 @@ class _SimpleUserRegistrationPageState
                           onTap: () {
                             Navigator.pop(context);
                           },
-                          child:
-                              GlobalView().assetImageView(AppImages.ic_back)),
+                          child: GlobalView().assetImageView(AppImages.ic_back)),
                     ),
                   ),
-                  Consumer2<StandardUserProvider, BaseResponseProvider>(
-                      builder: (_, user, baseProvider, child) {
+                  Consumer2<StandardUserProvider, BaseResponseProvider>(builder: (_, user, baseProvider, child) {
                     return Visibility(
-                      visible: Provider.of<StandardUserProvider>(context)
-                              .isLoading ||
-                          Provider.of<BaseResponseProvider>(context).isLoading,
+                      visible: Provider.of<StandardUserProvider>(context).isLoading || Provider.of<BaseResponseProvider>(context).isLoading,
                       // visible: true,
                       child: Positioned(
                         child: Container(
@@ -625,7 +552,7 @@ class _SimpleUserRegistrationPageState
         });
   }
 
-  void _onImageButtonPressed(ImageSource source, {BuildContext context}) async {
+  void _onImageButtonPressed(ImageSource source, {required BuildContext context}) async {
     try {
       final ImagePicker _picker = new ImagePicker();
       final pickedFile = await _picker.getImage(
@@ -634,15 +561,14 @@ class _SimpleUserRegistrationPageState
       );
       // setState(() {
       imageFile = pickedFile;
-      print("_imageFile-->> ${imageFile.path.toString()}");
-      imageFileBody = File(imageFile.path);
+      print("_imageFile-->> ${imageFile!.path.toString()}");
+      imageFileBody = File(imageFile!.path);
       // _imageFile.readAsString().then((value) => imageFileBody = value);
       print("imageFileBody->> $imageFileBody");
       // });
       // _imageFile = pickedFile;
       // print("_imageFile-->> ${_imageFile.path.toString()}");
-      Provider.of<StandardUserProvider>(context, listen: false)
-          .setStandardUserImage(imageFileBody);
+      Provider.of<StandardUserProvider>(context, listen: false).setStandardUserImage(imageFileBody);
       // // print("Image-->> ${StandardUserProvider().getUserImage()}");
     } catch (e) {
       // setState(() {
@@ -663,8 +589,7 @@ class _SimpleUserRegistrationPageState
                       leading: new Icon(Icons.photo_library),
                       title: new Text('Photo Library'),
                       onTap: () {
-                        _onImageButtonPressed(ImageSource.gallery,
-                            context: context);
+                        _onImageButtonPressed(ImageSource.gallery, context: context);
                         Navigator.of(context).pop();
                       }),
                   // new ListTile(
@@ -689,10 +614,8 @@ class _SimpleUserRegistrationPageState
     // print(
     //     "isPrivacyValue -> ${Provider.of<StandardUserProvider>(context, listen: false).isPrivacyCheckBoxValue}");
 
-    if (Provider.of<StandardUserProvider>(context, listen: false)
-            .isAgeCheckBoxValue &&
-        Provider.of<StandardUserProvider>(context, listen: false)
-            .isPrivacyCheckBoxValue) {
+    if (Provider.of<StandardUserProvider>(context, listen: false).isAgeCheckBoxValue &&
+        Provider.of<StandardUserProvider>(context, listen: false).isPrivacyCheckBoxValue) {
       if (
           // firstNameTextEditingController.text.isNotEmpty &&
           //   lastNameTextEditingController.text.isNotEmpty &&
@@ -700,54 +623,31 @@ class _SimpleUserRegistrationPageState
               emailTextEditingController.text.isNotEmpty &&
               passcodeController.text.isNotEmpty &&
               reEnterPasscodeController.text.isNotEmpty) {
-        if (passcodeController.text.length < 5 ||
-            reEnterPasscodeController.text.length < 5) {
-          GlobalView()
-              .showToast(AppToastMessages.enter_five_digit_passcode_message);
+        if (passcodeController.text.length < 5 || reEnterPasscodeController.text.length < 5) {
+          GlobalView().showToast(AppToastMessages.enter_five_digit_passcode_message);
         } else if (passcodeController.text != reEnterPasscodeController.text) {
           GlobalView().showToast(AppToastMessages.passcode_not_same_message);
         } else if (EmailValidator.validate(emailTextEditingController.text) &&
             // Provider.of<StandardUserProvider>(context, listen: false)
             //         .userImage !=
             //     null &&
-            Provider.of<StandardUserProvider>(context, listen: false)
-                .isAgeCheckBoxValue &&
-            Provider.of<StandardUserProvider>(context, listen: false)
-                .isPrivacyCheckBoxValue) {
-          Provider.of<StandardUserProvider>(context, listen: false)
-              .standardUserRegister(
-                  context,
-                  firstNameTextEditingController.text.isEmpty
-                      ? ""
-                      : firstNameTextEditingController.text,
-                  lastNameTextEditingController.text.isEmpty
-                      ? ""
-                      : lastNameTextEditingController.text,
-                  userNameTextEditingController.text,
-                  emailTextEditingController.text,
-                  // dateofBirthTextEditingController.text,
-                  // imageFileBody.path,
-                  Provider.of<StandardUserProvider>(context, listen: false)
-                              .userImage ==
-                          null
-                      ? ""
-                      : Provider.of<StandardUserProvider>(context,
-                              listen: false)
-                          .userImage
-                          .path,
-                  "1",
-                  Provider.of<StandardUserProvider>(context,
-                                  listen: false)
-                              .isAgeCheckBoxValue ==
-                          true
-                      ? 1
-                      : 0,
-                  Provider.of<StandardUserProvider>(context, listen: false)
-                              .isPrivacyCheckBoxValue ==
-                          true
-                      ? 1
-                      : 0,
-                  passcodeController.text);
+            Provider.of<StandardUserProvider>(context, listen: false).isAgeCheckBoxValue &&
+            Provider.of<StandardUserProvider>(context, listen: false).isPrivacyCheckBoxValue) {
+          Provider.of<StandardUserProvider>(context, listen: false).standardUserRegister(
+              context,
+              firstNameTextEditingController.text.isEmpty ? "" : firstNameTextEditingController.text,
+              lastNameTextEditingController.text.isEmpty ? "" : lastNameTextEditingController.text,
+              userNameTextEditingController.text,
+              emailTextEditingController.text,
+              // dateofBirthTextEditingController.text,
+              // imageFileBody.path,
+              Provider.of<StandardUserProvider>(context, listen: false).userImage == null
+                  ? ""
+                  : Provider.of<StandardUserProvider>(context, listen: false).userImage!.path,
+              "1",
+              Provider.of<StandardUserProvider>(context, listen: false).isAgeCheckBoxValue == true ? 1 : 0,
+              Provider.of<StandardUserProvider>(context, listen: false).isPrivacyCheckBoxValue == true ? 1 : 0,
+              passcodeController.text);
         }
         // else if (Provider.of<StandardUserProvider>(context, listen: false)
         //         .userImage ==
@@ -757,18 +657,13 @@ class _SimpleUserRegistrationPageState
         else if (!EmailValidator.validate(emailTextEditingController.text)) {
           GlobalView().showToast(AppToastMessages.valid_email_message);
         } else {
-          if (!Provider.of<StandardUserProvider>(context, listen: false)
-                  .isAgeCheckBoxValue &&
-              !Provider.of<StandardUserProvider>(context, listen: false)
-                  .isPrivacyCheckBoxValue) {
+          if (!Provider.of<StandardUserProvider>(context, listen: false).isAgeCheckBoxValue &&
+              !Provider.of<StandardUserProvider>(context, listen: false).isPrivacyCheckBoxValue) {
             GlobalView().showToast(AppToastMessages.select_checkbox_message);
-          } else if (!Provider.of<StandardUserProvider>(context, listen: false)
-              .isAgeCheckBoxValue) {
+          } else if (!Provider.of<StandardUserProvider>(context, listen: false).isAgeCheckBoxValue) {
             GlobalView().showToast(AppToastMessages.select_age_checkboxMessage);
-          } else if (!Provider.of<StandardUserProvider>(context, listen: false)
-              .isPrivacyCheckBoxValue) {
-            GlobalView().showToast(
-                AppToastMessages.select_terms_policy_checkbox_message);
+          } else if (!Provider.of<StandardUserProvider>(context, listen: false).isPrivacyCheckBoxValue) {
+            GlobalView().showToast(AppToastMessages.select_terms_policy_checkbox_message);
           }
 
           // GlobalView().showToast(AppToastMessages
@@ -781,17 +676,16 @@ class _SimpleUserRegistrationPageState
   }
 
   void getProfileData() async {
-    String model =
-        PreferenceUtils.getObject(PreferenceUtils.keyStandardUserProfileObject);
+    String model = PreferenceUtils.getObject(PreferenceUtils.keyStandardUserProfileObject);
     profileResponse = ProfileResponse.fromJson(json.decode(model));
-    print(profileResponse.user.avatar);
+    print(profileResponse!.user!.avatar);
     if (profileResponse != null) {
       print("PRefs is not empty");
-      profilePic = profileResponse.user.avatar;
-      firstNameTextEditingController.text = profileResponse.user.firstName;
-      lastNameTextEditingController.text = profileResponse.user.lastName;
-      userNameTextEditingController.text = profileResponse.user.username;
-      emailTextEditingController.text = profileResponse.user.email;
+      profilePic = profileResponse!.user!.avatar;
+      firstNameTextEditingController.text = profileResponse!.user!.firstName!;
+      lastNameTextEditingController.text = profileResponse!.user!.lastName!;
+      userNameTextEditingController.text = profileResponse!.user!.username!;
+      emailTextEditingController.text = profileResponse!.user!.email!;
     } else {
       print("PRefs is empty");
     }
@@ -807,14 +701,13 @@ class _SimpleUserRegistrationPageState
     // create a new file in temporary path with random file name.
     File file = new File('$tempPath' + (rng.nextInt(100)).toString() + '.png');
     // call http.get method and pass imageUrl into it to get response.
-    var response = await http.get(Uri.parse(profilePic));
+    var response = await http.get(Uri.parse(profilePic!));
     // write bodyBytes received in response to file.
     profilePicFile = await file.writeAsBytes(response.bodyBytes);
     print("profile_pic_file path-> ${profilePicFile.path}");
     // print(
     //     "imageFileBody path-> ${imageFileBody.path}");
-    if (userNameTextEditingController.text.isNotEmpty &&
-        emailTextEditingController.text.isNotEmpty) {
+    if (userNameTextEditingController.text.isNotEmpty && emailTextEditingController.text.isNotEmpty) {
       if (EmailValidator.validate(emailTextEditingController.text)) {
         Provider.of<BaseResponseProvider>(context, listen: false).updateProfile(
             context,
@@ -822,7 +715,7 @@ class _SimpleUserRegistrationPageState
             lastNameTextEditingController.text,
             userNameTextEditingController.text,
             emailTextEditingController.text,
-            imageFileBody == null ? profilePicFile.path : imageFileBody.path);
+            imageFileBody == null ? profilePicFile.path : imageFileBody!.path);
       } else {
         GlobalView().showToast(AppToastMessages.valid_email_message);
       }
@@ -847,11 +740,7 @@ class _SimpleUserRegistrationPageState
                 // 11
                 DeviceSize().deviceHeight(context) * 0.014),
           ),
-          GlobalView().textFieldView(
-              AppImages.ic_user,
-              firstNameTextEditingController,
-              AppMessages.hint_firstname,
-              AppTextStyle.start_text_align,
+          GlobalView().textFieldView(AppImages.ic_user, firstNameTextEditingController, AppMessages.hint_firstname, AppTextStyle.start_text_align,
               textInputType: TextInputType.name),
           GlobalView().sizedBoxView(DeviceSize().deviceHeight(context) * 0.01),
           Container(
@@ -865,11 +754,7 @@ class _SimpleUserRegistrationPageState
                 // 11
                 DeviceSize().deviceHeight(context) * 0.014),
           ),
-          GlobalView().textFieldView(
-              AppImages.ic_user,
-              lastNameTextEditingController,
-              AppMessages.hint_lastname,
-              AppTextStyle.start_text_align,
+          GlobalView().textFieldView(AppImages.ic_user, lastNameTextEditingController, AppMessages.hint_lastname, AppTextStyle.start_text_align,
               textInputType: TextInputType.name),
           GlobalView().sizedBoxView(DeviceSize().deviceHeight(context) * 0.01),
         ],
@@ -877,8 +762,7 @@ class _SimpleUserRegistrationPageState
     );
   }
 
-  Widget ageConfirmationCheckBoxView() =>
-      Consumer<StandardUserProvider>(builder: (context, user, child) {
+  Widget ageConfirmationCheckBoxView() => Consumer<StandardUserProvider>(builder: (context, user, child) {
         return Container(
           alignment: Alignment.topLeft,
           // color: Colors.yellow,
@@ -891,19 +775,13 @@ class _SimpleUserRegistrationPageState
                 padding: EdgeInsets.zero,
                 // color: Colors.green,
                 child: Theme(
-                  data: ThemeData(
-                      unselectedWidgetColor: BaseColor.btn_gradient_end_color1,
-                      backgroundColor: BaseColor.btn_gradient_end_color1),
+                  data: ThemeData(unselectedWidgetColor: BaseColor.btn_gradient_end_color1, backgroundColor: BaseColor.btn_gradient_end_color1),
                   child: Checkbox(
-                      value: Provider.of<StandardUserProvider>(context,
-                              listen: false)
-                          .isAgeCheckBoxValue,
+                      value: Provider.of<StandardUserProvider>(context, listen: false).isAgeCheckBoxValue,
                       checkColor: BaseColor.pure_white_color,
                       activeColor: BaseColor.btn_gradient_end_color1,
-                      onChanged: (bool value) {
-                        Provider.of<StandardUserProvider>(context,
-                                listen: false)
-                            .changeAgeCheckBoxValue();
+                      onChanged: (bool? value) {
+                        Provider.of<StandardUserProvider>(context, listen: false).changeAgeCheckBoxValue();
                         // setState(() {
                         //   checkValue = value;
                         // });
@@ -911,19 +789,14 @@ class _SimpleUserRegistrationPageState
                 ),
               ),
               Expanded(
-                  child: GlobalView().textViewWithStartAlign(
-                      AppMessages.age_confirmation_text,
-                      AppTextStyle.inter_font_family,
-                      AppTextStyle.medium_font_weight,
-                      BaseColor.forgot_pass_txt_color,
-                      16))
+                  child: GlobalView().textViewWithStartAlign(AppMessages.age_confirmation_text, AppTextStyle.inter_font_family,
+                      AppTextStyle.medium_font_weight, BaseColor.forgot_pass_txt_color, 16))
             ],
           ),
         );
       });
 
-  Widget termsPolicyCheckBoxView() =>
-      Consumer<StandardUserProvider>(builder: (context, user, child) {
+  Widget termsPolicyCheckBoxView() => Consumer<StandardUserProvider>(builder: (context, user, child) {
         return Container(
           alignment: Alignment.topLeft,
           // color: Colors.yellow,
@@ -936,29 +809,20 @@ class _SimpleUserRegistrationPageState
                 padding: EdgeInsets.zero,
                 // color: Colors.green,
                 child: Theme(
-                  data: ThemeData(
-                      unselectedWidgetColor: BaseColor.btn_gradient_end_color1,
-                      backgroundColor: BaseColor.btn_gradient_end_color1),
+                  data: ThemeData(unselectedWidgetColor: BaseColor.btn_gradient_end_color1, backgroundColor: BaseColor.btn_gradient_end_color1),
                   child: Checkbox(
-                      value: Provider.of<StandardUserProvider>(context,
-                              listen: false)
-                          .isPrivacyCheckBoxValue,
+                      value: Provider.of<StandardUserProvider>(context, listen: false).isPrivacyCheckBoxValue,
                       checkColor: BaseColor.pure_white_color,
                       activeColor: BaseColor.btn_gradient_end_color1,
-                      onChanged: (bool value) {
-                        Provider.of<StandardUserProvider>(context,
-                                listen: false)
-                            .changePrivacyCheckBoxValue();
+                      onChanged: (bool? value) {
+                        Provider.of<StandardUserProvider>(context, listen: false).changePrivacyCheckBoxValue();
                       }),
                 ),
               ),
               Expanded(
                   child: Text.rich(TextSpan(
-                      text: 'I confirm and accept ',
-                      style: TextStyle(
-                          fontSize: 14,
-                          color: BaseColor.terms_policy_text_color,
-                          fontFamily: AppTextStyle.inter_font_family),
+                      text: 'I accept Trendsee\'s ',
+                      style: TextStyle(fontSize: 14, color: BaseColor.terms_policy_text_color, fontFamily: AppTextStyle.inter_font_family),
                       children: <TextSpan>[
                     TextSpan(
                         text: 'Privacy Policy',
@@ -990,8 +854,7 @@ class _SimpleUserRegistrationPageState
                               recognizer: TapGestureRecognizer()
                                 ..onTap = () {
                                   // code to open / launch privacy policy link here
-                                  UrlLauncher()
-                                      .launchUrl(ApiUrls.terms_service_url);
+                                  UrlLauncher().launchUrl(ApiUrls.terms_service_url);
                                 })
                         ])
                   ])))

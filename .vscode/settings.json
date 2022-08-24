@@ -2,5 +2,9 @@
     "editor.formatOnSave": true,
     "dart.additionalAnalyzerFileExtensions": [
         "flutter generate"
-    ]
+    ],
+    "java.project.sourcePaths": [
+        "android"
+    ],
+    "java.configuration.updateBuildConfiguration": "interactive"
 }

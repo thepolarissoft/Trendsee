@@ -64,12 +64,12 @@ class GlobalView {
 
   Widget textFieldView(String image, TextEditingController controller,
           String hintText, TextAlign textAlign,
-          {TextInputType textInputType,
-          Widget suffixIcon,
+          {TextInputType? textInputType,
+          Widget? suffixIcon,
           bool isObscure = false,
-          List<TextInputFormatter> inputFormatters,
-          bool isReadOnly,
-          Function onTap}) =>
+          List<TextInputFormatter>? inputFormatters,
+          bool? isReadOnly,
+          Function? onTap}) =>
       Material(
         shadowColor: BaseColor.shadow_color,
         elevation: 4,
@@ -189,7 +189,7 @@ class GlobalView {
 
   Widget textFieldViewPhone(String image, TextEditingController controller,
           String hintText, TextAlign textAlign,
-          {bool isReadOnly, Function onTap}) =>
+          {bool? isReadOnly, Function? onTap}) =>
       Material(
         shadowColor: BaseColor.shadow_color,
         elevation: 4,

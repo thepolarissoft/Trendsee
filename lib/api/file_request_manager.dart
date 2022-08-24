@@ -24,8 +24,7 @@ class FileRequestManager {
       int isEighteen,
       int isAcceptedTac,
       String passcode) async {
-    var request =
-        http.MultipartRequest('POST', Uri.parse(ApiUrls.user_register_url));
+    var request = http.MultipartRequest('POST', Uri.parse(ApiUrls.user_register_url));
     request.fields["first_name"] = firstName;
     request.fields["last_name"] = lastName;
     request.fields["username"] = username;
@@ -51,7 +50,9 @@ class FileRequestManager {
     } else {
       print(res.statusCode);
       print(res);
+      return Baseresponse(json.decode(respStr));
     }
+    // return null;
     // return res.reasonPhrase;
   }
 
@@ -64,8 +65,7 @@ class FileRequestManager {
     String email,
     String filename,
   ) async {
-    var request = new http.MultipartRequest(
-        'POST', Uri.parse(ApiUrls.update_profile_url));
+    var request = new http.MultipartRequest('POST', Uri.parse(ApiUrls.update_profile_url));
     request.fields["first_name"] = firstName;
     request.fields["last_name"] = lastName;
     request.fields["username"] = username;
@@ -94,6 +94,7 @@ class FileRequestManager {
       // print(
       //     "RESPONSE====>> ${Baseresponse.fromJson(json.decode(respStr)).toString()}");
       print(res.statusCode);
+      return Baseresponse(json.decode(respStr));
     }
     // return res.reasonPhrase;
   }
@@ -117,8 +118,8 @@ class FileRequestManager {
     int isAcceptedTac,
     String categoryIds,
     String advertiseMedia,
-    int metropolitanAreaId,
-    int cityId,
+    int? metropolitanAreaId,
+    int? cityId,
     String businessWebsite,
     int isOnline,
     int isMobile,
@@ -144,8 +145,7 @@ class FileRequestManager {
       "advertise_media": advertiseMedia,
       "metropolitan_area_id": metropolitanAreaId,
       "city_id": cityId,
-      "business_website": !businessWebsite.startsWith(AppMessages.http_text) &&
-              !businessWebsite.startsWith(AppMessages.https_text)
+      "business_website": !businessWebsite.startsWith(AppMessages.http_text) && !businessWebsite.startsWith(AppMessages.https_text)
           ? AppMessages.http_text + businessWebsite
           : businessWebsite,
       "is_online": isOnline,
@@ -157,8 +157,7 @@ class FileRequestManager {
     print("DATA==--->>> $data");
     Object body = jsonEncode(data);
     print("BODY==--->>> $body");
-    var response = await http.post(Uri.parse(ApiUrls.user_register_url),
-        headers: {"Content-Type": "application/json"}, body: body);
+    var response = await http.post(Uri.parse(ApiUrls.user_register_url), headers: {"Content-Type": "application/json"}, body: body);
 
     // print("BODY-->> ${jsonEncode({
     //       "first_name": first_name,
@@ -187,6 +186,7 @@ class FileRequestManager {
       return Baseresponse(json.decode(response.body));
     } else {
       print(response.statusCode);
+      return Baseresponse(json.decode(response.body));
     }
     // request.fields["first_name"] = first_name;
     // request.fields["last_name"] = last_name;
@@ -245,8 +245,8 @@ class FileRequestManager {
     String contact,
     String categoryIds,
     String advertiseMedia,
-    int metropolitanAreaId,
-    int cityId,
+    int? metropolitanAreaId,
+    int? cityId,
     String cityName,
     String businessWebsite,
     int isOnline,
@@ -270,8 +270,7 @@ class FileRequestManager {
       "metropolitan_area_id": metropolitanAreaId.toString(),
       "city_id": cityId.toString(),
       "city_name": cityName,
-      "business_website": !businessWebsite.startsWith(AppMessages.http_text) &&
-              !businessWebsite.startsWith(AppMessages.https_text)
+      "business_website": !businessWebsite.startsWith(AppMessages.http_text) && !businessWebsite.startsWith(AppMessages.https_text)
           ? AppMessages.http_text + businessWebsite
           : businessWebsite,
       "is_online": isOnline.toString(),
@@ -286,8 +285,7 @@ class FileRequestManager {
     );
     request.fields.addAll(data);
     if (avatar.path != null && avatar.path.length > 0) {
-      request.files
-          .add(await http.MultipartFile.fromPath('avatar', avatar.path));
+      request.files.add(await http.MultipartFile.fromPath('avatar', avatar.path));
     }
     request.headers.addAll(IHttpRequest.defaultHeader);
     var res = await request.send();
@@ -300,12 +298,12 @@ class FileRequestManager {
       return Baseresponse(json.decode(respStr));
     } else {
       print(res.statusCode);
+      return Baseresponse(json.decode(respStr));
     }
   }
 
   // ignore: missing_return
-  Future<String> uploadImageToS3(
-      BuildContext context, File file, String fileName, String ext) async {
+  Future<String> uploadImageToS3(BuildContext? context, File file, String fileName, String ext) async {
     const _accessKeyId = 'AKIAXB6LPMGHXM3AJBFN';
     const _secretKeyId = 'X/4ADguGDzRSvuxl3tHq3ZA9NvbQvURXs2vtiKyY';
     const _region = 'us-east-2';
@@ -316,17 +314,9 @@ class FileRequestManager {
     final length = await _file.length();
     final uri = Uri.parse(_s3Endpoint);
     final req = http.MultipartRequest("POST", uri);
-    final multipartFile =
-        http.MultipartFile('file', stream, length, filename: fileName);
-    final policy = Policy.fromS3PresignedPost(
-        'AppsData/BusinessMedia/' + fileName + ext,
-        'trendobucket',
-        _accessKeyId,
-        15,
-        length,
-        region: _region);
-    final key =
-        SigV4.calculateSigningKey(_secretKeyId, policy.datetime, _region, 's3');
+    final multipartFile = http.MultipartFile('file', stream, length, filename: fileName);
+    final policy = Policy.fromS3PresignedPost('AppsData/BusinessMedia/' + fileName + ext, 'trendobucket', _accessKeyId, 15, length, region: _region);
+    final key = SigV4.calculateSigningKey(_secretKeyId, policy.datetime, _region, 's3');
     final signature = SigV4.calculateSignature(key, policy.encode());
     req.files.add(multipartFile);
     req.fields['key'] = policy.key;
@@ -343,10 +333,11 @@ class FileRequestManager {
       print(res.statusCode);
       // Response response = (await res.stream.toBytes()) as http.Response;
       if (res.statusCode >= 200 && res.statusCode <= 299) {
-        String imageUrl =
-            _s3Endpoint + '/AppsData/BusinessMedia/' + fileName + ext;
+        String imageUrl = _s3Endpoint + '/AppsData/BusinessMedia/' + fileName + ext;
         print("imageUrl-->> $imageUrl");
         return imageUrl;
+      } else {
+        return '';
       }
       // else if (AccessToken().checkTokenExpiry(
       //       context: context,
@@ -358,6 +349,7 @@ class FileRequestManager {
       // }
     } catch (e) {
       print(e.toString());
+      return '';
     }
   }
 
@@ -376,12 +368,9 @@ class FileRequestManager {
 
     // final multipartFile =
     //     http.MultipartFile('file', stream, length, filename: fileName);
-    final policy = Policy.fromS3PresignedPost(
-        imageURL, 'trendobucket', _accessKeyId, 15, 1024,
-        region: _region);
+    final policy = Policy.fromS3PresignedPost(imageURL, 'trendobucket', _accessKeyId, 15, 1024, region: _region);
 
-    final key =
-        SigV4.calculateSigningKey(_secretKeyId, policy.datetime, _region, 's3');
+    final key = SigV4.calculateSigningKey(_secretKeyId, policy.datetime, _region, 's3');
     final signature = SigV4.calculateSignature(key, policy.encode());
     request.headers.addAll(<String, String>{
       'key': policy.key,

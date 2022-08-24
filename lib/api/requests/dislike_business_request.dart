@@ -6,13 +6,13 @@ import 'package:trendoapp/constants/api_urls.dart';
 
 class DislikeBusinessRequest implements IHttpRequest {
   @override
-  String absolutePath = ApiUrls.dislike_business_url;
+  String? absolutePath = ApiUrls.dislike_business_url;
 
   @override
-  Object body;
+  Object? body;
 
   @override
-  HttpMethod httpMethod = HttpMethod.POST;
+  HttpMethod? httpMethod = HttpMethod.POST;
 
   @override
   Map<String, dynamic> get headers {
@@ -26,7 +26,7 @@ class DislikeBusinessRequest implements IHttpRequest {
 
   DislikeBusinessRequest(
       DislikeBusinessRequestBody dislikeBusinessRequestBody) {
-    var map = Map<String, String>();
+    var map = Map<String, String?>();
     map["business_id"] = dislikeBusinessRequestBody.businessId.toString();
     map["reason"] = dislikeBusinessRequestBody.reason;
     map["action"] = dislikeBusinessRequestBody.action.toString();

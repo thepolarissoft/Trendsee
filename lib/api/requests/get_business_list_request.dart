@@ -5,15 +5,15 @@ class GetBusinessListRequest implements IHttpRequest {
   int page = 1;
   String latitude = "";
   String longitude = "";
-  String distance = "";
+  String? distance = "";
   @override
-  String absolutePath = ApiUrls.business_list_url;
+  String? absolutePath = ApiUrls.business_list_url;
 
   @override
-  Object body;
+  Object? body;
 
   @override
-  HttpMethod httpMethod = HttpMethod.GET;
+  HttpMethod? httpMethod = HttpMethod.GET;
 
   @override
   Map<String, dynamic> get headers {
@@ -21,8 +21,8 @@ class GetBusinessListRequest implements IHttpRequest {
   }
 
   @override
-  Map<String, String> get parameters {
-    var map = new Map<String, String>();
+  Map<String, String?> get parameters {
+    Map<String, String?> map = new Map<String, String>();
     map = {
       "page": page.toString(),
       "latitude": latitude,
@@ -39,7 +39,7 @@ class GetBusinessListRequest implements IHttpRequest {
   }
 
   GetBusinessListRequest(
-      int page, String latitude, String longitude, String distance) {
+      int page, String latitude, String longitude, String? distance) {
     this.page = page;
     this.latitude = latitude;
     this.longitude = longitude;

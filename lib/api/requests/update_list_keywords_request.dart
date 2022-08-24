@@ -4,13 +4,13 @@ import 'package:trendoapp/constants/api_urls.dart';
 class UpdateListKeywordsRequest implements IHttpRequest {
   String businessKeywords = "";
   @override
-  String absolutePath = ApiUrls.update_list_keywords_url;
+  String? absolutePath = ApiUrls.update_list_keywords_url;
 
   @override
-  Object body;
+  Object? body;
 
   @override
-  HttpMethod httpMethod = HttpMethod.GET;
+  HttpMethod? httpMethod = HttpMethod.GET;
 
   @override
   Map<String, dynamic> get headers {

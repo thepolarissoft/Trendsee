@@ -8,7 +8,7 @@ import 'package:trendoapp/providers/filter_provider.dart';
 import '../global_view.dart';
 
 class DistanceFilterView extends StatelessWidget {
-  DistanceFilterView({Key key}) : super(key: key);
+  DistanceFilterView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

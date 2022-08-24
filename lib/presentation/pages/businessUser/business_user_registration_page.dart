@@ -58,8 +58,8 @@ class _BusinessUserRegistrationPageState
 
   TextEditingController metropolitanAreaTextEditingController =
       new TextEditingController();
-  AutoCompleteTextField searchMetropolitanAreaTextField;
-  AutoCompleteTextField searchCityTextField;
+  late AutoCompleteTextField searchMetropolitanAreaTextField;
+  AutoCompleteTextField? searchCityTextField;
 
   TextEditingController businessAddressTextEditingController =
       new TextEditingController();
@@ -92,7 +92,7 @@ class _BusinessUserRegistrationPageState
 
   bool checkValue = true;
 
-  PickedFile _imageFile;
+  PickedFile? _imageFile;
 
   dynamic pickImageError;
 
@@ -101,19 +101,19 @@ class _BusinessUserRegistrationPageState
   bool isVideo = false;
   List<String> listMediaImages = [];
 
-  double _latitude;
-  double _longitude;
+  late double _latitude;
+  late double _longitude;
   // String imageUrl = "";
-  String category;
-  String matropolitanArea;
-  String city;
+  String? category;
+  String? matropolitanArea;
+  String? city;
   BusinessUserResponse businessUserResponse = new BusinessUserResponse();
-  BusinessUserProfileResponse businessUserProfileResponse;
+  BusinessUserProfileResponse? businessUserProfileResponse;
   GlobalKey<AutoCompleteTextFieldState<MetropolitanAreaInfo>> keyArea =
       new GlobalKey();
   GlobalKey<AutoCompleteTextFieldState<MetropolitanCityInfo>> keyCity =
       new GlobalKey();
-  File imageFileBody;
+  File? imageFileBody;
   TextEditingController passwordTextEditingController =
       new TextEditingController();
   bool isObscure = true;
@@ -138,9 +138,9 @@ class _BusinessUserRegistrationPageState
           Provider.of<CategoriesListProvider>(context, listen: false)
               .addDataToList(
                   Provider.of<BusinessUserProvider>(context, listen: false)
-                      .businessUserProfileResponse
-                      .user
-                      .categories);
+                      .businessUserProfileResponse!
+                      .user!
+                      .categories!);
           var catProvider =
               Provider.of<CategoriesListProvider>(context, listen: false);
           businessCategoryTextEditingController.text = CategoryUtils()
@@ -154,7 +154,7 @@ class _BusinessUserRegistrationPageState
                 .selectedBusinessCategoryItem(catProvider.listCategories[0]);
           }
           print(
-              "catProvider.selectedCategoryData ${catProvider.selectedCategoryResponse.name}");
+              "catProvider.selectedCategoryData ${catProvider.selectedCategoryResponse!.name}");
           provider.setCenterLocation(null, null);
           businessGPSCoordinatesTextEditingController.text = "";
         }
@@ -250,22 +250,22 @@ class _BusinessUserRegistrationPageState
                                       image: DecorationImage(
                                           image: widget.isEditable
                                               ? _imageFile == null
-                                                  ? businessUserResponse
+                                                  ? (businessUserResponse
                                                                   .avatar !=
                                                               null &&
                                                           businessUserResponse
-                                                                  .avatar
+                                                                  .avatar!
                                                                   .length >
                                                               0
                                                       ? NetworkImage(
                                                           businessUserResponse
-                                                              .avatar)
+                                                              .avatar!)
                                                       : AssetImage(AppImages
-                                                          .default_profile_Pic)
+                                                          .default_profile_Pic)) as ImageProvider<Object>
                                                   : FileImage(
                                                       // File(_imageFile.path),
-                                                      provider.userImage)
-                                              : provider.userImage == null
+                                                      provider.userImage!)
+                                              : (provider.userImage == null
                                                   ? AssetImage(AppImages
                                                       .default_profile_Pic)
                                                   : FileImage(
@@ -274,7 +274,7 @@ class _BusinessUserRegistrationPageState
                                                       //         context,
                                                       //         listen: false)
                                                       //     .userImage
-                                                      provider.userImage),
+                                                      provider.userImage!)) as ImageProvider<Object>,
                                           // NetworkImage(
                                           //     businessUserResponse
                                           //         .avatar),
@@ -295,8 +295,8 @@ class _BusinessUserRegistrationPageState
                                     child: GestureDetector(
                                       onTap: () {
                                         if (widget.isEditable &&
-                                            provider.businessUserProfileResponse
-                                                    .user.currentPlan
+                                            provider.businessUserProfileResponse!
+                                                    .user!.currentPlan!
                                                     .toLowerCase() ==
                                                 AppMessages.freeText) {
                                           DialogUtils.displayDialogCallBack(
@@ -372,13 +372,13 @@ class _BusinessUserRegistrationPageState
                               AppTextStyle.start_text_align,
                               textInputType: TextInputType.url,
                               isReadOnly: widget.isEditable &&
-                                  provider.businessUserProfileResponse.user
-                                          .currentPlan
+                                  provider.businessUserProfileResponse!.user!
+                                          .currentPlan!
                                           .toLowerCase() ==
                                       AppMessages.freeText, onTap: () {
                             if (widget.isEditable &&
-                                provider.businessUserProfileResponse.user
-                                        .currentPlan
+                                provider.businessUserProfileResponse!.user!
+                                        .currentPlan!
                                         .toLowerCase() ==
                                     AppMessages.freeText) {
                               DialogUtils.displayDialogCallBack(
@@ -801,13 +801,13 @@ class _BusinessUserRegistrationPageState
                               AppMessages.hint_other_phone_number,
                               AppTextStyle.start_text_align,
                               isReadOnly: widget.isEditable &&
-                                  provider.businessUserProfileResponse.user
-                                          .currentPlan
+                                  provider.businessUserProfileResponse!.user!
+                                          .currentPlan!
                                           .toLowerCase() ==
                                       AppMessages.freeText, onTap: () {
                             if (widget.isEditable &&
-                                provider.businessUserProfileResponse.user
-                                        .currentPlan
+                                provider.businessUserProfileResponse!.user!
+                                        .currentPlan!
                                         .toLowerCase() ==
                                     AppMessages.freeText) {
                               DialogUtils.displayDialogCallBack(
@@ -1082,22 +1082,22 @@ class _BusinessUserRegistrationPageState
                     },
                     itemBuilder: (context, item) {
                       return searchItemView(
-                          item.name, AppMessages.area_text.toLowerCase());
+                          item.name!, AppMessages.area_text.toLowerCase());
                     },
                     itemFilter: (item, query) {
-                      return item.name
+                      return item.name!
                           .toLowerCase()
                           .startsWith(query.toLowerCase());
                     },
                     itemSorter: (a, b) {
-                      return a.name.compareTo(b.name);
+                      return a.name!.compareTo(b.name!);
                     },
                     itemSubmitted: (item) {
                       print("ITEM NAME-> ${item.name}");
                       searchMetropolitanAreaTextField
-                          .textField.controller.text = item.name;
+                          .textField!.controller!.text = item.name!;
                       print(
-                          "AREA TEXT->${searchMetropolitanAreaTextField.textField.controller.text}");
+                          "AREA TEXT->${searchMetropolitanAreaTextField.textField!.controller!.text}");
                       // businessProvider.selectedMetropolitanAreaNameFun(item.name);
                       businessProvider.selectedMetropolitanArea(item);
                       businessProvider.changeEditableAreaValue();
@@ -1114,13 +1114,13 @@ class _BusinessUserRegistrationPageState
               onTap: () {
                 businessProvider.changeEditableAreaValue();
                 if (!businessProvider.isEditableArea) {
-                  searchMetropolitanAreaTextField.textField.controller.text =
+                  searchMetropolitanAreaTextField.textField!.controller!.text =
                       "";
                   businessProvider.selectedMetropolitanAreaInfo = null;
                   businessProvider.selectedMetroCityInfo = null;
                   if (searchCityTextField != null &&
-                      searchCityTextField.textField.controller.text != null) {
-                    searchMetropolitanAreaTextField.textField.controller.text =
+                      searchCityTextField!.textField!.controller!.text != null) {
+                    searchMetropolitanAreaTextField.textField!.controller!.text =
                         "";
                   }
                 }
@@ -1208,23 +1208,23 @@ class _BusinessUserRegistrationPageState
                     // },
                     itemBuilder: (context, item) {
                       return searchItemView(
-                          item.name, AppMessages.city_text.toLowerCase());
+                          item.name!, AppMessages.city_text.toLowerCase());
                     },
 
                     itemFilter: (item, query) {
-                      return item.name
+                      return item.name!
                           .toLowerCase()
                           .startsWith(query.toLowerCase());
                     },
                     itemSorter: (a, b) {
-                      return a.name.compareTo(b.name);
+                      return a.name!.compareTo(b.name!);
                     },
                     itemSubmitted: (item) {
                       print("ITEM NAME-> ${item.name}");
-                      searchCityTextField.textField.controller.text = item.name;
+                      searchCityTextField!.textField!.controller!.text = item.name!;
                       businessProvider.selectedCity(item);
                       print(
-                          "AREA TEXT->${searchCityTextField.textField.controller.text}");
+                          "AREA TEXT->${searchCityTextField!.textField!.controller!.text}");
                       businessProvider.changeEditableCityValue();
                     },
                     suggestions: businessProvider.listCities,
@@ -1240,7 +1240,7 @@ class _BusinessUserRegistrationPageState
                 print("CIty suffix clicked");
                 businessProvider.changeEditableCityValue();
                 if (!businessProvider.isEditableCity) {
-                  searchCityTextField.textField.controller.text = "";
+                  searchCityTextField!.textField!.controller!.text = "";
                   businessProvider.selectedMetroCityInfo = null;
                 }
               },
@@ -1290,8 +1290,8 @@ class _BusinessUserRegistrationPageState
                         ? GestureDetector(
                             onTap: () {
                               if (widget.isEditable &&
-                                  businessUser.businessUserProfileResponse.user
-                                          .currentPlan
+                                  businessUser.businessUserProfileResponse!.user!
+                                          .currentPlan!
                                           .toLowerCase() ==
                                       AppMessages.freeText) {
                                 DialogUtils.displayDialogCallBack(
@@ -1354,7 +1354,7 @@ class _BusinessUserRegistrationPageState
                                 ),
                                 child: FadeInImage.assetNetwork(
                                   placeholder: AppImages.loader_gif_removeBG,
-                                  image: businessUser.listImageUrl[index],
+                                  image: businessUser.listImageUrl[index]!,
                                   fit: BoxFit.cover,
                                   height: DeviceSize().deviceWidth(context) / 3,
                                   width: DeviceSize().deviceWidth(context) / 3,
@@ -1375,8 +1375,8 @@ class _BusinessUserRegistrationPageState
                                     print(
                                         "listImageUrl LENGTH-> ${businessUser.listImageUrl.length}");
                                     if (widget.isEditable &&
-                                        businessUser.businessUserProfileResponse
-                                                .user.currentPlan
+                                        businessUser.businessUserProfileResponse!
+                                                .user!.currentPlan!
                                                 .toLowerCase() ==
                                             AppMessages.freeText) {
                                       DialogUtils.displayDialogCallBack(
@@ -1526,7 +1526,7 @@ class _BusinessUserRegistrationPageState
                                   //       fontSize: 14),
                                   // ),
                                   GlobalView().textViewWithStartAlign(
-                                      value.name,
+                                      value.name!,
                                       AppTextStyle.inter_font_family,
                                       AppTextStyle.normal_font_weight,
                                       BaseColor.hint_color,
@@ -1542,7 +1542,7 @@ class _BusinessUserRegistrationPageState
                           onChanged: (selectedValue) {
                             // categories.selectedCategory = selectedValue;
                             categories
-                                .selectedBusinessCategoryItem(selectedValue);
+                                .selectedBusinessCategoryItem(selectedValue!);
                           },
                         ),
                       ),
@@ -1591,7 +1591,7 @@ class _BusinessUserRegistrationPageState
                             return DropdownMenuItem<MetropolitanAreaInfo>(
                               value: value2,
                               child: new GlobalView().textViewWithStartAlign(
-                                  value2.name,
+                                  value2.name!,
                                   AppTextStyle.inter_font_family,
                                   AppTextStyle.normal_font_weight,
                                   BaseColor.hint_color,
@@ -1604,7 +1604,7 @@ class _BusinessUserRegistrationPageState
                                       null
                                   ? "Area"
                                   : businessProvider
-                                      .listMetropolitanAreaInfo[0].name,
+                                      .listMetropolitanAreaInfo[0].name!,
                               AppTextStyle.inter_font_family,
                               AppTextStyle.normal_font_weight,
                               BaseColor.black_color.withOpacity(0.5),
@@ -1612,7 +1612,7 @@ class _BusinessUserRegistrationPageState
                           onChanged: (selectedValue) {
                             // categories.selectedCategory = selectedValue;
                             businessProvider
-                                .selectedMetropolitanArea(selectedValue);
+                                .selectedMetropolitanArea(selectedValue!);
                           },
                         ),
                       ),
@@ -1656,17 +1656,17 @@ class _BusinessUserRegistrationPageState
                             for (var j = 0;
                                 j <
                                     businessProvider
-                                        .selectedMetropolitanAreaInfo
-                                        .cities
+                                        .selectedMetropolitanAreaInfo!
+                                        .cities!
                                         .length;
                                 j++)
                               businessProvider
-                                  .selectedMetropolitanAreaInfo.cities[j]
+                                  .selectedMetropolitanAreaInfo!.cities![j]
                           ].map((MetropolitanCityInfo value) {
                             return DropdownMenuItem<MetropolitanCityInfo>(
                               value: value,
                               child: new GlobalView().textViewWithStartAlign(
-                                  value.name,
+                                  value.name!,
                                   AppTextStyle.inter_font_family,
                                   AppTextStyle.normal_font_weight,
                                   BaseColor.hint_color,
@@ -1675,7 +1675,7 @@ class _BusinessUserRegistrationPageState
                           }).toList(),
                           hint: new GlobalView().textViewWithCenterAlign(
                               businessProvider
-                                  .selectedMetropolitanAreaInfo.cities[0].name,
+                                  .selectedMetropolitanAreaInfo!.cities![0].name!,
                               AppTextStyle.inter_font_family,
                               AppTextStyle.normal_font_weight,
                               BaseColor.black_color.withOpacity(0.5),
@@ -1735,7 +1735,7 @@ class _BusinessUserRegistrationPageState
     return Container(
       // width:DeviceSize().deviceWidth(context) * 0.8,
       child: Consumer<BusinessUserProvider>(
-        builder: (_, listener, child) => RadioGroup<String>.builder(
+        builder: (_, listener, child) => RadioGroup<String?>.builder(
           // spacebetween: DeviceSize().deviceWidth(context) * 0.01,
 
           spacebetween: 2,
@@ -1745,15 +1745,15 @@ class _BusinessUserRegistrationPageState
             // selectedBusiness = value;
             cityTextEditingController.text = "";
             if (searchCityTextField != null &&
-                searchCityTextField.textField.controller.text != null) {
-              searchMetropolitanAreaTextField.textField.controller.text = "";
+                searchCityTextField!.textField!.controller!.text != null) {
+              searchMetropolitanAreaTextField.textField!.controller!.text = "";
             }
 
             listener.setBusinessTypeValue(value);
           },
           items: listener.listBusiness,
           itemBuilder: (item) => RadioButtonBuilder(
-            item,
+            item!,
           ),
           activeColor: BaseColor.btn_gradient_end_color2,
           direction: Axis.horizontal,
@@ -1785,7 +1785,7 @@ class _BusinessUserRegistrationPageState
                           .isAgeCheckBoxValue,
                       checkColor: BaseColor.pure_white_color,
                       activeColor: BaseColor.btn_gradient_end_color1,
-                      onChanged: (bool value) {
+                      onChanged: (bool? value) {
                         Provider.of<BusinessUserProvider>(context,
                                 listen: false)
                             .setAgeCheckBoxValue();
@@ -1827,7 +1827,7 @@ class _BusinessUserRegistrationPageState
                           .isPrivacyCheckBoxValue,
                       checkColor: BaseColor.pure_white_color,
                       activeColor: BaseColor.btn_gradient_end_color1,
-                      onChanged: (bool value) {
+                      onChanged: (bool? value) {
                         Provider.of<BusinessUserProvider>(context,
                                 listen: false)
                             .setPrivacyCheckBoxValue();
@@ -1836,7 +1836,7 @@ class _BusinessUserRegistrationPageState
               ),
               Expanded(
                   child: Text.rich(TextSpan(
-                      text: 'I confirm and accept ',
+                      text: 'I accept Trendsee\'s  ',
                       style: TextStyle(
                           fontSize: 14,
                           color: BaseColor.terms_policy_text_color,
@@ -1966,7 +1966,7 @@ class _BusinessUserRegistrationPageState
       );
 
   void _onImageButtonPressed(String imageType, ImageSource source,
-      {BuildContext context}) async {
+      {BuildContext? context}) async {
     try {
       final ImagePicker _picker = new ImagePicker();
       final pickedFile = await _picker.getImage(
@@ -1985,10 +1985,10 @@ class _BusinessUserRegistrationPageState
       if (widget.isEditable == false) {
         _imageFile = pickedFile;
         // Future<Uint8List> imageUrl = _imageFile.readAsBytes();
-        Provider.of<BusinessUserProvider>(context, listen: false)
-            .addToBusinessUserImagesList(_imageFile.path);
-        print("_imageFile-->> ${_imageFile.path.toString()}");
-        File file = File(_imageFile.path);
+        Provider.of<BusinessUserProvider>(context!, listen: false)
+            .addToBusinessUserImagesList(_imageFile!.path);
+        print("_imageFile-->> ${_imageFile!.path.toString()}");
+        File file = File(_imageFile!.path);
         String ext = p.extension(file.path);
         String fileName = DateTime.now().millisecondsSinceEpoch.toString();
         print("fileName===-->> $fileName");
@@ -1997,10 +1997,10 @@ class _BusinessUserRegistrationPageState
             .getImageUrl(context, file, fileName, ext);
       } else {
         if (type == AppMessages.media_text.toLowerCase()) {
-          PickedFile mediaFile;
+          PickedFile? mediaFile;
           mediaFile = pickedFile;
-          Provider.of<BusinessUserProvider>(context, listen: false)
-              .addToBusinessUserImagesList(mediaFile.path);
+          Provider.of<BusinessUserProvider>(context!, listen: false)
+              .addToBusinessUserImagesList(mediaFile!.path);
           print("mediaFile-->> ${mediaFile.path.toString()}");
           File file = File(mediaFile.path);
           String ext = p.extension(file.path);
@@ -2010,10 +2010,10 @@ class _BusinessUserRegistrationPageState
               .getImageUrl(context, file, fileName, ext);
         } else {
           _imageFile = pickedFile;
-          print("_imageFile-->> ${_imageFile.path.toString()}");
-          imageFileBody = File(_imageFile.path);
+          print("_imageFile-->> ${_imageFile!.path.toString()}");
+          imageFileBody = File(_imageFile!.path);
           print("imageFileBody->> $imageFileBody");
-          Provider.of<BusinessUserProvider>(context, listen: false)
+          Provider.of<BusinessUserProvider>(context!, listen: false)
               .setStandardUserImage(imageFileBody);
         }
       }
@@ -2152,8 +2152,8 @@ class _BusinessUserRegistrationPageState
     // print("VAlue-> ${searchCityTextField.textField.controller.text}");
     var provider = Provider.of<BusinessUserProvider>(context, listen: false);
     if (provider.selectedMetropolitanAreaInfo != null) {
-      if (provider.selectedMetropolitanAreaInfo.name !=
-          searchMetropolitanAreaTextField.textField.controller.text) {
+      if (provider.selectedMetropolitanAreaInfo!.name !=
+          searchMetropolitanAreaTextField.textField!.controller!.text) {
         provider.setAreaCityResponseNull();
       }
     }
@@ -2201,7 +2201,7 @@ class _BusinessUserRegistrationPageState
             //     ? searchCityTextField.textField.controller.text
             //     : "",
             cityTextEditingController.text,
-            searchMetropolitanAreaTextField.textField.controller.text,
+            searchMetropolitanAreaTextField.textField!.controller!.text,
             otherPhoneTextEditingController.text,
             2,
             provider.isAgeCheckBoxValue == true ? 1 : 0,
@@ -2211,15 +2211,15 @@ class _BusinessUserRegistrationPageState
                 .join(','),
             provider.listImageUrl.join(','),
             provider.selectedMetropolitanAreaInfo != null
-                ? provider.selectedMetropolitanAreaInfo.id
+                ? provider.selectedMetropolitanAreaInfo!.id
                 // : metropolitanAreaTextEditingController.text,
                 : 0,
             // searchMetropolitanAreaTextField
             //     .textField.controller.text,
             searchCityTextField != null &&
-                    searchCityTextField.textField.controller.text.isNotEmpty
+                    searchCityTextField!.textField!.controller!.text.isNotEmpty
                 ? provider.selectedMetroCityInfo != null
-                    ? provider.selectedMetroCityInfo.id
+                    ? provider.selectedMetroCityInfo!.id
                     : 0
                 : 0,
             // searchCityTextField.textField.controller.text,
@@ -2257,7 +2257,7 @@ class _BusinessUserRegistrationPageState
     }
   }
 
-  void onClickRegisterBtn({BuildContext context}) {
+  void onClickRegisterBtn({required BuildContext context}) {
     if (Provider.of<BusinessUserProvider>(context, listen: false)
                 .selectedBusiness ==
             AppMessages.online_text ||
@@ -2310,10 +2310,10 @@ class _BusinessUserRegistrationPageState
               .listImageUrl
               .join(','),
           Provider.of<BusinessUserProvider>(context, listen: false)
-              .selectedMetropolitanAreaInfo
+              .selectedMetropolitanAreaInfo!
               .id,
           Provider.of<BusinessUserProvider>(context, listen: false)
-              .selectedMetroCityInfo
+              .selectedMetroCityInfo!
               .id,
           cityTextEditingController.text,
           businessWebsiteTextEditingController.text,
@@ -2323,7 +2323,7 @@ class _BusinessUserRegistrationPageState
                   null
               ? File("")
               : Provider.of<BusinessUserProvider>(context, listen: false)
-                  .userImage,
+                  .userImage!,
         );
       } else if (!ValidationUtils()
           .isUrlValidate(businessWebsiteTextEditingController.text)) {
@@ -2395,7 +2395,7 @@ class _BusinessUserRegistrationPageState
                   null
               ? File("")
               : Provider.of<BusinessUserProvider>(context, listen: false)
-                  .userImage,
+                  .userImage!,
         );
       } else if (!ValidationUtils()
           .isUrlValidate(businessWebsiteTextEditingController.text)) {
@@ -2418,7 +2418,7 @@ class _BusinessUserRegistrationPageState
     }
   }
 
-  void onClickUpdateProfileBtn({BuildContext context}) {
+  void onClickUpdateProfileBtn({required BuildContext context}) {
     if (Provider.of<BusinessUserProvider>(context, listen: false)
                 .selectedBusiness ==
             AppMessages.mobile_text ||
@@ -2437,9 +2437,9 @@ class _BusinessUserRegistrationPageState
       businessGPSCoordinatesTextEditingController.text.isEmpty;
     } else {
       businessGPSCoordinatesTextEditingController.text =
-          provider.centerLatitude.toStringAsFixed(5) +
+          provider.centerLatitude!.toStringAsFixed(5) +
               "/" +
-              provider.centerLongitude.toStringAsFixed(5);
+              provider.centerLongitude!.toStringAsFixed(5);
       var parts = businessGPSCoordinatesTextEditingController.text.split("/");
       _latitude = double.parse(parts[0]);
       _longitude = double.parse(parts[1]);
@@ -2475,34 +2475,34 @@ class _BusinessUserRegistrationPageState
       }
     }
     print("IS ONLINE->> ${businessUserResponse.isOnline}");
-    print("MEDIA length-->> ${businessUserResponse.businessMedia.length}");
-    _latitude = double.parse(businessUserResponse.latitude);
-    _longitude = double.parse(businessUserResponse.latitude);
+    print("MEDIA length-->> ${businessUserResponse.businessMedia!.length}");
+    _latitude = double.parse(businessUserResponse.latitude!);
+    _longitude = double.parse(businessUserResponse.latitude!);
     // businessCategoryTextEditingController.text =
     //     businessUserResponse.category.name;
-    businessNameTextEditingController.text = businessUserResponse.businessName;
+    businessNameTextEditingController.text = businessUserResponse.businessName!;
     businessPhoneNumberTextEditingController.text =
-        businessUserResponse.businessPhone;
+        businessUserResponse.businessPhone!;
     businessAddressTextEditingController.text =
-        businessUserResponse.businessAddress;
+        businessUserResponse.businessAddress!;
     print("businessUserResponse->  ${businessUserResponse.toJson()}");
     print("City Name-> ${businessUserResponse.cityName}");
-    cityTextEditingController.text = businessUserResponse.cityName;
+    cityTextEditingController.text = businessUserResponse.cityName!;
     businessWebsiteTextEditingController.text =
-        businessUserResponse.businessWebsite;
+        businessUserResponse.businessWebsite!;
     businessGPSCoordinatesTextEditingController.text =
-        double.parse(businessUserResponse.latitude).toStringAsFixed(5) +
+        double.parse(businessUserResponse.latitude!).toStringAsFixed(5) +
             " / " +
-            double.parse(businessUserResponse.longitude).toStringAsFixed(5);
-    ownerFirstNameTextEditingController.text = businessUserResponse.firstName;
-    lastNameTextEditingController.text = businessUserResponse.lastName;
-    userNameTextEditingController.text = businessUserResponse.username;
-    emailTextEditingController.text = businessUserResponse.email;
-    otherPhoneTextEditingController.text = businessUserResponse.contact;
+            double.parse(businessUserResponse.longitude!).toStringAsFixed(5);
+    ownerFirstNameTextEditingController.text = businessUserResponse.firstName!;
+    lastNameTextEditingController.text = businessUserResponse.lastName!;
+    userNameTextEditingController.text = businessUserResponse.username!;
+    emailTextEditingController.text = businessUserResponse.email!;
+    otherPhoneTextEditingController.text = businessUserResponse.contact!;
     if (businessUserResponse.metropolitanArea != null) {
       // metropolitanAreaTextEditingController.text =
-      searchMetropolitanAreaTextField.textField.controller.text =
-          businessUserResponse.metropolitanArea.name ?? "";
+      searchMetropolitanAreaTextField.textField!.controller!.text =
+          businessUserResponse.metropolitanArea!.name ?? "";
     }
     // if (businessUserResponse.city != null) {
     //   searchCityTextField.textField.controller.text =
@@ -2511,11 +2511,11 @@ class _BusinessUserRegistrationPageState
     //  Provider.of<Category>(context, listen: false)
     // businessCategoryTextEditingController.text =
     //     businessUserResponse.category.name;
-    if (businessUserResponse.businessMedia.isNotEmpty) {
-      List<String> list = [];
-      for (var i = 0; i < businessUserResponse.businessMedia.length; i++) {
-        list.add(businessUserResponse.businessMedia[i].media);
-        print("MEDIA NAME->> ${businessUserResponse.businessMedia[i].media}");
+    if (businessUserResponse.businessMedia!.isNotEmpty) {
+      List<String?> list = [];
+      for (var i = 0; i < businessUserResponse.businessMedia!.length; i++) {
+        list.add(businessUserResponse.businessMedia![i].media);
+        print("MEDIA NAME->> ${businessUserResponse.businessMedia![i].media}");
       }
       Provider.of<BusinessUserProvider>(context, listen: false)
           .addArrayToBusinessUserImagesList(list);
@@ -2527,7 +2527,7 @@ class _BusinessUserRegistrationPageState
   void onClickCategoryView() {
     var provider = Provider.of<BusinessUserProvider>(context, listen: false);
     if (widget.isEditable &&
-        provider.businessUserProfileResponse.user.isApproved == 1) {
+        provider.businessUserProfileResponse!.user!.isApproved == 1) {
       DialogUtils.displayDialogCallBack(
               context,
               "",

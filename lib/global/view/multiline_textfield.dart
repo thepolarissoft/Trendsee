@@ -10,16 +10,16 @@ import 'global_view.dart';
 
 class MultilineCategoryTextfield extends StatelessWidget {
   MultilineCategoryTextfield({
-    Key key,
-    @required this.controller,
+    Key? key,
+    required this.controller,
     this.onClick,
     this.prefixIcon,
     this.hintText,
   }) : super(key: key);
   TextEditingController controller;
-  VoidCallback onClick;
-  Widget prefixIcon;
-  String hintText;
+  VoidCallback? onClick;
+  Widget? prefixIcon;
+  String? hintText;
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -29,7 +29,7 @@ class MultilineCategoryTextfield extends StatelessWidget {
       child: TextField(
         onTap: () {
           if (onClick != null) {
-            onClick();
+            onClick!();
           }
         },
         readOnly: true,

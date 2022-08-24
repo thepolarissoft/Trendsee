@@ -22,7 +22,7 @@ class SearchByBusinessResponse extends Baseresponse {
   //   this.place,
   // }) : super(status: status, statuscode: statuscode, msg: msg);
 
-  BusinessPlaceResponse place;
+  BusinessPlaceResponse? place;
 
   SearchByBusinessResponse.fromJson(Map<String, dynamic> json) : super(json) {
     place = json["place"] == null
@@ -34,25 +34,25 @@ class SearchByBusinessResponse extends Baseresponse {
         "status": status == null ? null : status,
         "statuscode": statuscode == null ? null : statuscode,
         "msg": msg == null ? null : msg,
-        "place": place == null ? null : place.toJson(),
+        "place": place == null ? null : place!.toJson(),
       };
 }
 
 class BusinessPlaceResponse extends PaginationResponse {
   BusinessPlaceResponse({
-    int currentPage,
+    int? currentPage,
     this.data,
-    String firstPageUrl,
-    int from,
-    int lastPage,
-    String lastPageUrl,
-    List<Link> links,
+    String? firstPageUrl,
+    int? from,
+    int? lastPage,
+    String? lastPageUrl,
+    List<Link>? links,
     dynamic nextPageUrl,
-    String path,
-    int perPage,
+    String? path,
+    int? perPage,
     dynamic prevPageUrl,
-    int to,
-    int total,
+    int? to,
+    int? total,
   }) : super(
             currentPage: currentPage,
             firstPageUrl: firstPageUrl,
@@ -67,7 +67,7 @@ class BusinessPlaceResponse extends PaginationResponse {
             to: to,
             total: total);
 
-  List<VerifiedUserResponse> data;
+  List<VerifiedUserResponse>? data;
 
   factory BusinessPlaceResponse.fromJson(Map<String, dynamic> json) =>
       BusinessPlaceResponse(

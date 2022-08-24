@@ -5,7 +5,7 @@ import 'package:trendoapp/data/models/categories_list_response.dart';
 import 'package:trendoapp/data/models/category_response.dart';
 
 class CategoriesListProvider extends ChangeNotifier {
-  CategoriesListResponse categoriesListResponse;
+  CategoriesListResponse? categoriesListResponse;
   List<CategoryResponse> listCategories = [];
   List<CategoryResponse> listCategoriesForHome = [];
   bool isLoading = false;
@@ -14,29 +14,29 @@ class CategoriesListProvider extends ChangeNotifier {
   List<CategoryResponse> listSelectedCategories = [];
   // List<CategoryResponse> tempListSelectedCategories = [];
 
-  List<int> listSelectedCategoryId = [];
+  List<int?> listSelectedCategoryId = [];
   // List<int> listFilteredCategoryId = [];
-  CategoryResponse selectedCategoryResponse;
+  CategoryResponse? selectedCategoryResponse;
 
   // ignore: missing_return
-  Future<CategoriesListResponse> getCategoriesList(BuildContext context) async {
+  Future<CategoriesListResponse?> getCategoriesList(BuildContext context) async {
     isLoading = true;
     notifyListeners();
     categoriesListResponse = await ApiManager(context).getCategoriesList();
-    if (categoriesListResponse.statuscode == 200) {
+    if (categoriesListResponse!.statuscode == 200) {
       if (categoriesListResponse != null) {
         isLoading = false;
-        print("baseresponse--->>== ${categoriesListResponse.msg}");
+        print("baseresponse--->>== ${categoriesListResponse!.msg}");
         if (categoriesListResponse != null &&
-            categoriesListResponse.category != null) {
+            categoriesListResponse!.category != null) {
           listCategories.clear();
-          listCategories.addAll(categoriesListResponse.category);
+          listCategories.addAll(categoriesListResponse!.category!);
           // listCategories[0].isChecked = true;
           listCategoriesForHome.clear();
           CategoryResponse category =
               CategoryResponse(id: 0, name: AppMessages.home_first_cat_name);
           listCategoriesForHome.add(category);
-          listCategoriesForHome.addAll(categoriesListResponse.category);
+          listCategoriesForHome.addAll(categoriesListResponse!.category!);
           listCategoriesForHome[0].isChecked = true;
           selectedBusinessCategoryResponse = listCategoriesForHome[0];
 
@@ -45,11 +45,11 @@ class CategoriesListProvider extends ChangeNotifier {
 
           selectedCategoryResponse = listCategoriesForHome[0];
           print(
-              "selectedCategoryResponse--->> ${selectedCategoryResponse.toJson()}");
+              "selectedCategoryResponse--->> ${selectedCategoryResponse!.toJson()}");
           // listFilteredCategoryId.clear();
           // listFilteredCategoryId.add(listCategoriesForHome[0].id);
           print(
-              "IS checked from provider-> ${categoriesListResponse.category[0].isChecked}");
+              "IS checked from provider-> ${categoriesListResponse!.category![0].isChecked}");
           return categoriesListResponse;
         }
       }
@@ -113,7 +113,7 @@ class CategoriesListProvider extends ChangeNotifier {
   //   notifyListeners();
   // }
 
-  void changeCheckBoxValue(CategoryResponse categoryResponse, bool value) {
+  void changeCheckBoxValue(CategoryResponse categoryResponse, bool? value) {
     print(
         "tempListSelectedCategories Length-> ${listSelectedCategories.length}");
     if (value == true && listSelectedCategories.length < 2) {
@@ -200,7 +200,7 @@ class CategoriesListProvider extends ChangeNotifier {
   //   notifyListeners();
   // }
 
-  void selectedCategoryItem(CategoryResponse categoryResponse) {
+  void selectedCategoryItem(CategoryResponse? categoryResponse) {
     // selectedCategoryResponse = categoryResponse;
     // print("value Provider->> ${categoryResponse.toJson()}");
 
@@ -208,7 +208,7 @@ class CategoriesListProvider extends ChangeNotifier {
     //     "selectedBusinessCategoryResponse Provider-> ${selectedBusinessCategoryResponse.toJson()}");
     print("listCategoriesForHome Length-> ${listCategoriesForHome.length}");
     for (var i = 0; i < listCategoriesForHome.length; i++) {
-      if (listCategoriesForHome[i].id == categoryResponse.id) {
+      if (listCategoriesForHome[i].id == categoryResponse!.id) {
         // selectedBusinessCategoryResponse = listCategories[i];
         selectedCategoryResponse = categoryResponse;
         break;

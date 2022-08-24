@@ -13,14 +13,14 @@ import 'package:trendoapp/utils/dialog_utils.dart';
 
 // ignore: must_be_immutable
 class AccountSettingsScreen extends StatelessWidget {
-  ProfileResponse profileResponse;
-  BusinessUserProfileResponse businessUserProfileResponse;
+  ProfileResponse? profileResponse;
+  BusinessUserProfileResponse? businessUserProfileResponse;
   int userType;
   AccountSettingsScreen({
-    Key key,
-    @required this.profileResponse,
-    @required this.businessUserProfileResponse,
-    @required this.userType,
+    Key? key,
+    required this.profileResponse,
+    required this.businessUserProfileResponse,
+    required this.userType,
   }) : super(key: key);
 
   @override
@@ -73,11 +73,11 @@ class AccountSettingsScreen extends StatelessWidget {
                           height: 30,
                           // value: provider.allowNotification,
                           value: userType == 1
-                              ? profileResponse.user.allowNotification == 1
+                              ? profileResponse!.user!.allowNotification == 1
                                   ? true
                                   : false
-                              : businessUserProfileResponse
-                                          .user.allowNotification ==
+                              : businessUserProfileResponse!
+                                          .user!.allowNotification ==
                                       1
                                   ? true
                                   : false,

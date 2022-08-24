@@ -12,13 +12,13 @@ import 'exception/exception_type.dart';
 class Api {
   BuildContext context;
 
-  Api({@required this.context});
+  Api({required this.context});
 
   // ignore: missing_return
   Future<http.Response> request(IHttpRequest request) {
     List<String> listKeys = [];
-    List<String> listValues = [];
-    request.parameters.forEach((k, v) {
+    List<String?> listValues = [];
+    request.parameters!.forEach((k, v) {
       listKeys.add(k);
       listValues.add(v);
     });
@@ -27,7 +27,7 @@ class Api {
       if (i == 0) {
         paramsString = paramsString + "?";
       }
-      paramsString = paramsString + listKeys[i] + "=" + listValues[i];
+      paramsString = paramsString + listKeys[i] + "=" + listValues[i]!;
       if (i != listKeys.length - 1) {
         paramsString = paramsString + "&";
         // print("paramsString $paramsString");
@@ -38,9 +38,9 @@ class Api {
     if (Provider.of<ConnectionProvider>(context, listen: false)
         .isInternetConnection) {
       if (request.httpMethod == HttpMethod.GET) {
-        print('URL--> ${request.absolutePath + paramsString}');
-        var url = Uri.parse(request.absolutePath + paramsString);
-        http.get(url, headers: request.headers).then((response) {
+        print('URL--> ${request.absolutePath! + paramsString}');
+        var url = Uri.parse(request.absolutePath! + paramsString);
+        http.get(url, headers: request.headers as Map<String, String>?).then((response) {
           print("response-->>>>-==- $response");
           completer.complete(response);
         }).catchError((error) {
@@ -51,11 +51,11 @@ class Api {
         });
       } else if (request.httpMethod == HttpMethod.POST) {
         print('URL--> ${request.absolutePath}');
-        var url = Uri.parse(request.absolutePath + paramsString);
+        var url = Uri.parse(request.absolutePath! + paramsString);
         http
             .post(
           url,
-          headers: request.headers,
+          headers: request.headers as Map<String, String>?,
           body: request.body,
         )
             .then((response) {

@@ -9,7 +9,7 @@ import 'package:trendoapp/constants/device_size.dart';
 import 'package:trendoapp/global/view/global_view.dart';
 
 class ResetPasswordScreen extends StatelessWidget {
-  ResetPasswordScreen({Key key}) : super(key: key);
+  ResetPasswordScreen({Key? key}) : super(key: key);
   TextEditingController currentPasswordController = TextEditingController();
   TextEditingController newPasswordController = TextEditingController();
   TextEditingController reEnterPasswordController = TextEditingController();

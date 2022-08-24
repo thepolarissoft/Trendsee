@@ -1,5 +1,5 @@
 class LikeBusinessRequestBody {
-  String businessId;
+  String? businessId;
 
   LikeBusinessRequestBody(String businessId) {
     this.businessId = businessId;

@@ -29,8 +29,8 @@ class _NotificationsPageState extends State<NotificationsPage> {
           scrollController.position.maxScrollExtent) {
         final provider =
             Provider.of<NotificationsProvider>(context, listen: false);
-        if (provider.notificationListResponse.notifications.currentPage <
-            provider.notificationListResponse.notifications.lastPage) {
+        if (provider.notificationListResponse!.notifications!.currentPage! <
+            provider.notificationListResponse!.notifications!.lastPage!) {
           provider.getNotificationsList(context);
         } else {
           // GlobalView().showToast(AppMessages.no_more_data_text);
@@ -152,7 +152,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
                                             .description !=
                                         null
                                     ? provider
-                                        .listNotifiedUserInfo[index].description
+                                        .listNotifiedUserInfo[index].description!
                                     : "Lorem ipsum dolor sit amet, consetetur drowny sadipscing elitr, sed diam nonumy eirmod.",
                                 AppTextStyle.inter_font_family,
                                 AppTextStyle.medium_font_weight,
@@ -160,7 +160,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
                                 16),
                             GlobalView().textViewWithStartAlign(
                                 DayTimeUtils().convertToAgo(provider
-                                    .listNotifiedUserInfo[index].createdAt),
+                                    .listNotifiedUserInfo[index].createdAt!),
                                 AppTextStyle.inter_font_family,
                                 AppTextStyle.medium_font_weight,
                                 BaseColor.black_color.withOpacity(0.5),

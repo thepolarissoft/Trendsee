@@ -24,10 +24,10 @@ class HomeFeedResponse extends Baseresponse {
   //   this.totalClick,
   //   this.data,
   // }) : super(status: status, statuscode: statuscode, msg: msg);
-  int totalViews = 0;
-  int totalLikes = 0;
-  int totalClick = 0;
-  FeedInfo data;
+  int? totalViews = 0;
+  int? totalLikes = 0;
+  int? totalClick = 0;
+  FeedInfo? data;
 
   // factory HomeFeedResponse.fromJson(Map<String, dynamic> json) =>
   //     HomeFeedResponse(
@@ -61,18 +61,18 @@ class HomeFeedResponse extends Baseresponse {
 class FeedInfo extends PaginationResponse {
   FeedInfo({
     this.data,
-    int currentPage,
-    String firstPageUrl,
-    int from,
-    int lastPage,
-    String lastPageUrl,
-    List<Link> links,
+    int? currentPage,
+    String? firstPageUrl,
+    int? from,
+    int? lastPage,
+    String? lastPageUrl,
+    List<Link>? links,
     dynamic nextPageUrl,
-    String path,
-    int perPage,
+    String? path,
+    int? perPage,
     dynamic prevPageUrl,
-    int to,
-    int total,
+    int? to,
+    int? total,
   }) : super(
           currentPage: currentPage,
           firstPageUrl: firstPageUrl,
@@ -88,7 +88,7 @@ class FeedInfo extends PaginationResponse {
           total: total,
         );
 
-  List<FeedResponse> data;
+  List<FeedResponse>? data;
 
   factory FeedInfo.fromJson(Map<String, dynamic> json) => FeedInfo(
         data: json["data"] == null
@@ -116,7 +116,7 @@ class FeedInfo extends PaginationResponse {
   Map<String, dynamic> toJson() => {
         "data": data == null
             ? null
-            : List<dynamic>.from(data.map((x) => x.toJson())),
+            : List<dynamic>.from(data!.map((x) => x.toJson())),
         "current_page": currentPage == null ? null : currentPage,
         "first_page_url": firstPageUrl == null ? null : firstPageUrl,
         "from": from == null ? null : from,
@@ -124,7 +124,7 @@ class FeedInfo extends PaginationResponse {
         "last_page_url": lastPageUrl == null ? null : lastPageUrl,
         "links": links == null
             ? null
-            : List<dynamic>.from(links.map((x) => x.toJson())),
+            : List<dynamic>.from(links!.map((x) => x.toJson())),
         "next_page_url": nextPageUrl,
         "path": path == null ? null : path,
         "per_page": perPage == null ? null : perPage,

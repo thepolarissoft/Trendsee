@@ -13,37 +13,37 @@ import 'package:trendoapp/global/view/show_alert_view.dart';
 import 'package:trendoapp/utils/preference_utils.dart';
 
 class HomeFeedResponseProvider extends ChangeNotifier {
-  HomeFeedResponse homeFeedResponse;
+  HomeFeedResponse? homeFeedResponse;
   bool isLoading = false;
   List<FeedResponse> listFeedInfo = [];
-  LikeDislikeResponse likeDislikeResponse;
+  late LikeDislikeResponse likeDislikeResponse;
   FeedResponse feedResponse = new FeedResponse();
-  Baseresponse baseresponse;
-  ProfileResponse profileResponse;
+  Baseresponse? baseresponse;
+  ProfileResponse? profileResponse;
   var list = [];
   bool isAvailableHomeData = false;
 
   void getHomeFeedList(BuildContext context, String categoryId, String latitude,
-      String longitude, String distance,String cityName) async {
+      String longitude, String? distance,String? cityName) async {
     isLoading = true;
     isAvailableHomeData = false;
     notifyListeners();
     int page =
-        homeFeedResponse == null ? 1 : homeFeedResponse.data.currentPage + 1;
+        homeFeedResponse == null ? 1 : homeFeedResponse!.data!.currentPage! + 1;
     ApiManager(context)
         .getHomeFeedList(page.toString(), categoryId == null ? "0" : categoryId,
             latitude, longitude, distance,cityName)
         .then((response) {
       homeFeedResponse = response;
-      if (homeFeedResponse.statuscode == 200) {
+      if (homeFeedResponse!.statuscode == 200) {
         if (homeFeedResponse != null &&
-            homeFeedResponse.data != null &&
-            homeFeedResponse.data.data != null) {
+            homeFeedResponse!.data != null &&
+            homeFeedResponse!.data!.data != null) {
           print("ISLOADING-=-=> $isLoading");
           if (page == 1) {
             listFeedInfo.clear();
           }
-          listFeedInfo.addAll(homeFeedResponse.data.data);
+          listFeedInfo.addAll(homeFeedResponse!.data!.data!);
           print("listFeedInfo Length-->> ${listFeedInfo.length}");
           isAvailableHomeData = true;
         } else {
@@ -83,9 +83,9 @@ class HomeFeedResponseProvider extends ChangeNotifier {
         listFeedInfo[index].isLiked = 0;
         listFeedInfo[index].isDisliked = 0;
       }
-      listFeedInfo[index].totalLikes = likeDislikeResponse.feed.totalLikes;
+      listFeedInfo[index].totalLikes = likeDislikeResponse.feed!.totalLikes;
       listFeedInfo[index].totalDislikes =
-          likeDislikeResponse.feed.totalDislikes;
+          likeDislikeResponse.feed!.totalDislikes;
     } else if (event.toLowerCase() == "dislike") {
       if (isDislike == "1") {
         listFeedInfo[index].isLiked = 0;
@@ -95,8 +95,8 @@ class HomeFeedResponseProvider extends ChangeNotifier {
         listFeedInfo[index].isDisliked = 0;
       }
       listFeedInfo[index].totalDislikes =
-          likeDislikeResponse.feed.totalDislikes;
-      listFeedInfo[index].totalLikes = likeDislikeResponse.feed.totalLikes;
+          likeDislikeResponse.feed!.totalDislikes;
+      listFeedInfo[index].totalLikes = likeDislikeResponse.feed!.totalLikes;
     }
     notifyListeners();
   }
@@ -114,8 +114,8 @@ class HomeFeedResponseProvider extends ChangeNotifier {
         feedResponse.isLiked = 0;
         feedResponse.isDisliked = 0;
       }
-      feedResponse.totalLikes = likeDislikeResponse.feed.totalLikes;
-      feedResponse.totalDislikes = likeDislikeResponse.feed.totalDislikes;
+      feedResponse.totalLikes = likeDislikeResponse.feed!.totalLikes;
+      feedResponse.totalDislikes = likeDislikeResponse.feed!.totalDislikes;
     } else if (event.toLowerCase() == "dislike") {
       if (isDislike == "1") {
         feedResponse.isLiked = 0;
@@ -124,8 +124,8 @@ class HomeFeedResponseProvider extends ChangeNotifier {
         feedResponse.isLiked = 0;
         feedResponse.isDisliked = 0;
       }
-      feedResponse.totalDislikes = likeDislikeResponse.feed.totalDislikes;
-      feedResponse.totalLikes = likeDislikeResponse.feed.totalLikes;
+      feedResponse.totalDislikes = likeDislikeResponse.feed!.totalDislikes;
+      feedResponse.totalLikes = likeDislikeResponse.feed!.totalLikes;
     }
     print("feedResponse.isLiked->> ${feedResponse.isLiked}");
     print("feedResponse.isDisliked->> ${feedResponse.isDisliked}");
@@ -138,14 +138,14 @@ class HomeFeedResponseProvider extends ChangeNotifier {
     notifyListeners();
     ApiManager(context).getMyCheckInsList(page.toString()).then((response) {
       homeFeedResponse = response;
-      if (homeFeedResponse.statuscode == 200) {
+      if (homeFeedResponse!.statuscode == 200) {
         if (homeFeedResponse != null) {
-          if (homeFeedResponse.data != null &&
-              homeFeedResponse.data.data != null) {
+          if (homeFeedResponse!.data != null &&
+              homeFeedResponse!.data!.data != null) {
             // listFeedInfo.clear();
-            listFeedInfo.addAll(homeFeedResponse.data.data);
+            listFeedInfo.addAll(homeFeedResponse!.data!.data!);
             print("listFeedInfo Length-->> ${listFeedInfo.length}");
-            print("nextPageUrl====>> ${homeFeedResponse.data.nextPageUrl}");
+            print("nextPageUrl====>> ${homeFeedResponse!.data!.nextPageUrl}");
           }
           isLoading = false;
         }
@@ -170,16 +170,16 @@ class HomeFeedResponseProvider extends ChangeNotifier {
     ApiManager(context).homeFeedLike(feedId, isLike).then((response) {
       baseresponse = response;
       if (baseresponse != null) {
-        print("baseresponse--->>== ${baseresponse.msg}");
-        if (baseresponse.statuscode == 200 || baseresponse.statuscode == 201) {
+        print("baseresponse--->>== ${baseresponse!.msg}");
+        if (baseresponse!.statuscode == 200 || baseresponse!.statuscode == 201) {
           if (isLike == 1) {
             listFeedInfo[index].isLiked = 1;
-            listFeedInfo[index].totalLikes = listFeedInfo[index].totalLikes + 1;
+            listFeedInfo[index].totalLikes = listFeedInfo[index].totalLikes! + 1;
             print("IS LIKED-> ${listFeedInfo[index].isLiked}");
             print("TOTAL LIKES-> ${listFeedInfo[index].totalLikes}");
           } else {
             listFeedInfo[index].isLiked = 0;
-            listFeedInfo[index].totalLikes = listFeedInfo[index].totalLikes - 1;
+            listFeedInfo[index].totalLikes = listFeedInfo[index].totalLikes! - 1;
             print("IS LIKED==-> ${listFeedInfo[index].isLiked}");
             print("TOTAL LIKES===-> ${listFeedInfo[index].totalLikes}");
           }
@@ -203,23 +203,23 @@ class HomeFeedResponseProvider extends ChangeNotifier {
 
   void checkInDetailsLike(
     BuildContext context,
-    int feedId,
+    int? feedId,
     int isLike,
   ) async {
     print("feed_id->> $feedId");
     ApiManager(context).homeFeedLike(feedId, isLike).then((response) {
       baseresponse = response;
       if (baseresponse != null) {
-        print("baseresponse--->>== ${baseresponse.msg}");
-        if (baseresponse.statuscode == 200 || baseresponse.statuscode == 201) {
+        print("baseresponse--->>== ${baseresponse!.msg}");
+        if (baseresponse!.statuscode == 200 || baseresponse!.statuscode == 201) {
           print("feedResponse.isLiked-> ${feedResponse.isLiked}");
           print("feedResponse.totalLikes-> ${feedResponse.totalLikes}");
           if (isLike == 1) {
             feedResponse.isLiked = 1;
-            feedResponse.totalLikes = feedResponse.totalLikes + 1;
+            feedResponse.totalLikes = feedResponse.totalLikes! + 1;
           } else {
             feedResponse.isLiked = 0;
-            feedResponse.totalLikes = feedResponse.totalLikes - 1;
+            feedResponse.totalLikes = feedResponse.totalLikes! - 1;
           }
           GlobalView().showToast(AppMessages.like_business_text);
         }
@@ -240,21 +240,21 @@ class HomeFeedResponseProvider extends ChangeNotifier {
   }
 
   void deleteMycheckIns(
-      BuildContext context, int feedId, int index, String route) async {
+      BuildContext context, int? feedId, int index, String route) async {
     ApiManager(context).deleteMyCheckIns(feedId.toString()).then((response) {
       baseresponse = response;
-      if (baseresponse.statuscode == 200) {
+      if (baseresponse!.statuscode == 200) {
         if (baseresponse != null) {
-          print("baseresponse--->>== ${baseresponse.msg}");
-          if (baseresponse.statuscode == 200) {
+          print("baseresponse--->>== ${baseresponse!.msg}");
+          if (baseresponse!.statuscode == 200) {
             // GlobalView().showToast(baseresponse.msg);
             if (route.toLowerCase() == "profile") {
-              profileResponse.user.totalFeeds =
-                  profileResponse.user.totalFeeds - 1;
+              profileResponse!.user!.totalFeeds =
+                  profileResponse!.user!.totalFeeds! - 1;
               listFeedInfo.removeAt(index);
             } else {
               listFeedInfo[index].totalFeeds =
-                  listFeedInfo[index].totalFeeds - 1;
+                  listFeedInfo[index].totalFeeds! - 1;
               listFeedInfo.removeAt(index);
             }
           }
@@ -288,15 +288,15 @@ class HomeFeedResponseProvider extends ChangeNotifier {
       if (baseresponse != null) {
         print("feedResponse2.isLiked-> ${feedResponse2.isLiked}");
         print("feedResponse2.totalLikes-> ${feedResponse2.totalLikes}");
-        print("baseresponse--->>== ${baseresponse.msg}");
-        if (baseresponse.statuscode == 200 || baseresponse.statuscode == 201) {
+        print("baseresponse--->>== ${baseresponse!.msg}");
+        if (baseresponse!.statuscode == 200 || baseresponse!.statuscode == 201) {
           if (isLike == 1) {
             feedResponse2.isLiked = 1;
-            feedResponse2.totalLikes = feedResponse2.totalLikes + 1;
+            feedResponse2.totalLikes = feedResponse2.totalLikes! + 1;
             GlobalView().showToast(AppMessages.like_business_text);
           } else {
             feedResponse2.isLiked = 0;
-            feedResponse2.totalLikes = feedResponse2.totalLikes - 1;
+            feedResponse2.totalLikes = feedResponse2.totalLikes! - 1;
             GlobalView().showToast(AppMessages.unlike_business_text);
           }
         }
@@ -326,11 +326,11 @@ class HomeFeedResponseProvider extends ChangeNotifier {
             json.encode(profileResponse));
         if (response != null) {
           isLoading = false;
-          if (response.user.businessMedia.isNotEmpty) {}
+          if (response.user!.businessMedia!.isNotEmpty) {}
           // notifyListeners();
           listFeedInfo.clear();
-          listFeedInfo.addAll(profileResponse.user.feed);
-          print("PROFILE RESPONSE-->> ${response.user.avatar}");
+          listFeedInfo.addAll(profileResponse!.user!.feed!);
+          print("PROFILE RESPONSE-->> ${response.user!.avatar}");
         } else {
           isLoading = true;
         }

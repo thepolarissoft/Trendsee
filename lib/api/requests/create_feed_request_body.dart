@@ -1,18 +1,18 @@
 class CreateFeedRequestBody {
-  String description;
-  String businessUserId;
-  String categoryId;
-  String latitude;
-  String longitude;
-  String locationName;
+  String? description;
+  String? businessUserId;
+  String? categoryId;
+  String? latitude;
+  String? longitude;
+  String? locationName;
 
   CreateFeedRequestBody(
       String description,
       String businessUserId,
       String categoryId,
-      String latitude,
-      String longitude,
-      String locationName) {
+      String? latitude,
+      String? longitude,
+      String? locationName) {
     this.description = description;
     this.businessUserId = businessUserId;
     this.categoryId = categoryId;

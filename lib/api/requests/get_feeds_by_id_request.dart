@@ -8,13 +8,13 @@ class GetFeedsByIdRequest implements IHttpRequest {
   String businessUserId;
   int page;
   @override
-  String absolutePath = ApiUrls.feeds_by_id_url;
+  String? absolutePath = ApiUrls.feeds_by_id_url;
 
   @override
-  Object body;
+  Object? body;
 
   @override
-  HttpMethod httpMethod = HttpMethod.GET;
+  HttpMethod? httpMethod = HttpMethod.GET;
 
   @override
   Map<String, dynamic> get headers {
@@ -29,5 +29,5 @@ class GetFeedsByIdRequest implements IHttpRequest {
     return map;
   }
 
-  GetFeedsByIdRequest({@required this.businessUserId, @required this.page});
+  GetFeedsByIdRequest({required this.businessUserId, required this.page});
 }

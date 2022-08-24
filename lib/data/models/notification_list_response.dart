@@ -7,8 +7,8 @@ NotificationListResponse notificationListResponseFromJson(String str) =>
     NotificationListResponse.fromJson(json.decode(str));
 
 class NotificationListResponse extends Baseresponse {
-  int totalCount;
-  Notifications notifications;
+  int? totalCount;
+  Notifications? notifications;
 
   NotificationListResponse.fromJson(Map<String, dynamic> json) : super(json) {
     notifications = json["notifications"] == null
@@ -20,19 +20,19 @@ class NotificationListResponse extends Baseresponse {
 
 class Notifications extends PaginationResponse {
   Notifications({
-    int currentPage,
+    int? currentPage,
     this.data,
-    String firstPageUrl,
-    int from,
-    int lastPage,
-    String lastPageUrl,
-    List<Link> links,
+    String? firstPageUrl,
+    int? from,
+    int? lastPage,
+    String? lastPageUrl,
+    List<Link>? links,
     dynamic nextPageUrl,
-    String path,
-    int perPage,
+    String? path,
+    int? perPage,
     dynamic prevPageUrl,
-    int to,
-    int total,
+    int? to,
+    int? total,
   }) : super(
           currentPage: currentPage,
           firstPageUrl: firstPageUrl,
@@ -48,7 +48,7 @@ class Notifications extends PaginationResponse {
           total: total,
         );
 
-  List<NotifiedUserInfo> data;
+  List<NotifiedUserInfo>? data;
 
   factory Notifications.fromJson(Map<String, dynamic> json) => Notifications(
         currentPage: json["current_page"] == null ? null : json["current_page"],
@@ -77,14 +77,14 @@ class Notifications extends PaginationResponse {
         "current_page": currentPage == null ? null : currentPage,
         "data": data == null
             ? null
-            : List<dynamic>.from(data.map((x) => x.toJson())),
+            : List<dynamic>.from(data!.map((x) => x.toJson())),
         "first_page_url": firstPageUrl == null ? null : firstPageUrl,
         "from": from == null ? null : from,
         "last_page": lastPage == null ? null : lastPage,
         "last_page_url": lastPageUrl == null ? null : lastPageUrl,
         "links": links == null
             ? null
-            : List<dynamic>.from(links.map((x) => x.toJson())),
+            : List<dynamic>.from(links!.map((x) => x.toJson())),
         "next_page_url": nextPageUrl,
         "path": path == null ? null : path,
         "per_page": perPage == null ? null : perPage,

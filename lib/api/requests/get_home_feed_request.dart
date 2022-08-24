@@ -8,16 +8,16 @@ class GetHomeFeedRequest implements IHttpRequest {
   String categoryId = "";
   String latitude = "";
   String longitude = "";
-  String distance = "";
-  String cityName = "";
+  String? distance = "";
+  String? cityName = "";
   @override
-  String absolutePath = ApiUrls.home_feed_list_url;
+  String? absolutePath = ApiUrls.home_feed_list_url;
 
   @override
-  Object body;
+  Object? body;
 
   @override
-  HttpMethod httpMethod = HttpMethod.GET;
+  HttpMethod? httpMethod = HttpMethod.GET;
 
   @override
   Map<String, dynamic> get headers {
@@ -26,8 +26,8 @@ class GetHomeFeedRequest implements IHttpRequest {
   }
 
   @override
-  Map<String, String> get parameters {
-    Map<String, String> map = new Map<String, String>();
+  Map<String, String?> get parameters {
+    Map<String, String?> map = new Map<String, String>();
     print("DISTANCE IN FEET-> $distance");
     map = {
       "page": page,
@@ -51,7 +51,7 @@ class GetHomeFeedRequest implements IHttpRequest {
   }
 
   GetHomeFeedRequest(String page, String categoryId, String latitude,
-      String longitude, String distance, String cityName) {
+      String longitude, String? distance, String? cityName) {
     this.page = page;
     this.categoryId = categoryId;
     this.latitude = latitude;

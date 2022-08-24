@@ -4,13 +4,13 @@ import 'package:trendoapp/constants/api_urls.dart';
 
 class SendOtpRequest implements IHttpRequest {
   @override
-  String absolutePath = ApiUrls.send_otp_url;
+  String? absolutePath = ApiUrls.send_otp_url;
 
   @override
-  Object body;
+  Object? body;
 
   @override
-  HttpMethod httpMethod = HttpMethod.POST;
+  HttpMethod? httpMethod = HttpMethod.POST;
 
   @override
   Map<String, dynamic> get headers {
@@ -23,7 +23,7 @@ class SendOtpRequest implements IHttpRequest {
   }
 
   SendOtpRequest(SendOtpRequestBody sendOtpRequestBody) {
-    var map = Map<String, String>();
+    var map = Map<String, String?>();
     map["email"] = sendOtpRequestBody.email;
     this.body = map;
     print("SendOtpRequestBody $body");

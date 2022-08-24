@@ -19,7 +19,7 @@ class BusinessLikedListResponse extends Baseresponse {
   //   this.place,
   // });
 
-  Business place;
+  Business? place;
   BusinessLikedListResponse.fromJson(Map<String, dynamic> json) : super(json) {
     place = json["place"] == null ? null : Business.fromJson(json["place"]);
   }
@@ -42,18 +42,18 @@ class BusinessLikedListResponse extends Baseresponse {
 class Business extends PaginationResponse {
   Business({
     this.data,
-    int currentPage,
-    String firstPageUrl,
-    int from,
-    int lastPage,
-    String lastPageUrl,
-    List<Link> links,
+    int? currentPage,
+    String? firstPageUrl,
+    int? from,
+    int? lastPage,
+    String? lastPageUrl,
+    List<Link>? links,
     dynamic nextPageUrl,
-    String path,
-    int perPage,
+    String? path,
+    int? perPage,
     dynamic prevPageUrl,
-    int to,
-    int total,
+    int? to,
+    int? total,
   }) : super(
             currentPage: currentPage,
             firstPageUrl: firstPageUrl,
@@ -68,7 +68,7 @@ class Business extends PaginationResponse {
             to: to,
             total: total);
 
-  List<VerifiedUserResponse> data;
+  List<VerifiedUserResponse>? data;
 
   factory Business.fromJson(Map<String, dynamic> json) => Business(
         data: json["data"] == null
@@ -80,6 +80,6 @@ class Business extends PaginationResponse {
   Map<String, dynamic> toJson() => {
         "data": data == null
             ? null
-            : List<dynamic>.from(data.map((x) => x.toJson())),
+            : List<dynamic>.from(data!.map((x) => x.toJson())),
       };
 }

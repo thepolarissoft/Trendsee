@@ -15,18 +15,18 @@ import 'package:trendoapp/utils/day_time_utils.dart';
 // ignore: must_be_immutable
 class CheckInsItemView extends StatelessWidget {
   // const ListItemView({Key key}) : super(key: key);
-  VerifiedUserResponse verifiedUserResponse;
+  VerifiedUserResponse? verifiedUserResponse;
   FeedResponse feedResponse;
   bool isVisibleDeleteIcon;
   bool isVisibleLikePanel;
   VoidCallback onClickDelete;
   bool isHome;
   CheckInsItemView(
-      {@required this.verifiedUserResponse,
-      @required this.feedResponse,
-      @required this.isVisibleDeleteIcon,
-      @required this.isVisibleLikePanel,
-      @required this.onClickDelete,
+      {required this.verifiedUserResponse,
+      required this.feedResponse,
+      required this.isVisibleDeleteIcon,
+      required this.isVisibleLikePanel,
+      required this.onClickDelete,
       this.isHome = false});
 
   void onClickLike(BuildContext context, int feedId) {
@@ -93,12 +93,12 @@ class CheckInsItemView extends StatelessWidget {
                             children: [
                               GlobalView().textViewWithStartAlign(
                                   verifiedUserResponse == null
-                                      ? feedResponse.user.username == null
+                                      ? feedResponse.user!.username == null
                                           ? "John Doe"
-                                          : feedResponse.user.username
-                                      : verifiedUserResponse.username == null
+                                          : feedResponse.user!.username!
+                                      : verifiedUserResponse!.username == null
                                           ? "John Doe"
-                                          : verifiedUserResponse.username,
+                                          : verifiedUserResponse!.username!,
                                   // "John Doe",
                                   AppTextStyle.metropolis_font_family,
                                   AppTextStyle.semi_bold_font_weight,
@@ -107,7 +107,7 @@ class CheckInsItemView extends StatelessWidget {
                               GlobalView().textViewWithStartAlign(
                                   // "15 min ago",
                                   DayTimeUtils()
-                                      .convertToAgo(feedResponse.createdAt),
+                                      .convertToAgo(feedResponse.createdAt!),
                                   AppTextStyle.metropolis_font_family,
                                   AppTextStyle.medium_font_weight,
                                   BaseColor.black_color,
@@ -154,9 +154,9 @@ class CheckInsItemView extends StatelessWidget {
                         shape: BoxShape.circle,
                         color: Colors.grey,
                         image: DecorationImage(
-                            image: feedResponse.businessUser.avatar != ""
-                                ? NetworkImage(feedResponse.businessUser.avatar)
-                                : AssetImage(AppImages.default_profile_Pic),
+                            image: (feedResponse.businessUser!.avatar != ""
+                                ? NetworkImage(feedResponse.businessUser!.avatar!)
+                                : AssetImage(AppImages.default_profile_Pic)) as ImageProvider<Object>,
                             fit: BoxFit.cover),
                       ),
                     ),
@@ -204,9 +204,9 @@ class CheckInsItemView extends StatelessWidget {
                               //     : verifiedUserResponse.businessName == null
                               //         ? "ChoxBlast Cafe"
                               //         : verifiedUserResponse.businessName,
-                              feedResponse.businessUser.businessName == null
+                              feedResponse.businessUser!.businessName == null
                                   ? "ChoxBlast Cafe"
-                                  : feedResponse.businessUser.businessName,
+                                  : feedResponse.businessUser!.businessName!,
                               // "ChoxBlast Cafe",
                               AppTextStyle.metropolis_font_family,
                               AppTextStyle.bold_font_weight,
@@ -218,7 +218,7 @@ class CheckInsItemView extends StatelessWidget {
                                 feedResponse.categories == null
                                     ? "Cafe"
                                     : CategoryUtils().getCategoryName(
-                                        feedResponse.categories),
+                                        feedResponse.categories!),
                                 // "Cafe",
                                 AppTextStyle.metropolis_font_family,
                                 AppTextStyle.bold_font_weight,
@@ -235,7 +235,7 @@ class CheckInsItemView extends StatelessWidget {
                               child: GlobalView().textViewWithStartAlign(
                                   feedResponse.locationName == null
                                       ? "Cafe"
-                                      : feedResponse.locationName,
+                                      : feedResponse.locationName!,
                                   // "Cafe",
                                   AppTextStyle.metropolis_font_family,
                                   AppTextStyle.bold_font_weight,
@@ -270,15 +270,15 @@ class CheckInsItemView extends StatelessWidget {
                         padding: EdgeInsets.only(left: 7, top: 2),
                         alignment: Alignment.centerLeft,
                         child: GlobalView().textViewWithStartAlign(
-                            feedResponse.businessUser.isMobile == 1
+                            feedResponse.businessUser!.isMobile == 1
                                 ? AppMessages.mobile_business_text
-                                : feedResponse.businessUser.isOnline == 0
+                                : feedResponse.businessUser!.isOnline == 0
                                     ? feedResponse
-                                                .businessUser.businessAddress ==
+                                                .businessUser!.businessAddress ==
                                             null
                                         ? "ChoxBlast Cafe"
                                         : feedResponse
-                                            .businessUser.businessAddress
+                                            .businessUser!.businessAddress!
                                     : AppMessages.online_business_text,
                             // "Abix Street",
                             AppTextStyle.metropolis_font_family,
@@ -297,7 +297,7 @@ class CheckInsItemView extends StatelessWidget {
                   child: GlobalView().textViewWithStartAlign(
                       feedResponse.distance != null
                           ? AppMessages.within +
-                              feedResponse.distance +
+                              feedResponse.distance! +
                               AppMessages.miles_from_text
                           : "",
                       AppTextStyle.inter_font_family,
@@ -316,7 +316,7 @@ class CheckInsItemView extends StatelessWidget {
                     child: GlobalView().textViewWithStartAlign(
                         feedResponse.description == null
                             ? "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut"
-                            : feedResponse.description,
+                            : feedResponse.description!,
                         // "Lorem ipsum dolor sit amet",
                         AppTextStyle.inter_font_family,
                         AppTextStyle.medium_font_weight,

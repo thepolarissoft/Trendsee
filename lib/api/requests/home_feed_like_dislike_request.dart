@@ -6,13 +6,13 @@ import 'package:trendoapp/constants/api_urls.dart';
 
 class HomeFeedLikeDislikeRequest implements IHttpRequest {
   @override
-  String absolutePath = ApiUrls.like_dislike_home_feed_url;
+  String? absolutePath = ApiUrls.like_dislike_home_feed_url;
 
   @override
-  Object body;
+  Object? body;
 
   @override
-  HttpMethod httpMethod = HttpMethod.POST;
+  HttpMethod? httpMethod = HttpMethod.POST;
 
   @override
   Map<String, dynamic> get headers {
@@ -26,7 +26,7 @@ class HomeFeedLikeDislikeRequest implements IHttpRequest {
 
   HomeFeedLikeDislikeRequest(
       HomeFeedLikeDislikeRequestBody homeFeedLikeDislikeRequestBody) {
-    var map = new Map<String, String>();
+    var map = new Map<String, String?>();
     map["feed_id"] = homeFeedLikeDislikeRequestBody.feedId;
     map["is_like"] = homeFeedLikeDislikeRequestBody.isLike;
     map["is_dislike"] = homeFeedLikeDislikeRequestBody.isDislike;

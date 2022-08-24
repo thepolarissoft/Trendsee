@@ -22,7 +22,7 @@ class BusinessListResponse extends Baseresponse {
   //   this.business,
   // }) : super(status: status, statuscode: statuscode, msg: msg);
 
-  Business business;
+  Business? business;
 
   // factory BusinessListResponse.fromJson(Map<String, dynamic> json) =>
   //     BusinessListResponse(
@@ -52,18 +52,18 @@ class BusinessListResponse extends Baseresponse {
 class Business extends PaginationResponse {
   Business({
     this.data,
-    int currentPage,
-    String firstPageUrl,
-    int from,
-    int lastPage,
-    String lastPageUrl,
-    List<Link> links,
+    int? currentPage,
+    String? firstPageUrl,
+    int? from,
+    int? lastPage,
+    String? lastPageUrl,
+    List<Link>? links,
     dynamic nextPageUrl,
-    String path,
-    int perPage,
+    String? path,
+    int? perPage,
     dynamic prevPageUrl,
-    int to,
-    int total,
+    int? to,
+    int? total,
   }) : super(
             currentPage: currentPage,
             firstPageUrl: firstPageUrl,
@@ -78,7 +78,7 @@ class Business extends PaginationResponse {
             to: to,
             total: total);
 
-  List<VerifiedUserResponse> data;
+  List<VerifiedUserResponse>? data;
 
   factory Business.fromJson(Map<String, dynamic> json) => Business(
         data: json["data"] == null
@@ -106,7 +106,7 @@ class Business extends PaginationResponse {
   Map<String, dynamic> toJson() => {
         "data": data == null
             ? null
-            : List<dynamic>.from(data.map((x) => x.toJson())),
+            : List<dynamic>.from(data!.map((x) => x.toJson())),
         "current_page": currentPage == null ? null : currentPage,
         "first_page_url": firstPageUrl == null ? null : firstPageUrl,
         "from": from == null ? null : from,
@@ -114,7 +114,7 @@ class Business extends PaginationResponse {
         "last_page_url": lastPageUrl == null ? null : lastPageUrl,
         "links": links == null
             ? null
-            : List<dynamic>.from(links.map((x) => x.toJson())),
+            : List<dynamic>.from(links!.map((x) => x.toJson())),
         "next_page_url": nextPageUrl,
         "path": path == null ? null : path,
         "per_page": perPage == null ? null : perPage,

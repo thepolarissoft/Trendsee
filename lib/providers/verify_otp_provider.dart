@@ -19,9 +19,9 @@ import 'package:trendoapp/utils/storage_utils.dart';
 
 class VerifyOtpProvider extends ChangeNotifier {
   bool isLoading = false;
-  VerifiedOtpResponse verifiedOtpResponse;
-  Baseresponse baseresponse;
-  ProfileResponse profileResponse;
+  VerifiedOtpResponse? verifiedOtpResponse;
+  Baseresponse? baseresponse;
+  ProfileResponse? profileResponse;
 
   // void verifyOtp(BuildContext context, String email, String otp) {
   //   isLoading = true;
@@ -107,43 +107,43 @@ class VerifyOtpProvider extends ChangeNotifier {
   //   });
   // }
 
-  void verifyOtpNew(BuildContext context, String email, String otp) {
+  void verifyOtpNew(BuildContext context, String? email, String otp) {
     isLoading = true;
     notifyListeners();
     ApiManager(context).verifyOTP(email, otp).then((response) async {
       verifiedOtpResponse = response;
-      print("verifiedOtpResponse CODE-> ${verifiedOtpResponse.statuscode}");
-      print("verifiedOtpResponse msg-> ${verifiedOtpResponse.msg}");
-      if (verifiedOtpResponse.statuscode == 200) {
+      print("verifiedOtpResponse CODE-> ${verifiedOtpResponse!.statuscode}");
+      print("verifiedOtpResponse msg-> ${verifiedOtpResponse!.msg}");
+      if (verifiedOtpResponse!.statuscode == 200) {
         if (verifiedOtpResponse != null) {
-          if (verifiedOtpResponse.standardUser != null) {
+          if (verifiedOtpResponse!.standardUser != null) {
             isLoading = false;
-            log("verifiedOtpResponse Token-=-=-=-=> ${verifiedOtpResponse.token}");
-            print(verifiedOtpResponse.standardUser.toString());
+            log("verifiedOtpResponse Token-=-=-=-=> ${verifiedOtpResponse!.token}");
+            print(verifiedOtpResponse!.standardUser.toString());
             isLoading = false;
             StorageUtils.writeIntValue(StorageUtils.keyUserType,
-                verifiedOtpResponse.standardUser.userType);
+                verifiedOtpResponse!.standardUser!.userType);
             if (StorageUtils.readIntValue(StorageUtils.keyUserType) != null) {
               if (StorageUtils.readIntValue(StorageUtils.keyUserType) == 1) {
                 StorageUtils.writeStringValue(
-                    StorageUtils.keyToken, verifiedOtpResponse.token);
+                    StorageUtils.keyToken, verifiedOtpResponse!.token);
                 AccessToken().setTokenValue(
                     StorageUtils.readStringValue(StorageUtils.keyToken));
                 Navigator.pushNamed(context, AppRoutes.timeline_route_name);
               }
             }
-          } else if (verifiedOtpResponse.businessUsers != null) {
-            print(verifiedOtpResponse.businessUsers.toString());
+          } else if (verifiedOtpResponse!.businessUsers != null) {
+            print(verifiedOtpResponse!.businessUsers.toString());
             isLoading = false;
-            if (verifiedOtpResponse.businessUsers != null &&
-                verifiedOtpResponse.businessUsers.isNotEmpty &&
-                verifiedOtpResponse.businessUsers.length == 1) {
-              if (verifiedOtpResponse.businessUsers[0].isApproved == 0) {
+            if (verifiedOtpResponse!.businessUsers != null &&
+                verifiedOtpResponse!.businessUsers!.isNotEmpty &&
+                verifiedOtpResponse!.businessUsers!.length == 1) {
+              if (verifiedOtpResponse!.businessUsers![0].isApproved == 0) {
                 Navigator.pushNamed(context, AppRoutes.signin_route_name);
-              } else if (verifiedOtpResponse.businessUsers[0].isApproved == 1) {
-                log("Verified Token ${verifiedOtpResponse.token}");
+              } else if (verifiedOtpResponse!.businessUsers![0].isApproved == 1) {
+                log("Verified Token ${verifiedOtpResponse!.token}");
                 getUserByIdToken(
-                    context, verifiedOtpResponse.businessUsers[0].id);
+                    context, verifiedOtpResponse!.businessUsers![0].id);
                 // StorageUtils.writeStringValue(
                 //     StorageUtils.keyToken, verifiedOtpResponse.token);
                 // AccessToken().setTokenValue(
@@ -160,17 +160,17 @@ class VerifyOtpProvider extends ChangeNotifier {
               Navigator.pushNamed(
                   context, AppRoutes.multiple_business_user_list_route_name,
                   arguments: MultipleBusinessUserListArgs(
-                      listBusinessUsers: verifiedOtpResponse.businessUsers));
+                      listBusinessUsers: verifiedOtpResponse!.businessUsers));
             }
           }
           log("StorageUtils TOKEN=-==-->> ${StorageUtils.readStringValue(StorageUtils.keyToken)}");
         }
-      } else if (verifiedOtpResponse.statuscode == 402) {
+      } else if (verifiedOtpResponse!.statuscode == 402) {
         DialogUtils().showSupportAlertDialog(context, "approval");
         Navigator.pushNamed(
             context, AppRoutes.successful_email_verification_route_name);
       } else {
-        GlobalView().showToast(verifiedOtpResponse.msg);
+        GlobalView().showToast(verifiedOtpResponse!.msg!);
       }
       isLoading = false;
       notifyListeners();
@@ -188,43 +188,43 @@ class VerifyOtpProvider extends ChangeNotifier {
     });
   }
 
-  void verifyPasscode(BuildContext context, String email, String passcode) {
+  void verifyPasscode(BuildContext context, String? email, String passcode) {
     isLoading = true;
     notifyListeners();
     ApiManager(context).verifyPasscode(email, passcode).then((response) async {
       verifiedOtpResponse = response;
-      print("verifiedOtpResponse CODE-> ${verifiedOtpResponse.statuscode}");
-      print("verifiedOtpResponse msg-> ${verifiedOtpResponse.msg}");
-      if (verifiedOtpResponse.statuscode == 200) {
+      print("verifiedOtpResponse CODE-> ${verifiedOtpResponse!.statuscode}");
+      print("verifiedOtpResponse msg-> ${verifiedOtpResponse!.msg}");
+      if (verifiedOtpResponse!.statuscode == 200) {
         if (verifiedOtpResponse != null) {
-          if (verifiedOtpResponse.standardUser != null) {
+          if (verifiedOtpResponse!.standardUser != null) {
             isLoading = false;
-            log("verifiedOtpResponse Token-=-=-=-=> ${verifiedOtpResponse.token}");
-            print(verifiedOtpResponse.standardUser.toString());
+            log("verifiedOtpResponse Token-=-=-=-=> ${verifiedOtpResponse!.token}");
+            print(verifiedOtpResponse!.standardUser.toString());
             isLoading = false;
             StorageUtils.writeIntValue(StorageUtils.keyUserType,
-                verifiedOtpResponse.standardUser.userType);
+                verifiedOtpResponse!.standardUser!.userType);
             if (StorageUtils.readIntValue(StorageUtils.keyUserType) != null) {
               if (StorageUtils.readIntValue(StorageUtils.keyUserType) == 1) {
                 StorageUtils.writeStringValue(
-                    StorageUtils.keyToken, verifiedOtpResponse.token);
+                    StorageUtils.keyToken, verifiedOtpResponse!.token);
                 AccessToken().setTokenValue(
                     StorageUtils.readStringValue(StorageUtils.keyToken));
                 Navigator.pushNamed(context, AppRoutes.timeline_route_name);
               }
             }
-          } else if (verifiedOtpResponse.businessUsers != null) {
-            print(verifiedOtpResponse.businessUsers.toString());
+          } else if (verifiedOtpResponse!.businessUsers != null) {
+            print(verifiedOtpResponse!.businessUsers.toString());
             isLoading = false;
-            if (verifiedOtpResponse.businessUsers != null &&
-                verifiedOtpResponse.businessUsers.isNotEmpty &&
-                verifiedOtpResponse.businessUsers.length == 1) {
-              if (verifiedOtpResponse.businessUsers[0].isApproved == 0) {
+            if (verifiedOtpResponse!.businessUsers != null &&
+                verifiedOtpResponse!.businessUsers!.isNotEmpty &&
+                verifiedOtpResponse!.businessUsers!.length == 1) {
+              if (verifiedOtpResponse!.businessUsers![0].isApproved == 0) {
                 Navigator.pushNamed(context, AppRoutes.signin_route_name);
-              } else if (verifiedOtpResponse.businessUsers[0].isApproved == 1) {
-                log("Verified Token ${verifiedOtpResponse.token}");
+              } else if (verifiedOtpResponse!.businessUsers![0].isApproved == 1) {
+                log("Verified Token ${verifiedOtpResponse!.token}");
                 getUserByIdToken(
-                    context, verifiedOtpResponse.businessUsers[0].id);
+                    context, verifiedOtpResponse!.businessUsers![0].id);
                 // StorageUtils.writeStringValue(
                 //     StorageUtils.keyToken, verifiedOtpResponse.token);
                 // AccessToken().setTokenValue(
@@ -241,17 +241,17 @@ class VerifyOtpProvider extends ChangeNotifier {
               Navigator.pushNamed(
                   context, AppRoutes.multiple_business_user_list_route_name,
                   arguments: MultipleBusinessUserListArgs(
-                      listBusinessUsers: verifiedOtpResponse.businessUsers));
+                      listBusinessUsers: verifiedOtpResponse!.businessUsers));
             }
           }
           log("StorageUtils TOKEN=-==-->> ${StorageUtils.readStringValue(StorageUtils.keyToken)}");
         }
-      } else if (verifiedOtpResponse.statuscode == 402) {
+      } else if (verifiedOtpResponse!.statuscode == 402) {
         DialogUtils().showSupportAlertDialog(context, "approval");
         Navigator.pushNamed(
             context, AppRoutes.successful_email_verification_route_name);
       } else {
-        GlobalView().showToast(verifiedOtpResponse.msg);
+        GlobalView().showToast(verifiedOtpResponse!.msg!);
       }
       isLoading = false;
       notifyListeners();
@@ -269,12 +269,12 @@ class VerifyOtpProvider extends ChangeNotifier {
     });
   }
 
-  void sendOtp(BuildContext context, String email) {
+  void sendOtp(BuildContext context, String? email) {
     isLoading = true;
     notifyListeners();
     ApiManager(context).sendOTP(email).then((response) {
       baseresponse = response;
-      if (baseresponse.statuscode == 200) {
+      if (baseresponse!.statuscode == 200) {
         if (baseresponse != null) {
           isLoading = false;
           GlobalView().showToast(AppToastMessages.send_otp_verified_message);
@@ -296,30 +296,30 @@ class VerifyOtpProvider extends ChangeNotifier {
     });
   }
 
-  void getUserByIdToken(BuildContext context, int userId) async {
+  void getUserByIdToken(BuildContext context, int? userId) async {
     isLoading = true;
     notifyListeners();
     ApiManager(context).getUserByIdToken(userId).then((response) {
       profileResponse = response;
-      print("STATUS CODE-> ${profileResponse.statuscode}");
-      print("MSG-> ${profileResponse.msg}");
+      print("STATUS CODE-> ${profileResponse!.statuscode}");
+      print("MSG-> ${profileResponse!.msg}");
       if (profileResponse != null) {
         isLoading = false;
-        if (profileResponse.statuscode == 200) {
+        if (profileResponse!.statuscode == 200) {
           StorageUtils.writeIntValue(
-              StorageUtils.keyUserType, profileResponse.user.userType);
+              StorageUtils.keyUserType, profileResponse!.user!.userType);
           StorageUtils.writeStringValue(
-              StorageUtils.keyToken, profileResponse.token);
+              StorageUtils.keyToken, profileResponse!.token);
           AccessToken().setTokenValue(
               StorageUtils.readStringValue(StorageUtils.keyToken));
           PreferenceUtils.setStringValue(
               PreferenceUtils.keyBusinessUserProfileObject,
-              json.encode(profileResponse.user));
+              json.encode(profileResponse!.user));
           PreferenceUtils.setIntValue(
-              PreferenceUtils.keyUserId, profileResponse.user.id);
+              PreferenceUtils.keyUserId, profileResponse!.user!.id!);
           Navigator.pushNamed(context, AppRoutes.business_timeline_route_name);
         } else {
-          GlobalView().showToast(profileResponse.msg);
+          GlobalView().showToast(profileResponse!.msg!);
         }
       }
       notifyListeners();
@@ -342,11 +342,11 @@ class VerifyOtpProvider extends ChangeNotifier {
     notifyListeners();
     ApiManager(context).sendOtpByBusinessID(businessID).then((response) {
       baseresponse = response;
-      print("STATUS CODE-> ${baseresponse.statuscode}");
-      print("MSG-> ${baseresponse.msg}");
+      print("STATUS CODE-> ${baseresponse!.statuscode}");
+      print("MSG-> ${baseresponse!.msg}");
       if (baseresponse != null) {
         isLoading = false;
-        if (baseresponse.statuscode == 200) {
+        if (baseresponse!.statuscode == 200) {
           // Navigator.push(
           //     context,
           //     MaterialPageRoute(
@@ -383,29 +383,29 @@ class VerifyOtpProvider extends ChangeNotifier {
         .verifyOTPByBusinessID(businessID, otp)
         .then((response) async {
       verifiedOtpResponse = response;
-      print("verifiedOtpResponse CODE-> ${verifiedOtpResponse.statuscode}");
-      print("verifiedOtpResponse msg-> ${verifiedOtpResponse.msg}");
-      if (verifiedOtpResponse.statuscode == 200) {
+      print("verifiedOtpResponse CODE-> ${verifiedOtpResponse!.statuscode}");
+      print("verifiedOtpResponse msg-> ${verifiedOtpResponse!.msg}");
+      if (verifiedOtpResponse!.statuscode == 200) {
         if (verifiedOtpResponse != null) {
-          if (verifiedOtpResponse.businessUsers != null) {
-            print(verifiedOtpResponse.businessUsers.toString());
+          if (verifiedOtpResponse!.businessUsers != null) {
+            print(verifiedOtpResponse!.businessUsers.toString());
             isLoading = false;
-            if (verifiedOtpResponse.businessUsers != null &&
-                verifiedOtpResponse.businessUsers.isNotEmpty &&
-                verifiedOtpResponse.businessUsers.length == 1) {
-              if (verifiedOtpResponse.businessUsers[0].isApproved == 0) {
+            if (verifiedOtpResponse!.businessUsers != null &&
+                verifiedOtpResponse!.businessUsers!.isNotEmpty &&
+                verifiedOtpResponse!.businessUsers!.length == 1) {
+              if (verifiedOtpResponse!.businessUsers![0].isApproved == 0) {
                 Navigator.pushNamed(context, AppRoutes.signin_route_name);
-              } else if (verifiedOtpResponse.businessUsers[0].isApproved == 1) {
-                log("Verified Token ${verifiedOtpResponse.token}");
+              } else if (verifiedOtpResponse!.businessUsers![0].isApproved == 1) {
+                log("Verified Token ${verifiedOtpResponse!.token}");
                 StorageUtils.writeStringValue(
-                    StorageUtils.keyToken, verifiedOtpResponse.token);
+                    StorageUtils.keyToken, verifiedOtpResponse!.token);
                 AccessToken().setTokenValue(
                     StorageUtils.readStringValue(StorageUtils.keyToken));
                 PreferenceUtils.setStringValue(
                     PreferenceUtils.keyBusinessUserProfileObject,
-                    json.encode(verifiedOtpResponse.businessUsers[0]));
+                    json.encode(verifiedOtpResponse!.businessUsers![0]));
                 PreferenceUtils.setIntValue(PreferenceUtils.keyUserId,
-                    verifiedOtpResponse.businessUsers[0].id);
+                    verifiedOtpResponse!.businessUsers![0].id!);
                 Navigator.pushNamed(
                     context, AppRoutes.business_timeline_route_name);
               }
@@ -419,12 +419,12 @@ class VerifyOtpProvider extends ChangeNotifier {
           }
           log("StorageUtils TOKEN=-==-->> ${StorageUtils.readStringValue(StorageUtils.keyToken)}");
         }
-      } else if (verifiedOtpResponse.statuscode == 402) {
+      } else if (verifiedOtpResponse!.statuscode == 402) {
         DialogUtils().showSupportAlertDialog(context, "approval");
         Navigator.pushNamed(
             context, AppRoutes.successful_email_verification_route_name);
       } else {
-        GlobalView().showToast(verifiedOtpResponse.msg);
+        GlobalView().showToast(verifiedOtpResponse!.msg!);
       }
       isLoading = false;
       notifyListeners();
@@ -450,29 +450,29 @@ class VerifyOtpProvider extends ChangeNotifier {
         .verifyPasscodeByBusinessID(businessID, passcode)
         .then((response) async {
       verifiedOtpResponse = response;
-      print("verifiedOtpResponse CODE-> ${verifiedOtpResponse.statuscode}");
-      print("verifiedOtpResponse msg-> ${verifiedOtpResponse.msg}");
-      if (verifiedOtpResponse.statuscode == 200) {
+      print("verifiedOtpResponse CODE-> ${verifiedOtpResponse!.statuscode}");
+      print("verifiedOtpResponse msg-> ${verifiedOtpResponse!.msg}");
+      if (verifiedOtpResponse!.statuscode == 200) {
         if (verifiedOtpResponse != null) {
-          if (verifiedOtpResponse.businessUsers != null) {
-            print(verifiedOtpResponse.businessUsers.toString());
+          if (verifiedOtpResponse!.businessUsers != null) {
+            print(verifiedOtpResponse!.businessUsers.toString());
             isLoading = false;
-            if (verifiedOtpResponse.businessUsers != null &&
-                verifiedOtpResponse.businessUsers.isNotEmpty &&
-                verifiedOtpResponse.businessUsers.length == 1) {
-              if (verifiedOtpResponse.businessUsers[0].isApproved == 0) {
+            if (verifiedOtpResponse!.businessUsers != null &&
+                verifiedOtpResponse!.businessUsers!.isNotEmpty &&
+                verifiedOtpResponse!.businessUsers!.length == 1) {
+              if (verifiedOtpResponse!.businessUsers![0].isApproved == 0) {
                 Navigator.pushNamed(context, AppRoutes.signin_route_name);
-              } else if (verifiedOtpResponse.businessUsers[0].isApproved == 1) {
-                log("Verified Token ${verifiedOtpResponse.token}");
+              } else if (verifiedOtpResponse!.businessUsers![0].isApproved == 1) {
+                log("Verified Token ${verifiedOtpResponse!.token}");
                 StorageUtils.writeStringValue(
-                    StorageUtils.keyToken, verifiedOtpResponse.token);
+                    StorageUtils.keyToken, verifiedOtpResponse!.token);
                 AccessToken().setTokenValue(
                     StorageUtils.readStringValue(StorageUtils.keyToken));
                 PreferenceUtils.setStringValue(
                     PreferenceUtils.keyBusinessUserProfileObject,
-                    json.encode(verifiedOtpResponse.businessUsers[0]));
+                    json.encode(verifiedOtpResponse!.businessUsers![0]));
                 PreferenceUtils.setIntValue(PreferenceUtils.keyUserId,
-                    verifiedOtpResponse.businessUsers[0].id);
+                    verifiedOtpResponse!.businessUsers![0].id!);
                 Navigator.pushNamed(
                     context, AppRoutes.business_timeline_route_name);
               }
@@ -486,12 +486,12 @@ class VerifyOtpProvider extends ChangeNotifier {
           }
           log("StorageUtils TOKEN=-==-->> ${StorageUtils.readStringValue(StorageUtils.keyToken)}");
         }
-      } else if (verifiedOtpResponse.statuscode == 402) {
+      } else if (verifiedOtpResponse!.statuscode == 402) {
         DialogUtils().showSupportAlertDialog(context, "approval");
         Navigator.pushNamed(
             context, AppRoutes.successful_email_verification_route_name);
       } else {
-        GlobalView().showToast(verifiedOtpResponse.msg);
+        GlobalView().showToast(verifiedOtpResponse!.msg!);
       }
       isLoading = false;
       notifyListeners();
@@ -509,43 +509,43 @@ class VerifyOtpProvider extends ChangeNotifier {
     });
   }
 
-  void setPasscode(BuildContext context, String email, String passcode) {
+  void setPasscode(BuildContext context, String? email, String passcode) {
     isLoading = true;
     notifyListeners();
     ApiManager(context).setPasscode(email, passcode).then((response) async {
       verifiedOtpResponse = response;
-      print("verifiedOtpResponse CODE-> ${verifiedOtpResponse.statuscode}");
-      print("verifiedOtpResponse msg-> ${verifiedOtpResponse.msg}");
-      if (verifiedOtpResponse.statuscode == 200) {
+      print("verifiedOtpResponse CODE-> ${verifiedOtpResponse!.statuscode}");
+      print("verifiedOtpResponse msg-> ${verifiedOtpResponse!.msg}");
+      if (verifiedOtpResponse!.statuscode == 200) {
         if (verifiedOtpResponse != null) {
-          if (verifiedOtpResponse.standardUser != null) {
+          if (verifiedOtpResponse!.standardUser != null) {
             isLoading = false;
-            log("verifiedOtpResponse Token-=-=-=-=> ${verifiedOtpResponse.token}");
-            print(verifiedOtpResponse.standardUser.toString());
+            log("verifiedOtpResponse Token-=-=-=-=> ${verifiedOtpResponse!.token}");
+            print(verifiedOtpResponse!.standardUser.toString());
             isLoading = false;
             StorageUtils.writeIntValue(StorageUtils.keyUserType,
-                verifiedOtpResponse.standardUser.userType);
+                verifiedOtpResponse!.standardUser!.userType);
             if (StorageUtils.readIntValue(StorageUtils.keyUserType) != null) {
               if (StorageUtils.readIntValue(StorageUtils.keyUserType) == 1) {
                 StorageUtils.writeStringValue(
-                    StorageUtils.keyToken, verifiedOtpResponse.token);
+                    StorageUtils.keyToken, verifiedOtpResponse!.token);
                 AccessToken().setTokenValue(
                     StorageUtils.readStringValue(StorageUtils.keyToken));
                 Navigator.pushNamed(context, AppRoutes.timeline_route_name);
               }
             }
-          } else if (verifiedOtpResponse.businessUsers != null) {
-            print(verifiedOtpResponse.businessUsers.toString());
+          } else if (verifiedOtpResponse!.businessUsers != null) {
+            print(verifiedOtpResponse!.businessUsers.toString());
             isLoading = false;
-            if (verifiedOtpResponse.businessUsers != null &&
-                verifiedOtpResponse.businessUsers.isNotEmpty &&
-                verifiedOtpResponse.businessUsers.length == 1) {
-              if (verifiedOtpResponse.businessUsers[0].isApproved == 0) {
+            if (verifiedOtpResponse!.businessUsers != null &&
+                verifiedOtpResponse!.businessUsers!.isNotEmpty &&
+                verifiedOtpResponse!.businessUsers!.length == 1) {
+              if (verifiedOtpResponse!.businessUsers![0].isApproved == 0) {
                 Navigator.pushNamed(context, AppRoutes.signin_route_name);
-              } else if (verifiedOtpResponse.businessUsers[0].isApproved == 1) {
-                log("Verified Token ${verifiedOtpResponse.token}");
+              } else if (verifiedOtpResponse!.businessUsers![0].isApproved == 1) {
+                log("Verified Token ${verifiedOtpResponse!.token}");
                 getUserByIdToken(
-                    context, verifiedOtpResponse.businessUsers[0].id);
+                    context, verifiedOtpResponse!.businessUsers![0].id);
                 // StorageUtils.writeStringValue(
                 //     StorageUtils.keyToken, verifiedOtpResponse.token);
                 // AccessToken().setTokenValue(
@@ -562,17 +562,17 @@ class VerifyOtpProvider extends ChangeNotifier {
               Navigator.pushNamed(
                   context, AppRoutes.multiple_business_user_list_route_name,
                   arguments: MultipleBusinessUserListArgs(
-                      listBusinessUsers: verifiedOtpResponse.businessUsers));
+                      listBusinessUsers: verifiedOtpResponse!.businessUsers));
             }
           }
           log("StorageUtils TOKEN=-==-->> ${StorageUtils.readStringValue(StorageUtils.keyToken)}");
         }
-      } else if (verifiedOtpResponse.statuscode == 402) {
+      } else if (verifiedOtpResponse!.statuscode == 402) {
         DialogUtils().showSupportAlertDialog(context, "approval");
         Navigator.pushNamed(
             context, AppRoutes.successful_email_verification_route_name);
       } else {
-        GlobalView().showToast(verifiedOtpResponse.msg);
+        GlobalView().showToast(verifiedOtpResponse!.msg!);
       }
       isLoading = false;
       notifyListeners();

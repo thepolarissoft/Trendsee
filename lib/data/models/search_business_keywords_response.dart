@@ -20,10 +20,10 @@ class SearchBusinessKeywordsResponse {
     this.data,
   });
 
-  int status;
-  int statuscode;
-  String msg;
-  List<String> data;
+  int? status;
+  int? statuscode;
+  String? msg;
+  List<String>? data;
 
   factory SearchBusinessKeywordsResponse.fromJson(Map<String, dynamic> json) =>
       SearchBusinessKeywordsResponse(
@@ -39,6 +39,6 @@ class SearchBusinessKeywordsResponse {
         "status": status == null ? null : status,
         "statuscode": statuscode == null ? null : statuscode,
         "msg": msg == null ? null : msg,
-        "data": data == null ? null : List<dynamic>.from(data.map((x) => x)),
+        "data": data == null ? null : List<dynamic>.from(data!.map((x) => x)),
       };
 }

@@ -16,19 +16,19 @@ class PaginationResponse {
     this.total,
   });
 
-  int currentPage;
+  int? currentPage;
   // List<VerifiedUserResponse> data;
-  String firstPageUrl;
-  int from;
-  int lastPage;
-  String lastPageUrl;
-  List<Link> links;
+  String? firstPageUrl;
+  int? from;
+  int? lastPage;
+  String? lastPageUrl;
+  List<Link>? links;
   dynamic nextPageUrl;
-  String path;
-  int perPage;
+  String? path;
+  int? perPage;
   dynamic prevPageUrl;
-  int to;
-  int total;
+  int? to;
+  int? total;
 
   factory PaginationResponse.fromJson(Map<String, dynamic> json) =>
       PaginationResponse(
@@ -58,7 +58,7 @@ class PaginationResponse {
         "last_page_url": lastPageUrl == null ? null : lastPageUrl,
         "links": links == null
             ? null
-            : List<dynamic>.from(links.map((x) => x.toJson())),
+            : List<dynamic>.from(links!.map((x) => x.toJson())),
         "next_page_url": nextPageUrl,
         "path": path == null ? null : path,
         "per_page": perPage == null ? null : perPage,
@@ -75,9 +75,9 @@ class Link {
     this.active,
   });
 
-  String url;
-  String label;
-  bool active;
+  String? url;
+  String? label;
+  bool? active;
 
   factory Link.fromJson(Map<String, dynamic> json) => Link(
         url: json["url"] == null ? null : json["url"],

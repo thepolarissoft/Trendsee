@@ -11,7 +11,7 @@ import 'package:trendoapp/global/view/global_view.dart';
 import 'package:trendoapp/providers/business_list_provider.dart';
 
 class OnlineBusinessCheckInScreen extends StatefulWidget {
-  OnlineBusinessCheckInScreen({Key key}) : super(key: key);
+  OnlineBusinessCheckInScreen({Key? key}) : super(key: key);
 
   @override
   State<OnlineBusinessCheckInScreen> createState() =>
@@ -34,8 +34,8 @@ class _OnlineBusinessCheckInScreenState
     scrollController.addListener(() {
       if (scrollController.position.pixels ==
           scrollController.position.maxScrollExtent) {
-        if (businessListProvider.businessListResponse.business.currentPage <
-            businessListProvider.businessListResponse.business.lastPage) {
+        if (businessListProvider.businessListResponse!.business!.currentPage! <
+            businessListProvider.businessListResponse!.business!.lastPage!) {
           businessListProvider.getBusinessListByName(
               context, searchTextEditingController.text);
         } else {
@@ -107,7 +107,7 @@ class _OnlineBusinessCheckInScreenState
                           //         .businessListResponse
                           //         .isNotEmpty
                           //     ?
-                          Provider.of<BusinessListProvider>(context).isChecked
+                          Provider.of<BusinessListProvider>(context).isChecked!
                               ? GestureDetector(
                                   onTap: () {
                                     Navigator.pushNamed(context,

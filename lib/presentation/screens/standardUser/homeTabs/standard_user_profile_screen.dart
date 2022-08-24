@@ -19,24 +19,21 @@ import 'package:trendoapp/utils/storage_utils.dart';
 
 class StandardUserProfileScreen extends StatefulWidget {
   @override
-  _StandardUserProfileScreenState createState() =>
-      _StandardUserProfileScreenState();
+  _StandardUserProfileScreenState createState() => _StandardUserProfileScreenState();
 }
 
 class _StandardUserProfileScreenState extends State<StandardUserProfileScreen> {
   @override
   void initState() {
     super.initState();
-    Provider.of<HomeFeedResponseProvider>(context, listen: false)
-        .getProfile(context);
+    Provider.of<HomeFeedResponseProvider>(context, listen: false).getProfile(context);
     // Future.delayed(Duration.zero, () {
     //   Provider.of<ProfileProvider>(context, listen: false).getProfile(context);
     // });
   }
 
   FutureOr onCallBack(var value) {
-    Provider.of<HomeFeedResponseProvider>(context, listen: false)
-        .getProfile(context);
+    Provider.of<HomeFeedResponseProvider>(context, listen: false).getProfile(context);
   }
 
   @override
@@ -52,8 +49,7 @@ class _StandardUserProfileScreenState extends State<StandardUserProfileScreen> {
     //     builder: (context, child) {
     return Stack(
       children: [
-        Consumer2<HomeFeedResponseProvider, BaseResponseProvider>(
-            builder: (_, user, baseresponse, child) {
+        Consumer2<HomeFeedResponseProvider, BaseResponseProvider>(builder: (_, user, baseresponse, child) {
           return !Provider.of<HomeFeedResponseProvider>(context).isLoading
               ? CustomScrollView(
                   slivers: [
@@ -121,12 +117,7 @@ class _StandardUserProfileScreenState extends State<StandardUserProfileScreen> {
                           // Navigator.pushNamed(
                           //         context, AppRoutes.editProfileRouteName)
                           //     .then((value) => onCallBack);
-                          Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          SimpleUserRegistrationScreen(true)))
-                              .then(onCallBack);
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => SimpleUserRegistrationScreen(true))).then(onCallBack);
                         },
                         child: Padding(
                           padding: EdgeInsets.only(left: 10, top: 10),
@@ -238,8 +229,7 @@ class _StandardUserProfileScreenState extends State<StandardUserProfileScreen> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (_) => AccountSettingsScreen(
-                                              profileResponse:
-                                                  user.profileResponse,
+                                              profileResponse: user.profileResponse,
                                               businessUserProfileResponse: null,
                                               userType: 1,
                                             )));
@@ -247,15 +237,8 @@ class _StandardUserProfileScreenState extends State<StandardUserProfileScreen> {
                               child: Row(
                                 children: [
                                   Expanded(
-                                      child: GlobalView()
-                                          .textViewWithStartAlign(
-                                              AppMessages
-                                                  .account_settings_title,
-                                              AppTextStyle.inter_font_family,
-                                              AppTextStyle
-                                                  .semi_bold_font_weight,
-                                              BaseColor.black_color,
-                                              14)),
+                                      child: GlobalView().textViewWithStartAlign(AppMessages.account_settings_title, AppTextStyle.inter_font_family,
+                                          AppTextStyle.semi_bold_font_weight, BaseColor.black_color, 14)),
                                   Container(
                                     padding: EdgeInsets.zero,
                                     height: 15,
@@ -280,22 +263,15 @@ class _StandardUserProfileScreenState extends State<StandardUserProfileScreen> {
                               GlobalView().sizedBoxView(15),
                               GestureDetector(
                                 onTap: () {
-                                  Navigator.pushNamed(
-                                      context, AppRoutes.changePasscode);
+                                  Navigator.pushNamed(context, AppRoutes.changePasscode);
                                 },
                                 child: Padding(
                                   padding: EdgeInsets.symmetric(horizontal: 20),
                                   child: Row(
                                     children: [
                                       Expanded(
-                                        child: GlobalView()
-                                            .textViewWithStartAlign(
-                                                AppMessages.changePasscodeTitle,
-                                                AppTextStyle.inter_font_family,
-                                                AppTextStyle
-                                                    .semi_bold_font_weight,
-                                                BaseColor.black_color,
-                                                14),
+                                        child: GlobalView().textViewWithStartAlign(AppMessages.changePasscodeTitle, AppTextStyle.inter_font_family,
+                                            AppTextStyle.semi_bold_font_weight, BaseColor.black_color, 14),
                                       ),
                                       Container(
                                         padding: EdgeInsets.zero,
@@ -325,33 +301,22 @@ class _StandardUserProfileScreenState extends State<StandardUserProfileScreen> {
                                 GlobalView().sizedBoxView(15),
                                 GestureDetector(
                                   onTap: () {
-                                    Navigator.pushNamed(
-                                        context, AppRoutes.resetPassword);
+                                    Navigator.pushNamed(context, AppRoutes.resetPassword);
                                   },
                                   child: Padding(
-                                    padding:
-                                        EdgeInsets.symmetric(horizontal: 20),
+                                    padding: EdgeInsets.symmetric(horizontal: 20),
                                     child: Row(
                                       children: [
                                         Expanded(
-                                          child: GlobalView()
-                                              .textViewWithStartAlign(
-                                                  AppMessages
-                                                      .reset_password_title,
-                                                  AppTextStyle
-                                                      .inter_font_family,
-                                                  AppTextStyle
-                                                      .semi_bold_font_weight,
-                                                  BaseColor.black_color,
-                                                  14),
+                                          child: GlobalView().textViewWithStartAlign(AppMessages.reset_password_title, AppTextStyle.inter_font_family,
+                                              AppTextStyle.semi_bold_font_weight, BaseColor.black_color, 14),
                                         ),
                                         Container(
                                           padding: EdgeInsets.zero,
                                           height: 15,
                                           width: 15,
                                           // color: Colors.red,
-                                          child:
-                                              Image.asset(AppImages.ic_next2),
+                                          child: Image.asset(AppImages.ic_next2),
                                         ),
                                       ],
                                     ),
@@ -373,9 +338,9 @@ class _StandardUserProfileScreenState extends State<StandardUserProfileScreen> {
                           GlobalView().sizedBoxView(20),
                           Visibility(
                               visible: user.profileResponse != null &&
-                                      user.profileResponse.user != null &&
-                                      user.profileResponse.user.feed != null &&
-                                      user.profileResponse.user.feed.isNotEmpty
+                                      user.profileResponse!.user != null &&
+                                      user.profileResponse!.user!.feed != null &&
+                                      user.profileResponse!.user!.feed!.isNotEmpty
                                   ? true
                                   : false,
                               child: myCheckInsView(user)),
@@ -415,11 +380,7 @@ class _StandardUserProfileScreenState extends State<StandardUserProfileScreen> {
                     child: Row(
                       children: [
                         GlobalView().textViewWithStartAlign(
-                            AppMessages.my_checkins,
-                            AppTextStyle.inter_font_family,
-                            AppTextStyle.bold_font_weight,
-                            BaseColor.black_color,
-                            18),
+                            AppMessages.my_checkins, AppTextStyle.inter_font_family, AppTextStyle.bold_font_weight, BaseColor.black_color, 18),
                         GlobalView().textViewWithStartAlign(
                             // user.profileResponse.user.totalFeed
                             //             .toString() !=
@@ -429,12 +390,9 @@ class _StandardUserProfileScreenState extends State<StandardUserProfileScreen> {
                             //             .toString() +
                             //         ")"
                             //     : "0",
-                            provider.profileResponse.user.totalFeeds == null
+                            provider.profileResponse!.user!.totalFeeds == null
                                 ? " (" + "0" + ")"
-                                : " (" +
-                                    provider.profileResponse.user.totalFeeds
-                                        .toString() +
-                                    ")",
+                                : " (" + provider.profileResponse!.user!.totalFeeds.toString() + ")",
                             AppTextStyle.inter_font_family,
                             AppTextStyle.bold_font_weight,
                             BaseColor.count_color,
@@ -448,39 +406,31 @@ class _StandardUserProfileScreenState extends State<StandardUserProfileScreen> {
                       //     "TOTAL FEED ${user.profileResponse.user.totalFeed}");
                       // Navigator.pushNamed(
                       //     context, AppRoutes.my_all_check_ins_route_name);
-                      Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => MyAllCheckInsScreen()))
-                          .then(onCallBack);
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => MyAllCheckInsScreen())).then(onCallBack);
                     },
                     child: Container(
-                      child: GlobalView().textViewWithStartAlign(
-                          AppMessages.see_all_text,
-                          AppTextStyle.inter_font_family,
-                          AppTextStyle.medium_font_weight,
-                          BaseColor.forgot_pass_txt_color,
-                          12),
+                      child: GlobalView().textViewWithStartAlign(AppMessages.see_all_text, AppTextStyle.inter_font_family,
+                          AppTextStyle.medium_font_weight, BaseColor.forgot_pass_txt_color, 12),
                     ),
                   ),
                 ],
               ),
             ),
             GlobalView().sizedBoxView(15),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20),
-              child: CheckInsItemView(
-                  verifiedUserResponse: provider.profileResponse.user,
-                  feedResponse: provider.listFeedInfo[0],
-                  isVisibleDeleteIcon: true,
-                  isVisibleLikePanel: true,
-                  onClickDelete: () {
-                    print(
-                        "listFeedInfo[0] JSON-> ${provider.listFeedInfo[0].toJson()}");
-                    provider.deleteMycheckIns(
-                        context, provider.listFeedInfo[0].id, 0, "profile");
-                  }),
-            ),
+            provider.listFeedInfo.isNotEmpty
+                ? Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 20),
+                    child: CheckInsItemView(
+                        verifiedUserResponse: provider.profileResponse!.user,
+                        feedResponse: provider.listFeedInfo[0],
+                        isVisibleDeleteIcon: true,
+                        isVisibleLikePanel: true,
+                        onClickDelete: () {
+                          print("listFeedInfo[0] JSON-> ${provider.listFeedInfo[0].toJson()}");
+                          provider.deleteMycheckIns(context, provider.listFeedInfo[0].id, 0, "profile");
+                        }),
+                  )
+                : SizedBox(),
             //  // ),
           ],
         );
@@ -496,27 +446,15 @@ class _StandardUserProfileScreenState extends State<StandardUserProfileScreen> {
                   child: Row(
                     children: [
                       GlobalView().textViewWithStartAlign(
-                          AppMessages.my_friends,
-                          AppTextStyle.inter_font_family,
-                          AppTextStyle.bold_font_weight,
-                          BaseColor.black_color,
-                          18),
+                          AppMessages.my_friends, AppTextStyle.inter_font_family, AppTextStyle.bold_font_weight, BaseColor.black_color, 18),
                       GlobalView().textViewWithStartAlign(
-                          " (" + 84.toString() + ")",
-                          AppTextStyle.inter_font_family,
-                          AppTextStyle.bold_font_weight,
-                          BaseColor.count_color,
-                          12),
+                          " (" + 84.toString() + ")", AppTextStyle.inter_font_family, AppTextStyle.bold_font_weight, BaseColor.count_color, 12),
                     ],
                   ),
                 ),
                 Container(
                   child: GlobalView().textViewWithStartAlign(
-                      AppMessages.see_all_text,
-                      AppTextStyle.inter_font_family,
-                      AppTextStyle.medium_font_weight,
-                      BaseColor.forgot_pass_txt_color,
-                      12),
+                      AppMessages.see_all_text, AppTextStyle.inter_font_family, AppTextStyle.medium_font_weight, BaseColor.forgot_pass_txt_color, 12),
                 ),
               ],
             ),
@@ -555,11 +493,7 @@ class _StandardUserProfileScreenState extends State<StandardUserProfileScreen> {
                               ),
                               GlobalView().sizedBoxView(10),
                               GlobalView().textViewWithCenterAlign(
-                                  "John Doe",
-                                  AppTextStyle.inter_font_family,
-                                  AppTextStyle.medium_font_weight,
-                                  BaseColor.black_color,
-                                  11)
+                                  "John Doe", AppTextStyle.inter_font_family, AppTextStyle.medium_font_weight, BaseColor.black_color, 11)
                             ],
                           ),
                         );
@@ -579,27 +513,15 @@ class _StandardUserProfileScreenState extends State<StandardUserProfileScreen> {
                   child: Row(
                     children: [
                       GlobalView().textViewWithStartAlign(
-                          AppMessages.my_business_friends,
-                          AppTextStyle.inter_font_family,
-                          AppTextStyle.bold_font_weight,
-                          BaseColor.black_color,
-                          18),
+                          AppMessages.my_business_friends, AppTextStyle.inter_font_family, AppTextStyle.bold_font_weight, BaseColor.black_color, 18),
                       GlobalView().textViewWithStartAlign(
-                          " (" + 84.toString() + ")",
-                          AppTextStyle.inter_font_family,
-                          AppTextStyle.bold_font_weight,
-                          BaseColor.count_color,
-                          12),
+                          " (" + 84.toString() + ")", AppTextStyle.inter_font_family, AppTextStyle.bold_font_weight, BaseColor.count_color, 12),
                     ],
                   ),
                 ),
                 Container(
                   child: GlobalView().textViewWithStartAlign(
-                      AppMessages.see_all_text,
-                      AppTextStyle.inter_font_family,
-                      AppTextStyle.medium_font_weight,
-                      BaseColor.forgot_pass_txt_color,
-                      12),
+                      AppMessages.see_all_text, AppTextStyle.inter_font_family, AppTextStyle.medium_font_weight, BaseColor.forgot_pass_txt_color, 12),
                 ),
               ],
             ),
@@ -638,11 +560,7 @@ class _StandardUserProfileScreenState extends State<StandardUserProfileScreen> {
                           ),
                           GlobalView().sizedBoxView(10),
                           GlobalView().textViewWithCenterAlign(
-                              "ChoxBlast \n Cafe",
-                              AppTextStyle.inter_font_family,
-                              AppTextStyle.medium_font_weight,
-                              BaseColor.black_color,
-                              11)
+                              "ChoxBlast \n Cafe", AppTextStyle.inter_font_family, AppTextStyle.medium_font_weight, BaseColor.black_color, 11)
                         ],
                       ),
                     );
@@ -662,23 +580,15 @@ class _StandardUserProfileScreenState extends State<StandardUserProfileScreen> {
               children: [
                 Expanded(
                   child: GlobalView().textViewWithStartAlign(
-                      AppMessages.media_text,
-                      AppTextStyle.inter_font_family,
-                      AppTextStyle.bold_font_weight,
-                      BaseColor.black_color,
-                      18),
+                      AppMessages.media_text, AppTextStyle.inter_font_family, AppTextStyle.bold_font_weight, BaseColor.black_color, 18),
                 ),
                 GestureDetector(
                   onTap: () {
                     Navigator.pushNamed(context, AppRoutes.media_route_name);
                   },
                   child: Container(
-                    child: GlobalView().textViewWithStartAlign(
-                        AppMessages.see_all_text,
-                        AppTextStyle.inter_font_family,
-                        AppTextStyle.medium_font_weight,
-                        BaseColor.forgot_pass_txt_color,
-                        12),
+                    child: GlobalView().textViewWithStartAlign(AppMessages.see_all_text, AppTextStyle.inter_font_family,
+                        AppTextStyle.medium_font_weight, BaseColor.forgot_pass_txt_color, 12),
                   ),
                 ),
               ],
@@ -693,16 +603,12 @@ class _StandardUserProfileScreenState extends State<StandardUserProfileScreen> {
               // color: Colors.red,
               child: Card(
                 child: Padding(
-                  padding:
-                      EdgeInsets.only(top: 7, left: 10, right: 10, bottom: 7),
+                  padding: EdgeInsets.only(top: 7, left: 10, right: 10, bottom: 7),
                   child: GridView.builder(
                       physics: NeverScrollableScrollPhysics(),
                       itemCount: 3,
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          childAspectRatio: 0.95,
-                          mainAxisSpacing: 10,
-                          crossAxisSpacing: 10,
-                          crossAxisCount: 3),
+                          childAspectRatio: 0.95, mainAxisSpacing: 10, crossAxisSpacing: 10, crossAxisCount: 3),
                       itemBuilder: (context, index) {
                         return Image.asset(
                           AppImages.photo1,

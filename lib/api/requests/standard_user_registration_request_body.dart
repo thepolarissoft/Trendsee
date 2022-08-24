@@ -2,14 +2,14 @@ import 'dart:io';
 
 
 class StandardUserRegistrationRequestBody {
-  String firstName;
-  String lastName;
-  String username;
-  String email;
-  String password;
-  String dob;
-  File avatar;
-  String userType;
+  String? firstName;
+  String? lastName;
+  String? username;
+  String? email;
+  String? password;
+  String? dob;
+  File? avatar;
+  String? userType;
 
   StandardUserRegistrationRequestBody(
     String firstName,

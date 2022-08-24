@@ -5,7 +5,7 @@ class BusinessUserImagesModel {
 }
 
 class BusinessGPSCoordinatesModel {
-  double latitude;
-  double longitude;
+  double? latitude;
+  double? longitude;
   BusinessGPSCoordinatesModel(this.latitude, this.longitude);
 }

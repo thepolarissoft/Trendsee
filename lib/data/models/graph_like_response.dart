@@ -18,10 +18,10 @@ class GraphResponse {
     this.data,
   });
 
-  int status;
-  int statuscode;
-  String msg;
-  GraphInfo data;
+  int? status;
+  int? statuscode;
+  String? msg;
+  GraphInfo? data;
 
   factory GraphResponse.fromJson(Map<String, dynamic> json) => GraphResponse(
         status: json["status"] == null ? null : json["status"],
@@ -34,7 +34,7 @@ class GraphResponse {
         "status": status == null ? null : status,
         "statuscode": statuscode == null ? null : statuscode,
         "msg": msg == null ? null : msg,
-        "data": data == null ? null : data.toJson(),
+        "data": data == null ? null : data!.toJson(),
       };
 }
 
@@ -46,10 +46,10 @@ class GraphInfo {
     this.value,
   });
 
-  List<String> month;
-  List<String> conditionFrom;
-  List<DateTime> conditionTo;
-  List<int> value;
+  List<String>? month;
+  List<String>? conditionFrom;
+  List<DateTime>? conditionTo;
+  List<int>? value;
 
   factory GraphInfo.fromJson(Map<String, dynamic> json) => GraphInfo(
         month: json["month"] == null
@@ -68,13 +68,13 @@ class GraphInfo {
       );
 
   Map<String, dynamic> toJson() => {
-        "month": month == null ? null : List<dynamic>.from(month.map((x) => x)),
+        "month": month == null ? null : List<dynamic>.from(month!.map((x) => x)),
         "conditionFrom": conditionFrom == null
             ? null
-            : List<dynamic>.from(conditionFrom.map((x) => x)),
+            : List<dynamic>.from(conditionFrom!.map((x) => x)),
         "conditionTo": conditionTo == null
             ? null
-            : List<dynamic>.from(conditionTo.map((x) => x.toIso8601String())),
-        "value": value == null ? null : List<dynamic>.from(value.map((x) => x)),
+            : List<dynamic>.from(conditionTo!.map((x) => x.toIso8601String())),
+        "value": value == null ? null : List<dynamic>.from(value!.map((x) => x)),
       };
 }

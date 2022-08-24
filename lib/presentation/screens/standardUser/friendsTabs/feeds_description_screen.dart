@@ -13,7 +13,7 @@ import 'package:trendoapp/providers/search_by_business_provider.dart';
 import 'package:trendoapp/utils/day_time_utils.dart';
 
 class FeedsDescriptionScreen extends StatefulWidget {
-  FeedsDescriptionScreen({Key key, @required this.businessUserId})
+  FeedsDescriptionScreen({Key? key, required this.businessUserId})
       : super(key: key);
   String businessUserId;
 
@@ -82,7 +82,7 @@ class _FeedsDescriptionScreenState extends State<FeedsDescriptionScreen> {
                                   children: [
                                     GlobalView().textViewWithStartAlign(
                                         provider
-                                            .listFeedInfo[index].description,
+                                            .listFeedInfo[index].description!,
                                         AppTextStyle.inter_font_family,
                                         AppTextStyle.semi_bold_font_weight,
                                         BaseColor.black_color,
@@ -91,7 +91,7 @@ class _FeedsDescriptionScreenState extends State<FeedsDescriptionScreen> {
                                       alignment: Alignment.centerRight,
                                       child: GlobalView().textViewWithEndAlign(
                                           DayTimeUtils().convertToAgo(provider
-                                              .listFeedInfo[index].createdAt),
+                                              .listFeedInfo[index].createdAt!),
                                           AppTextStyle.inter_font_family,
                                           AppTextStyle.medium_font_weight,
                                           BaseColor.count_color,

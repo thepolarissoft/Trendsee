@@ -23,11 +23,11 @@ class VerifiedOtpResponse extends Baseresponse {
   //   this.user,
   // }) : super(status: status, msg: msg, statuscode: statuscode);
 
-  String tokenType;
-  String token;
+  String? tokenType;
+  String? token;
   // VerifiedUserResponse user;
-  VerifiedUserResponse standardUser;
-  List<VerifiedUserResponse> businessUsers;
+  VerifiedUserResponse? standardUser;
+  List<VerifiedUserResponse>? businessUsers;
 
   VerifiedOtpResponse.fromJson(Map<String, dynamic> json) : super(json) {
     tokenType = json["token_type"] == null ? null : json["token_type"];
@@ -49,7 +49,7 @@ class VerifiedOtpResponse extends Baseresponse {
         "token": token == null ? null : token,
         "business_users": businessUsers == null
             ? null
-            : List<dynamic>.from(businessUsers.map((x) => x.toJson())),
-        "standard_user": standardUser == null ? null : standardUser.toJson(),
+            : List<dynamic>.from(businessUsers!.map((x) => x.toJson())),
+        "standard_user": standardUser == null ? null : standardUser!.toJson(),
       };
 }

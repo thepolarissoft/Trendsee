@@ -22,8 +22,8 @@ import 'package:url_launcher/url_launcher.dart';
 
 // ignore: must_be_immutable
 class BusinessDetailsScreen extends StatefulWidget {
-  int businessId;
-  BusinessDetailsScreen({@required this.businessId});
+  int? businessId;
+  BusinessDetailsScreen({required this.businessId});
   @override
   _BusinessDetailsScreenState createState() => _BusinessDetailsScreenState();
 }
@@ -40,8 +40,7 @@ class _BusinessDetailsScreenState extends State<BusinessDetailsScreen> {
   void initState() {
     super.initState();
     // SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
-    Provider.of<SearchByBusinessProvider>(context, listen: false)
-        .businessDetails(context, widget.businessId);
+    Provider.of<SearchByBusinessProvider>(context, listen: false).businessDetails(context, widget.businessId);
     // });
   }
 
@@ -66,8 +65,7 @@ class _BusinessDetailsScreenState extends State<BusinessDetailsScreen> {
           },
           child: WillPopScope(
             onWillPop: () async {
-              Provider.of<SearchByBusinessProvider>(context, listen: false)
-                  .businessDetailsResponse = null;
+              Provider.of<SearchByBusinessProvider>(context, listen: false).businessDetailsResponse = null;
               return true;
             },
             child: Scaffold(
@@ -76,12 +74,9 @@ class _BusinessDetailsScreenState extends State<BusinessDetailsScreen> {
                 height: double.infinity,
                 width: double.infinity,
                 decoration: BoxDecoration(
-                  image: DecorationImage(
-                      image: AssetImage(AppImages.background_image1),
-                      fit: BoxFit.cover),
+                  image: DecorationImage(image: AssetImage(AppImages.background_image1), fit: BoxFit.cover),
                 ),
-                child: Consumer<SearchByBusinessProvider>(
-                    builder: (_, provider, child) {
+                child: Consumer<SearchByBusinessProvider>(builder: (_, provider, child) {
                   if (!provider.isLoading) {
                     // print(
                     //     "is website valid-> ${Uri.parse(provider.businessDetailsResponse.business.businessWebsite).isAbsolute}");
@@ -94,41 +89,80 @@ class _BusinessDetailsScreenState extends State<BusinessDetailsScreen> {
                             SliverAppBar(
                               automaticallyImplyLeading: false,
                               backgroundColor: BaseColor.pure_white_color,
-                              expandedHeight:
-                                  DeviceSize().deviceWidth(context) / 2 + 50,
+                              expandedHeight: DeviceSize().deviceWidth(context) / 2 + 50,
                               // pinned: true,
                               // floating: false,
+                              /// TOP IMAGES IS RENDER FROM HERE,
                               flexibleSpace: FlexibleSpaceBar(
                                 background: Container(
                                   child: provider.listMediaImages.length == 1
-                                      ? FadeInImage.assetNetwork(
-                                          placeholder:
-                                              AppImages.loader_gif_removeBG,
-                                          image: provider.listMediaImages[0],
-                                          fit: BoxFit.cover,
-                                          height: DeviceSize()
-                                                      .deviceWidth(context) /
-                                                  2 +
-                                              50,
-                                          width:
-                                              DeviceSize().deviceWidth(context),
+                                      ? GestureDetector(
+                                          onTap: () {
+                                            if (provider.listMediaImages.isNotEmpty || provider.listMediaImages != null) {
+                                              if (provider.businessDetailsResponse!.business!.linkAd != '' &&
+                                                  provider.businessDetailsResponse!.business!.linkAd != null &&
+                                                  provider.businessDetailsResponse!.business!.linkAd!.isNotEmpty) {
+                                                if (provider.businessDetailsResponse!.business!.linkAd!.contains('http') ||
+                                                    provider.businessDetailsResponse!.business!.linkAd!.contains('https')) {
+                                                  UrlLauncher().launchUrl(provider.businessDetailsResponse!.business!.linkAd!);
+                                                } else if (provider.businessDetailsResponse!.business!.linkAd!.toLowerCase().contains('www')) {
+                                                  UrlLauncher().launchUrl('https://${provider.businessDetailsResponse!.business!.linkAd!}');
+                                                } else if (provider.businessDetailsResponse!.business!.linkAd!.contains(RegExp(r'^[0-9]+$'))) {
+                                                  Navigator.pushReplacement(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                      builder: (_) => BusinessDetailsScreen(
+                                                          businessId: int.parse(provider.businessDetailsResponse!.business!.linkAd!)),
+                                                    ),
+                                                  );
+                                                }
+                                              }
+                                            }
+                                          },
+                                          child: FadeInImage.assetNetwork(
+                                            placeholder: AppImages.loader_gif_removeBG,
+                                            image: provider.listMediaImages[0]!,
+                                            fit: BoxFit.cover,
+                                            height: DeviceSize().deviceWidth(context) / 2 + 50,
+                                            width: DeviceSize().deviceWidth(context),
+                                          ),
                                         )
                                       : CarouselSlider(
                                           items: provider.listMediaImages
                                               .map(
-                                                (item) =>
-                                                    FadeInImage.assetNetwork(
-                                                  placeholder: AppImages
-                                                      .loader_gif_removeBG,
-                                                  image: item,
-                                                  fit: BoxFit.cover,
-                                                  height: DeviceSize()
-                                                              .deviceWidth(
-                                                                  context) /
-                                                          2 +
-                                                      50,
-                                                  width: DeviceSize()
-                                                      .deviceWidth(context),
+                                                (item) => GestureDetector(
+                                                  onTap: () {
+                                                    if (provider.listMediaImages.isNotEmpty || provider.listMediaImages != null) {
+                                                      if (provider.businessDetailsResponse!.business!.linkAd != '' &&
+                                                          provider.businessDetailsResponse!.business!.linkAd != null &&
+                                                          provider.businessDetailsResponse!.business!.linkAd!.isNotEmpty) {
+                                                        if (provider.businessDetailsResponse!.business!.linkAd!.contains('http') ||
+                                                            provider.businessDetailsResponse!.business!.linkAd!.contains('https')) {
+                                                          UrlLauncher().launchUrl(provider.businessDetailsResponse!.business!.linkAd!);
+                                                        } else if (provider.businessDetailsResponse!.business!.linkAd!
+                                                            .toLowerCase()
+                                                            .contains('www')) {
+                                                          UrlLauncher().launchUrl('https://${provider.businessDetailsResponse!.business!.linkAd!}');
+                                                        } else if (provider.businessDetailsResponse!.business!.linkAd!
+                                                            .contains(RegExp(r'^[0-9]+$'))) {
+                                                          Navigator.pushReplacement(
+                                                            context,
+                                                            MaterialPageRoute(
+                                                              builder: (_) => BusinessDetailsScreen(
+                                                                  businessId: int.parse(provider.businessDetailsResponse!.business!.linkAd!)),
+                                                            ),
+                                                          );
+                                                        }
+                                                      }
+                                                    }
+                                                  },
+                                                  child: FadeInImage.assetNetwork(
+                                                    placeholder: AppImages.loader_gif_removeBG,
+                                                    image: item!,
+                                                    fit: BoxFit.cover,
+                                                    height: DeviceSize().deviceWidth(context) / 2 + 50,
+                                                    width: DeviceSize().deviceWidth(context),
+                                                  ),
                                                 ),
                                               )
                                               .toList(),
@@ -153,10 +187,8 @@ class _BusinessDetailsScreenState extends State<BusinessDetailsScreen> {
                                             viewportFraction: 1,
                                             aspectRatio: 1,
                                             autoPlay: true,
-                                            autoPlayAnimationDuration:
-                                                Duration(milliseconds: 1500),
-                                            autoPlayInterval:
-                                                Duration(seconds: 5),
+                                            autoPlayAnimationDuration: Duration(milliseconds: 1500),
+                                            autoPlayInterval: Duration(seconds: 5),
                                             autoPlayCurve: Curves.ease,
                                             onPageChanged: (index, season) {
                                               provider.setCurrentIndex(index);
@@ -170,10 +202,7 @@ class _BusinessDetailsScreenState extends State<BusinessDetailsScreen> {
                                 child: GestureDetector(
                                   onTap: () {
                                     Navigator.pop(context);
-                                    Provider.of<SearchByBusinessProvider>(
-                                            context,
-                                            listen: false)
-                                        .businessDetailsResponse = null;
+                                    Provider.of<SearchByBusinessProvider>(context, listen: false).businessDetailsResponse = null;
                                   },
                                   child: Container(
                                     child: Image.asset(
@@ -188,19 +217,10 @@ class _BusinessDetailsScreenState extends State<BusinessDetailsScreen> {
                                 children: [
                                   GlobalView().sizedBoxView(20),
                                   GlobalView().textViewWithCenterAlign(
-                                      provider.businessDetailsResponse !=
-                                                  null &&
-                                              provider.businessDetailsResponse
-                                                      .business !=
-                                                  null &&
-                                              provider
-                                                      .businessDetailsResponse
-                                                      .business
-                                                      .businessName
-                                                      .length >
-                                                  0
-                                          ? provider.businessDetailsResponse
-                                              .business.businessName
+                                      provider.businessDetailsResponse != null &&
+                                              provider.businessDetailsResponse!.business != null &&
+                                              provider.businessDetailsResponse!.business!.businessName!.length > 0
+                                          ? provider.businessDetailsResponse!.business!.businessName!
                                           : "ChoxBlast Cafe",
                                       // "ChoxBlast Cafe",
                                       AppTextStyle.inter_font_family,
@@ -209,12 +229,8 @@ class _BusinessDetailsScreenState extends State<BusinessDetailsScreen> {
                                       20),
                                   GlobalView().sizedBoxView(5),
                                   GlobalView().textViewWithCenterAlign(
-                                      provider.businessDetailsResponse.business
-                                                  .categories !=
-                                              null
-                                          ? CategoryUtils().getCategoryName(
-                                              provider.businessDetailsResponse
-                                                  .business.categories)
+                                      provider.businessDetailsResponse != null || provider.businessDetailsResponse!.business!.categories != null
+                                          ? CategoryUtils().getCategoryName(provider.businessDetailsResponse!.business!.categories!)
                                           : "Restaurant",
                                       // "Restaurant",
                                       AppTextStyle.inter_font_family,
@@ -314,52 +330,32 @@ class _BusinessDetailsScreenState extends State<BusinessDetailsScreen> {
                                   GlobalView().sizedBoxView(15),
                                   GlobalView().dividerView(),
                                   Visibility(
-                                    visible: provider.businessDetailsResponse
-                                                .business.isMobile ==
-                                            0 &&
-                                        provider.businessDetailsResponse
-                                                .business.isOnline ==
-                                            0,
+                                    visible: provider.businessDetailsResponse!.business!.isMobile == 0 &&
+                                        provider.businessDetailsResponse!.business!.isOnline == 0,
                                     child: Padding(
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal: 10, vertical: 8),
-                                      child: GlobalView()
-                                          .textViewWithCenterAlign(
-                                              AppMessages.thisPlaceIsWithin +
-                                                  provider
-                                                      .businessDetailsResponse
-                                                      .business
-                                                      .distance +
-                                                  AppMessages.miles_from_text,
-                                              AppTextStyle.inter_font_family,
-                                              AppTextStyle
-                                                  .semi_bold_font_weight,
-                                              BaseColor.forgot_pass_txt_color,
-                                              16),
+                                      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                                      child: GlobalView().textViewWithCenterAlign(
+                                          AppMessages.thisPlaceIsWithin +
+                                              provider.businessDetailsResponse!.business!.distance! +
+                                              AppMessages.miles_from_text,
+                                          AppTextStyle.inter_font_family,
+                                          AppTextStyle.semi_bold_font_weight,
+                                          BaseColor.forgot_pass_txt_color,
+                                          16),
                                     ),
                                   ),
                                   Padding(
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: 20, vertical: 5),
+                                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
                                     child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       // crossAxisAlignment: CrossAxisAlignment.center,
                                       children: [
                                         Expanded(
                                           child: GestureDetector(
                                             onTap: () {
                                               print("Like clicked");
-                                              if (provider
-                                                      .businessDetailsResponse
-                                                      .business
-                                                      .isLiked ==
-                                                  0) {
-                                                provider.likeBusiness(
-                                                    context,
-                                                    provider
-                                                        .businessDetailsResponse
-                                                        .business);
+                                              if (provider.businessDetailsResponse!.business!.isLiked == 0) {
+                                                provider.likeBusiness(context, provider.businessDetailsResponse!.business!);
                                               }
                                               // else {
                                               //   DialogUtils().onClickLikedBusiness(
@@ -371,25 +367,14 @@ class _BusinessDetailsScreenState extends State<BusinessDetailsScreen> {
                                               // }
                                             },
                                             child: Padding(
-                                              padding: EdgeInsets.symmetric(
-                                                  horizontal: 0),
+                                              padding: EdgeInsets.symmetric(horizontal: 0),
                                               child: AbsorbPointer(
-                                                absorbing: provider
-                                                            .businessDetailsResponse
-                                                            .business
-                                                            .isLiked ==
-                                                        1
-                                                    ? true
-                                                    : false,
-                                                child: GlobalView()
-                                                    .wrappedButtonViewWithImage(
+                                                absorbing: provider.businessDetailsResponse!.business!.isLiked == 1 ? true : false,
+                                                child: GlobalView().wrappedButtonViewWithImage(
                                                   context,
                                                   Image.asset(
-                                                    provider.businessDetailsResponse
-                                                                .business.isLiked ==
-                                                            1
-                                                        ? AppImages
-                                                            .thumbs_up_filled
+                                                    provider.businessDetailsResponse!.business!.isLiked == 1
+                                                        ? AppImages.thumbs_up_filled
                                                         : AppImages.thumbs_up,
                                                     height: 40,
                                                     width: 40,
@@ -416,59 +401,30 @@ class _BusinessDetailsScreenState extends State<BusinessDetailsScreen> {
                                         Expanded(
                                           child: GestureDetector(
                                             onTap: () {
-                                              if (provider
-                                                      .businessDetailsResponse
-                                                      .business
-                                                      .isDisliked ==
-                                                  0) {
-                                                DialogUtils
-                                                    .displayDislikeDialog(
+                                              if (provider.businessDetailsResponse!.business!.isDisliked == 0) {
+                                                DialogUtils.displayDislikeDialog(
                                                   context,
                                                   reasonEditingController,
                                                   () {
-                                                    if (reasonEditingController
-                                                        .text.isNotEmpty) {
+                                                    if (reasonEditingController.text.isNotEmpty) {
                                                       provider.dislikeBusiness(
-                                                          context,
-                                                          provider
-                                                              .businessDetailsResponse
-                                                              .business,
-                                                          reasonEditingController
-                                                              .text,
-                                                          1,
-                                                          "");
-                                                    } else if (reasonEditingController
-                                                        .text.isEmpty) {
-                                                      GlobalView().showToast(
-                                                          AppToastMessages
-                                                              .valid_reason_message);
+                                                          context, provider.businessDetailsResponse!.business!, reasonEditingController.text, 1, "");
+                                                    } else if (reasonEditingController.text.isEmpty) {
+                                                      GlobalView().showToast(AppToastMessages.valid_reason_message);
                                                     }
                                                   },
                                                 );
                                               }
                                             },
                                             child: Padding(
-                                              padding: EdgeInsets.symmetric(
-                                                  horizontal: 0),
+                                              padding: EdgeInsets.symmetric(horizontal: 0),
                                               child: AbsorbPointer(
-                                                absorbing: provider
-                                                            .businessDetailsResponse
-                                                            .business
-                                                            .isDisliked ==
-                                                        1
-                                                    ? true
-                                                    : false,
-                                                child: GlobalView()
-                                                    .wrappedButtonViewWithImage(
+                                                absorbing: provider.businessDetailsResponse!.business!.isDisliked == 1 ? true : false,
+                                                child: GlobalView().wrappedButtonViewWithImage(
                                                   context,
                                                   Image.asset(
-                                                    provider
-                                                                .businessDetailsResponse
-                                                                .business
-                                                                .isDisliked ==
-                                                            1
-                                                        ? AppImages
-                                                            .thumbs_down_filled
+                                                    provider.businessDetailsResponse!.business!.isDisliked == 1
+                                                        ? AppImages.thumbs_down_filled
                                                         : AppImages.thumbs_down,
                                                     height: 40,
                                                     width: 40,
@@ -542,33 +498,19 @@ class _BusinessDetailsScreenState extends State<BusinessDetailsScreen> {
                                   // ),
                                   // GlobalView().sizedBoxView(20),
                                   Visibility(
-                                    visible: provider.businessDetailsResponse
-                                                    .business.businessWebsite !=
-                                                null &&
-                                            provider.businessDetailsResponse
-                                                    .business.businessWebsite !=
-                                                ""
+                                    visible: provider.businessDetailsResponse!.business!.businessWebsite != null &&
+                                            provider.businessDetailsResponse!.business!.businessWebsite != ""
                                         ? true
                                         : false,
                                     child: Padding(
-                                      padding:
-                                          EdgeInsets.symmetric(horizontal: 20),
+                                      padding: EdgeInsets.symmetric(horizontal: 20),
                                       child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                        crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
                                           Align(
                                             alignment: Alignment.centerLeft,
-                                            child: GlobalView()
-                                                .textViewWithStartAlign(
-                                                    AppMessages
-                                                        .hint_business_website,
-                                                    AppTextStyle
-                                                        .inter_font_family,
-                                                    AppTextStyle
-                                                        .semi_bold_font_weight,
-                                                    BaseColor.black_color,
-                                                    16),
+                                            child: GlobalView().textViewWithStartAlign(AppMessages.hint_business_website,
+                                                AppTextStyle.inter_font_family, AppTextStyle.semi_bold_font_weight, BaseColor.black_color, 16),
                                           ),
                                           GlobalView().sizedBoxView(5),
                                           GestureDetector(
@@ -582,20 +524,11 @@ class _BusinessDetailsScreenState extends State<BusinessDetailsScreen> {
                                             child: Align(
                                               alignment: Alignment.centerLeft,
                                               child: GlobalView().textViewWithStartAlign(
-                                                  provider
-                                                              .businessDetailsResponse
-                                                              .business
-                                                              .businessWebsite !=
-                                                          null
-                                                      ? provider
-                                                          .businessDetailsResponse
-                                                          .business
-                                                          .businessWebsite
+                                                  provider.businessDetailsResponse!.business!.businessWebsite != null
+                                                      ? provider.businessDetailsResponse!.business!.businessWebsite!
                                                       : "0",
-                                                  AppTextStyle
-                                                      .inter_font_family,
-                                                  AppTextStyle
-                                                      .medium_font_weight,
+                                                  AppTextStyle.inter_font_family,
+                                                  AppTextStyle.medium_font_weight,
                                                   BaseColor.black_color,
                                                   14),
                                             ),
@@ -603,34 +536,15 @@ class _BusinessDetailsScreenState extends State<BusinessDetailsScreen> {
                                           GlobalView().sizedBoxView(10),
                                           GestureDetector(
                                             onTap: () {
-                                              if (provider
-                                                      .businessDetailsResponse
-                                                      .business
-                                                      .currentPlan
-                                                      .toLowerCase() ==
-                                                  AppMessages.freeText) {
+                                              if (provider.businessDetailsResponse!.business!.currentPlan!.toLowerCase() == AppMessages.freeText) {
                                                 DialogUtils.displayDialogCallBack(
-                                                    context,
-                                                    "",
-                                                    "",
-                                                    AppMessages
-                                                        .featureNotAvailableMsg,
-                                                    "",
-                                                    AppMessages.ok_text,
-                                                    "");
+                                                    context, "", "", AppMessages.featureNotAvailableMsg, "", AppMessages.ok_text, "");
                                               } else {
-                                                String url = provider
-                                                    .businessDetailsResponse
-                                                    .business
-                                                    .businessWebsite;
+                                                String url = provider.businessDetailsResponse!.business!.businessWebsite!;
                                                 UrlLauncher().launchUrl(url);
                                               }
                                             },
-                                            child: GlobalView()
-                                                .wrappedButtonFilledView(
-                                                    context,
-                                                    AppMessages
-                                                        .visit_site_text),
+                                            child: GlobalView().wrappedButtonFilledView(context, AppMessages.visit_site_text),
                                           ),
                                           GlobalView().sizedBoxView(20),
                                         ],
@@ -638,65 +552,38 @@ class _BusinessDetailsScreenState extends State<BusinessDetailsScreen> {
                                     ),
                                   ),
                                   Padding(
-                                    padding:
-                                        EdgeInsets.symmetric(horizontal: 20),
+                                    padding: EdgeInsets.symmetric(horizontal: 20),
                                     child: Align(
                                       alignment: Alignment.centerLeft,
-                                      child: GlobalView()
-                                          .textViewWithStartAlign(
-                                              AppMessages
-                                                  .hint_business_phone_number,
-                                              AppTextStyle.inter_font_family,
-                                              AppTextStyle
-                                                  .semi_bold_font_weight,
-                                              BaseColor.black_color,
-                                              16),
+                                      child: GlobalView().textViewWithStartAlign(AppMessages.hint_business_phone_number,
+                                          AppTextStyle.inter_font_family, AppTextStyle.semi_bold_font_weight, BaseColor.black_color, 16),
                                     ),
                                   ),
                                   GlobalView().sizedBoxView(10),
                                   Padding(
-                                    padding:
-                                        EdgeInsets.symmetric(horizontal: 20),
+                                    padding: EdgeInsets.symmetric(horizontal: 20),
                                     child: Align(
                                       alignment: Alignment.centerLeft,
-                                      child: GlobalView()
-                                          .textViewWithStartAlign(
-                                              provider.businessDetailsResponse
-                                                          .business.businessPhone
-                                                          .toString() !=
-                                                      null
-                                                  ? provider
-                                                      .businessDetailsResponse
-                                                      .business
-                                                      .businessPhone
-                                                      .toString()
-                                                  : "+1 (525) 6564 8914",
-                                              // "+1 (525) 6564 8914",
-                                              AppTextStyle.inter_font_family,
-                                              AppTextStyle.medium_font_weight,
-                                              BaseColor.black_color,
-                                              14),
+                                      child: GlobalView().textViewWithStartAlign(
+                                          provider.businessDetailsResponse!.business!.businessPhone.toString() != null
+                                              ? provider.businessDetailsResponse!.business!.businessPhone.toString()
+                                              : "+1 (525) 6564 8914",
+                                          // "+1 (525) 6564 8914",
+                                          AppTextStyle.inter_font_family,
+                                          AppTextStyle.medium_font_weight,
+                                          BaseColor.black_color,
+                                          14),
                                     ),
                                   ),
                                   GlobalView().sizedBoxView(10),
                                   GestureDetector(
                                     onTap: () async {
-                                      if (provider.businessDetailsResponse
-                                              .business.currentPlan
-                                              .toLowerCase() ==
-                                          AppMessages.freeText) {
+                                      if (provider.businessDetailsResponse!.business!.currentPlan!.toLowerCase() == AppMessages.freeText) {
                                         DialogUtils.displayDialogCallBack(
-                                            context,
-                                            "",
-                                            "",
-                                            AppMessages.featureNotAvailableMsg,
-                                            "",
-                                            AppMessages.ok_text,
-                                            "");
+                                            context, "", "", AppMessages.featureNotAvailableMsg, "", AppMessages.ok_text, "");
                                       } else {
                                         print("Call now called");
-                                        String url =
-                                            'tel:${provider.businessDetailsResponse.business.businessPhone}';
+                                        String url = 'tel:${provider.businessDetailsResponse!.business!.businessPhone}';
                                         if (await canLaunch(url)) {
                                           await launch(url);
                                         } else {
@@ -707,43 +594,30 @@ class _BusinessDetailsScreenState extends State<BusinessDetailsScreen> {
                                     child: Align(
                                       alignment: Alignment.centerLeft,
                                       child: Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 20),
-                                        child: GlobalView()
-                                            .wrappedButtonFilledView(context,
-                                                AppMessages.call_now_text),
+                                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                                        child: GlobalView().wrappedButtonFilledView(context, AppMessages.call_now_text),
                                       ),
                                     ),
                                   ),
                                   GlobalView().sizedBoxView(20),
                                   Padding(
-                                    padding:
-                                        EdgeInsets.symmetric(horizontal: 20),
+                                    padding: EdgeInsets.symmetric(horizontal: 20),
                                     child: Align(
                                       alignment: Alignment.centerLeft,
-                                      child: GlobalView()
-                                          .textViewWithStartAlign(
-                                              AppMessages.hint_business_address,
-                                              AppTextStyle.inter_font_family,
-                                              AppTextStyle
-                                                  .semi_bold_font_weight,
-                                              BaseColor.black_color,
-                                              16),
+                                      child: GlobalView().textViewWithStartAlign(AppMessages.hint_business_address, AppTextStyle.inter_font_family,
+                                          AppTextStyle.semi_bold_font_weight, BaseColor.black_color, 16),
                                     ),
                                   ),
                                   GlobalView().sizedBoxView(10),
                                   Padding(
-                                    padding:
-                                        EdgeInsets.symmetric(horizontal: 20),
+                                    padding: EdgeInsets.symmetric(horizontal: 20),
                                     child: Align(
                                       alignment: Alignment.topLeft,
                                       child: Row(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                        crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
                                           Padding(
-                                            padding:
-                                                const EdgeInsets.only(top: 2),
+                                            padding: const EdgeInsets.only(top: 2),
                                             child: Container(
                                               height: 16,
                                               width: 16,
@@ -755,43 +629,20 @@ class _BusinessDetailsScreenState extends State<BusinessDetailsScreen> {
                                           ),
                                           Expanded(
                                             child: Padding(
-                                              padding: const EdgeInsets.only(
-                                                  left: 7),
-                                              child: GlobalView()
-                                                  .textViewWithStartAlign(
-                                                      provider
-                                                                  .businessDetailsResponse
-                                                                  .business
-                                                                  .isMobile ==
-                                                              1
-                                                          ? AppMessages
-                                                              .mobile_business_text
-                                                          : provider
-                                                                      .businessDetailsResponse
-                                                                      .business
-                                                                      .isOnline ==
-                                                                  0
-                                                              ? provider
-                                                                          .businessDetailsResponse
-                                                                          .business
-                                                                          .businessAddress
-                                                                          .toString() !=
-                                                                      null
-                                                                  ? provider
-                                                                      .businessDetailsResponse
-                                                                      .business
-                                                                      .businessAddress
-                                                                      .toString()
-                                                                  : "Abix Street, Main Road, San Fransisco, California"
-                                                              : AppMessages
-                                                                  .online_business_text,
-                                                      // "Abix Street, Main Road, San Fransisco, California",
-                                                      AppTextStyle
-                                                          .inter_font_family,
-                                                      AppTextStyle
-                                                          .medium_font_weight,
-                                                      BaseColor.black_color,
-                                                      14),
+                                              padding: const EdgeInsets.only(left: 7),
+                                              child: GlobalView().textViewWithStartAlign(
+                                                  provider.businessDetailsResponse!.business!.isMobile == 1
+                                                      ? AppMessages.mobile_business_text
+                                                      : provider.businessDetailsResponse!.business!.isOnline == 0
+                                                          ? provider.businessDetailsResponse!.business!.businessAddress.toString() != null
+                                                              ? provider.businessDetailsResponse!.business!.businessAddress.toString()
+                                                              : "Abix Street, Main Road, San Fransisco, California"
+                                                          : AppMessages.online_business_text,
+                                                  // "Abix Street, Main Road, San Fransisco, California",
+                                                  AppTextStyle.inter_font_family,
+                                                  AppTextStyle.medium_font_weight,
+                                                  BaseColor.black_color,
+                                                  14),
                                             ),
                                           ),
                                         ],
@@ -799,12 +650,8 @@ class _BusinessDetailsScreenState extends State<BusinessDetailsScreen> {
                                     ),
                                   ),
                                   Visibility(
-                                    visible: provider.businessDetailsResponse
-                                                    .business.isOnline ==
-                                                1 ||
-                                            provider.businessDetailsResponse
-                                                    .business.isMobile ==
-                                                1
+                                    visible: provider.businessDetailsResponse!.business!.isOnline == 1 ||
+                                            provider.businessDetailsResponse!.business!.isMobile == 1
                                         //||
                                         // provider.selectedBusinessResponse.cityName == ""
                                         ? false
@@ -813,61 +660,41 @@ class _BusinessDetailsScreenState extends State<BusinessDetailsScreen> {
                                       children: [
                                         GlobalView().sizedBoxView(20),
                                         Padding(
-                                          padding: EdgeInsets.symmetric(
-                                              horizontal: 20),
+                                          padding: EdgeInsets.symmetric(horizontal: 20),
                                           child: Align(
                                             alignment: Alignment.centerLeft,
-                                            child: GlobalView()
-                                                .textViewWithStartAlign(
-                                                    AppMessages.city_text,
-                                                    // +
-                                                    //     ", " +
-                                                    //     AppMessages.title_metropolitan_area,
-                                                    AppTextStyle
-                                                        .inter_font_family,
-                                                    AppTextStyle
-                                                        .semi_bold_font_weight,
-                                                    BaseColor.black_color,
-                                                    16),
+                                            child: GlobalView().textViewWithStartAlign(
+                                                AppMessages.city_text,
+                                                // +
+                                                //     ", " +
+                                                //     AppMessages.title_metropolitan_area,
+                                                AppTextStyle.inter_font_family,
+                                                AppTextStyle.semi_bold_font_weight,
+                                                BaseColor.black_color,
+                                                16),
                                           ),
                                         ),
                                         GlobalView().sizedBoxView(10),
                                         Padding(
-                                          padding: EdgeInsets.symmetric(
-                                              horizontal: 20),
+                                          padding: EdgeInsets.symmetric(horizontal: 20),
                                           child: Align(
                                             alignment: Alignment.topLeft,
                                             child: Padding(
-                                              padding: const EdgeInsets.only(
-                                                  left: 7),
-                                              child: GlobalView()
-                                                  .textViewWithStartAlign(
-                                                      provider.businessDetailsResponse
-                                                                      .business.city !=
-                                                                  null &&
-                                                              provider
-                                                                      .businessDetailsResponse
-                                                                      .business
-                                                                      .city
-                                                                      .name !=
-                                                                  ""
-                                                          ? provider
-                                                              .businessDetailsResponse
-                                                              .business
-                                                              .city
-                                                              .name
-                                                          //      +
-                                                          // ", " +
-                                                          // provider.selectedBusinessResponse
-                                                          //     .metropolitanArea
-                                                          : "-",
-                                                      // "Abix Street, Main Road, San Fransisco, California",
-                                                      AppTextStyle
-                                                          .inter_font_family,
-                                                      AppTextStyle
-                                                          .medium_font_weight,
-                                                      BaseColor.black_color,
-                                                      14),
+                                              padding: const EdgeInsets.only(left: 7),
+                                              child: GlobalView().textViewWithStartAlign(
+                                                  provider.businessDetailsResponse!.business!.city != null &&
+                                                          provider.businessDetailsResponse!.business!.city!.name != ""
+                                                      ? provider.businessDetailsResponse!.business!.city!.name!
+                                                      //      +
+                                                      // ", " +
+                                                      // provider.selectedBusinessResponse
+                                                      //     .metropolitanArea
+                                                      : "-",
+                                                  // "Abix Street, Main Road, San Fransisco, California",
+                                                  AppTextStyle.inter_font_family,
+                                                  AppTextStyle.medium_font_weight,
+                                                  BaseColor.black_color,
+                                                  14),
                                             ),
                                           ),
                                         ),
@@ -880,11 +707,7 @@ class _BusinessDetailsScreenState extends State<BusinessDetailsScreen> {
                                         // provider.businessDetailsResponse
                                         //                 .business.isOnline ==
                                         //             1 ||
-                                        provider.businessDetailsResponse
-                                                    .business.isMobile ==
-                                                1
-                                            ? false
-                                            : true,
+                                        provider.businessDetailsResponse!.business!.isMobile == 1 ? false : true,
                                     child: Column(
                                       children: [
                                         GlobalView().sizedBoxView(20),
@@ -893,21 +716,11 @@ class _BusinessDetailsScreenState extends State<BusinessDetailsScreen> {
                                             // String query = Uri.encodeComponent(
                                             //   provider.selectedBusinessResponse.latitude,
                                             //   provider.selectedBusinessResponse.longitude);
-                                            String lat = provider
-                                                .businessDetailsResponse
-                                                .business
-                                                .latitude;
-                                            String long = provider
-                                                .businessDetailsResponse
-                                                .business
-                                                .longitude;
-                                            String googleUrl = Platform
-                                                    .isAndroid
+                                            String? lat = provider.businessDetailsResponse!.business!.latitude;
+                                            String? long = provider.businessDetailsResponse!.business!.longitude;
+                                            String googleUrl = Platform.isAndroid
                                                 ? "https://www.google.com/maps/search/?api=1&query="
-                                                : "https://maps.apple.com/?q=" +
-                                                    lat +
-                                                    "," +
-                                                    long;
+                                                : "https://maps.apple.com/?q=" + lat! + "," + long!;
                                             if (await canLaunch(googleUrl)) {
                                               await launch(googleUrl);
                                             }
@@ -915,18 +728,10 @@ class _BusinessDetailsScreenState extends State<BusinessDetailsScreen> {
                                           child: Align(
                                             alignment: Alignment.centerLeft,
                                             child: Padding(
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                      horizontal: 20),
+                                              padding: const EdgeInsets.symmetric(horizontal: 20),
                                               child: Container(
-                                                width: DeviceSize()
-                                                        .deviceWidth(context) -
-                                                    180,
-                                                child: GlobalView()
-                                                    .wrappedButtonFilledView(
-                                                        context,
-                                                        AppMessages
-                                                            .get_direction_text),
+                                                width: DeviceSize().deviceWidth(context) - 180,
+                                                child: GlobalView().wrappedButtonFilledView(context, AppMessages.get_direction_text),
                                               ),
                                             ),
                                           ),
@@ -972,11 +777,8 @@ class _BusinessDetailsScreenState extends State<BusinessDetailsScreen> {
                         Positioned(
                           bottom: 0,
                           child: Visibility(
-                              visible: provider.businessDetailsResponse.business
-                                          .feed.isNotEmpty &&
-                                      provider.businessDetailsResponse.business
-                                              .feed.length >
-                                          0
+                              visible: provider.businessDetailsResponse!.business!.feed!.isNotEmpty &&
+                                      provider.businessDetailsResponse!.business!.feed!.length > 0
                                   ? true
                                   : false,
                               // child: businessCheckInsView(provider),
@@ -985,13 +787,8 @@ class _BusinessDetailsScreenState extends State<BusinessDetailsScreen> {
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                            builder: (_) =>
-                                                FeedsDescriptionScreen(
-                                                  businessUserId: provider
-                                                      .businessDetailsResponse
-                                                      .business
-                                                      .id
-                                                      .toString(),
+                                            builder: (_) => FeedsDescriptionScreen(
+                                                  businessUserId: provider.businessDetailsResponse!.business!.id.toString(),
                                                 )));
                                   },
                                   title: AppMessages.business_checkins_title)),
@@ -1017,8 +814,7 @@ class _BusinessDetailsScreenState extends State<BusinessDetailsScreen> {
 
   Widget businessCheckInsView(SearchByBusinessProvider provider) {
     // print("FEED-> ${provider.businessDetailsResponse.business.feed}");
-    if (provider.businessDetailsResponse.business.feed.isNotEmpty &&
-        provider.businessDetailsResponse.business.feed.length > 0) {
+    if (provider.businessDetailsResponse!.business!.feed!.isNotEmpty && provider.businessDetailsResponse!.business!.feed!.length > 0) {
       return Column(
         children: [
           Padding(
@@ -1028,12 +824,8 @@ class _BusinessDetailsScreenState extends State<BusinessDetailsScreen> {
                 Expanded(
                   child: Row(
                     children: [
-                      GlobalView().textViewWithStartAlign(
-                          AppMessages.business_checkins_title,
-                          AppTextStyle.inter_font_family,
-                          AppTextStyle.bold_font_weight,
-                          BaseColor.black_color,
-                          18),
+                      GlobalView().textViewWithStartAlign(AppMessages.business_checkins_title, AppTextStyle.inter_font_family,
+                          AppTextStyle.bold_font_weight, BaseColor.black_color, 18),
                       // GlobalView().textViewWithStartAlign(
                       //     provider.businessDetailsResponse.business
                       //                 .totalFeeds ==
@@ -1075,11 +867,11 @@ class _BusinessDetailsScreenState extends State<BusinessDetailsScreen> {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 20),
             child: CheckInsItemView(
-              feedResponse: provider.businessDetailsResponse.business.feed[0],
+              feedResponse: provider.businessDetailsResponse!.business!.feed![0],
               isVisibleDeleteIcon: false,
               isVisibleLikePanel: false,
               onClickDelete: () {},
-              verifiedUserResponse: provider.businessDetailsResponse.business,
+              verifiedUserResponse: provider.businessDetailsResponse!.business,
             ),
           ),
         ],

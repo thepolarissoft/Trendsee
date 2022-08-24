@@ -16,58 +16,43 @@ import 'package:trendoapp/global/view/show_alert_view.dart';
 import 'package:trendoapp/utils/storage_utils.dart';
 
 class SearchByBusinessProvider extends ChangeNotifier {
-  SearchByBusinessResponse searchByBusinessResponse;
+  SearchByBusinessResponse? searchByBusinessResponse;
   bool isLoading = false;
   List<VerifiedUserResponse> listBusiness = [];
-  Baseresponse baseresponse;
+  Baseresponse? baseresponse;
   // VerifiedUserResponse selectedBusinessResponse = new VerifiedUserResponse();
-  List<String> listMediaImages = [];
+  List<String?> listMediaImages = [];
   int current = 1;
-  BusinessLikedListResponse businessLikedListResponse;
+  BusinessLikedListResponse? businessLikedListResponse;
   // List<VerifiedUserResponse> listBusinessLiked = [];
-  BusinessDetailsResponse businessDetailsResponse;
-  DislikedCommentsResponse dislikedCommentsResponse =
-      new DislikedCommentsResponse();
+  BusinessDetailsResponse? businessDetailsResponse;
+  DislikedCommentsResponse dislikedCommentsResponse = new DislikedCommentsResponse();
   List<CommentResponse> listDislikedComments = [];
   bool isAvailableComment = false;
-  HomeFeedResponse homeFeedResponse;
+  HomeFeedResponse? homeFeedResponse;
   List<FeedResponse> listFeedInfo = [];
   bool isAvailableFeedsData = false;
-  SearchBusinessKeywordsResponse searchBusinessKeywordsResponse =
-      SearchBusinessKeywordsResponse();
+  SearchBusinessKeywordsResponse searchBusinessKeywordsResponse = SearchBusinessKeywordsResponse();
   List<String> listBusinessKeyword = [];
 
   void getSearchByBusinessList(
-      BuildContext context,
-      int page,
-      String searchValue,
-      String categoryId,
-      String latitude,
-      String longitude,
-      String distance,
-      String cityName) {
+      BuildContext context, int page, String searchValue, String categoryId, String latitude, String longitude, String? distance, String? cityName) {
     isLoading = true;
     notifyListeners();
-    ApiManager(context)
-        .getSearchByBusinessList(page.toString(), searchValue, categoryId,
-            latitude, longitude, distance, cityName)
-        .then((response) {
+    ApiManager(context).getSearchByBusinessList(page.toString(), searchValue, categoryId, latitude, longitude, distance, cityName).then((response) {
       searchByBusinessResponse = response;
-      if (searchByBusinessResponse.statuscode == 200) {
-        if (searchByBusinessResponse != null &&
-            searchByBusinessResponse.place != null &&
-            searchByBusinessResponse.place.data != null) {
-          if (searchByBusinessResponse.place.data.isNotEmpty) {
+      if (searchByBusinessResponse!.statuscode == 200) {
+        if (searchByBusinessResponse != null && searchByBusinessResponse!.place != null && searchByBusinessResponse!.place!.data != null) {
+          if (searchByBusinessResponse!.place!.data!.isNotEmpty) {
             if (page == 1) {
               listBusiness.clear();
-              listBusiness.addAll(searchByBusinessResponse.place.data);
+              listBusiness.addAll(searchByBusinessResponse!.place!.data!);
             } else {
-              listBusiness.addAll(searchByBusinessResponse.place.data);
+              listBusiness.addAll(searchByBusinessResponse!.place!.data!);
             }
           }
           isLoading = false;
-          print(
-              "searchByBusinessResponse-> ${searchByBusinessResponse.place.data.length}");
+          print("searchByBusinessResponse-> ${searchByBusinessResponse!.place!.data!.length}");
         }
       }
       isLoading = false;
@@ -78,8 +63,7 @@ class SearchByBusinessProvider extends ChangeNotifier {
       ShowAlertView(
               context: context,
               onCallBack: () {
-                getSearchByBusinessList(context, page, searchValue, categoryId,
-                    latitude, longitude, distance, cityName);
+                getSearchByBusinessList(context, page, searchValue, categoryId, latitude, longitude, distance, cityName);
               },
               exception: onError)
           .showAlertDialog();
@@ -91,7 +75,7 @@ class SearchByBusinessProvider extends ChangeNotifier {
     isLoading = true;
     ApiManager(context).followBusiness(businessId.toString()).then((response) {
       baseresponse = response;
-      if (baseresponse.statuscode == 200) {
+      if (baseresponse!.statuscode == 200) {
         if (baseresponse != null) {
           listBusiness[index].isFollow = 1;
           // GlobalView().showToast(AppToastMessages.follow_done_message);
@@ -115,11 +99,9 @@ class SearchByBusinessProvider extends ChangeNotifier {
 
   void unFollowBusiness(BuildContext context, int businessId, int index) {
     isLoading = true;
-    ApiManager(context)
-        .unFollowBusiness(businessId.toString())
-        .then((response) {
+    ApiManager(context).unFollowBusiness(businessId.toString()).then((response) {
       baseresponse = response;
-      if (baseresponse.statuscode == 200) {
+      if (baseresponse!.statuscode == 200) {
         if (baseresponse != null) {
           listBusiness[index].isFollow = 0;
           // GlobalView().showToast(AppToastMessages.unfollow_done_message);
@@ -146,9 +128,9 @@ class SearchByBusinessProvider extends ChangeNotifier {
     isLoading = true;
     ApiManager(context).followBusiness(businessId.toString()).then((response) {
       baseresponse = response;
-      if (baseresponse.statuscode == 200) {
+      if (baseresponse!.statuscode == 200) {
         if (baseresponse != null) {
-          businessDetailsResponse.business.isFollow = 1;
+          businessDetailsResponse!.business!.isFollow = 1;
           // GlobalView().showToast(AppToastMessages.follow_done_message);
         }
       }
@@ -170,13 +152,11 @@ class SearchByBusinessProvider extends ChangeNotifier {
 
   void unFollowBusinessDetails(BuildContext context, int businessId) {
     isLoading = true;
-    ApiManager(context)
-        .unFollowBusiness(businessId.toString())
-        .then((response) {
+    ApiManager(context).unFollowBusiness(businessId.toString()).then((response) {
       baseresponse = response;
-      if (baseresponse.statuscode == 200) {
+      if (baseresponse!.statuscode == 200) {
         if (baseresponse != null) {
-          businessDetailsResponse.business.isFollow = 1;
+          businessDetailsResponse!.business!.isFollow = 1;
           // GlobalView().showToast(AppToastMessages.unfollow_done_message);
         }
       }
@@ -217,16 +197,14 @@ class SearchByBusinessProvider extends ChangeNotifier {
     ApiManager(context).homeFeedLike(feedId, isLike).then((response) {
       baseresponse = response;
       if (baseresponse != null) {
-        print("baseresponse--->>== ${baseresponse.msg}");
-        if (baseresponse.statuscode == 200 || baseresponse.statuscode == 201) {
+        print("baseresponse--->>== ${baseresponse!.msg}");
+        if (baseresponse!.statuscode == 200 || baseresponse!.statuscode == 201) {
           if (isLike == 1) {
-            businessDetailsResponse.business.feed[index].isLiked = 1;
-            businessDetailsResponse.business.feed[index].totalLikes =
-                businessDetailsResponse.business.feed[index].totalLikes + 1;
+            businessDetailsResponse!.business!.feed![index].isLiked = 1;
+            businessDetailsResponse!.business!.feed![index].totalLikes = businessDetailsResponse!.business!.feed![index].totalLikes! + 1;
           } else {
-            businessDetailsResponse.business.feed[index].isLiked = 0;
-            businessDetailsResponse.business.feed[index].totalLikes =
-                businessDetailsResponse.business.feed[index].totalLikes - 1;
+            businessDetailsResponse!.business!.feed![index].isLiked = 0;
+            businessDetailsResponse!.business!.feed![index].totalLikes = businessDetailsResponse!.business!.feed![index].totalLikes! - 1;
           }
           GlobalView().showToast(AppMessages.like_business_text);
         }
@@ -255,16 +233,14 @@ class SearchByBusinessProvider extends ChangeNotifier {
     ApiManager(context).homeFeedLike(feedId, isLike).then((response) {
       baseresponse = response;
       if (baseresponse != null) {
-        print("baseresponse--->>== ${baseresponse.msg}");
-        if (baseresponse.statuscode == 200 || baseresponse.statuscode == 201) {
+        print("baseresponse--->>== ${baseresponse!.msg}");
+        if (baseresponse!.statuscode == 200 || baseresponse!.statuscode == 201) {
           if (isLike == 1) {
-            businessDetailsResponse.business.isLiked = 1;
-            businessDetailsResponse.business.totalLikes =
-                businessDetailsResponse.business.totalLikes + 1;
+            businessDetailsResponse!.business!.isLiked = 1;
+            businessDetailsResponse!.business!.totalLikes = businessDetailsResponse!.business!.totalLikes! + 1;
           } else {
-            businessDetailsResponse.business.isLiked = 0;
-            businessDetailsResponse.business.totalLikes =
-                businessDetailsResponse.business.totalLikes - 1;
+            businessDetailsResponse!.business!.isLiked = 0;
+            businessDetailsResponse!.business!.totalLikes = businessDetailsResponse!.business!.totalLikes! - 1;
           }
           GlobalView().showToast(AppMessages.like_business_text);
         }
@@ -290,16 +266,14 @@ class SearchByBusinessProvider extends ChangeNotifier {
 
     ApiManager(context).getBusinessLikedList(page.toString()).then((response) {
       businessLikedListResponse = response;
-      print("businessLikedListResponse-> ${businessLikedListResponse.place}");
-      if (businessLikedListResponse.statuscode == 200) {
-        if (businessLikedListResponse != null &&
-            businessLikedListResponse.place != null &&
-            businessLikedListResponse.place.data != null) {
+      print("businessLikedListResponse-> ${businessLikedListResponse!.place}");
+      if (businessLikedListResponse!.statuscode == 200) {
+        if (businessLikedListResponse != null && businessLikedListResponse!.place != null && businessLikedListResponse!.place!.data != null) {
           if (page == 1) {
             listBusiness.clear();
           }
-          listBusiness.addAll(businessLikedListResponse.place.data);
-          print(businessLikedListResponse.place.data.length);
+          listBusiness.addAll(businessLikedListResponse!.place!.data!);
+          print(businessLikedListResponse!.place!.data!.length);
           print(listBusiness.length);
           // notifyListeners();
           // GlobalView().showToast(AppToastMessages.sucessfullyDataFetchMessage);
@@ -321,13 +295,12 @@ class SearchByBusinessProvider extends ChangeNotifier {
     });
   }
 
-  void unLikeBusiness(
-      BuildContext context, int businessId, int index, String route) {
+  void unLikeBusiness(BuildContext context, int businessId, int index, String route) {
     ApiManager(context).unlikeBusiness(businessId.toString()).then((response) {
       baseresponse = response;
       if (baseresponse != null) {
-        print("baseresponse--->>== ${baseresponse.msg}");
-        if (baseresponse.statuscode == 200 || baseresponse.statuscode == 201) {
+        print("baseresponse--->>== ${baseresponse!.msg}");
+        if (baseresponse!.statuscode == 200 || baseresponse!.statuscode == 201) {
           listBusiness[index].isLiked = 0;
           if (route.toLowerCase() == "businessilike") {
             listBusiness.removeAt(index);
@@ -355,11 +328,10 @@ class SearchByBusinessProvider extends ChangeNotifier {
     ApiManager(context).unlikeBusiness(businessId.toString()).then((response) {
       baseresponse = response;
       if (baseresponse != null) {
-        print("baseresponse--->>== ${baseresponse.msg}");
-        if (baseresponse.statuscode == 200 || baseresponse.statuscode == 201) {
-          businessDetailsResponse.business.totalLikes =
-              businessDetailsResponse.business.totalLikes - 1;
-          businessDetailsResponse.business.isLiked = 0;
+        print("baseresponse--->>== ${baseresponse!.msg}");
+        if (baseresponse!.statuscode == 200 || baseresponse!.statuscode == 201) {
+          businessDetailsResponse!.business!.totalLikes = businessDetailsResponse!.business!.totalLikes! - 1;
+          businessDetailsResponse!.business!.isLiked = 0;
           // getBusinessLikedList(context, 1);
           GlobalView().showToast(AppMessages.unlike_business_text);
         }
@@ -383,10 +355,10 @@ class SearchByBusinessProvider extends ChangeNotifier {
     ApiManager(context).likeBusiness(business.id.toString()).then((response) {
       baseresponse = response;
       if (baseresponse != null) {
-        print("baseresponse--->>== ${baseresponse.msg}");
-        if (baseresponse.statuscode == 200 || baseresponse.statuscode == 201) {
+        print("baseresponse--->>== ${baseresponse!.msg}");
+        if (baseresponse!.statuscode == 200 || baseresponse!.statuscode == 201) {
           business.isLiked = 1;
-          business.totalLikes += 1;
+          business.totalLikes = business.totalLikes! + 1;
           business.isDisliked = 0;
           GlobalView().showToast(AppMessages.like_business_text);
         }
@@ -406,31 +378,23 @@ class SearchByBusinessProvider extends ChangeNotifier {
     });
   }
 
-  void businessDetails(BuildContext context, int businessId) async {
+  void businessDetails(BuildContext context, int? businessId) async {
     isLoading = true;
     // notifyListeners();
     ApiManager(context)
-        .businessDetails(
-            businessId,
-            StorageUtils.readStringValue(StorageUtils.keyLatitude),
-            StorageUtils.readStringValue(StorageUtils.keyLongitude))
+        .businessDetails(businessId, StorageUtils.readStringValue(StorageUtils.keyLatitude), StorageUtils.readStringValue(StorageUtils.keyLongitude))
         .then((response) {
       businessDetailsResponse = response;
       if (businessDetailsResponse != null) {
-        print("businessDetailsResponse--->>== ${businessDetailsResponse.msg}");
-        if (businessDetailsResponse.statuscode == 200 ||
-            businessDetailsResponse.statuscode == 201) {
-          if (businessDetailsResponse.business != null) {
-            print(
-                "IS DISLIKED=-=-=-=-> ${businessDetailsResponse.business.isDisliked}");
+        print("businessDetailsResponse--->>== ${businessDetailsResponse!.msg}");
+        if (businessDetailsResponse!.statuscode == 200 || businessDetailsResponse!.statuscode == 201) {
+          if (businessDetailsResponse!.business != null) {
+            print("IS DISLIKED=-=-=-=-> ${businessDetailsResponse!.business!.isDisliked}");
             // print("BUSINESS-> ${businessDetailsResponse.business.toJson()}");
-            if (businessDetailsResponse.business.businessMedia.isNotEmpty) {
+            if (businessDetailsResponse!.business!.businessMedia!.isNotEmpty) {
               listMediaImages.clear();
-              for (var i = 0;
-                  i < businessDetailsResponse.business.businessMedia.length;
-                  i++) {
-                listMediaImages.add(
-                    businessDetailsResponse.business.businessMedia[i].media);
+              for (var i = 0; i < businessDetailsResponse!.business!.businessMedia!.length; i++) {
+                listMediaImages.add(businessDetailsResponse!.business!.businessMedia![i].media);
                 print("listMediaImages-> $listMediaImages");
               }
             }
@@ -453,15 +417,12 @@ class SearchByBusinessProvider extends ChangeNotifier {
     });
   }
 
-  void dislikeBusiness(BuildContext context, VerifiedUserResponse business,
-      String reason, int action, String route) {
-    ApiManager(context)
-        .dislikeBusiness(business.id, reason, action)
-        .then((response) {
+  void dislikeBusiness(BuildContext context, VerifiedUserResponse business, String reason, int action, String route) {
+    ApiManager(context).dislikeBusiness(business.id, reason, action).then((response) {
       baseresponse = response;
       if (baseresponse != null) {
-        print("baseresponse--->>== ${baseresponse.msg}");
-        if (baseresponse.statuscode == 200 || baseresponse.statuscode == 201) {
+        print("baseresponse--->>== ${baseresponse!.msg}");
+        if (baseresponse!.statuscode == 200 || baseresponse!.statuscode == 201) {
           if (action == 1) {
             business.isDisliked = 1;
             business.isLiked = 0;
@@ -489,26 +450,23 @@ class SearchByBusinessProvider extends ChangeNotifier {
     });
   }
 
-  void dislikedCommentList(BuildContext context, int page, int businessId) {
+  void dislikedCommentList(BuildContext context, int page, int? businessId) {
     isLoading = true;
     isAvailableComment = true;
     notifyListeners();
     ApiManager(context).dislikedCommentList(page, businessId).then((response) {
       dislikedCommentsResponse = response;
       if (dislikedCommentsResponse != null) {
-        print(
-            "dislikedCommentsResponse--->>== ${dislikedCommentsResponse.msg}");
-        if (dislikedCommentsResponse.statuscode == 200 ||
-            dislikedCommentsResponse.statuscode == 201) {
+        print("dislikedCommentsResponse--->>== ${dislikedCommentsResponse.msg}");
+        if (dislikedCommentsResponse.statuscode == 200 || dislikedCommentsResponse.statuscode == 201) {
           if (dislikedCommentsResponse.dislike != null) {
-            if (dislikedCommentsResponse.dislike.data != null &&
-                dislikedCommentsResponse.dislike.data.length > 0 &&
-                dislikedCommentsResponse.dislike.data.isNotEmpty) {
+            if (dislikedCommentsResponse.dislike!.data != null &&
+                dislikedCommentsResponse.dislike!.data!.length > 0 &&
+                dislikedCommentsResponse.dislike!.data!.isNotEmpty) {
               if (page == 1) {
                 listDislikedComments.clear();
               }
-              listDislikedComments
-                  .addAll(dislikedCommentsResponse.dislike.data);
+              listDislikedComments.addAll(dislikedCommentsResponse.dislike!.data!);
               isAvailableComment = true;
             } else {
               listDislikedComments.clear();
@@ -533,24 +491,19 @@ class SearchByBusinessProvider extends ChangeNotifier {
     });
   }
 
-  void getFeedListbyBusinessID(
-      BuildContext context, String businessUserId, int page) async {
+  void getFeedListbyBusinessID(BuildContext context, String businessUserId, int page) async {
     isLoading = true;
     isAvailableFeedsData = false;
     notifyListeners();
-    ApiManager(context)
-        .getFeedsByBusinessID(businessUserId, page)
-        .then((response) {
+    ApiManager(context).getFeedsByBusinessID(businessUserId, page).then((response) {
       homeFeedResponse = response;
-      if (homeFeedResponse.statuscode == 200) {
-        if (homeFeedResponse != null &&
-            homeFeedResponse.data != null &&
-            homeFeedResponse.data.data != null) {
+      if (homeFeedResponse!.statuscode == 200) {
+        if (homeFeedResponse != null && homeFeedResponse!.data != null && homeFeedResponse!.data!.data != null) {
           print("ISLOADING-=-=> $isLoading");
           if (page == 1) {
             listFeedInfo.clear();
           }
-          listFeedInfo.addAll(homeFeedResponse.data.data);
+          listFeedInfo.addAll(homeFeedResponse!.data!.data!);
           print("listFeedInfo Length-->> ${listFeedInfo.length}");
           isAvailableFeedsData = true;
         } else {
@@ -573,24 +526,18 @@ class SearchByBusinessProvider extends ChangeNotifier {
     });
   }
 
-  List<String> searchBusinessKeywords(
-      BuildContext context, String searchValue) {
+  List<String> searchBusinessKeywords(BuildContext context, String searchValue) {
     // isLoading = true;
     // isAvailableFeedsData = false;
-    ApiManager(context)
-        .searchBusinessKeywords(searchValue.trim())
-        .then((response) {
+    ApiManager(context).searchBusinessKeywords(searchValue.trim()).then((response) {
       searchBusinessKeywordsResponse = response;
       if (searchBusinessKeywordsResponse.statuscode == 200) {
-        if (searchBusinessKeywordsResponse != null &&
-            searchBusinessKeywordsResponse.data != null) {
+        if (searchBusinessKeywordsResponse != null && searchBusinessKeywordsResponse.data != null) {
           print("ISLOADING-=-=> $isLoading");
-          searchBusinessKeywordsResponse.data =
-              searchBusinessKeywordsResponse.data.toSet().toList();
+          searchBusinessKeywordsResponse.data = searchBusinessKeywordsResponse.data!.toSet().toList();
           listBusinessKeyword.clear();
-          for (var i = 0; i < searchBusinessKeywordsResponse.data.length; i++) {
-            listBusinessKeyword
-                .add(searchBusinessKeywordsResponse.data[i].trim());
+          for (var i = 0; i < searchBusinessKeywordsResponse.data!.length; i++) {
+            listBusinessKeyword.add(searchBusinessKeywordsResponse.data![i].trim());
           }
           // listBusinessKeyword.retainWhere(
           //     (s) => s.toLowerCase().contains(searchValue.toLowerCase()));

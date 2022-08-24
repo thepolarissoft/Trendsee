@@ -18,7 +18,7 @@ class MetropolitanAreasListResponse extends Baseresponse {
   //   this.metropolitanAreas,
   // }) : super(status: status, statuscode: statuscode, msg: msg);
 
-  List<MetropolitanAreaInfo> metropolitanAreas;
+  List<MetropolitanAreaInfo>? metropolitanAreas;
 
   MetropolitanAreasListResponse.fromJson(Map<String, dynamic> json)
       : super(json) {
@@ -34,7 +34,7 @@ class MetropolitanAreasListResponse extends Baseresponse {
         "msg": msg == null ? null : msg,
         "metropolitan_areas": metropolitanAreas == null
             ? null
-            : List<dynamic>.from(metropolitanAreas.map((x) => x.toJson())),
+            : List<dynamic>.from(metropolitanAreas!.map((x) => x.toJson())),
       };
 }
 
@@ -48,12 +48,12 @@ class MetropolitanAreaInfo {
     this.metropolitanAreaId,
   });
 
-  int id;
-  String name;
-  DateTime createdAt;
-  DateTime updatedAt;
-  List<MetropolitanCityInfo> cities;
-  int metropolitanAreaId;
+  int? id;
+  String? name;
+  DateTime? createdAt;
+  DateTime? updatedAt;
+  List<MetropolitanCityInfo>? cities;
+  int? metropolitanAreaId;
 
   factory MetropolitanAreaInfo.fromJson(Map<String, dynamic> json) =>
       MetropolitanAreaInfo(
@@ -77,11 +77,11 @@ class MetropolitanAreaInfo {
   Map<String, dynamic> toJson() => {
         "id": id == null ? null : id,
         "name": name == null ? null : name,
-        "created_at": createdAt == null ? null : createdAt.toIso8601String(),
-        "updated_at": updatedAt == null ? null : updatedAt.toIso8601String(),
+        "created_at": createdAt == null ? null : createdAt!.toIso8601String(),
+        "updated_at": updatedAt == null ? null : updatedAt!.toIso8601String(),
         "cities": cities == null
             ? null
-            : List<dynamic>.from(cities.map((x) => x.toJson())),
+            : List<dynamic>.from(cities!.map((x) => x.toJson())),
         "metropolitan_area_id":
             metropolitanAreaId == null ? null : metropolitanAreaId,
       };
@@ -95,11 +95,11 @@ class MetropolitanCityInfo {
     this.updatedAt,
     this.metropolitanAreaId,
   });
-  int id;
-  String name="";
-  DateTime createdAt;
-  DateTime updatedAt;
-  int metropolitanAreaId;
+  int? id;
+  String? name="";
+  DateTime? createdAt;
+  DateTime? updatedAt;
+  int? metropolitanAreaId;
 
   factory MetropolitanCityInfo.fromJson(Map<String, dynamic> json) =>
       MetropolitanCityInfo(
@@ -119,8 +119,8 @@ class MetropolitanCityInfo {
   Map<String, dynamic> toJson() => {
         "id": id == null ? null : id,
         "name": name == null ? null : name,
-        "created_at": createdAt == null ? null : createdAt.toIso8601String(),
-        "updated_at": updatedAt == null ? null : updatedAt.toIso8601String(),
+        "created_at": createdAt == null ? null : createdAt!.toIso8601String(),
+        "updated_at": updatedAt == null ? null : updatedAt!.toIso8601String(),
         "metropolitan_area_id":
             metropolitanAreaId == null ? null : metropolitanAreaId,
       };

@@ -7,11 +7,11 @@ class LoginUserResponse {
      this.username,
   });
 
-  int id;
-  String firstName;
-  String lastName;
-  String avatar;
-  String username;
+  int? id;
+  String? firstName;
+  String? lastName;
+  String? avatar;
+  String? username;
   factory LoginUserResponse.fromJson(Map<String, dynamic> json) =>
       LoginUserResponse(
         id: json["id"] == null ? null : json["id"],

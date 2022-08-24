@@ -3,13 +3,13 @@ import 'package:trendoapp/constants/api_urls.dart';
 
 class LogoutRequest implements IHttpRequest {
   @override
-  String absolutePath = ApiUrls.logout_url;
+  String? absolutePath = ApiUrls.logout_url;
 
   @override
-  Object body;
+  Object? body;
 
   @override
-  HttpMethod httpMethod = HttpMethod.GET;
+  HttpMethod? httpMethod = HttpMethod.GET;
 
   @override
   Map<String, dynamic> get headers {

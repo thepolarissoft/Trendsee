@@ -19,8 +19,8 @@ class BusinessUserProfileResponse extends Baseresponse {
   //   this.user,
   // }) : super(status: status, statuscode: statuscode, msg: msg);
 
-  BusinessUserResponse user;
-  List<LatLongInfo> latLong;
+  BusinessUserResponse? user;
+  List<LatLongInfo>? latLong;
 
   BusinessUserProfileResponse.fromJson(Map<String, dynamic> json)
       : super(json) {

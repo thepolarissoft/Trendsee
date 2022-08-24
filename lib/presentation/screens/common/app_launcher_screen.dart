@@ -1,6 +1,5 @@
 import 'dart:async';
-
-import 'package:connectivity/connectivity.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:trendoapp/constants/app_images.dart';
@@ -30,18 +29,14 @@ class _AppLauncherScreenState extends State<AppLauncherScreen> {
   void initApiCalls() async {
     // ConnectionUtils(context: context).init();
     var connectivityResult = await (Connectivity().checkConnectivity());
-    if ((connectivityResult == ConnectivityResult.mobile) ||
-        (connectivityResult == ConnectivityResult.wifi)) {
-      MetropolitanAreasListResponse metropolitanAreasListResponse =
-          await Provider.of<BusinessUserProvider>(context, listen: false)
-              .getMetropolitanAreasList(context);
-      if (metropolitanAreasListResponse.statuscode == 200) {
-        CategoriesListResponse categoriesListResponse =
-            await Provider.of<CategoriesListProvider>(context, listen: false)
-                .getCategoriesList(context);
-        print(
-            "CATEGORY STATUS CODE-> ${Provider.of<CategoriesListProvider>(context, listen: false).categoriesListResponse.statuscode}");
-        if (categoriesListResponse.statuscode == 200) {
+    if ((connectivityResult == ConnectivityResult.mobile) || (connectivityResult == ConnectivityResult.wifi)) {
+      MetropolitanAreasListResponse? metropolitanAreasListResponse =
+          await (Provider.of<BusinessUserProvider>(context, listen: false).getMetropolitanAreasList(context));
+      if (metropolitanAreasListResponse!.statuscode == 200) {
+        CategoriesListResponse? categoriesListResponse =
+            await (Provider.of<CategoriesListProvider>(context, listen: false).getCategoriesList(context));
+        print("CATEGORY STATUS CODE-> ${Provider.of<CategoriesListProvider>(context, listen: false).categoriesListResponse!.statuscode}");
+        if (categoriesListResponse!.statuscode == 200) {
           setNavigation();
         }
       } else {
@@ -67,13 +62,10 @@ class _AppLauncherScreenState extends State<AppLauncherScreen> {
   }
 
   void setNavigation() {
-    print(
-        "KEY USER TYPE-> ${StorageUtils.readIntValue(StorageUtils.keyUserType)}");
+    print("KEY USER TYPE-> ${StorageUtils.readIntValue(StorageUtils.keyUserType)}");
     print("KEY TOKEN-> ${StorageUtils.readStringValue(StorageUtils.keyToken)}");
-    print(
-        "TOKEN LENGTH-> ${StorageUtils.readStringValue(StorageUtils.keyToken).length}");
-    if (StorageUtils.readStringValue(StorageUtils.keyToken) != null &&
-        StorageUtils.readStringValue(StorageUtils.keyToken).length > 0) {
+    print("TOKEN LENGTH-> ${StorageUtils.readStringValue(StorageUtils.keyToken).length}");
+    if (StorageUtils.readStringValue(StorageUtils.keyToken) != null && StorageUtils.readStringValue(StorageUtils.keyToken).length > 0) {
       if (StorageUtils.readIntValue(StorageUtils.keyUserType) == 1) {
         Navigator.pushNamed(context, AppRoutes.timeline_route_name);
       } else {

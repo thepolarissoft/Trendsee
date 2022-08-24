@@ -16,7 +16,7 @@ import 'package:trendoapp/providers/business_user_provider.dart';
 import 'package:trendoapp/utils/day_time_utils.dart';
 
 class AddEditBusinessHoursScreen extends StatefulWidget {
-  AddEditBusinessHoursScreen({Key key}) : super(key: key);
+  AddEditBusinessHoursScreen({Key? key}) : super(key: key);
 
   @override
   State<AddEditBusinessHoursScreen> createState() =>
@@ -193,7 +193,7 @@ class _AddEditBusinessHoursScreenState
     bool isEmpty = false;
     var provider = Provider.of<BusinessUserProvider>(context, listen: false);
     for (var i = 0; i < provider.listBusinessHours.length; i++) {
-      if (provider.listBusinessHours[i].isOpen) {
+      if (provider.listBusinessHours[i].isOpen!) {
         print("Open time-> ${provider.listBusinessHours[i].openTime}");
         print("Close time-> ${provider.listBusinessHours[i].closeTime}");
         if ((provider.listBusinessHours[i].openTime == "-1" ||
@@ -235,14 +235,14 @@ class _AddEditBusinessHoursScreenState
                             color: BaseColor.border_txtfield_color, size: 25),
                         items: [
                           for (var i = 0;
-                              i < provider.timeZoneResponse.timeZone.length;
+                              i < provider.timeZoneResponse.timeZone!.length;
                               i++)
-                            provider.timeZoneResponse.timeZone[i]
+                            provider.timeZoneResponse.timeZone![i]
                         ].map((v) {
                           return DropdownMenuItem<TimezoneInfo>(
                               value: v,
                               child: GlobalView().textViewWithStartAlign(
-                                  v.value,
+                                  v.value!,
                                   AppTextStyle.inter_font_family,
                                   AppTextStyle.normal_font_weight,
                                   BaseColor.hint_color,
@@ -301,7 +301,7 @@ class _AddEditBusinessHoursScreenState
                               FlutterSwitch(
                                 width: 48,
                                 height: 26,
-                                value: provider.listBusinessHours[index].isOpen,
+                                value: provider.listBusinessHours[index].isOpen!,
                                 // value: provider.listBusinessHours[index].openTime ==
                                 //             "-1" &&
                                 //         provider.listBusinessHours[index].closeTime ==
@@ -322,7 +322,7 @@ class _AddEditBusinessHoursScreenState
                               ),
                               Expanded(
                                   child: GlobalView().textViewWithStartAlign(
-                                      provider.listBusinessHours[index].isOpen
+                                      provider.listBusinessHours[index].isOpen!
                                           ? AppMessages.open_text
                                           : AppMessages.closed_text,
                                       AppTextStyle.inter_font_family,
@@ -335,7 +335,7 @@ class _AddEditBusinessHoursScreenState
                       ],
                     ),
                     Visibility(
-                        visible: provider.listBusinessHours[index].isOpen
+                        visible: provider.listBusinessHours[index].isOpen!
                             ? true
                             : false,
                         child: Padding(
@@ -433,9 +433,9 @@ class _AddEditBusinessHoursScreenState
     });
   }
 
-  Widget selectOpenTimeButton(Function onClick, String data) {
+  Widget selectOpenTimeButton(Function onClick, String? data) {
     return GestureDetector(
-      onTap: onClick,
+      onTap: onClick as void Function()?,
       child: Container(
         height: 50,
         decoration: BoxDecoration(
@@ -443,7 +443,7 @@ class _AddEditBusinessHoursScreenState
             border: Border.all(color: BaseColor.border_txtfield_color)),
         child: Center(
           child: GlobalView().textViewWithStartAlign(
-              data == "-1" ? AppMessages.open_time_text : data,
+              data == "-1" ? AppMessages.open_time_text : data!,
               AppTextStyle.inter_font_family,
               AppTextStyle.normal_font_weight,
               BaseColor.hint_color,
@@ -453,9 +453,9 @@ class _AddEditBusinessHoursScreenState
     );
   }
 
-  Widget selectCloseTimeButton(Function onClick, String data) {
+  Widget selectCloseTimeButton(Function onClick, String? data) {
     return GestureDetector(
-      onTap: onClick,
+      onTap: onClick as void Function()?,
       child: Container(
         height: 50,
         decoration: BoxDecoration(
@@ -463,7 +463,7 @@ class _AddEditBusinessHoursScreenState
             border: Border.all(color: BaseColor.border_txtfield_color)),
         child: Center(
           child: GlobalView().textViewWithStartAlign(
-              data == "-1" ? AppMessages.close_time_text : data,
+              data == "-1" ? AppMessages.close_time_text : data!,
               AppTextStyle.inter_font_family,
               AppTextStyle.normal_font_weight,
               BaseColor.hint_color,

@@ -8,10 +8,10 @@ import 'package:trendoapp/providers/categories_list_provider.dart';
 import 'package:trendoapp/providers/filter_provider.dart';
 
 class FilterTextWidget extends StatelessWidget {
-  FilterTextWidget({Key key, this.isHome = true}) : super(key: key);
+  FilterTextWidget({Key? key, this.isHome = true}) : super(key: key);
   bool isHome = true;
-  FilterProvider filterProvider;
-  CategoriesListProvider catProvider;
+  late FilterProvider filterProvider;
+  late CategoriesListProvider catProvider;
   TextStyle textStyle = TextStyle(
       color: BaseColor.black_color, fontSize: 16, fontWeight: FontWeight.w600);
 
@@ -40,7 +40,7 @@ class FilterTextWidget extends StatelessWidget {
               style: textStyle,
             ),
             TextSpan(
-              text: catProvider.selectedCategoryResponse.name,
+              text: catProvider.selectedCategoryResponse!.name,
               style: textValueStyle,
             ),
             TextSpan(
@@ -50,7 +50,7 @@ class FilterTextWidget extends StatelessWidget {
             TextSpan(
               text: (!isHome &&
                       filterProvider.selectedMetropolitanCityInfo != null &&
-                      filterProvider.selectedMetropolitanCityInfo.length > 0)
+                      filterProvider.selectedMetropolitanCityInfo!.length > 0)
                   ? filterProvider.selectedMetropolitanCityInfo
                   : "",
               style: textValueStyle,
@@ -64,7 +64,7 @@ class FilterTextWidget extends StatelessWidget {
             // ),
             TextSpan(
               text: filterProvider.distanceRadius != "0"
-                  ? filterProvider.distanceRadius +
+                  ? filterProvider.distanceRadius! +
                       (filterProvider.distanceRadius == "1"
                           ? AppMessages.mile_text
                           : AppMessages.miles_text)

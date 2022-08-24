@@ -6,10 +6,10 @@ class CategoryResponse {
     this.updatedAt,
   });
 
-  int id;
-  String name;
-  DateTime createdAt;
-  DateTime updatedAt;
+  int? id;
+  String? name;
+  DateTime? createdAt;
+  DateTime? updatedAt;
   bool isChecked = false;
 
   factory CategoryResponse.fromJson(Map<String, dynamic> json) =>
@@ -27,7 +27,7 @@ class CategoryResponse {
   Map<String, dynamic> toJson() => {
         "id": id == null ? null : id,
         "name": name == null ? null : name,
-        "created_at": createdAt == null ? null : createdAt.toIso8601String(),
-        "updated_at": updatedAt == null ? null : updatedAt.toIso8601String(),
+        "created_at": createdAt == null ? null : createdAt!.toIso8601String(),
+        "updated_at": updatedAt == null ? null : updatedAt!.toIso8601String(),
       };
 }

@@ -13,8 +13,8 @@ import 'package:trendoapp/global/view/global_view.dart';
 import 'package:trendoapp/providers/verify_otp_provider.dart';
 
 class PasscodeVerificationScreen extends StatefulWidget {
-  PasscodeVerificationScreen({Key key, @required this.args}) : super(key: key);
-  PasscodeVerificationArgs args;
+  PasscodeVerificationScreen({Key? key, required this.args}) : super(key: key);
+  PasscodeVerificationArgs? args;
   @override
   State<PasscodeVerificationScreen> createState() =>
       _PasscodeVerificationScreenState();
@@ -98,18 +98,18 @@ class _PasscodeVerificationScreenState
                               // print("OTP--====>>> $otp");
                               // print("EMAIL--====>>> ${widget.email}");
                               if (otp != null) {
-                                if (widget.args.isVerifyByBusinessID) {
+                                if (widget.args!.isVerifyByBusinessID) {
                                   Provider.of<VerifyOtpProvider>(context,
                                           listen: false)
                                       .verifyPasscodeByBusinessID(
                                           context,
-                                          widget.args.businessID,
+                                          widget.args!.businessID,
                                           int.parse(otp));
                                 } else {
                                   Provider.of<VerifyOtpProvider>(context,
                                           listen: false)
                                       .verifyPasscode(
-                                          context, widget.args.email, otp);
+                                          context, widget.args!.email, otp);
                                 }
                               } else {
                                 GlobalView().showToast(
@@ -215,7 +215,7 @@ class _PasscodeVerificationScreenState
 }
 
 class PasscodeVerificationArgs {
-  String email;
+  String? email;
   bool isVerifyByBusinessID;
   int businessID = 0;
 

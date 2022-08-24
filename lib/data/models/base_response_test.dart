@@ -62,9 +62,9 @@ class BaseresponseTest {
     this.msg,
   });
 
-  int status;
-  int statuscode;
-  String msg;
+  int? status;
+  int? statuscode;
+  String? msg;
 
   factory BaseresponseTest.fromJson(Map<String, dynamic> json) => BaseresponseTest(
         status: json["status"] == null ? null : json["status"],

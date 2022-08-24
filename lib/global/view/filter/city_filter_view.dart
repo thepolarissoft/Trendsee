@@ -12,12 +12,12 @@ import 'package:trendoapp/providers/filter_provider.dart';
 import '../global_view.dart';
 
 class CityFilterView extends StatelessWidget {
-  CityFilterView({Key key, @required this.filterProvider
+  CityFilterView({Key? key, required this.filterProvider
       // @required this.keyCity,
       // @required this.citySearchController,
       })
       : super(key: key);
-  FilterProvider filterProvider;
+  FilterProvider? filterProvider;
   // AutoCompleteTextField searchCityTextField;
   // GlobalKey<AutoCompleteTextFieldState<String>> keyCity;
   //     new GlobalKey();
@@ -37,11 +37,7 @@ class CityFilterView extends StatelessWidget {
       mainAxisSize: MainAxisSize.max,
       children: [
         GlobalView().textViewWithStartAlign(
-            AppMessages.search_city_title,
-            AppTextStyle.inter_font_family,
-            AppTextStyle.normal_font_weight,
-            BaseColor.forgot_pass_txt_color,
-            18),
+            AppMessages.search_city_title, AppTextStyle.inter_font_family, AppTextStyle.normal_font_weight, BaseColor.forgot_pass_txt_color, 18),
         GlobalView().sizedBoxView(10),
         Consumer<FilterProvider>(builder: (ctx, provider, child) {
           print("list City length->> ${provider.listCities}");
@@ -57,7 +53,7 @@ class CityFilterView extends StatelessWidget {
                 borderRadius: BorderRadius.circular(25),
                 child: TypeAheadField<String>(
                   textFieldConfiguration: TextFieldConfiguration(
-                    controller: filterProvider.citySearchController,
+                    controller: filterProvider!.citySearchController,
                     autocorrect: false,
                     enableSuggestions: false,
                     style: TextStyle(
@@ -70,25 +66,17 @@ class CityFilterView extends StatelessWidget {
                       // filled: true,
                       focusColor: BaseColor.pure_white_color,
                       contentPadding: EdgeInsets.only(left: 60, right: -40),
-                      prefixIcon:
-                          GlobalView().prefixIconView(AppImages.ic_location),
+                      prefixIcon: GlobalView().prefixIconView(AppImages.ic_location),
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(25),
-                        borderSide:
-                            BorderSide(color: BaseColor.border_txtfield_color),
+                        borderSide: BorderSide(color: BaseColor.border_txtfield_color),
                       ),
-                      disabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(25),
-                          borderSide: BorderSide(
-                              color: BaseColor.border_txtfield_color)),
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(25),
-                          borderSide: BorderSide(
-                              color: BaseColor.border_txtfield_color)),
-                      focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(25),
-                          borderSide: BorderSide(
-                              color: BaseColor.border_txtfield_color)),
+                      disabledBorder:
+                          OutlineInputBorder(borderRadius: BorderRadius.circular(25), borderSide: BorderSide(color: BaseColor.border_txtfield_color)),
+                      border:
+                          OutlineInputBorder(borderRadius: BorderRadius.circular(25), borderSide: BorderSide(color: BaseColor.border_txtfield_color)),
+                      focusedBorder:
+                          OutlineInputBorder(borderRadius: BorderRadius.circular(25), borderSide: BorderSide(color: BaseColor.border_txtfield_color)),
                       hintText: AppMessages.hint_city_name,
                       hintStyle: TextStyle(
                         color: BaseColor.hint_color.withOpacity(0.6),
@@ -98,21 +86,22 @@ class CityFilterView extends StatelessWidget {
                     ),
                   ),
                   suggestionsCallback: (pattern) async {
-                    if (pattern.length >= 2)
+                    if (pattern.length >= 2) {
                       return provider.searchByCity(context, pattern);
+                    } else {
+                      return [''];
+                    }
                   },
                   hideOnEmpty: true,
                   itemBuilder: (context, item) {
-                    return searchItemView(
-                        item, AppMessages.city_text.toLowerCase());
+                    return searchItemView(item, AppMessages.city_text.toLowerCase());
                   },
                   onSuggestionSelected: (item) {
                     print("ITEM NAME-> $item");
-                    filterProvider.citySearchController.text = item;
+                    filterProvider!.citySearchController.text = item;
                     provider.selectedCity(item);
                     provider.setDistanceRadius("0");
-                    print(
-                        "AREA TEXT->${filterProvider.citySearchController.text}");
+                    print("AREA TEXT->${filterProvider!.citySearchController.text}");
                     // provider.searchByCity(context);
                     // provider.changeEditableCityValue();
                     print("Suggestion-> $item");
@@ -133,15 +122,9 @@ class CityFilterView extends StatelessWidget {
             height: 30,
             width: 30,
             padding: EdgeInsets.all(6),
-            decoration: BoxDecoration(
-                shape: BoxShape.circle, color: BaseColor.border_txtfield_color),
-            child: Image.asset(
-                route == AppMessages.area_text
-                    ? AppImages.ic_metro
-                    : AppImages.ic_location,
-                height: 20,
-                width: 20,
-                color: BaseColor.pure_white_color),
+            decoration: BoxDecoration(shape: BoxShape.circle, color: BaseColor.border_txtfield_color),
+            child: Image.asset(route == AppMessages.area_text ? AppImages.ic_metro : AppImages.ic_location,
+                height: 20, width: 20, color: BaseColor.pure_white_color),
           ),
           SizedBox(width: 10),
           Expanded(
@@ -166,8 +149,7 @@ class CityFilterView extends StatelessWidget {
               ),
             ),
           ),
-          Image.asset(AppImages.ic_back_search2,
-              height: 15, width: 15, color: BaseColor.black_color),
+          Image.asset(AppImages.ic_back_search2, height: 15, width: 15, color: BaseColor.black_color),
           SizedBox(width: 10),
         ],
       ),

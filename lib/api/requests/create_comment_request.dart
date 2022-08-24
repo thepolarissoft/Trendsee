@@ -6,13 +6,13 @@ import 'package:trendoapp/constants/api_urls.dart';
 
 class CreateCommentRequest implements IHttpRequest {
   @override
-  String absolutePath = ApiUrls.create_comment_url;
+  String? absolutePath = ApiUrls.create_comment_url;
 
   @override
-  Object body;
+  Object? body;
 
   @override
-  HttpMethod httpMethod = HttpMethod.POST;
+  HttpMethod? httpMethod = HttpMethod.POST;
 
   @override
   Map<String, dynamic> get headers {
@@ -25,7 +25,7 @@ class CreateCommentRequest implements IHttpRequest {
   }
 
   CreateCommentRequest(CreateCommentRequestBody createCommentRequestBody) {
-    var map = new Map<String, String>();
+    var map = new Map<String, String?>();
     map["feed_id"] = createCommentRequestBody.feedId;
     map["comment"] = createCommentRequestBody.comment;
     this.body = jsonEncode(map);

@@ -15,7 +15,7 @@ class TimeZoneResponse {
     this.timeZone,
   });
 
-  List<TimezoneInfo> timeZone;
+  List<TimezoneInfo>? timeZone;
 
   factory TimeZoneResponse.fromJson(Map<String, dynamic> json) =>
       TimeZoneResponse(
@@ -28,7 +28,7 @@ class TimeZoneResponse {
   Map<String, dynamic> toJson() => {
         "items": timeZone == null
             ? null
-            : List<dynamic>.from(timeZone.map((x) => x.toJson())),
+            : List<dynamic>.from(timeZone!.map((x) => x.toJson())),
       };
 }
 
@@ -42,12 +42,12 @@ class TimezoneInfo {
     this.utc,
   });
 
-  String value;
-  String abbr;
-  double offset;
-  bool isdst;
-  String text;
-  List<String> utc;
+  String? value;
+  String? abbr;
+  double? offset;
+  bool? isdst;
+  String? text;
+  List<String>? utc;
 
   factory TimezoneInfo.fromJson(Map<String, dynamic> json) => TimezoneInfo(
         value: json["value"] == null ? null : json["value"],
@@ -66,6 +66,6 @@ class TimezoneInfo {
         "offset": offset == null ? null : offset,
         "isdst": isdst == null ? null : isdst,
         "text": text == null ? null : text,
-        "utc": utc == null ? null : List<dynamic>.from(utc.map((x) => x)),
+        "utc": utc == null ? null : List<dynamic>.from(utc!.map((x) => x)),
       };
 }

@@ -13,7 +13,7 @@ import 'package:trendoapp/utils/storage_utils.dart';
 
 class AccountSettingsProvider extends ChangeNotifier {
   bool allowNotification = true;
-  Baseresponse baseresponse;
+  late Baseresponse baseresponse;
 
   void setNotificationSwitchValue(bool value) {
     allowNotification = value;
@@ -22,8 +22,8 @@ class AccountSettingsProvider extends ChangeNotifier {
 
   void saveNotificationSettings(
       BuildContext context,
-      ProfileResponse profileResponse,
-      BusinessUserProfileResponse businessUserProfileResponse) async {
+      ProfileResponse? profileResponse,
+      BusinessUserProfileResponse? businessUserProfileResponse) async {
     ApiManager(context)
         .saveNotificationSettings(allowNotification ? 1 : 0)
         .then((response) {
@@ -32,9 +32,9 @@ class AccountSettingsProvider extends ChangeNotifier {
         print(baseresponse.statuscode);
         if (profileResponse != null) {
           if (allowNotification) {
-            profileResponse.user.allowNotification = 1;
+            profileResponse.user!.allowNotification = 1;
           } else {
-            profileResponse.user.allowNotification = 0;
+            profileResponse.user!.allowNotification = 0;
             OneSignal.shared.setSubscriptionObserver((changes) {
               // changes.from.isSubscribed = false;
               changes.to.isSubscribed = false;
@@ -42,9 +42,9 @@ class AccountSettingsProvider extends ChangeNotifier {
           }
         } else if (businessUserProfileResponse != null) {
           if (allowNotification) {
-            businessUserProfileResponse.user.allowNotification = 1;
+            businessUserProfileResponse.user!.allowNotification = 1;
           } else {
-            businessUserProfileResponse.user.allowNotification = 0;
+            businessUserProfileResponse.user!.allowNotification = 0;
             OneSignal.shared.setSubscriptionObserver((changes) {
               // changes.from.isSubscribed = false;
               changes.to.isSubscribed = false;
@@ -74,7 +74,7 @@ class AccountSettingsProvider extends ChangeNotifier {
         print(baseresponse.statuscode);
         AccessToken().setTokenValue("");
         StorageUtils.removeKey(StorageUtils.keyToken);
-        PreferenceUtils.prefs.clear();
+        PreferenceUtils.prefs!.clear();
         Navigator.pushNamed(context, AppRoutes.signin_route_name);
       }
       notifyListeners();
@@ -99,7 +99,7 @@ class AccountSettingsProvider extends ChangeNotifier {
         print(baseresponse.statuscode);
         AccessToken().setTokenValue("");
         StorageUtils.removeKey(StorageUtils.keyToken);
-        PreferenceUtils.prefs.clear();
+        PreferenceUtils.prefs!.clear();
         Navigator.pushNamed(context, AppRoutes.signin_route_name);
       }
       notifyListeners();
@@ -127,7 +127,7 @@ class AccountSettingsProvider extends ChangeNotifier {
         print(baseresponse.statuscode);
         Navigator.pop(context);
       }
-      GlobalView().showToast(baseresponse.msg);
+      GlobalView().showToast(baseresponse.msg!);
       notifyListeners();
     }).catchError((onError) {
       print("ONERROR->> ${onError.toString()}");

@@ -8,16 +8,15 @@ class StorageUtils {
   static final String keyBusinessType = 'business_type';
 
   static GetStorage getStorage = GetStorage();
-  static Future<GetStorage> get _instance async =>
-      getStorage ??= (await GetStorage.init()) as GetStorage;
+  static Future<GetStorage> get _instance async => getStorage;
 
   static Future<GetStorage> init() async {
     getStorage = await _instance;
     return getStorage;
   }
 
-  static writeStringValue(String key, String value) {
-    return getStorage.write(key, value) ?? "";
+  static writeStringValue(String key, String? value) {
+    return getStorage.write(key, value);
   }
 
   static String readStringValue(String key) {
@@ -25,15 +24,15 @@ class StorageUtils {
   }
 
   static writeDoubleValue(String key, double value) {
-    return getStorage.write(key, value) ?? 0;
+    return getStorage.write(key, value) ;
   }
 
   static double readDoubleValue(String key) {
     return getStorage.read(key) ?? 0;
   }
 
-  static writeIntValue(String key, int value) {
-    return getStorage.write(key, value) ?? "";
+  static writeIntValue(String key, int? value) {
+    return getStorage.write(key, value) ;
   }
 
   static int readIntValue(String key) {

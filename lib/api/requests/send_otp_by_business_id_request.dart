@@ -7,13 +7,13 @@ import 'package:trendoapp/constants/api_urls.dart';
 class SendOtpByBusinessIdRequest implements IHttpRequest {
   int businessId;
   @override
-  String absolutePath = ApiUrls.send_otp_by_id_url;
+  String? absolutePath = ApiUrls.send_otp_by_id_url;
 
   @override
-  Object body;
+  Object? body;
 
   @override
-  HttpMethod httpMethod = HttpMethod.GET;
+  HttpMethod? httpMethod = HttpMethod.GET;
 
   @override
   Map<String, dynamic> get headers {
@@ -28,5 +28,5 @@ class SendOtpByBusinessIdRequest implements IHttpRequest {
     return map;
   }
 
-  SendOtpByBusinessIdRequest({@required this.businessId});
+  SendOtpByBusinessIdRequest({required this.businessId});
 }

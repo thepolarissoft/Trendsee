@@ -75,13 +75,13 @@ class CheckInDetailsPage extends StatelessWidget {
                               shape: BoxShape.circle,
                               color: Colors.grey,
                               image: DecorationImage(
-                                  image: homeFeed.feedResponse.businessUser
+                                  image: (homeFeed.feedResponse.businessUser!
                                               .avatar !=
                                           ""
                                       ? NetworkImage(homeFeed
-                                          .feedResponse.businessUser.avatar)
+                                          .feedResponse.businessUser!.avatar!)
                                       : AssetImage(
-                                          AppImages.default_profile_Pic),
+                                          AppImages.default_profile_Pic)) as ImageProvider<Object>,
                                   fit: BoxFit.cover),
                             ),
                           ),
@@ -103,12 +103,12 @@ class CheckInDetailsPage extends StatelessWidget {
                                                     null &&
                                                 homeFeed
                                                         .feedResponse
-                                                        .businessUser
+                                                        .businessUser!
                                                         .businessName ==
                                                     null
                                             ? "ChoxBlast Cafe"
-                                            : homeFeed.feedResponse.businessUser
-                                                .businessName,
+                                            : homeFeed.feedResponse.businessUser!
+                                                .businessName!,
                                         AppTextStyle.metropolis_font_family,
                                         AppTextStyle.bold_font_weight,
                                         BaseColor.black_color,
@@ -129,7 +129,7 @@ class CheckInDetailsPage extends StatelessWidget {
                                             ? "Cafe"
                                             : CategoryUtils().getCategoryName(
                                                 homeFeed
-                                                    .feedResponse.categories),
+                                                    .feedResponse.categories!),
                                         AppTextStyle.metropolis_font_family,
                                         AppTextStyle.semi_bold_font_weight,
                                         BaseColor.forgot_pass_txt_color,
@@ -145,7 +145,7 @@ class CheckInDetailsPage extends StatelessWidget {
 
                     GlobalView().sizedBoxView(5),
                     Visibility(
-                      visible: homeFeed.feedResponse.businessUser.isOnline == 0
+                      visible: homeFeed.feedResponse.businessUser!.isOnline == 0
                           ? false
                           : true,
                       child: Padding(
@@ -167,17 +167,17 @@ class CheckInDetailsPage extends StatelessWidget {
                                 width: 5,
                               ),
                               Text(
-                                homeFeed.feedResponse.businessUser.isOnline == 0
+                                homeFeed.feedResponse.businessUser!.isOnline == 0
                                     ? homeFeed.feedResponse == null &&
                                             homeFeed.feedResponse
                                                     .businessUser ==
                                                 null &&
-                                            homeFeed.feedResponse.businessUser
+                                            homeFeed.feedResponse.businessUser!
                                                     .businessAddress ==
                                                 null
                                         ? "Abix Street, Main Road, San Fransisco, California"
-                                        : homeFeed.feedResponse.businessUser
-                                            .businessAddress
+                                        : homeFeed.feedResponse.businessUser!
+                                            .businessAddress!
                                     : AppMessages.online_business_text,
                                 // "Abix Street, Main Road, San Fransisco, California Abix Street",
                                 // textAlign: TextAlign.justify,
@@ -210,7 +210,7 @@ class CheckInDetailsPage extends StatelessWidget {
                               homeFeed.feedResponse == null &&
                                       homeFeed.feedResponse.description == null
                                   ? "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt"
-                                  : homeFeed.feedResponse.description,
+                                  : homeFeed.feedResponse.description!,
                               AppTextStyle.inter_font_family,
                               AppTextStyle.medium_font_weight,
                               BaseColor.black_color,
@@ -452,11 +452,11 @@ class CheckInDetailsPage extends StatelessWidget {
                       GlobalView().textViewWithStartAlign(
                           homeFeed.feedResponse == null &&
                                   homeFeed.feedResponse.user == null &&
-                                  homeFeed.feedResponse.user.username == null
+                                  homeFeed.feedResponse.user!.username == null
                               //      &&
                               // homeFeed.feedResponse.user.lastName == null
                               ? "John Doe"
-                              : homeFeed.feedResponse.user.username
+                              : homeFeed.feedResponse.user!.username!
                           // +
                           //     " " +
                           //     homeFeed.feedResponse.user.lastName
@@ -468,7 +468,7 @@ class CheckInDetailsPage extends StatelessWidget {
                       GlobalView().textViewWithStartAlign(
                           // "15 min ago",
                           DayTimeUtils()
-                              .convertToAgo(homeFeed.feedResponse.createdAt),
+                              .convertToAgo(homeFeed.feedResponse.createdAt!),
                           AppTextStyle.metropolis_font_family,
                           AppTextStyle.medium_font_weight,
                           BaseColor.black_color,

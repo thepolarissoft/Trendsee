@@ -47,10 +47,10 @@ class Baseresponse {
   Baseresponse(Map<String, dynamic> fullJson) {
     parsing(fullJson);
   }
-  int status;
-  int statuscode;
-  String msg;
-  bool isThisFirstBusinessWithThisEmail;
+  int? status;
+  int? statuscode;
+  String? msg;
+  bool? isThisFirstBusinessWithThisEmail;
 
   Map<String, dynamic> toJsonData() => {
         "status": status == null ? null : status,

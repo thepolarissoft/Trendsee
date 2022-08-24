@@ -21,7 +21,7 @@ class LikeDislikeResponse extends Baseresponse {
   //   this.feed,
   // }) : super(status: status, msg: msg, statuscode: statuscode);
 
-  FeedResponse feed;
+  FeedResponse? feed;
 
   LikeDislikeResponse.fromJson(Map<String, dynamic> json) : super(json) {
     feed = json["feed"] == null ? null : FeedResponse.fromJson(json["feed"]);
@@ -31,6 +31,6 @@ class LikeDislikeResponse extends Baseresponse {
         "status": status == null ? null : status,
         "msg": msg == null ? null : msg,
         "statuscode": statuscode == null ? null : statuscode,
-        "feed": feed == null ? null : feed.toJson(),
+        "feed": feed == null ? null : feed!.toJson(),
       };
 }

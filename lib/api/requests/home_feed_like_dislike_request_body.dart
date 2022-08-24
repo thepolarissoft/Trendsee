@@ -1,7 +1,7 @@
 class HomeFeedLikeDislikeRequestBody {
-  String feedId;
-  String isLike;
-  String isDislike;
+  String? feedId;
+  String? isLike;
+  String? isDislike;
 
   HomeFeedLikeDislikeRequestBody(
       String feedId, String isLike, String isDislike) {

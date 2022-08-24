@@ -14,11 +14,11 @@ import 'package:trendoapp/global/view/global_view.dart';
 import 'package:trendoapp/providers/filter_provider.dart';
 
 void openFilterBottomSheet({
-  @required BuildContext context,
-  @required String route,
-  @required FilterProvider filterProvider,
-  @required int selectedFilterValue,
-  @required String distanceRadius,
+  required BuildContext context,
+  required String route,
+  required FilterProvider? filterProvider,
+  required int? selectedFilterValue,
+  required String? distanceRadius,
 }) {
   showModalBottomSheet<void>(
     shape: RoundedRectangleBorder(
@@ -102,12 +102,12 @@ void openFilterBottomSheet({
                                           BaseColor.pure_white_color,
                                       thumbColor:
                                           BaseColor.forgot_pass_txt_color,
-                                      onValueChanged: (i) {
+                                      onValueChanged: (dynamic i) {
                                         setState(
                                           () {
                                             selectedFilterValue = i;
                                             // print("Value-> ${myTabs[i]}");
-                                            Text list = myFilterTabs[i];
+                                            Text list = myFilterTabs[i] as Text;
                                             distanceRadius = list.data;
                                             // print("Distance Radius-> $distanceRadius");
                                             // Provider.of<FilterProvider>(context,

@@ -24,7 +24,7 @@ class SearchListData {
             context,
             page,
             searchValue,
-            catProvider.selectedCategoryResponse.id.toString(),
+            catProvider.selectedCategoryResponse!.id.toString(),
             StorageUtils.readStringValue(StorageUtils.keyLatitude),
             StorageUtils.readStringValue(StorageUtils.keyLongitude),
             "5",
@@ -54,7 +54,7 @@ class SearchListData {
       Provider.of<CategoriesListProvider>(context, listen: false)
           // .listFilteredCategoryId
           // .join(",")
-          .selectedCategoryResponse
+          .selectedCategoryResponse!
           .id
           .toString(),
       // filterModel.categoryId,
@@ -67,7 +67,7 @@ class SearchListData {
   }
 
   void applySearchDataForDistance(
-      BuildContext context, String distanceRadius) async {
+      BuildContext context, String? distanceRadius) async {
     print(
         "Distance Radius-->> ${Provider.of<FilterProvider>(context, listen: false).distanceRadius}");
     print(
@@ -84,7 +84,7 @@ class SearchListData {
       Provider.of<CategoriesListProvider>(context, listen: false)
           // .listFilteredCategoryId
           // .join(",")
-          .selectedCategoryResponse
+          .selectedCategoryResponse!
           .id
           .toString(),
       StorageUtils.readStringValue(StorageUtils.keyLatitude),
@@ -109,7 +109,7 @@ class SearchListData {
       context,
       1,
       Provider.of<FilterProvider>(context, listen: false).searchValue,
-      catProvider.selectedCategoryResponse.id.toString(),
+      catProvider.selectedCategoryResponse!.id.toString(),
       StorageUtils.readStringValue(StorageUtils.keyLatitude),
       StorageUtils.readStringValue(StorageUtils.keyLongitude),
       Provider.of<FilterProvider>(context, listen: false).distanceRadius,

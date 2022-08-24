@@ -9,22 +9,22 @@ import 'package:trendoapp/global/view/show_alert_view.dart';
 import 'package:trendoapp/providers/home_feed_response_provider.dart';
 
 class CommentResponseProvider extends ChangeNotifier {
-  CommentListResponse commentListResponse;
+  CommentListResponse? commentListResponse;
   List<CommentResponse> listComments = [];
   bool isLoading = false;
 
-  void getCommentList(BuildContext context, int feedId) async {
+  void getCommentList(BuildContext context, int? feedId) async {
     isLoading = true;
     notifyListeners();
     ApiManager(context).getCommentList(feedId.toString()).then((response) {
       commentListResponse = response;
-      if (commentListResponse.statuscode == 200) {
+      if (commentListResponse!.statuscode == 200) {
         if (commentListResponse != null &&
-            commentListResponse.feed != null &&
-            commentListResponse.feed.categories.isNotEmpty) {
+            commentListResponse!.feed != null &&
+            commentListResponse!.feed!.categories!.isNotEmpty) {
           isLoading = false;
           listComments.clear();
-          listComments.addAll(commentListResponse.feed.comments);
+          listComments.addAll(commentListResponse!.feed!.comments!);
           // GlobalView().showToast(AppToastMessages.sucessfullyDataFetchMessage);
         } else {
           isLoading = false;
@@ -45,25 +45,25 @@ class CommentResponseProvider extends ChangeNotifier {
     });
   }
 
-  void createComment(BuildContext context, int feedId, String comment) async {
+  void createComment(BuildContext context, int? feedId, String comment) async {
     isLoading = true;
     notifyListeners();
     ApiManager(context)
         .createComment(feedId.toString(), comment)
         .then((response) {
       commentListResponse = response;
-      if (commentListResponse.statuscode == 200) {
+      if (commentListResponse!.statuscode == 200) {
         if (commentListResponse != null &&
-            commentListResponse.feed != null &&
-            commentListResponse.feed.categories.isNotEmpty != null) {
+            commentListResponse!.feed != null &&
+            commentListResponse!.feed!.categories!.isNotEmpty != null) {
           isLoading = false;
           Provider.of<HomeFeedResponseProvider>(context, listen: false)
               .feedResponse
-              .totalComments = commentListResponse.feed.totalComments;
+              .totalComments = commentListResponse!.feed!.totalComments;
           print(
               "TOTAL COMMENTS-->> ${Provider.of<HomeFeedResponseProvider>(context, listen: false).feedResponse.totalComments}");
           listComments.clear();
-          listComments.addAll(commentListResponse.feed.comments);
+          listComments.addAll(commentListResponse!.feed!.comments!);
           GlobalView().showToast(AppToastMessages.comment_posted_message);
         } else {
           isLoading = false;

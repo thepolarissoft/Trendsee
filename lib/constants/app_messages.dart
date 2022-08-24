@@ -11,8 +11,7 @@ class AppMessages {
   static const String or_text = "OR";
   static const String verify_email_title = "Verify Email";
   static const String verify_passcode_title = "Verify Passcode";
-  static const String verify_email_message =
-      "Enter the verification code sent to \n your email";
+  static const String verify_email_message = "Enter the verification code sent to \n your email";
   static const String verify_passcode_message = "Enter the pass code!";
   static const String otp_message = "Didn’t receive the code?";
   static const String resend_otp_message = "Resend code";
@@ -21,8 +20,7 @@ class AppMessages {
   static const String success_message = "Thanks! Your email was verified";
   static const String feed_show = "I want to see the trend";
   static const String forgot_pass_title = "Enter your Registered Email";
-  static const String forgot_pass_message =
-      "We will send link to Reset this on your \n Email address.";
+  static const String forgot_pass_message = "We will send link to Reset this on your \n Email address.";
   static const String hint_email = "Enter Email ID";
   static const String hint_firstname = "Enter First Name";
   static const String hint_lastname = "Enter Last Name";
@@ -35,8 +33,7 @@ class AppMessages {
   static const String title_username = "Username";
   static const String title_email = "Email";
   static const String title_date_of_birth = "Date of Birth";
-  static const String terms_policy_text =
-      "I confirm and accept Privacy Policy and \n Terms of Service.";
+  static const String terms_policy_text = "I confirm and accept Privacy Policy and \n Terms of Service.";
   static const String create_account_text = "Create Account";
   static const String title_user_select_type = "Select type";
   static const String business_user_register_text = "Business Registration";
@@ -45,8 +42,7 @@ class AppMessages {
   static const String title_metropolitan_area = "Metropolitan Area";
   static const String title_business_address = "Business Address";
   static const String title_business_website = "Business Website";
-  static const String title_business_gps_coordinates =
-      "Business GPS Coordinates";
+  static const String title_business_gps_coordinates = "Business GPS Coordinates";
   static const String title_owner_firstname = "First Name";
   static const String title_other_phone_number = "Phone Number";
   static const String title_city = "Business City Name";
@@ -88,10 +84,8 @@ class AppMessages {
   static const String business_friends_sub_title = "Business Friends";
   static const String profile_settings_title = "Profile Settings";
   static const String no_internet_title = "No Connection!";
-  static const String no_internet_msg =
-      "Please check your Internet Connection!";
-  static const String something_went_wrong_msg =
-      "Something went wrong, Please try again later!";
+  static const String no_internet_msg = "Please check your Internet Connection!";
+  static const String something_went_wrong_msg = "Something went wrong, Please try again later!";
   static const String no_internet_sub_msg = "Try again later!";
   static const String retry_text = "Retry";
   static const String cancel_text = "Cancel";
@@ -104,8 +98,7 @@ class AppMessages {
   static const String account_delete_message = "Delete My Account";
   static const String reset_password_title = "Reset Password";
   static const String my_checkins = "My Check-ins";
-  static const String business_checkins_title =
-      "Here is what people are saying";
+  static const String business_checkins_title = "Here is what people are saying";
   static const String see_all_text = "See All";
   static const String my_friends = "My Friends";
   static const String my_business_friends = "My Business Friends";
@@ -114,13 +107,12 @@ class AppMessages {
   static const String all_text = "All";
   static const String photos_text = "Photos";
   static const String videos_text = "Videos";
-  static const String age_confirmation_text = "I am over 18 years old.";
+  static const String age_confirmation_text = "I am over 13 years old.";
   static const String online_only_text = "Online only.";
   static const String hint_for_login = "Enter Username or Email";
   static const String select_this_location = "Select this Location";
   static const String title_select_category = "Select Category";
-  static const String no_feeds_available_with_filters_message =
-      "Nothing Here \n Change Search To Get Result";
+  static const String no_feeds_available_with_filters_message = "Nothing Here \n Change Search To Get Result";
   static const String no_feeds_available_message = "No feeds Available!";
   static const String my_checkins_title = "My Check-ins";
   static const String views_text = "Views";
@@ -147,8 +139,7 @@ class AppMessages {
   static const String logout_sub_message = "you want to logout?";
   static const String yes_text = "Yes";
   static const String no_text = "No";
-  static const String hint_search_by_business_name =
-      "What are you looking for?";
+  static const String hint_search_by_business_name = "What are you looking for?";
   static const String find_near_by_business_text = "Find Nearby Businesses";
   static const String businesses_i_like_title = "Businesses I Like";
   static const String nearby_businesses_text = "Nearby Businesses";
@@ -162,8 +153,7 @@ class AppMessages {
   static const String apply_text = "Apply";
   static const String notifications_text = "Notifications";
   static const String no_notifications_text = "No notifications available!";
-  static const String no_business_liked_text =
-      "You haven't liked any businesses yet!";
+  static const String no_business_liked_text = "You haven't liked any businesses yet!";
   static const String unFollow_text = "Unfollow";
   static const String unFollow_message = "Are you sure you want to unfollow";
   static const String like_text = "Like";
@@ -173,28 +163,21 @@ class AppMessages {
   static const String unlike_message = "Are you sure you want to unlike";
   static const String unauthenticated_text = "unauthenticated";
   static const String token_expired_text = "Token expired!";
-  static const String delete_account_sub_message =
-      "you want to delete your account?";
-  static const String deactivate_account_sub_message =
-      "you want to de-activate your account?";
+  static const String delete_account_sub_message = "you want to delete your account?";
+  static const String deactivate_account_sub_message = "you want to de-activate your account?";
   static const String delete_account_message = "Account deleted successfully!";
-  static const String deactivate_account_message =
-      "Account de-activated successfully!";
-  static const String suspended_user_message =
-      "Your account has been suspended!";
+  static const String deactivate_account_message = "Account de-activated successfully!";
+  static const String suspended_user_message = "Your account has been suspended!";
   static const String deleted_user_message = "Your account has been deleted!";
-  static const String deactivated_user_message =
-      "Your account has been de-activated!";
-  static const String approval_user_message =
-      "Business needs approval by admin!";
+  static const String deactivated_user_message = "Your account has been de-activated!";
+  static const String approval_user_message = "Business needs approval by admin!";
   static const String close_text = "Close";
   static const String support_text = "Support";
   static const String suspended_title = "Account Suspended";
   static const String delete_account_title = "Delete Account";
   static const String deactivate_account_title = "De-activate Account";
   static const String approval_account_title = "Account Approval";
-  static const String subject_deactivated_text =
-      "Account has been de-activated!";
+  static const String subject_deactivated_text = "Account has been de-activated!";
   static const String subject_deleted_text = "Account has been deleted!";
   static const String no_more_data_text = "No more data available!";
   static const String oops_text = "Oops!";
@@ -212,8 +195,7 @@ class AppMessages {
   static const String view_text = "view";
   static const String click_text = "click";
   static const String dislike_feed_text = "Dislike Feed";
-  static const String dislike_feed_reason_message =
-      "Please enter reason for dislike this feed!";
+  static const String dislike_feed_reason_message = "Please enter reason for dislike this feed!";
   static const String hint_reason = "Reason";
   static const String dislike_text = "Dislike";
   static const String disliked_text = "Disliked";
@@ -231,37 +213,27 @@ class AppMessages {
   static const String approve_msg =
       "Please select “Continue” to review and complete the Marketing Services Agreement (MSA). Once the MSA is complete, please allow up to 48 hours for Trendsee to review your information.";
   static const String already_registered_title = "Already Registered";
-  static const String already_registered_msg =
-      "You have already registered with this Email, Please try with another Email!";
-  static const String no_nearby_locations_available_text =
-      "No Near By Location Available!";
+  static const String already_registered_msg = "You have already registered with this Email, Please try with another Email!";
+  static const String no_nearby_locations_available_text = "No Near By Location Available!";
   static const String dislike_msg_text = "Dislike Messages";
   static const String visit_site_text = "Visit Site";
-  static const String online_business_check_in_text =
-      "Online Business Check-In";
+  static const String online_business_check_in_text = "Online Business Check-In";
   static const String no_business_available_text = "No Businesses Available!";
   static const String continue_text = "Continue";
   static const String change_category_text = "Change Category";
-  static const String change_category_message_text =
-      "Only admin can change categories";
-  static const String change_category_sub_message_text =
-      "Contact admin@trendsee.app to change categories!";
+  static const String change_category_message_text = "Only admin can change categories";
+  static const String change_category_sub_message_text = "Contact admin@trendsee.app to change categories!";
   static const String contact_text = "Contact";
   static const String business_ac_error_text = "Business Account error";
   static const String choose_business_cat_title = "Choose Business Categories";
   static const String search_by_city_title = "Search By City";
   static const String radius_text = "Radius";
   static const String total_clicks_text = "Total Clicks";
-  static const String select_atleast_one_cate_text =
-      "You must select at least 1 business category!";
-  static const String online_business_hint_text =
-      "Type Online Business Name Here";
-  static const String add_unregistered_business_title =
-      "Add Unregistered Small Business";
-  static const String unregistered_business_title =
-      "Unregistered Small Business";
-  static const String unregistered_business_msg =
-      "Thanks for your help! We will verify this business before adding it to Trendsee.";
+  static const String select_atleast_one_cate_text = "You must select at least 1 business category!";
+  static const String online_business_hint_text = "Type Online Business Name Here";
+  static const String add_unregistered_business_title = "Add Unregistered Small Business";
+  static const String unregistered_business_title = "Unregistered Small Business";
+  static const String unregistered_business_msg = "Thanks for your help! We will verify this business before adding it to Trendsee.";
   static const String unregistered_business_sub_msg = "Thanks For Your Help!";
   static const String business_hours_text = "Business Hours";
   static const String business_open_time_text = "Business Open Time";
@@ -303,25 +275,21 @@ class AppMessages {
   static const String currentPassword = "Current Password";
   static const String newPassword = "New Password";
   static const String reEnterNewPassword = "Re-enter New Password";
-  static const String forgot_passcode_message =
-      "Send an email to passcodehelp@trendsee.app with your new 5 digit passcode";
+  static const String forgot_passcode_message = "Send an email to passcodehelp@trendsee.app with your new 5 digit passcode";
   static const String changePasscodeTitle = "Change Passcode";
   static const String currentPasscode = "Current Passcode";
   static const String newPasscode = "New Passcode";
   static const String reEnterNewPasscode = "Re-enter Passcode";
   static const String set_passcode_title = "Set Passcode";
-  static const String registrationSuccessfullyText =
-      "Registration Successfully";
+  static const String registrationSuccessfullyText = "Registration Successfully";
   static const String registerAnotherBusinessTitle =
       "You registered another business with same email, so please login again to verify this new added business.";
   static const String hintEmailAddress = "Enter Email Address";
   static const String passcodeText = "Passcode";
   static const String createPasscodeText = "Create a 5 Digit Passcode";
   static const String freeText = "free";
-  static const String featureNotAvailableMsg =
-      "This feature is not available for this business";
-  static const String selectDiffPlanText =
-      "Select a different subscription plan to change this info";
+  static const String featureNotAvailableMsg = "This feature is not available for this business";
+  static const String selectDiffPlanText = "Select a different subscription plan to change this info";
   static const String viewPlansHereText = "View plans here";
 
 // Within___ miles from you

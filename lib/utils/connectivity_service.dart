@@ -1,13 +1,12 @@
 import 'dart:async';
 
-import 'package:connectivity/connectivity.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 
 enum ConnectivityStatus { WiFi, Cellular, Offline }
 
 class ConnectivityService {
   // Create our public controller
-  StreamController<ConnectivityStatus> connectionStatusController =
-      StreamController<ConnectivityStatus>();
+  StreamController<ConnectivityStatus> connectionStatusController = StreamController<ConnectivityStatus>();
 
   ConnectivityService() {
     // Subscribe to the connectivity Chanaged Steam

@@ -7,11 +7,11 @@ class CityModel {
     this.metropolitanAreaId,
   });
 
-  int id;
-  String name;
-  DateTime createdAt;
-  DateTime updatedAt;
-  int metropolitanAreaId;
+  int? id;
+  String? name;
+  DateTime? createdAt;
+  DateTime? updatedAt;
+  int? metropolitanAreaId;
 
   factory CityModel.fromJson(Map<String, dynamic> json) => CityModel(
         id: json["id"] == null ? null : json["id"],
@@ -30,8 +30,8 @@ class CityModel {
   Map<String, dynamic> toJson() => {
         "id": id == null ? null : id,
         "name": name == null ? null : name,
-        "created_at": createdAt == null ? null : createdAt.toIso8601String(),
-        "updated_at": updatedAt == null ? null : updatedAt.toIso8601String(),
+        "created_at": createdAt == null ? null : createdAt!.toIso8601String(),
+        "updated_at": updatedAt == null ? null : updatedAt!.toIso8601String(),
         "metropolitan_area_id":
             metropolitanAreaId == null ? null : metropolitanAreaId,
       };

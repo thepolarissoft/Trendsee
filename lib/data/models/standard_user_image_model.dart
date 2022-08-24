@@ -1,6 +1,6 @@
 import 'dart:io';
 
 class StandardUserImageModel {
-  File standardUserImage;
+  File? standardUserImage;
   StandardUserImageModel(this.standardUserImage);
 }

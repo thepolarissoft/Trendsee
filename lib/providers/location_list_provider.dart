@@ -4,7 +4,7 @@ import 'package:trendoapp/data/models/location_list_response.dart';
 import 'package:trendoapp/global/view/show_alert_view.dart';
 
 class LocationListProvider extends ChangeNotifier {
-  LocationListResponse locationListResponse;
+  LocationListResponse? locationListResponse;
   bool isLoading = false;
   bool isChecked = false;
 
@@ -13,7 +13,7 @@ class LocationListProvider extends ChangeNotifier {
     // notifyListeners();
     ApiManager(context).getLocationList().then((response) {
       locationListResponse = response;
-      if (locationListResponse.statuscode == 200) {
+      if (locationListResponse!.statuscode == 200) {
         if (locationListResponse != null) {
           isLoading = false;
         } else {
@@ -37,7 +37,7 @@ class LocationListProvider extends ChangeNotifier {
 
   void changeCheckBoxValue(int index, bool value) {
     isChecked = value;
-    locationListResponse.location[index].isChecked = value;
+    locationListResponse!.location![index].isChecked = value;
     notifyListeners();
   }
 }

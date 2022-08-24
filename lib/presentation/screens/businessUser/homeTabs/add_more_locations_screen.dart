@@ -16,7 +16,7 @@ import 'package:trendoapp/utils/storage_utils.dart';
 
 // ignore: must_be_immutable
 class AddMoreLocationsScreen extends StatefulWidget {
-  AddMoreLocationsScreen({Key key}) : super(key: key);
+  AddMoreLocationsScreen({Key? key}) : super(key: key);
 
   @override
   State<AddMoreLocationsScreen> createState() => _AddMoreLocationsScreenState();
@@ -94,7 +94,7 @@ class _AddMoreLocationsScreenState extends State<AddMoreLocationsScreen> {
                         return Visibility(
                           visible:
                               businessUserType == AppMessages.mobile_text &&
-                                      provider.listLatLong.length >= 1
+                                      provider.listLatLong!.length >= 1
                                   ? false
                                   : true,
                           child: Padding(
@@ -155,9 +155,9 @@ class _AddMoreLocationsScreenState extends State<AddMoreLocationsScreen> {
   }
 
   bool isVisibleDeleteIcon(BusinessUserProvider provider) {
-    if (provider.businessUserProfileResponse.user.isMobile == 0 &&
-        provider.businessUserProfileResponse.user.isOnline == 0) {
-      if (provider.listLatLong.length <= 1) {
+    if (provider.businessUserProfileResponse!.user!.isMobile == 0 &&
+        provider.businessUserProfileResponse!.user!.isOnline == 0) {
+      if (provider.listLatLong!.length <= 1) {
         return false;
       } else {
         return true;
@@ -176,14 +176,14 @@ class _AddMoreLocationsScreenState extends State<AddMoreLocationsScreen> {
         child: Consumer<BusinessUserProvider>(
           builder: (_, provider, child) {
             if (provider.listLatLong != null &&
-                provider.listLatLong.isNotEmpty) {
+                provider.listLatLong!.isNotEmpty) {
               return Stack(
                 children: [
                   Padding(
                     padding: const EdgeInsets.only(left: 10, right: 10),
                     child: ListView.builder(
                       // shrinkWrap: true,
-                      itemCount: provider.listLatLong.length,
+                      itemCount: provider.listLatLong!.length,
                       controller: scrollController,
                       physics: AlwaysScrollableScrollPhysics(),
                       itemBuilder: (_, index) => Padding(
@@ -198,14 +198,14 @@ class _AddMoreLocationsScreenState extends State<AddMoreLocationsScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 GlobalView().textViewWithStartAlign(
-                                    provider.listLatLong[index].locationName ==
+                                    provider.listLatLong![index].locationName ==
                                                 null ||
-                                            provider.listLatLong[index]
+                                            provider.listLatLong![index]
                                                     .locationName ==
                                                 ""
                                         ? "Anonymous"
                                         : provider
-                                            .listLatLong[index].locationName,
+                                            .listLatLong![index].locationName!,
                                     AppTextStyle.inter_font_family,
                                     AppTextStyle.semi_bold_font_weight,
                                     BaseColor.black_color,
@@ -226,11 +226,11 @@ class _AddMoreLocationsScreenState extends State<AddMoreLocationsScreen> {
                                       child: Container(
                                         child: GlobalView()
                                             .textViewWithStartAlign(
-                                                provider.listLatLong[index]
-                                                        .latitude +
+                                                provider.listLatLong![index]
+                                                        .latitude! +
                                                     " / " +
-                                                    provider.listLatLong[index]
-                                                        .longitude,
+                                                    provider.listLatLong![index]
+                                                        .longitude!,
                                                 AppTextStyle.inter_font_family,
                                                 AppTextStyle
                                                     .semi_bold_font_weight,
@@ -278,7 +278,7 @@ class _AddMoreLocationsScreenState extends State<AddMoreLocationsScreen> {
                                         onTap: () {
                                           provider.deleteBusinessLatlong(
                                               context,
-                                              provider.listLatLong[index]);
+                                              provider.listLatLong![index]);
                                         },
                                         child: Image.asset(
                                           AppImages.icon_finder_delete,

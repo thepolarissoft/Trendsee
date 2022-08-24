@@ -4,13 +4,13 @@ import 'package:trendoapp/constants/api_urls.dart';
 class GetListBusinessHomeFeedRequest implements IHttpRequest {
   String page = "";
   @override
-  String absolutePath = ApiUrls.list_business_home_feed_url;
+  String? absolutePath = ApiUrls.list_business_home_feed_url;
 
   @override
-  Object body;
+  Object? body;
 
   @override
-  HttpMethod httpMethod = HttpMethod.GET;
+  HttpMethod? httpMethod = HttpMethod.GET;
 
   @override
   Map<String, dynamic> get headers {

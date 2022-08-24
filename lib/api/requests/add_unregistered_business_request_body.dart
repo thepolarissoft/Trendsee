@@ -1,9 +1,9 @@
 class AddUnregisteredBusinessRequestBody {
-  String businessName;
-  String latitude;
-  String longitude;
-  String categoryId;
-  String businessUsername;
+  String? businessName;
+  String? latitude;
+  String? longitude;
+  String? categoryId;
+  String? businessUsername;
 
   AddUnregisteredBusinessRequestBody(String businessName, String latitude,
       String longitude, String categoryId, String businessUsername) {

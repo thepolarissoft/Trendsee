@@ -9,7 +9,7 @@ import 'package:trendoapp/utils/day_time_utils.dart';
 
 class CommentsView extends StatelessWidget {
   CommentResponse commentResponse = new CommentResponse();
-  CommentsView({Key key, @required this.commentResponse}) : super(key: key);
+  CommentsView({Key? key, required this.commentResponse}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -57,8 +57,8 @@ class CommentsView extends StatelessWidget {
                           Expanded(
                             child: GlobalView().textViewWithStartAlign(
                                 commentResponse.user != null &&
-                                        commentResponse.user.username != null
-                                    ? commentResponse.user.username
+                                        commentResponse.user!.username != null
+                                    ? commentResponse.user!.username!
                                     //  +
                                     // " " +
                                     // commentResponse.user.lastName
@@ -72,7 +72,7 @@ class CommentsView extends StatelessWidget {
                               commentResponse != null &&
                                       commentResponse.createdAt != null
                                   ? DayTimeUtils()
-                                      .convertToAgo(commentResponse.createdAt)
+                                      .convertToAgo(commentResponse.createdAt!)
                                   //  provider
                                   //     .listDislikedComments[
                                   //         itemIndex]
@@ -92,7 +92,7 @@ class CommentsView extends StatelessWidget {
                         child: GlobalView().textViewWithStartAlign(
                             commentResponse != null &&
                                     commentResponse.comment != null
-                                ? commentResponse.comment
+                                ? commentResponse.comment!
                                 : "comment",
                             AppTextStyle.inter_font_family,
                             AppTextStyle.medium_font_weight,

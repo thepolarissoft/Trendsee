@@ -2,15 +2,15 @@ import 'package:trendoapp/api/common/i_http_request.dart';
 import 'package:trendoapp/constants/api_urls.dart';
 
 class UnfollowBusinessRequest implements IHttpRequest {
-  String businessId;
+  String? businessId;
   @override
-  String absolutePath = ApiUrls.unfollow_business_url;
+  String? absolutePath = ApiUrls.unfollow_business_url;
 
   @override
-  Object body;
+  Object? body;
 
   @override
-  HttpMethod httpMethod = HttpMethod.GET;
+  HttpMethod? httpMethod = HttpMethod.GET;
 
   @override
   Map<String, dynamic> get headers {
@@ -18,8 +18,8 @@ class UnfollowBusinessRequest implements IHttpRequest {
   }
 
   @override
-  Map<String, String> get parameters {
-    var map = Map<String, String>();
+  Map<String, String?> get parameters {
+    Map<String, String?> map = Map<String, String>();
     map = {"business_id": businessId};
     return map;
   }

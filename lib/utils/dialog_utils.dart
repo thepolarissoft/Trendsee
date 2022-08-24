@@ -14,11 +14,11 @@ import 'package:trendoapp/utils/url_launcher.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class DialogUtils {
-  static Future<String> displayDialogCallBack(
+  static Future<String?> displayDialogCallBack(
     BuildContext context,
     String image,
     String title,
-    String message,
+    String? message,
     String subMessage,
     String negativeMsg,
     String positiveMsg,
@@ -64,7 +64,7 @@ class DialogUtils {
                       child: Container(
                         // margin: EdgeInsets.only(top: 20),
                         child: GlobalView().textViewWithCenterAlign(
-                            message,
+                            message!,
                             AppTextStyle.inter_font_family,
                             AppTextStyle.semi_bold_font_weight,
                             BaseColor.black_color,
@@ -138,7 +138,7 @@ class DialogUtils {
         });
   }
 
-  static Future<String> displayDislikeDialog(
+  static Future<String?> displayDislikeDialog(
     BuildContext context,
     TextEditingController reasonEditingController,
     VoidCallback voidCallback,
@@ -302,7 +302,7 @@ class DialogUtils {
             "",
             AppMessages.unlike_title,
             AppMessages.unlike_message,
-            provider.listBusiness[index].businessName + "?",
+            provider.listBusiness[index].businessName! + "?",
             AppMessages.no_text,
             AppMessages.yes_text)
         .then((value) {

@@ -5,7 +5,7 @@ import 'package:trendoapp/data/models/notified_user_info.dart';
 import 'package:trendoapp/global/view/show_alert_view.dart';
 
 class NotificationsProvider extends ChangeNotifier {
-  NotificationListResponse notificationListResponse;
+  NotificationListResponse? notificationListResponse;
   bool isLoading = false;
   List<NotifiedUserInfo> listNotifiedUserInfo = [];
   bool isAvailableNotificationData = false;
@@ -16,20 +16,20 @@ class NotificationsProvider extends ChangeNotifier {
     notifyListeners();
     int page = notificationListResponse == null
         ? 1
-        : notificationListResponse.notifications.currentPage + 1;
+        : notificationListResponse!.notifications!.currentPage! + 1;
     print("page-> $page");
     ApiManager(context).getNotificationsList(page).then(
       (response) {
         notificationListResponse = response;
-        if (notificationListResponse.statuscode == 200) {
+        if (notificationListResponse!.statuscode == 200) {
           if (notificationListResponse != null &&
-              notificationListResponse.notifications != null) {
-            if (notificationListResponse.notifications.data.isNotEmpty) {
+              notificationListResponse!.notifications != null) {
+            if (notificationListResponse!.notifications!.data!.isNotEmpty) {
               if (page == 1) {
                 listNotifiedUserInfo.clear();
               }
               listNotifiedUserInfo
-                  .addAll(notificationListResponse.notifications.data);
+                  .addAll(notificationListResponse!.notifications!.data!);
               isAvailableNotificationData = true;
             } else {
               isAvailableNotificationData = false;

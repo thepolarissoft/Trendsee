@@ -12,7 +12,7 @@ import 'package:trendoapp/providers/verify_otp_provider.dart';
 
 // ignore: must_be_immutable
 class EmailVerificationPage extends StatefulWidget {
-  String email;
+  String? email;
   bool isVerifyByBusinessID;
   int businessID = 0;
   EmailVerificationPage(this.email, this.isVerifyByBusinessID,

@@ -5,12 +5,12 @@ import 'dart:io';
 import 'package:http/http.dart' as http;
 
 class GenerateImageUrl {
-  bool success;
-  String message;
+  bool? success;
+  String? message;
 
-  bool isGenerated;
-  String uploadUrl;
-  String downloadUrl;
+  bool? isGenerated;
+  String? uploadUrl;
+  String? downloadUrl;
 
   Future<void> call(String fileType) async {
     try {
@@ -46,10 +46,10 @@ class GenerateImageUrl {
 
 
 class UploadFile {
-  bool success;
-  String message;
+  bool? success;
+  String? message;
 
-  bool isUploaded;
+  bool? isUploaded;
 
   Future<void> call(String url, File image) async {
     try {

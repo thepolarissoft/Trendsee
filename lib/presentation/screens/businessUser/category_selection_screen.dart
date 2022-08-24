@@ -16,7 +16,7 @@ import 'package:trendoapp/providers/business_list_provider.dart';
 import 'package:trendoapp/providers/categories_list_provider.dart';
 
 class CategorySelectionScreen extends StatefulWidget {
-  CategorySelectionScreen({Key key, @required this.userType}) : super(key: key);
+  CategorySelectionScreen({Key? key, required this.userType}) : super(key: key);
   int userType = 0; //0=standard user, 1=business user
   @override
   _CategorySelectionScreenState createState() =>
@@ -232,7 +232,7 @@ class _CategorySelectionScreenState extends State<CategorySelectionScreen> {
                               children: [
                                 Container(
                                   child: GlobalView().textViewWithStartAlign(
-                                      provider.listCategories[index].name,
+                                      provider.listCategories[index].name!,
                                       AppTextStyle.inter_font_family,
                                       AppTextStyle.medium_font_weight,
                                       BaseColor.black_color,
@@ -257,7 +257,7 @@ class _CategorySelectionScreenState extends State<CategorySelectionScreen> {
                                   checkColor: BaseColor.pure_white_color,
                                   activeColor:
                                       BaseColor.btn_gradient_end_color1,
-                                  onChanged: (bool value) {
+                                  onChanged: (bool? value) {
                                     provider.changeCheckBoxValue(
                                         provider.listCategories[index], value);
                                     // setState(() {

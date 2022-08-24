@@ -4,13 +4,13 @@ import 'package:trendoapp/constants/api_urls.dart';
 
 class BusinessUserRegisterRequest implements IHttpRequest {
   @override
-  String absolutePath = ApiUrls.user_register_url;
+  String? absolutePath = ApiUrls.user_register_url;
 
   @override
-  Object body;
+  Object? body;
 
   @override
-  HttpMethod httpMethod = HttpMethod.POST;
+  HttpMethod? httpMethod = HttpMethod.POST;
 
   @override
   Map<String, dynamic> get headers {
@@ -24,7 +24,7 @@ class BusinessUserRegisterRequest implements IHttpRequest {
 
   BusinessUserRegisterRequest(
       BusinessUserRegisterRequestBody businessUserRegisterRequestBody) {
-    var map = new Map<String, String>();
+    var map = new Map<String, String?>();
     map['first_name'] = businessUserRegisterRequestBody.firstName;
     map['last_name'] = businessUserRegisterRequestBody.lastName;
     map['username'] = businessUserRegisterRequestBody.username;

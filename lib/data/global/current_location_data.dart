@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -7,8 +8,8 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:trendoapp/utils/storage_utils.dart';
 
 class CurrentLocationData {
-  LatLng latlong;
-  CameraPosition cameraPosition;
+  LatLng? latlong;
+  CameraPosition? cameraPosition;
 
   void getCurrentLocation(BuildContext context) async {
     bool serviceEnabled;
@@ -44,24 +45,20 @@ class CurrentLocationData {
       // Permissions are denied forever, handle appropriately.
       // permission = await Geolocator.checkPermission();
       await openAppSettings();
-      return Future.error(
-          'Location permissions are permanently denied, we cannot request permissions.');
+      return Future.error('Location permissions are permanently denied, we cannot request permissions.');
     }
     getLocation(context);
   }
 
   getLocation(BuildContext context) async {
-    Position position = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high);
-    Position position2 = await Geolocator.getLastKnownPosition();
-    print("Last Location-=> ${position2.latitude}");
+    Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+    // Position? position2 = await (Geolocator.getLastKnownPosition());
+    // print("Last Location-=> ${position2!.latitude}");
     print(position.latitude);
     print(position.longitude);
     if (position != null) {
-      StorageUtils.writeStringValue(
-          StorageUtils.keyLatitude, position.latitude.toString());
-      StorageUtils.writeStringValue(
-          StorageUtils.keyLongitude, position.longitude.toString());
+      StorageUtils.writeStringValue(StorageUtils.keyLatitude, position.latitude.toString());
+      StorageUtils.writeStringValue(StorageUtils.keyLongitude, position.longitude.toString());
       print("LAT->>${StorageUtils.readStringValue(StorageUtils.keyLatitude)}");
       // HomeListData().initHomeData(context, 1);
     }

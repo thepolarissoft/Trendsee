@@ -21,7 +21,7 @@ class CategoriesListResponse extends Baseresponse {
   //   this.category,
   // }) : super(status: status, statuscode: statuscode, msg: msg);
 
-  List<CategoryResponse> category;
+  List<CategoryResponse>? category;
 
   // factory CategoriesListResponse.fromJson(Map<String, dynamic> json) =>
   //     CategoriesListResponse(
@@ -47,6 +47,6 @@ class CategoriesListResponse extends Baseresponse {
         "msg": msg == null ? null : msg,
         "category": category == null
             ? null
-            : List<dynamic>.from(category.map((x) => x.toJson())),
+            : List<dynamic>.from(category!.map((x) => x.toJson())),
       };
 }

@@ -6,13 +6,13 @@ import 'package:trendoapp/constants/api_urls.dart';
 
 class CreateFeedRequest implements IHttpRequest {
   @override
-  String absolutePath = ApiUrls.create_feed_url;
+  String? absolutePath = ApiUrls.create_feed_url;
 
   @override
-  Object body;
+  Object? body;
 
   @override
-  HttpMethod httpMethod = HttpMethod.POST;
+  HttpMethod? httpMethod = HttpMethod.POST;
 
   @override
   Map<String, dynamic> get headers {
@@ -25,7 +25,7 @@ class CreateFeedRequest implements IHttpRequest {
   }
 
   CreateFeedRequest(CreateFeedRequestBody createFeedRequestBody) {
-    var map = Map<String, String>();
+    var map = Map<String, String?>();
     map["description"] = createFeedRequestBody.description;
     map["business_user_id"] = createFeedRequestBody.businessUserId;
     map["category_id"] = createFeedRequestBody.categoryId != null

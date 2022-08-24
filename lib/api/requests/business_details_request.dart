@@ -2,16 +2,16 @@ import 'package:trendoapp/api/common/i_http_request.dart';
 import 'package:trendoapp/constants/api_urls.dart';
 
 class BusinessDetailsRequest implements IHttpRequest {
-  int businessId;
-  String latitude, longitude;
+  int? businessId;
+  String? latitude, longitude;
   @override
-  String absolutePath = ApiUrls.business_details_url;
+  String? absolutePath = ApiUrls.business_details_url;
 
   @override
-  Object body;
+  Object? body;
 
   @override
-  HttpMethod httpMethod = HttpMethod.GET;
+  HttpMethod? httpMethod = HttpMethod.GET;
 
   @override
   Map<String, dynamic> get headers {
@@ -19,8 +19,8 @@ class BusinessDetailsRequest implements IHttpRequest {
   }
 
   @override
-  Map<String, String> get parameters {
-    Map<String, String> map = new Map<String, String>();
+  Map<String, String?> get parameters {
+    Map<String, String?> map = new Map<String, String>();
     map = {
       "business_id": businessId.toString(),
       "latitude": latitude,
@@ -29,7 +29,7 @@ class BusinessDetailsRequest implements IHttpRequest {
     return map;
   }
 
-  BusinessDetailsRequest(int businessId, String latitude, String longitude) {
+  BusinessDetailsRequest(int? businessId, String latitude, String longitude) {
     this.businessId = businessId;
     this.latitude = latitude;
     this.longitude = longitude;

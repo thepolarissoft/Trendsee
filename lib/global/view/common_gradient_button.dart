@@ -8,9 +8,9 @@ import 'global_view.dart';
 // ignore: must_be_immutable
 class CommonGradientButton extends StatelessWidget {
   CommonGradientButton(
-      {Key key,
-      @required this.onPressed,
-      @required this.title,
+      {Key? key,
+      required this.onPressed,
+      required this.title,
       this.fontWeight,
       this.textColor,
       this.padding,
@@ -19,10 +19,10 @@ class CommonGradientButton extends StatelessWidget {
 
   VoidCallback onPressed;
   String title;
-  FontWeight fontWeight;
-  Color textColor;
-  EdgeInsetsGeometry padding;
-  List<Color> gradientColors;
+  FontWeight? fontWeight;
+  Color? textColor;
+  EdgeInsetsGeometry? padding;
+  List<Color>? gradientColors;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(

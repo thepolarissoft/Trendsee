@@ -22,7 +22,7 @@ class CategoryView extends StatefulWidget {
 }
 
 class _CategoryViewState extends State<CategoryView> {
-  int page;
+  int? page;
   // FilterModel filterModel;
   @override
   void initState() {
@@ -73,7 +73,7 @@ class _CategoryViewState extends State<CategoryView> {
 
   Widget categoryView() =>
       Consumer<CategoriesListProvider>(builder: (_, categories, child) {
-        print("CATEGORY->> ${categories.selectedCategoryResponse.toJson()}");
+        print("CATEGORY->> ${categories.selectedCategoryResponse!.toJson()}");
         return Material(
           shadowColor: BaseColor.shadow_color,
           elevation: 4,
@@ -112,7 +112,7 @@ class _CategoryViewState extends State<CategoryView> {
                                     Expanded(
                                       child: GlobalView()
                                           .textViewWithStartAlign(
-                                              value.name,
+                                              value.name!,
                                               AppTextStyle.inter_font_family,
                                               AppTextStyle.normal_font_weight,
                                               BaseColor.hint_color,

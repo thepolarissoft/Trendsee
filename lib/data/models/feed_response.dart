@@ -30,29 +30,29 @@ class FeedResponse {
     this.distance,
   });
 
-  int id;
-  String title;
-  String description;
-  int categoryId;
-  int userId;
-  int businessUserId;
-  int totalLikes;
-  int totalDislikes;
-  int totalComments;
-  int totalShares;
-  DateTime createdAt;
-  DateTime updatedAt;
-  int totalFeeds;
-  int isLiked;
-  int isDisliked;
+  int? id;
+  String? title;
+  String? description;
+  int? categoryId;
+  int? userId;
+  int? businessUserId;
+  int? totalLikes;
+  int? totalDislikes;
+  int? totalComments;
+  int? totalShares;
+  DateTime? createdAt;
+  DateTime? updatedAt;
+  int? totalFeeds;
+  int? isLiked;
+  int? isDisliked;
   // List<dynamic> images;
   // CategoryResponse category;
-  List<CategoryResponse> categories;
-  LoginUserResponse user;
-  BusinessUserResponse businessUser;
-  List<CommentResponse> comments;
-  String locationName;
-  String distance;
+  List<CategoryResponse>? categories;
+  LoginUserResponse? user;
+  BusinessUserResponse? businessUser;
+  List<CommentResponse>? comments;
+  String? locationName;
+  String? distance;
   factory FeedResponse.fromJson(Map<String, dynamic> json) => FeedResponse(
         id: json["id"] == null ? null : json["id"],
         title: json["title"] == null ? null : json["title"],
@@ -112,19 +112,19 @@ class FeedResponse {
         "total_dislikes": totalDislikes == null ? null : totalDislikes,
         "total_comments": totalComments == null ? null : totalComments,
         "total_shares": totalShares == null ? null : totalShares,
-        "created_at": createdAt == null ? null : createdAt.toIso8601String(),
-        "updated_at": updatedAt == null ? null : updatedAt.toIso8601String(),
+        "created_at": createdAt == null ? null : createdAt!.toIso8601String(),
+        "updated_at": updatedAt == null ? null : updatedAt!.toIso8601String(),
         "total_feeds": totalFeeds == null ? null : totalFeeds,
         "is_liked": isLiked == null ? null : isLiked,
         "is_disliked": isDisliked == null ? null : isDisliked,
         // "images":
         //     images == null ? null : List<dynamic>.from(images.map((x) => x)),
         // "category": category == null ? null : category.toJson(),
-        "user": user == null ? null : user.toJson(),
-        "business_user": businessUser == null ? null : businessUser.toJson(),
+        "user": user == null ? null : user!.toJson(),
+        "business_user": businessUser == null ? null : businessUser!.toJson(),
         "comments": comments == null
             ? null
-            : List<dynamic>.from(comments.map((x) => x.toJson())),
+            : List<dynamic>.from(comments!.map((x) => x.toJson())),
         "distance": distance == null ? null : distance,
       };
 }

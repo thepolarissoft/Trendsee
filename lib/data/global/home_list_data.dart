@@ -38,7 +38,7 @@ class HomeListData {
       Provider.of<HomeFeedResponseProvider>(context, listen: false)
           .getHomeFeedList(
               context,
-              catProvider.selectedCategoryResponse.id.toString(),
+              catProvider.selectedCategoryResponse!.id.toString(),
               StorageUtils.readStringValue(StorageUtils.keyLatitude),
               StorageUtils.readStringValue(StorageUtils.keyLongitude),
               "5",
@@ -54,7 +54,7 @@ class HomeListData {
         .getHomeFeedList(
       context,
       Provider.of<CategoriesListProvider>(context, listen: false)
-          .selectedCategoryResponse
+          .selectedCategoryResponse!
           .id
           .toString(),
       StorageUtils.readStringValue(StorageUtils.keyLatitude),
@@ -78,7 +78,7 @@ class HomeListData {
       context,
       catProvider
           // .listFilteredCategoryId[0]
-          .selectedCategoryResponse
+          .selectedCategoryResponse!
           .id
           .toString(),
       StorageUtils.readStringValue(StorageUtils.keyLatitude),

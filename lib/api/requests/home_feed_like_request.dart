@@ -6,13 +6,13 @@ import 'package:trendoapp/constants/api_urls.dart';
 
 class HomeFeedLikeRequest implements IHttpRequest {
   @override
-  String absolutePath = ApiUrls.like_home_feed_url;
+  String? absolutePath = ApiUrls.like_home_feed_url;
 
   @override
-  Object body;
+  Object? body;
 
   @override
-  HttpMethod httpMethod = HttpMethod.POST;
+  HttpMethod? httpMethod = HttpMethod.POST;
 
   @override
   Map<String, dynamic> get headers {

@@ -6,13 +6,13 @@ import 'package:trendoapp/constants/api_urls.dart';
 
 class AddBusinessLatlongRequest implements IHttpRequest {
   @override
-  String absolutePath = ApiUrls.add_business_latlong_url;
+  String? absolutePath = ApiUrls.add_business_latlong_url;
 
   @override
-  Object body;
+  Object? body;
 
   @override
-  HttpMethod httpMethod = HttpMethod.POST;
+  HttpMethod? httpMethod = HttpMethod.POST;
 
   @override
   Map<String, dynamic> get headers {
@@ -26,7 +26,7 @@ class AddBusinessLatlongRequest implements IHttpRequest {
 
   AddBusinessLatlongRequest(
       AddBusinessLatlongRequestBody addBusinessLatlongRequestBody) {
-    var map = new Map<String, String>();
+    var map = new Map<String, String?>();
     map["latitude"] = addBusinessLatlongRequestBody.latitude;
     map["longitude"] = addBusinessLatlongRequestBody.longitude;
     map["is_default"] = addBusinessLatlongRequestBody.isDefault.toString();

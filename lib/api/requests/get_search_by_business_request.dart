@@ -2,21 +2,21 @@ import 'package:trendoapp/api/common/i_http_request.dart';
 import 'package:trendoapp/constants/api_urls.dart';
 
 class GetSearchByBusinessRequest implements IHttpRequest {
-  String page;
-  String searchValue;
-  String categoryId;
-  String latitude;
-  String longitude;
-  String distance;
-  String cityName;
+  String? page;
+  String? searchValue;
+  String? categoryId;
+  String? latitude;
+  String? longitude;
+  String? distance;
+  String? cityName;
   @override
-  String absolutePath = ApiUrls.search_by_business_url;
+  String? absolutePath = ApiUrls.search_by_business_url;
 
   @override
-  Object body;
+  Object? body;
 
   @override
-  HttpMethod httpMethod = HttpMethod.GET;
+  HttpMethod? httpMethod = HttpMethod.GET;
 
   @override
   Map<String, dynamic> get headers {
@@ -24,8 +24,8 @@ class GetSearchByBusinessRequest implements IHttpRequest {
   }
 
   @override
-  Map<String, String> get parameters {
-    var map = Map<String, String>();
+  Map<String, String?> get parameters {
+    Map<String, String?> map = Map<String, String>();
     print("DISTANCE IN FEET-> $distance");
     map = {
       "page": page,
@@ -56,7 +56,7 @@ class GetSearchByBusinessRequest implements IHttpRequest {
   }
 
   GetSearchByBusinessRequest(String page, String searchValue, String categoryId,
-      String latitude, String longitude, String distance, String cityName) {
+      String latitude, String longitude, String? distance, String? cityName) {
     this.page = page;
     this.searchValue = searchValue;
     this.categoryId = categoryId;

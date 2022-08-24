@@ -4,13 +4,13 @@ import 'package:trendoapp/constants/api_urls.dart';
 
 class VerifyPasscodeRequest implements IHttpRequest {
   @override
-  String absolutePath = ApiUrls.verify_passcode_new_url;
+  String? absolutePath = ApiUrls.verify_passcode_new_url;
 
   @override
-  Object body;
+  Object? body;
 
   @override
-  HttpMethod httpMethod = HttpMethod.POST;
+  HttpMethod? httpMethod = HttpMethod.POST;
 
   @override
   Map<String, dynamic> get headers {
@@ -23,7 +23,7 @@ class VerifyPasscodeRequest implements IHttpRequest {
   }
 
   VerifyPasscodeRequest(VerifyPasscodeRequestBody verifyPasscodeRequestBody) {
-    var map = new Map<String, String>();
+    var map = new Map<String, String?>();
     map["email"] = verifyPasscodeRequestBody.email;
     map["passcode"] = verifyPasscodeRequestBody.passcode;
     this.body = map;

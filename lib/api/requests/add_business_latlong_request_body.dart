@@ -1,8 +1,8 @@
 class AddBusinessLatlongRequestBody {
-  String latitude;
-  String longitude;
+  String? latitude;
+  String? longitude;
   int isDefault;
-  int businessLocationId;
+  int? businessLocationId;
   String locationName;
   String businessUserId;
   AddBusinessLatlongRequestBody(

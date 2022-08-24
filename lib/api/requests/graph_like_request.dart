@@ -2,16 +2,16 @@ import 'package:trendoapp/api/common/i_http_request.dart';
 import 'package:trendoapp/constants/api_urls.dart';
 
 class GraphLikeRequest implements IHttpRequest {
-  int businessUserId;
-  String graphRange;
+  int? businessUserId;
+  String? graphRange;
   @override
-  String absolutePath = ApiUrls.graph_likes_url;
+  String? absolutePath = ApiUrls.graph_likes_url;
 
   @override
-  Object body;
+  Object? body;
 
   @override
-  HttpMethod httpMethod = HttpMethod.GET;
+  HttpMethod? httpMethod = HttpMethod.GET;
 
   @override
   Map<String, dynamic> get headers {
@@ -19,8 +19,8 @@ class GraphLikeRequest implements IHttpRequest {
   }
 
   @override
-  Map<String, String> get parameters {
-    var map = new Map<String, String>();
+  Map<String, String?> get parameters {
+    Map<String, String?> map = new Map<String, String>();
     map = {
       "business_user_id": this.businessUserId.toString(),
       "graph_range": this.graphRange,

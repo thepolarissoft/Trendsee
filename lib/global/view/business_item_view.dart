@@ -13,7 +13,7 @@ class BusinessItemView extends StatelessWidget {
   VerifiedUserResponse verifiedUserResponse;
   VoidCallback onClickLikeButton;
   BusinessItemView(
-      {@required this.verifiedUserResponse, @required this.onClickLikeButton});
+      {required this.verifiedUserResponse, required this.onClickLikeButton});
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -42,11 +42,11 @@ class BusinessItemView extends StatelessWidget {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(8),
                   child: verifiedUserResponse.businessMedia != null &&
-                          verifiedUserResponse.businessMedia.isNotEmpty &&
-                          verifiedUserResponse.businessMedia[0].media != null
+                          verifiedUserResponse.businessMedia!.isNotEmpty &&
+                          verifiedUserResponse.businessMedia![0].media != null
                       ? FadeInImage.assetNetwork(
                           placeholder: AppImages.loader_gif_removeBG,
-                          image: verifiedUserResponse.businessMedia[0].media,
+                          image: verifiedUserResponse.businessMedia![0].media!,
                           fit: BoxFit.cover)
                       : Image.asset(AppImages.photo3, fit: BoxFit.cover),
                 ),
@@ -67,7 +67,7 @@ class BusinessItemView extends StatelessWidget {
                             child: GlobalView().textViewWithStartAlign(
                                 // "ChoxBlast Cafe ChoxBlast Cafe ChoxBlast Cafe ChoxBlast Cafe ChoxBlast Cafe ChoxBlast Cafe",
                                 verifiedUserResponse.businessName != null
-                                    ? verifiedUserResponse.businessName
+                                    ? verifiedUserResponse.businessName!
                                     : "ChoxBlast Cafe",
                                 AppTextStyle.inter_font_family,
                                 AppTextStyle.semi_bold_font_weight,
@@ -106,7 +106,7 @@ class BusinessItemView extends StatelessWidget {
                       GlobalView().textViewWithStartAlign(
                           verifiedUserResponse.categories != null
                               ? CategoryUtils().getCategoryName(
-                                  verifiedUserResponse.categories)
+                                  verifiedUserResponse.categories!)
                               : "Reastaurant",
                           AppTextStyle.inter_font_family,
                           AppTextStyle.medium_font_weight,
@@ -132,7 +132,7 @@ class BusinessItemView extends StatelessWidget {
                                                     .businessAddress !=
                                                 null
                                             ? verifiedUserResponse
-                                                .businessAddress
+                                                .businessAddress!
                                             : "San Fransisco, California, USA"
                                         : AppMessages.online_business_text,
                                 AppTextStyle.inter_font_family,

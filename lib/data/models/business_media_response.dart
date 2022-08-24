@@ -8,12 +8,12 @@ class BusinessMediaResponse {
     this.updatedAt,
   });
 
-  int id;
-  String media;
-  int type;
-  int userId;
-  DateTime createdAt;
-  DateTime updatedAt;
+  int? id;
+  String? media;
+  int? type;
+  int? userId;
+  DateTime? createdAt;
+  DateTime? updatedAt;
 
   factory BusinessMediaResponse.fromJson(Map<String, dynamic> json) =>
       BusinessMediaResponse(
@@ -34,7 +34,7 @@ class BusinessMediaResponse {
         "media": media == null ? null : media,
         "type": type == null ? null : type,
         "user_id": userId == null ? null : userId,
-        "created_at": createdAt == null ? null : createdAt.toIso8601String(),
-        "updated_at": updatedAt == null ? null : updatedAt.toIso8601String(),
+        "created_at": createdAt == null ? null : createdAt!.toIso8601String(),
+        "updated_at": updatedAt == null ? null : updatedAt!.toIso8601String(),
       };
 }

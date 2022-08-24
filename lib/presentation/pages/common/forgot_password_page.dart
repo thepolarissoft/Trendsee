@@ -13,7 +13,7 @@ import 'package:trendoapp/utils/preference_utils.dart';
 class ForgotPasswordPage extends StatelessWidget {
   TextEditingController emailTextEditingController =
       new TextEditingController();
-  String username = "";
+  String? username = "";
   @override
   Widget build(BuildContext context) {
     username = PreferenceUtils.getStringValue(

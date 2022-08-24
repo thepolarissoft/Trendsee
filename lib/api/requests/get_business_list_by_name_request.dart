@@ -5,13 +5,13 @@ class GetBusinessListByNameRequest implements IHttpRequest {
   int page = 1;
   String searchValue = "";
   @override
-  String absolutePath = ApiUrls.list_business_by_name_url;
+  String? absolutePath = ApiUrls.list_business_by_name_url;
 
   @override
-  Object body;
+  Object? body;
 
   @override
-  HttpMethod httpMethod = HttpMethod.GET;
+  HttpMethod? httpMethod = HttpMethod.GET;
 
   @override
   Map<String, dynamic> get headers {

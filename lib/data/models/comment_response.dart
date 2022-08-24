@@ -18,20 +18,20 @@ class CommentResponse {
     this.user,
   });
 
-  int id;
-  int businessUserId;
-  String comment;
-  int feedId;
-  int userId;
-  String reason;
-  int commentId;
-  int tagUserId;
-  DateTime createdAt;
-  DateTime updatedAt;
-  int isLiked;
-  String tagUserName;
-  List<dynamic> replies;
-  LoginUserResponse user;
+  int? id;
+  int? businessUserId;
+  String? comment;
+  int? feedId;
+  int? userId;
+  String? reason;
+  int? commentId;
+  int? tagUserId;
+  DateTime? createdAt;
+  DateTime? updatedAt;
+  int? isLiked;
+  String? tagUserName;
+  List<dynamic>? replies;
+  LoginUserResponse? user;
 
   factory CommentResponse.fromJson(Map<String, dynamic> json) =>
       CommentResponse(
@@ -68,12 +68,12 @@ class CommentResponse {
         "user_id": userId == null ? null : userId,
         "comment_id": commentId == null ? null : commentId,
         "tag_user_id": tagUserId == null ? null : tagUserId,
-        "created_at": createdAt == null ? null : createdAt.toIso8601String(),
-        "updated_at": updatedAt == null ? null : updatedAt.toIso8601String(),
+        "created_at": createdAt == null ? null : createdAt!.toIso8601String(),
+        "updated_at": updatedAt == null ? null : updatedAt!.toIso8601String(),
         "is_liked": isLiked == null ? null : isLiked,
         "tag_user_name": tagUserName == null ? null : tagUserName,
         "replies":
-            replies == null ? null : List<dynamic>.from(replies.map((x) => x)),
-        "user": user == null ? null : user.toJson(),
+            replies == null ? null : List<dynamic>.from(replies!.map((x) => x)),
+        "user": user == null ? null : user!.toJson(),
       };
 }

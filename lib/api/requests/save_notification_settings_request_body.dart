@@ -1,5 +1,5 @@
 class SaveNotificationSettingsRequestBody {
-  int allowNotification;
+  int? allowNotification;
 
   SaveNotificationSettingsRequestBody(int allowNotification){
     this.allowNotification=allowNotification;

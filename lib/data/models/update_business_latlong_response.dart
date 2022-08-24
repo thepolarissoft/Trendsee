@@ -10,10 +10,10 @@ BusinessLatlongResponse updateBusinessLatlongResponseFromJson(String str) =>
     BusinessLatlongResponse.fromJson(json.decode(str));
 
 class BusinessLatlongResponse extends Baseresponse {
-  int status;
-  String msg;
-  int statuscode;
-  List<LatLongInfo> latLong;
+  int? status;
+  String? msg;
+  int? statuscode;
+  List<LatLongInfo>? latLong;
 
   BusinessLatlongResponse.fromJson(Map<String, dynamic> json) : super(json) {
     status = json["status"] == null ? null : json["status"];
@@ -34,11 +34,11 @@ class LatLongInfo {
     this.locationName,
     this.isDefault,
   });
-  int id;
-  String latitude;
-  String longitude;
-  String locationName;
-  int isDefault;
+  int? id;
+  String? latitude;
+  String? longitude;
+  String? locationName;
+  int? isDefault;
 
   factory LatLongInfo.fromJson(Map<String, dynamic> json) => LatLongInfo(
         id: json["id"] == null ? null : json["id"],

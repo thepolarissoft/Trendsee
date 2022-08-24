@@ -5,13 +5,13 @@ import 'package:trendoapp/constants/api_urls.dart';
 class SearchBusinessKeywordsRequest implements IHttpRequest {
   String searchValue = "";
   @override
-  String absolutePath = ApiUrls.search_business_keywords_url;
+  String? absolutePath = ApiUrls.search_business_keywords_url;
 
   @override
-  Object body;
+  Object? body;
 
   @override
-  HttpMethod httpMethod = HttpMethod.GET;
+  HttpMethod? httpMethod = HttpMethod.GET;
 
   @override
   Map<String, dynamic> get headers {
@@ -26,5 +26,5 @@ class SearchBusinessKeywordsRequest implements IHttpRequest {
     return map;
   }
 
-  SearchBusinessKeywordsRequest({@required this.searchValue});
+  SearchBusinessKeywordsRequest({required this.searchValue});
 }

@@ -4,5 +4,5 @@ class VerifyOtpByBusinessIdRequestBody {
   int businessId;
   int otp;
   VerifyOtpByBusinessIdRequestBody(
-      {@required this.businessId, @required this.otp});
+      {required this.businessId, required this.otp});
 }
