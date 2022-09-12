@@ -12,6 +12,7 @@ import 'package:trendoapp/utils/preference_utils.dart';
 import 'package:trendoapp/utils/provider_utils.dart';
 import 'package:trendoapp/utils/storage_utils.dart';
 
+//----
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   OneSignal.shared.requiresUserPrivacyConsent().then((value) {
@@ -71,8 +72,7 @@ class _MyAppState extends State<MyApp> {
       builder: (context, child) {
         return MediaQuery(
           child: child!,
-          data: MediaQuery.of(context)
-              .copyWith(textScaleFactor: 1.0), //for restrict system settings
+          data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0), //for restrict system settings
         );
       },
       home: Scaffold(
@@ -82,8 +82,7 @@ class _MyAppState extends State<MyApp> {
   }
 
   void initOneSignal() {
-    OneSignal.shared.setNotificationWillShowInForegroundHandler(
-        (OSNotificationReceivedEvent event) {
+    OneSignal.shared.setNotificationWillShowInForegroundHandler((OSNotificationReceivedEvent event) {
       // Will be called whenever a notification is received in foreground
       // Display Notification, pass null param for not displaying the notification
       event.complete(event.notification);
@@ -91,8 +90,7 @@ class _MyAppState extends State<MyApp> {
       //     context, MaterialPageRoute(builder: (_) => BusinessDetailsScreen()));
     });
 
-    OneSignal.shared
-        .setNotificationOpenedHandler((OSNotificationOpenedResult result) {
+    OneSignal.shared.setNotificationOpenedHandler((OSNotificationOpenedResult result) {
       // Will be called whenever a notification is opened/button pressed.
 
       print('NOTIFICATION OPENED HANDLER CALLED WITH: ${result.toString()}');
