@@ -41,6 +41,7 @@ class Api {
         print('URL--> ${request.absolutePath! + paramsString}');
         var url = Uri.parse(request.absolutePath! + paramsString);
         http.get(url, headers: request.headers as Map<String, String>?).then((response) {
+       print("response-->>>>-==- $response");
           print("response-->>>>-==- ${response.body}");
           completer.complete(response);
         }).catchError((error) {

@@ -1,6 +1,5 @@
 class ApiUrls {
   static const String base_url ='http://api.trendseeapp.com/'; // "http://18.191.193.64/";
-  // static const String base_url = "http://192.168.29.68:8001/"; // LOCAL URL
   static const String user_register_url = base_url + "api/register";
   static const String send_otp_url = base_url + "api/send_otp";
   static const String verify_otp_url = base_url + "api/verify_otp_new";

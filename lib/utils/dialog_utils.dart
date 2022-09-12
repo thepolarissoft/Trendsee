@@ -22,7 +22,6 @@ class DialogUtils {
     String subMessage,
     String negativeMsg,
     String positiveMsg,
-    {VoidCallback? onTap,}
   ) async {
     // String clickedValue;
     return await showDialog<String>(
@@ -115,7 +114,7 @@ class DialogUtils {
                               child: Padding(
                             padding: const EdgeInsets.only(left: 8),
                             child: GestureDetector(
-                              onTap: onTap ?? () {
+                              onTap: () {
                                 Navigator.of(context).pop(positiveMsg);
                               },
                               child:

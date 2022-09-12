@@ -10,7 +10,7 @@ class AppMessages {
   static const String register_btn_text = "Sign up";
   static const String or_text = "OR";
   static const String verify_email_title = "Verify Email";
-  static const String verify_passcode_title = "Verify Passcode";
+  static const String verify_passcode_title = "Enter your passcode";
   static const String verify_email_message = "Enter the verification code sent to \n your email";
   static const String verify_passcode_message = "Enter the pass code!";
   static const String otp_message = "Didn’t receive the code?";
@@ -95,6 +95,7 @@ class AppMessages {
   static const String account_settings_title = "Account Settings";
   static const String notification_settings_title = "Notification settings";
   static const String account_de_active_message = "De-activate My Account";
+  static const String editBusinessInfo = "Edit Business Info";
   static const String account_delete_message = "Delete My Account";
   static const String reset_password_title = "Reset Password";
   static const String my_checkins = "My Check-ins";
@@ -112,7 +113,7 @@ class AppMessages {
   static const String hint_for_login = "Enter Username or Email";
   static const String select_this_location = "Select this Location";
   static const String title_select_category = "Select Category";
-  static const String no_feeds_available_with_filters_message = "Nothing Here \n Change Search To Get Result";
+  static const String no_feeds_available_with_filters_message = "Nothing Here \n Change Search To Get Results";
   static const String no_feeds_available_message = "No feeds Available!";
   static const String my_checkins_title = "My Check-ins";
   static const String views_text = "Views";
@@ -188,7 +189,7 @@ class AppMessages {
   static const String online_business_text = "Online Business";
   static const String mobile_business_text = "Mobile Business";
   static const String add_text = "Add";
-  static const String change_search_text = "Change Search?";
+  static const String change_search_text = "Change Search";
   static const String other_text = "Other";
   static const String area_text = "area";
   static const String working_progress_text = "Working Progress!";

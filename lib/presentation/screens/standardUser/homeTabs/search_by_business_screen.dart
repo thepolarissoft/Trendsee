@@ -254,11 +254,7 @@ class _SearchByBusinessScreenState extends State<SearchByBusinessScreen> with Ti
   }
 
   void getMoreBusinessData() async {
-    print("getMoreBusinessData ==============================================================");
     SearchByBusinessResponse? searchByBusinessResponse = Provider.of<SearchByBusinessProvider>(context, listen: false).searchByBusinessResponse;
-    print(searchByBusinessResponse != null );
-    print(searchByBusinessResponse!.place != null );
-    print(searchByBusinessResponse.place!.nextPageUrl != null);
     if (searchByBusinessResponse != null && searchByBusinessResponse.place != null && searchByBusinessResponse.place!.nextPageUrl != null) {
       page++;
       Provider.of<SearchByBusinessProvider>(context, listen: false).getSearchByBusinessList(
@@ -436,7 +432,6 @@ class _SearchByBusinessScreenState extends State<SearchByBusinessScreen> with Ti
                                     }),
                               ),
                             ),
-                        
                           ),
                         )
                       : Container(
