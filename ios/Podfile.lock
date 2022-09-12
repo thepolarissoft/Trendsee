@@ -1,14 +1,4 @@
 PODS:
-  - aws_s3 (0.0.1):
-    - AWSCognito
-    - AWSCore
-    - AWSS3
-    - Flutter
-  - AWSCognito (2.19.1):
-    - AWSCore (= 2.19.1)
-  - AWSCore (2.19.1)
-  - AWSS3 (2.19.1):
-    - AWSCore (= 2.19.1)
   - connectivity_plus (0.0.1):
     - Flutter
     - ReachabilitySwift
@@ -65,7 +55,6 @@ PODS:
     - Flutter
 
 DEPENDENCIES:
-  - aws_s3 (from `.symlinks/plugins/aws_s3/ios`)
   - connectivity_plus (from `.symlinks/plugins/connectivity_plus/ios`)
   - Flutter (from `Flutter`)
   - flutter_keyboard_visibility (from `.symlinks/plugins/flutter_keyboard_visibility/ios`)
@@ -85,9 +74,6 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
-    - AWSCognito
-    - AWSCore
-    - AWSS3
     - FMDB
     - GoogleMaps
     - OneSignalXCFramework
@@ -95,8 +81,6 @@ SPEC REPOS:
     - Toast
 
 EXTERNAL SOURCES:
-  aws_s3:
-    :path: ".symlinks/plugins/aws_s3/ios"
   connectivity_plus:
     :path: ".symlinks/plugins/connectivity_plus/ios"
   Flutter:
@@ -129,10 +113,6 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/url_launcher_ios/ios"
 
 SPEC CHECKSUMS:
-  aws_s3: 01f73004966a469c748da1336ba7be2bcf031ba6
-  AWSCognito: f50de600804941d083af37a7568905f31a774727
-  AWSCore: 55c154ae27efc5c98bdc30a0eeea5a35d10a2ab5
-  AWSS3: 2272253b098d07803af8dd20ce6ce7302bcffb47
   connectivity_plus: 413a8857dd5d9f1c399a39130850d02fe0feaf7e
   Flutter: 50d75fe2f02b26cc09d224853bb45737f8b3214a
   flutter_keyboard_visibility: 0339d06371254c3eb25eeb90ba8d17dca8f9c069

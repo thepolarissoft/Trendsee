@@ -35,12 +35,22 @@ class SearchByBusinessProvider extends ChangeNotifier {
   SearchBusinessKeywordsResponse searchBusinessKeywordsResponse = SearchBusinessKeywordsResponse();
   List<String> listBusinessKeyword = [];
 
-  void getSearchByBusinessList(
-      BuildContext context, int page, String searchValue, String categoryId, String latitude, String longitude, String? distance, String? cityName) {
+  void getSearchByBusinessList(BuildContext context, int page, String searchValue, String categoryId, String latitude, String longitude, String? distance, String? cityName) {
     isLoading = true;
     notifyListeners();
-    ApiManager(context).getSearchByBusinessList(page.toString(), searchValue, categoryId, latitude, longitude, distance, cityName).then((response) {
+    ApiManager(context).getSearchByBusinessList(page.toString(), searchValue, categoryId, latitude, longitude, distance, cityName).
+    then((response) {
+       print('*- ${response.place!.currentPage}');
+      print('*-*- ${response.place!.data}');
+      print('*-*-*- ${response.place!.lastPage}');
+      print('*-*-*-* ${response.place!.firstPageUrl}');
+      print('*-*-*-*- ${response.place!.lastPageUrl}');
       searchByBusinessResponse = response;
+      print('*- ${searchByBusinessResponse!.place!.currentPage}');
+      print('*-*- ${searchByBusinessResponse!.place!.data}');
+      print('*-*-*- ${searchByBusinessResponse!.place!.lastPage}');
+      print('*-*-*-* ${searchByBusinessResponse!.place!.firstPageUrl}');
+      print('*-*-*-*- ${searchByBusinessResponse!.place!.lastPageUrl}');
       if (searchByBusinessResponse!.statuscode == 200) {
         if (searchByBusinessResponse != null && searchByBusinessResponse!.place != null && searchByBusinessResponse!.place!.data != null) {
           if (searchByBusinessResponse!.place!.data!.isNotEmpty) {
@@ -381,9 +391,7 @@ class SearchByBusinessProvider extends ChangeNotifier {
   void businessDetails(BuildContext context, int? businessId) async {
     isLoading = true;
     // notifyListeners();
-    ApiManager(context)
-        .businessDetails(businessId, StorageUtils.readStringValue(StorageUtils.keyLatitude), StorageUtils.readStringValue(StorageUtils.keyLongitude))
-        .then((response) {
+    ApiManager(context).businessDetails(businessId, StorageUtils.readStringValue(StorageUtils.keyLatitude), StorageUtils.readStringValue(StorageUtils.keyLongitude)).then((response) {
       businessDetailsResponse = response;
       if (businessDetailsResponse != null) {
         print("businessDetailsResponse--->>== ${businessDetailsResponse!.msg}");
@@ -460,9 +468,7 @@ class SearchByBusinessProvider extends ChangeNotifier {
         print("dislikedCommentsResponse--->>== ${dislikedCommentsResponse.msg}");
         if (dislikedCommentsResponse.statuscode == 200 || dislikedCommentsResponse.statuscode == 201) {
           if (dislikedCommentsResponse.dislike != null) {
-            if (dislikedCommentsResponse.dislike!.data != null &&
-                dislikedCommentsResponse.dislike!.data!.length > 0 &&
-                dislikedCommentsResponse.dislike!.data!.isNotEmpty) {
+            if (dislikedCommentsResponse.dislike!.data != null && dislikedCommentsResponse.dislike!.data!.length > 0 && dislikedCommentsResponse.dislike!.data!.isNotEmpty) {
               if (page == 1) {
                 listDislikedComments.clear();
               }

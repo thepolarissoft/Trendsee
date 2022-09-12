@@ -536,6 +536,7 @@ class _BusinessDetailsScreenState extends State<BusinessDetailsScreen> {
                                           GlobalView().sizedBoxView(10),
                                           GestureDetector(
                                             onTap: () {
+                                              debugPrint('*-*-*${provider.businessDetailsResponse!.business!.currentPlan}');
                                               if (provider.businessDetailsResponse!.business!.currentPlan!.toLowerCase() == AppMessages.freeText) {
                                                 DialogUtils.displayDialogCallBack(
                                                     context, "", "", AppMessages.featureNotAvailableMsg, "", AppMessages.ok_text, "");

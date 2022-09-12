@@ -10,7 +10,6 @@ import 'package:trendoapp/constants/app_routes.dart';
 import 'package:trendoapp/constants/app_text_style.dart';
 import 'package:trendoapp/constants/app_toast_messages.dart';
 import 'package:trendoapp/constants/base_color.dart';
-
 import 'package:trendoapp/data/models/verified_user_response.dart';
 import 'package:trendoapp/global/view/global_view.dart';
 import 'package:trendoapp/providers/base_response_provider.dart';
