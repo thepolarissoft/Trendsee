@@ -13,7 +13,10 @@ import 'package:trendoapp/constants/device_size.dart';
 import 'package:trendoapp/global/view/check_ins_item_view.dart';
 import 'package:trendoapp/global/view/common_gradient_button.dart';
 import 'package:trendoapp/global/view/global_view.dart';
+import 'package:trendoapp/presentation/pages/standardUser/add_new_check_in_page.dart';
+import 'package:trendoapp/presentation/screens/standardUser/friendsTabs/add_new_check_support_screen.dart';
 import 'package:trendoapp/presentation/screens/standardUser/friendsTabs/feeds_description_screen.dart';
+import 'package:trendoapp/providers/business_list_provider.dart';
 import 'package:trendoapp/providers/search_by_business_provider.dart';
 import 'package:trendoapp/utils/category_utils.dart';
 import 'package:trendoapp/utils/dialog_utils.dart';
@@ -102,8 +105,7 @@ class _BusinessDetailsScreenState extends State<BusinessDetailsScreen> {
                                               if (provider.businessDetailsResponse!.business!.linkAd != '' &&
                                                   provider.businessDetailsResponse!.business!.linkAd != null &&
                                                   provider.businessDetailsResponse!.business!.linkAd!.isNotEmpty) {
-                                                if (provider.businessDetailsResponse!.business!.linkAd!.contains('http') ||
-                                                    provider.businessDetailsResponse!.business!.linkAd!.contains('https')) {
+                                                if (provider.businessDetailsResponse!.business!.linkAd!.contains('http') || provider.businessDetailsResponse!.business!.linkAd!.contains('https')) {
                                                   UrlLauncher().launchUrl(provider.businessDetailsResponse!.business!.linkAd!);
                                                 } else if (provider.businessDetailsResponse!.business!.linkAd!.toLowerCase().contains('www')) {
                                                   UrlLauncher().launchUrl('https://${provider.businessDetailsResponse!.business!.linkAd!}');
@@ -111,8 +113,7 @@ class _BusinessDetailsScreenState extends State<BusinessDetailsScreen> {
                                                   Navigator.pushReplacement(
                                                     context,
                                                     MaterialPageRoute(
-                                                      builder: (_) => BusinessDetailsScreen(
-                                                          businessId: int.parse(provider.businessDetailsResponse!.business!.linkAd!)),
+                                                      builder: (_) => BusinessDetailsScreen(businessId: int.parse(provider.businessDetailsResponse!.business!.linkAd!)),
                                                     ),
                                                   );
                                                 }
@@ -139,17 +140,13 @@ class _BusinessDetailsScreenState extends State<BusinessDetailsScreen> {
                                                         if (provider.businessDetailsResponse!.business!.linkAd!.contains('http') ||
                                                             provider.businessDetailsResponse!.business!.linkAd!.contains('https')) {
                                                           UrlLauncher().launchUrl(provider.businessDetailsResponse!.business!.linkAd!);
-                                                        } else if (provider.businessDetailsResponse!.business!.linkAd!
-                                                            .toLowerCase()
-                                                            .contains('www')) {
+                                                        } else if (provider.businessDetailsResponse!.business!.linkAd!.toLowerCase().contains('www')) {
                                                           UrlLauncher().launchUrl('https://${provider.businessDetailsResponse!.business!.linkAd!}');
-                                                        } else if (provider.businessDetailsResponse!.business!.linkAd!
-                                                            .contains(RegExp(r'^[0-9]+$'))) {
+                                                        } else if (provider.businessDetailsResponse!.business!.linkAd!.contains(RegExp(r'^[0-9]+$'))) {
                                                           Navigator.pushReplacement(
                                                             context,
                                                             MaterialPageRoute(
-                                                              builder: (_) => BusinessDetailsScreen(
-                                                                  businessId: int.parse(provider.businessDetailsResponse!.business!.linkAd!)),
+                                                              builder: (_) => BusinessDetailsScreen(businessId: int.parse(provider.businessDetailsResponse!.business!.linkAd!)),
                                                             ),
                                                           );
                                                         }
@@ -330,18 +327,11 @@ class _BusinessDetailsScreenState extends State<BusinessDetailsScreen> {
                                   GlobalView().sizedBoxView(15),
                                   GlobalView().dividerView(),
                                   Visibility(
-                                    visible: provider.businessDetailsResponse!.business!.isMobile == 0 &&
-                                        provider.businessDetailsResponse!.business!.isOnline == 0,
+                                    visible: provider.businessDetailsResponse!.business!.isMobile == 0 && provider.businessDetailsResponse!.business!.isOnline == 0,
                                     child: Padding(
                                       padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-                                      child: GlobalView().textViewWithCenterAlign(
-                                          AppMessages.thisPlaceIsWithin +
-                                              provider.businessDetailsResponse!.business!.distance! +
-                                              AppMessages.miles_from_text,
-                                          AppTextStyle.inter_font_family,
-                                          AppTextStyle.semi_bold_font_weight,
-                                          BaseColor.forgot_pass_txt_color,
-                                          16),
+                                      child: GlobalView().textViewWithCenterAlign(AppMessages.thisPlaceIsWithin + provider.businessDetailsResponse!.business!.distance! + AppMessages.miles_from_text,
+                                          AppTextStyle.inter_font_family, AppTextStyle.semi_bold_font_weight, BaseColor.forgot_pass_txt_color, 16),
                                     ),
                                   ),
                                   Padding(
@@ -373,9 +363,7 @@ class _BusinessDetailsScreenState extends State<BusinessDetailsScreen> {
                                                 child: GlobalView().wrappedButtonViewWithImage(
                                                   context,
                                                   Image.asset(
-                                                    provider.businessDetailsResponse!.business!.isLiked == 1
-                                                        ? AppImages.thumbs_up_filled
-                                                        : AppImages.thumbs_up,
+                                                    provider.businessDetailsResponse!.business!.isLiked == 1 ? AppImages.thumbs_up_filled : AppImages.thumbs_up,
                                                     height: 40,
                                                     width: 40,
                                                     // ? GlobalView().buttonRoundedBorder(
@@ -407,8 +395,7 @@ class _BusinessDetailsScreenState extends State<BusinessDetailsScreen> {
                                                   reasonEditingController,
                                                   () {
                                                     if (reasonEditingController.text.isNotEmpty) {
-                                                      provider.dislikeBusiness(
-                                                          context, provider.businessDetailsResponse!.business!, reasonEditingController.text, 1, "");
+                                                      provider.dislikeBusiness(context, provider.businessDetailsResponse!.business!, reasonEditingController.text, 1, "");
                                                     } else if (reasonEditingController.text.isEmpty) {
                                                       GlobalView().showToast(AppToastMessages.valid_reason_message);
                                                     }
@@ -423,9 +410,7 @@ class _BusinessDetailsScreenState extends State<BusinessDetailsScreen> {
                                                 child: GlobalView().wrappedButtonViewWithImage(
                                                   context,
                                                   Image.asset(
-                                                    provider.businessDetailsResponse!.business!.isDisliked == 1
-                                                        ? AppImages.thumbs_down_filled
-                                                        : AppImages.thumbs_down,
+                                                    provider.businessDetailsResponse!.business!.isDisliked == 1 ? AppImages.thumbs_down_filled : AppImages.thumbs_down,
                                                     height: 40,
                                                     width: 40,
                                                     // ? GlobalView().buttonRoundedBorder(
@@ -443,6 +428,34 @@ class _BusinessDetailsScreenState extends State<BusinessDetailsScreen> {
                                         ),
                                       ],
                                     ),
+                                  ),
+                                  GlobalView().sizedBoxView(20),
+                                  // support button
+                                  GestureDetector(
+                                    onTap: () {
+                                      print(provider.businessDetailsResponse!.business!.businessName);
+                                      print(CategoryUtils().getCategoryName(provider.businessDetailsResponse!.business!.categories!));
+                                      print(provider.businessDetailsResponse!.business!.id);
+                                      print(CategoryUtils().getCategoryId(provider.businessDetailsResponse!.business!.categories!));
+                                      print(provider.businessDetailsResponse!.business!.latitude);
+                                      print(provider.businessDetailsResponse!.business!.longitude);
+                                      print(provider.businessDetailsResponse!.business!.locationName);
+
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => AddNewCheckSupportScreen(
+                                            businessId: provider.businessDetailsResponse!.business!.id ?? 0,
+                                            categoriesId: CategoryUtils().getCategoryId(provider.businessDetailsResponse!.business!.categories!),
+                                            businessLatitude: provider.businessDetailsResponse!.business!.latitude!,
+                                            businessLongitude: provider.businessDetailsResponse!.business!.longitude!,
+                                            businessLocationName: provider.businessDetailsResponse!.business!.locationName ?? '',
+                                            businessName: provider.businessDetailsResponse!.business!.businessName ?? '',
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                    child: GlobalView().wrappedButtonFilledView(context, AppMessages.supportText),
                                   ),
                                   GlobalView().sizedBoxView(20),
                                   // Padding(
@@ -498,10 +511,7 @@ class _BusinessDetailsScreenState extends State<BusinessDetailsScreen> {
                                   // ),
                                   // GlobalView().sizedBoxView(20),
                                   Visibility(
-                                    visible: provider.businessDetailsResponse!.business!.businessWebsite != null &&
-                                            provider.businessDetailsResponse!.business!.businessWebsite != ""
-                                        ? true
-                                        : false,
+                                    visible: provider.businessDetailsResponse!.business!.businessWebsite != null && provider.businessDetailsResponse!.business!.businessWebsite != "" ? true : false,
                                     child: Padding(
                                       padding: EdgeInsets.symmetric(horizontal: 20),
                                       child: Column(
@@ -509,8 +519,8 @@ class _BusinessDetailsScreenState extends State<BusinessDetailsScreen> {
                                         children: [
                                           Align(
                                             alignment: Alignment.centerLeft,
-                                            child: GlobalView().textViewWithStartAlign(AppMessages.hint_business_website,
-                                                AppTextStyle.inter_font_family, AppTextStyle.semi_bold_font_weight, BaseColor.black_color, 16),
+                                            child: GlobalView().textViewWithStartAlign(
+                                                AppMessages.hint_business_website, AppTextStyle.inter_font_family, AppTextStyle.semi_bold_font_weight, BaseColor.black_color, 16),
                                           ),
                                           GlobalView().sizedBoxView(5),
                                           GestureDetector(
@@ -524,9 +534,7 @@ class _BusinessDetailsScreenState extends State<BusinessDetailsScreen> {
                                             child: Align(
                                               alignment: Alignment.centerLeft,
                                               child: GlobalView().textViewWithStartAlign(
-                                                  provider.businessDetailsResponse!.business!.businessWebsite != null
-                                                      ? provider.businessDetailsResponse!.business!.businessWebsite!
-                                                      : "0",
+                                                  provider.businessDetailsResponse!.business!.businessWebsite != null ? provider.businessDetailsResponse!.business!.businessWebsite! : "0",
                                                   AppTextStyle.inter_font_family,
                                                   AppTextStyle.medium_font_weight,
                                                   BaseColor.black_color,
@@ -536,9 +544,9 @@ class _BusinessDetailsScreenState extends State<BusinessDetailsScreen> {
                                           GlobalView().sizedBoxView(10),
                                           GestureDetector(
                                             onTap: () {
+                                              debugPrint('*-*-*${provider.businessDetailsResponse!.business!.currentPlan}');
                                               if (provider.businessDetailsResponse!.business!.currentPlan!.toLowerCase() == AppMessages.freeText) {
-                                                DialogUtils.displayDialogCallBack(
-                                                    context, "", "", AppMessages.featureNotAvailableMsg, "", AppMessages.ok_text, "");
+                                                DialogUtils.displayDialogCallBack(context, "", "", AppMessages.featureNotAvailableMsg, "", AppMessages.ok_text, "");
                                               } else {
                                                 String url = provider.businessDetailsResponse!.business!.businessWebsite!;
                                                 UrlLauncher().launchUrl(url);
@@ -555,8 +563,8 @@ class _BusinessDetailsScreenState extends State<BusinessDetailsScreen> {
                                     padding: EdgeInsets.symmetric(horizontal: 20),
                                     child: Align(
                                       alignment: Alignment.centerLeft,
-                                      child: GlobalView().textViewWithStartAlign(AppMessages.hint_business_phone_number,
-                                          AppTextStyle.inter_font_family, AppTextStyle.semi_bold_font_weight, BaseColor.black_color, 16),
+                                      child: GlobalView().textViewWithStartAlign(
+                                          AppMessages.hint_business_phone_number, AppTextStyle.inter_font_family, AppTextStyle.semi_bold_font_weight, BaseColor.black_color, 16),
                                     ),
                                   ),
                                   GlobalView().sizedBoxView(10),
@@ -579,8 +587,7 @@ class _BusinessDetailsScreenState extends State<BusinessDetailsScreen> {
                                   GestureDetector(
                                     onTap: () async {
                                       if (provider.businessDetailsResponse!.business!.currentPlan!.toLowerCase() == AppMessages.freeText) {
-                                        DialogUtils.displayDialogCallBack(
-                                            context, "", "", AppMessages.featureNotAvailableMsg, "", AppMessages.ok_text, "");
+                                        DialogUtils.displayDialogCallBack(context, "", "", AppMessages.featureNotAvailableMsg, "", AppMessages.ok_text, "");
                                       } else {
                                         print("Call now called");
                                         String url = 'tel:${provider.businessDetailsResponse!.business!.businessPhone}';
@@ -604,8 +611,8 @@ class _BusinessDetailsScreenState extends State<BusinessDetailsScreen> {
                                     padding: EdgeInsets.symmetric(horizontal: 20),
                                     child: Align(
                                       alignment: Alignment.centerLeft,
-                                      child: GlobalView().textViewWithStartAlign(AppMessages.hint_business_address, AppTextStyle.inter_font_family,
-                                          AppTextStyle.semi_bold_font_weight, BaseColor.black_color, 16),
+                                      child: GlobalView()
+                                          .textViewWithStartAlign(AppMessages.hint_business_address, AppTextStyle.inter_font_family, AppTextStyle.semi_bold_font_weight, BaseColor.black_color, 16),
                                     ),
                                   ),
                                   GlobalView().sizedBoxView(10),
@@ -650,8 +657,7 @@ class _BusinessDetailsScreenState extends State<BusinessDetailsScreen> {
                                     ),
                                   ),
                                   Visibility(
-                                    visible: provider.businessDetailsResponse!.business!.isOnline == 1 ||
-                                            provider.businessDetailsResponse!.business!.isMobile == 1
+                                    visible: provider.businessDetailsResponse!.business!.isOnline == 1 || provider.businessDetailsResponse!.business!.isMobile == 1
                                         //||
                                         // provider.selectedBusinessResponse.cityName == ""
                                         ? false
@@ -682,8 +688,7 @@ class _BusinessDetailsScreenState extends State<BusinessDetailsScreen> {
                                             child: Padding(
                                               padding: const EdgeInsets.only(left: 7),
                                               child: GlobalView().textViewWithStartAlign(
-                                                  provider.businessDetailsResponse!.business!.city != null &&
-                                                          provider.businessDetailsResponse!.business!.city!.name != ""
+                                                  provider.businessDetailsResponse!.business!.city != null && provider.businessDetailsResponse!.business!.city!.name != ""
                                                       ? provider.businessDetailsResponse!.business!.city!.name!
                                                       //      +
                                                       // ", " +
@@ -718,9 +723,7 @@ class _BusinessDetailsScreenState extends State<BusinessDetailsScreen> {
                                             //   provider.selectedBusinessResponse.longitude);
                                             String? lat = provider.businessDetailsResponse!.business!.latitude;
                                             String? long = provider.businessDetailsResponse!.business!.longitude;
-                                            String googleUrl = Platform.isAndroid
-                                                ? "https://www.google.com/maps/search/?api=1&query="
-                                                : "https://maps.apple.com/?q=" + lat! + "," + long!;
+                                            String googleUrl = Platform.isAndroid ? "https://www.google.com/maps/search/?api=1&query=" : "https://maps.apple.com/?q=" + lat! + "," + long!;
                                             if (await canLaunch(googleUrl)) {
                                               await launch(googleUrl);
                                             }
@@ -777,10 +780,7 @@ class _BusinessDetailsScreenState extends State<BusinessDetailsScreen> {
                         Positioned(
                           bottom: 0,
                           child: Visibility(
-                              visible: provider.businessDetailsResponse!.business!.feed!.isNotEmpty &&
-                                      provider.businessDetailsResponse!.business!.feed!.length > 0
-                                  ? true
-                                  : false,
+                              visible: provider.businessDetailsResponse!.business!.feed!.isNotEmpty && provider.businessDetailsResponse!.business!.feed!.length > 0 ? true : false,
                               // child: businessCheckInsView(provider),
                               child: CommonGradientButton(
                                   onPressed: () {
@@ -824,8 +824,7 @@ class _BusinessDetailsScreenState extends State<BusinessDetailsScreen> {
                 Expanded(
                   child: Row(
                     children: [
-                      GlobalView().textViewWithStartAlign(AppMessages.business_checkins_title, AppTextStyle.inter_font_family,
-                          AppTextStyle.bold_font_weight, BaseColor.black_color, 18),
+                      GlobalView().textViewWithStartAlign(AppMessages.business_checkins_title, AppTextStyle.inter_font_family, AppTextStyle.bold_font_weight, BaseColor.black_color, 18),
                       // GlobalView().textViewWithStartAlign(
                       //     provider.businessDetailsResponse.business
                       //                 .totalFeeds ==

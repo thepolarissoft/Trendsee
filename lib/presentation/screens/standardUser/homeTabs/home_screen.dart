@@ -210,7 +210,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                         MaterialPageRoute(
                           builder: (_) => BusinessDetailsScreen(
                               businessId: homeFeedResponseProvider
-                                  .listFeedInfo[itemIndex].businessUserId),
+                                  .listFeedInfo[itemIndex].businessUserId,),
                         ),
                       );
                     },

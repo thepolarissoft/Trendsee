@@ -21,18 +21,13 @@ import 'package:trendoapp/utils/day_time_utils.dart';
 class CheckInDetailsPage extends StatelessWidget {
   FeedResponse feedResponse = new FeedResponse();
   // CheckInDetailsPage(this.feedResponse);
-  TextEditingController commentTextEditingController =
-      new TextEditingController();
+  TextEditingController commentTextEditingController = new TextEditingController();
   @override
   Widget build(BuildContext context) {
     Future.delayed(Duration.zero, () {
-      feedResponse =
-          Provider.of<HomeFeedResponseProvider>(context, listen: false)
-              .feedResponse;
-      Provider.of<BaseResponseProvider>(context, listen: false)
-          .viewFeed(feedResponse.id.toString(), context);
-      Provider.of<CommentResponseProvider>(context, listen: false)
-          .getCommentList(context, feedResponse.id);
+      feedResponse = Provider.of<HomeFeedResponseProvider>(context, listen: false).feedResponse;
+      Provider.of<BaseResponseProvider>(context, listen: false).viewFeed(feedResponse.id.toString(), context);
+      Provider.of<CommentResponseProvider>(context, listen: false).getCommentList(context, feedResponse.id);
     });
     return GestureDetector(
       onTap: () {
@@ -44,12 +39,9 @@ class CheckInDetailsPage extends StatelessWidget {
             child: Container(
               decoration: BoxDecoration(
                 // color: Colors.red,
-                image: DecorationImage(
-                    image: AssetImage(AppImages.background_image1),
-                    fit: BoxFit.cover),
+                image: DecorationImage(image: AssetImage(AppImages.background_image1), fit: BoxFit.cover),
               ),
-              child: Consumer<HomeFeedResponseProvider>(
-                  builder: (_, homeFeed, child) {
+              child: Consumer<HomeFeedResponseProvider>(builder: (_, homeFeed, child) {
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -75,13 +67,8 @@ class CheckInDetailsPage extends StatelessWidget {
                               shape: BoxShape.circle,
                               color: Colors.grey,
                               image: DecorationImage(
-                                  image: (homeFeed.feedResponse.businessUser!
-                                              .avatar !=
-                                          ""
-                                      ? NetworkImage(homeFeed
-                                          .feedResponse.businessUser!.avatar!)
-                                      : AssetImage(
-                                          AppImages.default_profile_Pic)) as ImageProvider<Object>,
+                                  image: (homeFeed.feedResponse.businessUser!.avatar != "" ? NetworkImage(homeFeed.feedResponse.businessUser!.avatar!) : AssetImage(AppImages.default_profile_Pic))
+                                      as ImageProvider<Object>,
                                   fit: BoxFit.cover),
                             ),
                           ),
@@ -97,18 +84,9 @@ class CheckInDetailsPage extends StatelessWidget {
                                   child: Container(
                                     // alignment: Alignment.center,
                                     child: GlobalView().textViewWithStartAlign(
-                                        homeFeed.feedResponse == null &&
-                                                homeFeed.feedResponse
-                                                        .businessUser ==
-                                                    null &&
-                                                homeFeed
-                                                        .feedResponse
-                                                        .businessUser!
-                                                        .businessName ==
-                                                    null
+                                        homeFeed.feedResponse == null && homeFeed.feedResponse.businessUser == null && homeFeed.feedResponse.businessUser!.businessName == null
                                             ? "ChoxBlast Cafe"
-                                            : homeFeed.feedResponse.businessUser!
-                                                .businessName!,
+                                            : homeFeed.feedResponse.businessUser!.businessName!,
                                         AppTextStyle.metropolis_font_family,
                                         AppTextStyle.bold_font_weight,
                                         BaseColor.black_color,
@@ -117,19 +95,11 @@ class CheckInDetailsPage extends StatelessWidget {
                                 ),
                                 GlobalView().sizedBoxView(2),
                                 Padding(
-                                  padding: EdgeInsets.only(
-                                      top: 0, left: 0, right: 0),
+                                  padding: EdgeInsets.only(top: 0, left: 0, right: 0),
                                   child: Container(
                                     // alignment: Alignment.center,
                                     child: GlobalView().textViewWithStartAlign(
-                                        homeFeed.feedResponse == null &&
-                                                homeFeed.feedResponse
-                                                        .categories ==
-                                                    null
-                                            ? "Cafe"
-                                            : CategoryUtils().getCategoryName(
-                                                homeFeed
-                                                    .feedResponse.categories!),
+                                        homeFeed.feedResponse == null && homeFeed.feedResponse.categories == null ? "Cafe" : CategoryUtils().getCategoryName(homeFeed.feedResponse.categories!),
                                         AppTextStyle.metropolis_font_family,
                                         AppTextStyle.semi_bold_font_weight,
                                         BaseColor.forgot_pass_txt_color,
@@ -145,9 +115,7 @@ class CheckInDetailsPage extends StatelessWidget {
 
                     GlobalView().sizedBoxView(5),
                     Visibility(
-                      visible: homeFeed.feedResponse.businessUser!.isOnline == 0
-                          ? false
-                          : true,
+                      visible: homeFeed.feedResponse.businessUser!.isOnline == 0 ? false : true,
                       child: Padding(
                         padding: EdgeInsets.symmetric(horizontal: 20),
                         child: Container(
@@ -168,16 +136,9 @@ class CheckInDetailsPage extends StatelessWidget {
                               ),
                               Text(
                                 homeFeed.feedResponse.businessUser!.isOnline == 0
-                                    ? homeFeed.feedResponse == null &&
-                                            homeFeed.feedResponse
-                                                    .businessUser ==
-                                                null &&
-                                            homeFeed.feedResponse.businessUser!
-                                                    .businessAddress ==
-                                                null
+                                    ? homeFeed.feedResponse == null && homeFeed.feedResponse.businessUser == null && homeFeed.feedResponse.businessUser!.businessAddress == null
                                         ? "Abix Street, Main Road, San Fransisco, California"
-                                        : homeFeed.feedResponse.businessUser!
-                                            .businessAddress!
+                                        : homeFeed.feedResponse.businessUser!.businessAddress!
                                     : AppMessages.online_business_text,
                                 // "Abix Street, Main Road, San Fransisco, California Abix Street",
                                 // textAlign: TextAlign.justify,
@@ -185,8 +146,7 @@ class CheckInDetailsPage extends StatelessWidget {
                                 maxLines: 2,
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
-                                  fontFamily:
-                                      AppTextStyle.metropolis_font_family,
+                                  fontFamily: AppTextStyle.metropolis_font_family,
                                   fontWeight: AppTextStyle.medium_font_weight,
                                   color: BaseColor.black_color.withOpacity(0.6),
                                   fontSize: 12,
@@ -199,16 +159,13 @@ class CheckInDetailsPage extends StatelessWidget {
                     ),
                     GlobalView().sizedBoxView(5),
                     Visibility(
-                      visible: homeFeed.feedResponse.description == ""
-                          ? false
-                          : true,
+                      visible: homeFeed.feedResponse.description == "" ? false : true,
                       child: Padding(
                         padding: EdgeInsets.only(left: 10, right: 10),
                         child: Container(
                           alignment: Alignment.center,
                           child: GlobalView().textViewWithCenterAlign(
-                              homeFeed.feedResponse == null &&
-                                      homeFeed.feedResponse.description == null
+                              homeFeed.feedResponse == null && homeFeed.feedResponse.description == null
                                   ? "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt"
                                   : homeFeed.feedResponse.description!,
                               AppTextStyle.inter_font_family,
@@ -225,10 +182,7 @@ class CheckInDetailsPage extends StatelessWidget {
                           children: [
                             GestureDetector(
                               onTap: () {
-                                Provider.of<BaseResponseProvider>(context,
-                                        listen: false)
-                                    .clickFeed(
-                                        feedResponse.id.toString(), context);
+                                Provider.of<BaseResponseProvider>(context, listen: false).clickFeed(feedResponse.id.toString(), context);
                                 homeFeed.checkInDetailsLike(
                                   context,
                                   homeFeed.feedResponse.id,
@@ -236,9 +190,7 @@ class CheckInDetailsPage extends StatelessWidget {
                                 );
                               },
                               child: Image.asset(
-                                homeFeed.feedResponse.isLiked == 1
-                                    ? AppImages.thumbs_up_filled
-                                    : AppImages.thumbs_up,
+                                homeFeed.feedResponse.isLiked == 1 ? AppImages.thumbs_up_filled : AppImages.thumbs_up,
                                 height: 24,
                                 width: 24,
                               ),
@@ -247,12 +199,7 @@ class CheckInDetailsPage extends StatelessWidget {
                               child: Container(
                                 margin: EdgeInsets.only(left: 10),
                                 child: GlobalView().textViewWithStartAlign(
-                                    homeFeed.feedResponse == null &&
-                                            homeFeed.feedResponse.totalLikes ==
-                                                null
-                                        ? "10.5k"
-                                        : homeFeed.feedResponse.totalLikes
-                                            .toString(),
+                                    homeFeed.feedResponse == null && homeFeed.feedResponse.totalLikes == null ? "10.5k" : homeFeed.feedResponse.totalLikes.toString(),
                                     AppTextStyle.metropolis_font_family,
                                     AppTextStyle.medium_font_weight,
                                     BaseColor.black_color.withOpacity(0.5),
@@ -311,16 +258,9 @@ class CheckInDetailsPage extends StatelessWidget {
                             Expanded(
                               child: Container(
                                 margin: EdgeInsets.only(left: 10),
-                                child: Consumer<CommentResponseProvider>(
-                                    builder: (_, p, child) {
+                                child: Consumer<CommentResponseProvider>(builder: (_, p, child) {
                                   return GlobalView().textViewWithStartAlign(
-                                      homeFeed.feedResponse == null &&
-                                              homeFeed.feedResponse
-                                                      .totalComments ==
-                                                  null
-                                          ? "10.5k"
-                                          : homeFeed.feedResponse.totalComments
-                                              .toString(),
+                                      homeFeed.feedResponse == null && homeFeed.feedResponse.totalComments == null ? "10.5k" : homeFeed.feedResponse.totalComments.toString(),
                                       AppTextStyle.metropolis_font_family,
                                       AppTextStyle.medium_font_weight,
                                       BaseColor.black_color.withOpacity(0.5),
@@ -404,8 +344,7 @@ class CheckInDetailsPage extends StatelessWidget {
     );
   }
 
-  Widget appBarView(BuildContext context, HomeFeedResponseProvider homeFeed) =>
-      Padding(
+  Widget appBarView(BuildContext context, HomeFeedResponseProvider homeFeed) => Padding(
         padding: EdgeInsets.only(left: 20, right: 20, top: 20),
         child: Row(
           children: [
@@ -450,9 +389,7 @@ class CheckInDetailsPage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       GlobalView().textViewWithStartAlign(
-                          homeFeed.feedResponse == null &&
-                                  homeFeed.feedResponse.user == null &&
-                                  homeFeed.feedResponse.user!.username == null
+                          homeFeed.feedResponse == null && homeFeed.feedResponse.user == null && homeFeed.feedResponse.user!.username == null
                               //      &&
                               // homeFeed.feedResponse.user.lastName == null
                               ? "John Doe"
@@ -467,8 +404,7 @@ class CheckInDetailsPage extends StatelessWidget {
                           12),
                       GlobalView().textViewWithStartAlign(
                           // "15 min ago",
-                          DayTimeUtils()
-                              .convertToAgo(homeFeed.feedResponse.createdAt!),
+                          DayTimeUtils().convertToAgo(homeFeed.feedResponse.createdAt!),
                           AppTextStyle.metropolis_font_family,
                           AppTextStyle.medium_font_weight,
                           BaseColor.black_color,
@@ -487,8 +423,7 @@ class CheckInDetailsPage extends StatelessWidget {
         ),
       );
 
-  Widget followBusinessView(
-      BuildContext context, HomeFeedResponseProvider homeFeed) {
+  Widget followBusinessView(BuildContext context, HomeFeedResponseProvider homeFeed) {
     return Consumer<SearchByBusinessProvider>(builder: (_, provider, child) {
       return Container(
         margin: const EdgeInsets.only(top: 10),
@@ -497,8 +432,7 @@ class CheckInDetailsPage extends StatelessWidget {
             Expanded(
               child: GestureDetector(
                 onTap: () {
-                  Provider.of<BaseResponseProvider>(context, listen: false)
-                      .clickFeed(feedResponse.id.toString(), context);
+                  Provider.of<BaseResponseProvider>(context, listen: false).clickFeed(feedResponse.id.toString(), context);
                   if (provider.listBusiness.isNotEmpty) {
                     // provider.selectedBusinessItem(homeFeed.feedResponse);
                   }
@@ -515,8 +449,7 @@ class CheckInDetailsPage extends StatelessWidget {
                   alignment: Alignment.center,
                   child: Container(
                     margin: const EdgeInsets.only(left: 20, right: 10),
-                    child: GlobalView().wrappedButtonFilledView(
-                        context, AppMessages.view_business_text),
+                    child: GlobalView().wrappedButtonFilledView(context, AppMessages.view_business_text),
                   ),
                 ),
               ),
@@ -534,8 +467,7 @@ class CheckInDetailsPage extends StatelessWidget {
     });
   }
 
-  Widget commentListView() =>
-      Consumer<CommentResponseProvider>(builder: (_, commentProvider, child) {
+  Widget commentListView() => Consumer<CommentResponseProvider>(builder: (_, commentProvider, child) {
         return !commentProvider.isLoading
             ? Container(
                 child: Expanded(
@@ -548,8 +480,7 @@ class CheckInDetailsPage extends StatelessWidget {
                           // shrinkWrap: true,
                           itemBuilder: (context, itemIndex) {
                             return CommentsView(
-                              commentResponse:
-                                  commentProvider.listComments[itemIndex],
+                              commentResponse: commentProvider.listComments[itemIndex],
                             );
                           }),
                     ),
@@ -564,8 +495,7 @@ class CheckInDetailsPage extends StatelessWidget {
               );
       });
 
-  Widget commentTextFieldView(BuildContext context) =>
-      Consumer<CommentResponseProvider>(builder: (_, commentProvider, child) {
+  Widget commentTextFieldView(BuildContext context) => Consumer<CommentResponseProvider>(builder: (_, commentProvider, child) {
         return Material(
           shadowColor: BaseColor.shadow_color,
           // elevation: 4,
@@ -587,18 +517,13 @@ class CheckInDetailsPage extends StatelessWidget {
                   //  prefixIconConstraints:BoxConstraints(minWidth: 23, maxHeight: 20),
                   suffixIcon: GestureDetector(
                     onTap: () {
-                      Provider.of<BaseResponseProvider>(context, listen: false)
-                          .clickFeed(feedResponse.id.toString(), context);
+                      Provider.of<BaseResponseProvider>(context, listen: false).clickFeed(feedResponse.id.toString(), context);
                       print('object');
                       if (commentTextEditingController.text.isNotEmpty) {
-                        Provider.of<CommentResponseProvider>(context,
-                                listen: false)
-                            .createComment(context, feedResponse.id,
-                                commentTextEditingController.text);
+                        Provider.of<CommentResponseProvider>(context, listen: false).createComment(context, feedResponse.id, commentTextEditingController.text);
                         commentTextEditingController.text = "";
                       } else {
-                        GlobalView()
-                            .showToast(AppToastMessages.empty_comment_message);
+                        GlobalView().showToast(AppToastMessages.empty_comment_message);
                       }
                     },
                     child: Container(
@@ -607,14 +532,8 @@ class CheckInDetailsPage extends StatelessWidget {
                         decoration: BoxDecoration(
                             shape: BoxShape.circle,
                             color: Colors.green,
-                            gradient: LinearGradient(colors: [
-                              BaseColor.btn_gradient_start_color1,
-                              BaseColor.btn_gradient_end_color1
-                            ]),
-                            boxShadow: [
-                              BoxShadow(
-                                  color: BaseColor.shadow_color, blurRadius: 5)
-                            ]
+                            gradient: LinearGradient(colors: [BaseColor.btn_gradient_start_color1, BaseColor.btn_gradient_end_color1]),
+                            boxShadow: [BoxShadow(color: BaseColor.shadow_color, blurRadius: 5)]
                             // image: DecorationImage(
                             //     image: AssetImage(AppImages.ic_sort), fit: BoxFit.fill)
                             ),
@@ -628,21 +547,11 @@ class CheckInDetailsPage extends StatelessWidget {
                   //     context, commentTextEditingController.text),
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(25),
-                    borderSide:
-                        BorderSide(color: BaseColor.border_txtfield_color),
+                    borderSide: BorderSide(color: BaseColor.border_txtfield_color),
                   ),
-                  disabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(25),
-                      borderSide:
-                          BorderSide(color: BaseColor.border_txtfield_color)),
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(25),
-                      borderSide:
-                          BorderSide(color: BaseColor.border_txtfield_color)),
-                  focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(25),
-                      borderSide:
-                          BorderSide(color: BaseColor.border_txtfield_color)),
+                  disabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(25), borderSide: BorderSide(color: BaseColor.border_txtfield_color)),
+                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(25), borderSide: BorderSide(color: BaseColor.border_txtfield_color)),
+                  focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(25), borderSide: BorderSide(color: BaseColor.border_txtfield_color)),
                   hintText: "Post comment",
                   hintStyle: TextStyle(
                     color: BaseColor.hint_color.withOpacity(0.6),

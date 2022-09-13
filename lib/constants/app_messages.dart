@@ -10,7 +10,7 @@ class AppMessages {
   static const String register_btn_text = "Sign up";
   static const String or_text = "OR";
   static const String verify_email_title = "Verify Email";
-  static const String verify_passcode_title = "Enter your passcode";
+  static const String verify_passcode_title = "Verify Passcode";
   static const String verify_email_message = "Enter the verification code sent to \n your email";
   static const String verify_passcode_message = "Enter the pass code!";
   static const String otp_message = "Didn’t receive the code?";
@@ -95,7 +95,6 @@ class AppMessages {
   static const String account_settings_title = "Account Settings";
   static const String notification_settings_title = "Notification settings";
   static const String account_de_active_message = "De-activate My Account";
-  static const String editBusinessInfo = "Edit Business Info";
   static const String account_delete_message = "Delete My Account";
   static const String reset_password_title = "Reset Password";
   static const String my_checkins = "My Check-ins";
@@ -205,6 +204,7 @@ class AppMessages {
   // static const String temp_locations_text = "Temp Locations";
   static const String online_text = "Online";
   static const String physical_text = "Physical";
+    static const String editBusinessInfo = "Edit Business Info";
   static const String mobile_text = "Mobile";
   static const String http_text = "http://";
   static const String https_text = "https://";
@@ -218,6 +218,7 @@ class AppMessages {
   static const String no_nearby_locations_available_text = "No Near By Location Available!";
   static const String dislike_msg_text = "Dislike Messages";
   static const String visit_site_text = "Visit Site";
+  static const String supportText = "Support";
   static const String online_business_check_in_text = "Online Business Check-In";
   static const String no_business_available_text = "No Businesses Available!";
   static const String continue_text = "Continue";

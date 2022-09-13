@@ -254,7 +254,11 @@ class _SearchByBusinessScreenState extends State<SearchByBusinessScreen> with Ti
   }
 
   void getMoreBusinessData() async {
+    print("getMoreBusinessData ==============================================================");
     SearchByBusinessResponse? searchByBusinessResponse = Provider.of<SearchByBusinessProvider>(context, listen: false).searchByBusinessResponse;
+    print(searchByBusinessResponse != null );
+    print(searchByBusinessResponse!.place != null );
+    print(searchByBusinessResponse.place!.nextPageUrl != null);
     if (searchByBusinessResponse != null && searchByBusinessResponse.place != null && searchByBusinessResponse.place!.nextPageUrl != null) {
       page++;
       Provider.of<SearchByBusinessProvider>(context, listen: false).getSearchByBusinessList(
@@ -347,7 +351,7 @@ class _SearchByBusinessScreenState extends State<SearchByBusinessScreen> with Ti
                       ? RefreshIndicator(
                           color: BaseColor.btn_gradient_end_color1,
                           onRefresh: () async {
-                            SearchListData().initSearchData(context, searchEditingController.text, page);
+                            SearchListData().initSearchData(context, searchEditingController.text, 1);
                           },
                           child: MediaQuery.removePadding(
                             context: context,
@@ -432,6 +436,7 @@ class _SearchByBusinessScreenState extends State<SearchByBusinessScreen> with Ti
                                     }),
                               ),
                             ),
+                        
                           ),
                         )
                       : Container(
@@ -443,9 +448,11 @@ class _SearchByBusinessScreenState extends State<SearchByBusinessScreen> with Ti
             Positioned(
               child: Visibility(
                 visible: Provider.of<SearchByBusinessProvider>(context, listen: false).isLoading,
-                child: Container(
+                child: 
+                Container(
                   color: BaseColor.home_bg_color,
-                  child: GlobalView().loaderView(),
+                  child: 
+                  GlobalView().loaderView(),
                 ),
               ),
             ),

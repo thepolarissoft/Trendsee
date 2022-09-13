@@ -120,8 +120,7 @@ class ApiManager {
     String userType,
   ) {
     Completer<Baseresponse> completer = new Completer();
-    StandardUserRegistrationRequestBody standardUserRegistrationRequestBody =
-        new StandardUserRegistrationRequestBody(firstName, lastName, username, email, dob, avatar, userType);
+    StandardUserRegistrationRequestBody standardUserRegistrationRequestBody = new StandardUserRegistrationRequestBody(firstName, lastName, username, email, dob, avatar, userType);
     StandardUserRegistrationRequest standardUserRegistrationRequest = new StandardUserRegistrationRequest(standardUserRegistrationRequestBody);
     Api(context: context)
         .request(standardUserRegistrationRequest)
@@ -367,10 +366,24 @@ class ApiManager {
   }
 
   Future<Baseresponse> createFeed(
-      String description, String businessUserId, String categoryId, String? latitude, String? longitude, String? locationName) {
+    String description,
+    String businessUserId,
+    String categoryId,
+    String? latitude,
+    String? longitude,
+    String? locationName,
+    String isSupport,
+  ) {
     Completer<Baseresponse> completer = new Completer();
-    CreateFeedRequestBody createFeedRequestBody =
-        new CreateFeedRequestBody(description, businessUserId, categoryId, latitude, longitude, locationName);
+    CreateFeedRequestBody createFeedRequestBody = new CreateFeedRequestBody(
+      description,
+      businessUserId,
+      categoryId,
+      latitude,
+      isSupport,
+      longitude,
+      locationName,
+    );
     CreateFeedRequest createFeedRequest = new CreateFeedRequest(createFeedRequestBody);
     Api(context: context)
         .request(createFeedRequest)
@@ -400,8 +413,7 @@ class ApiManager {
     return completer.future;
   }
 
-  Future<HomeFeedResponse> getHomeFeedList(
-      String page, String categoryId, String latitude, String longitude, String? distance, String? cityName) async {
+  Future<HomeFeedResponse> getHomeFeedList(String page, String categoryId, String latitude, String longitude, String? distance, String? cityName) async {
     Completer<HomeFeedResponse> completer = new Completer();
     GetHomeFeedRequest getHomeFeedRequest = new GetHomeFeedRequest(page, categoryId, latitude, longitude, distance, cityName);
     Api(context: context)
@@ -700,11 +712,9 @@ class ApiManager {
     return completer.future;
   }
 
-  Future<SearchByBusinessResponse> getSearchByBusinessList(
-      String page, String searchValue, String categoryId, String latitude, String longitude, String? distance, String? cityName) {
+  Future<SearchByBusinessResponse> getSearchByBusinessList(String page, String searchValue, String categoryId, String latitude, String longitude, String? distance, String? cityName) {
     Completer<SearchByBusinessResponse> completer = new Completer();
-    GetSearchByBusinessRequest getSearchByBusinessRequest =
-        new GetSearchByBusinessRequest(page, searchValue, categoryId, latitude, longitude, distance, cityName);
+    GetSearchByBusinessRequest getSearchByBusinessRequest = new GetSearchByBusinessRequest(page, searchValue, categoryId, latitude, longitude, distance, cityName);
     Api(context: context)
         .request(getSearchByBusinessRequest)
         .then((response) => {
@@ -1301,8 +1311,7 @@ class ApiManager {
 
   Future<BusinessLatlongResponse> addBusinessLatlong(String? latitude, String? longitude, int isDefault, String locationName, String businessUserId) {
     Completer<BusinessLatlongResponse> completer = new Completer();
-    AddBusinessLatlongRequestBody addBusinessLatlongRequestBody =
-        new AddBusinessLatlongRequestBody(latitude, longitude, isDefault, locationName, businessUserId);
+    AddBusinessLatlongRequestBody addBusinessLatlongRequestBody = new AddBusinessLatlongRequestBody(latitude, longitude, isDefault, locationName, businessUserId);
     AddBusinessLatlongRequest addBusinessLatlongRequest = new AddBusinessLatlongRequest(addBusinessLatlongRequestBody);
     Api(context: context)
         .request(addBusinessLatlongRequest)
@@ -1432,8 +1441,7 @@ class ApiManager {
 
   Future<Baseresponse> addUnregisteredBusiness(String businessName, String latitude, String longitude, String categoryId, String businessUsername) {
     Completer<Baseresponse> completer = new Completer();
-    AddUnregisteredBusinessRequestBody addUnregisteredBusinessRequestBody =
-        AddUnregisteredBusinessRequestBody(businessName, latitude, longitude, categoryId, businessUsername);
+    AddUnregisteredBusinessRequestBody addUnregisteredBusinessRequestBody = AddUnregisteredBusinessRequestBody(businessName, latitude, longitude, categoryId, businessUsername);
     AddUnregisteredBusinessRequest addUnregisteredBusinessRequest = AddUnregisteredBusinessRequest(addUnregisteredBusinessRequestBody);
     Api(context: context)
         .request(addUnregisteredBusinessRequest)
@@ -1710,8 +1718,7 @@ class ApiManager {
 
   Future<VerifiedOtpResponse> verifyPasscodeByBusinessID(int businessId, int passcode) {
     Completer<VerifiedOtpResponse> completer = new Completer();
-    VerifyPasscodeByBusinessIdRequestBody verifyPasscodeByBusinessIdRequestBody =
-        VerifyPasscodeByBusinessIdRequestBody(businessId: businessId, passcode: passcode);
+    VerifyPasscodeByBusinessIdRequestBody verifyPasscodeByBusinessIdRequestBody = VerifyPasscodeByBusinessIdRequestBody(businessId: businessId, passcode: passcode);
     VerifyPasscodeByBusinessIdRequest verifyPasscodeByBusinessIdRequest = VerifyPasscodeByBusinessIdRequest(verifyPasscodeByBusinessIdRequestBody);
     Api(context: context)
         .request(verifyPasscodeByBusinessIdRequest)

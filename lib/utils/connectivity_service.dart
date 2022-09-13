@@ -1,7 +1,6 @@
 import 'dart:async';
 
-import 'package:connectivity/connectivity.dart';
-
+import 'package:connectivity_plus/connectivity_plus.dart';
 
 enum ConnectivityStatus { WiFi, Cellular, Offline }
 

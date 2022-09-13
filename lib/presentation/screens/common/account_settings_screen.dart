@@ -8,7 +8,6 @@ import 'package:trendoapp/constants/base_color.dart';
 import 'package:trendoapp/data/models/business_user_profile_response.dart';
 import 'package:trendoapp/data/models/profile_response.dart';
 import 'package:trendoapp/global/view/global_view.dart';
-import 'package:trendoapp/presentation/screens/businessUser/business_user_registration_screen.dart';
 import 'package:trendoapp/presentation/screens/standardUser/simple_user_registration_screen.dart';
 import 'package:trendoapp/providers/settings/account_settings_provider.dart';
 import 'package:trendoapp/utils/dialog_utils.dart';
@@ -49,10 +48,15 @@ class AccountSettingsScreen extends StatelessWidget {
                   GlobalView().sizedBoxView(40),
                   Container(
                     alignment: Alignment.topCenter,
-                    child: GlobalView().textViewWithCenterAlign(AppMessages.account_settings_title, AppTextStyle.inter_font_family,
-                        AppTextStyle.semi_bold_font_weight, BaseColor.black_color, 18),
+                    child: GlobalView().textViewWithCenterAlign(
+                      AppMessages.account_settings_title,
+                      AppTextStyle.inter_font_family,
+                      AppTextStyle.semi_bold_font_weight,
+                      BaseColor.black_color,
+                      18,
+                    ),
                   ),
-                  GlobalView().sizedBoxView(30),
+                   GlobalView().sizedBoxView(30),
                   // Edit Bussiness Account
                   GestureDetector(
                     onTap: () {
@@ -66,8 +70,13 @@ class AccountSettingsScreen extends StatelessWidget {
                     child: Row(
                       children: [
                         Expanded(
-                          child: GlobalView().textViewWithStartAlign(AppMessages.editBusinessInfo, AppTextStyle.inter_font_family,
-                              AppTextStyle.medium_font_weight, BaseColor.black_color, 14),
+                          child: GlobalView().textViewWithStartAlign(
+                            AppMessages.editBusinessInfo,
+                            AppTextStyle.inter_font_family,
+                            AppTextStyle.medium_font_weight,
+                            BaseColor.black_color,
+                            14,
+                          ),
                         ),
                         Image.asset(
                           AppImages.ic_next2,
@@ -78,17 +87,21 @@ class AccountSettingsScreen extends StatelessWidget {
                     ),
                   ),
                   GlobalView().sizedBoxView(15),
-                  Divider(
+                   Divider(
                     color: BaseColor.divider_color.withOpacity(0.4),
                   ),
                   GlobalView().sizedBoxView(15),
-
                   Row(
                     mainAxisSize: MainAxisSize.max,
                     children: [
                       Expanded(
-                        child: GlobalView().textViewWithStartAlign(AppMessages.notification_settings_title, AppTextStyle.inter_font_family,
-                            AppTextStyle.medium_font_weight, BaseColor.black_color, 14),
+                        child: GlobalView().textViewWithStartAlign(
+                          AppMessages.notification_settings_title,
+                          AppTextStyle.inter_font_family,
+                          AppTextStyle.medium_font_weight,
+                          BaseColor.black_color,
+                          14,
+                        ),
                       ),
                       Consumer<AccountSettingsProvider>(builder: (context, provider, child) {
                         return FlutterSwitch(
@@ -119,7 +132,6 @@ class AccountSettingsScreen extends StatelessWidget {
                     color: BaseColor.divider_color.withOpacity(0.4),
                   ),
                   GlobalView().sizedBoxView(15),
-
                   GestureDetector(
                     onTap: () {
                       DialogUtils().onClickSettings(context, "deactivate");
@@ -127,8 +139,7 @@ class AccountSettingsScreen extends StatelessWidget {
                     child: Row(
                       children: [
                         Expanded(
-                          child: GlobalView().textViewWithStartAlign(AppMessages.account_de_active_message, AppTextStyle.inter_font_family,
-                              AppTextStyle.medium_font_weight, BaseColor.black_color, 14),
+                          child: GlobalView().textViewWithStartAlign(AppMessages.account_de_active_message, AppTextStyle.inter_font_family, AppTextStyle.medium_font_weight, BaseColor.black_color, 14),
                         ),
                         Image.asset(
                           AppImages.ic_next2,
@@ -150,8 +161,7 @@ class AccountSettingsScreen extends StatelessWidget {
                     child: Row(
                       children: [
                         Expanded(
-                          child: GlobalView().textViewWithStartAlign(AppMessages.account_delete_message, AppTextStyle.inter_font_family,
-                              AppTextStyle.medium_font_weight, BaseColor.black_color, 14),
+                          child: GlobalView().textViewWithStartAlign(AppMessages.account_delete_message, AppTextStyle.inter_font_family, AppTextStyle.medium_font_weight, BaseColor.black_color, 14),
                         ),
                         Image.asset(
                           AppImages.ic_next2,

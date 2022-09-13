@@ -35,13 +35,12 @@ class Api {
     }
 
     Completer<Response> completer = new Completer();
-    if (Provider.of<ConnectionProvider>(context, listen: false)
-        .isInternetConnection) {
+    if (Provider.of<ConnectionProvider>(context, listen: false).isInternetConnection) {
       if (request.httpMethod == HttpMethod.GET) {
         print('URL--> ${request.absolutePath! + paramsString}');
         var url = Uri.parse(request.absolutePath! + paramsString);
         http.get(url, headers: request.headers as Map<String, String>?).then((response) {
-       print("response-->>>>-==- $response");
+          print("response-->>>>-==- $response");
           print("response-->>>>-==- ${response.body}");
           completer.complete(response);
         }).catchError((error) {
@@ -60,6 +59,8 @@ class Api {
           body: request.body,
         )
             .then((response) {
+          print("response-->>>>-==- $response");
+          print("response-->>>>-==- ${response.body}");
           completer.complete(response);
         }).catchError((error) {
           print("ERROR-> $error");

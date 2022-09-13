@@ -112,20 +112,7 @@ class _StandardUserProfileScreenState extends State<StandardUserProfileScreen> {
                           ],
                         ),
                       ),
-                      // leading: GestureDetector(
-                      //   onTap: () {
-                      //     // Navigator.pushNamed(
-                      //     //         context, AppRoutes.editProfileRouteName)
-                      //     //     .then((value) => onCallBack);
-                      //     Navigator.push(context, MaterialPageRoute(builder: (context) => SimpleUserRegistrationScreen(true))).then(onCallBack);
-                      //   },
-                      //   child: Padding(
-                      //     padding: EdgeInsets.only(left: 10, top: 10),
-                      //     child: Container(
-                      //       child: Image.asset(AppImages.ic_edit_filled),
-                      //     ),
-                      //   ),
-                      // ),
+                      
                       actions: [
                         Padding(
                           padding: EdgeInsets.only(right: 10, top: 10),

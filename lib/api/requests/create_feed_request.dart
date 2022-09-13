@@ -34,6 +34,7 @@ class CreateFeedRequest implements IHttpRequest {
     map["latitude"] = createFeedRequestBody.latitude;
     map["longitude"] = createFeedRequestBody.longitude;
     map["location_name"] = createFeedRequestBody.locationName;
+    map["is_support"] = createFeedRequestBody.isSupport;
     var msg = jsonEncode(map);
     this.body = msg;
     print("CreateFeedRequestBody-->> $body");
