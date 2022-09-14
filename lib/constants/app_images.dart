@@ -2,6 +2,7 @@ class AppImages {
   static const String background_image = "assets/images/bg.png";
   static const String background_image1 = "assets/images/bg2.png";
   static const String app_logo = "assets/images/logo_icon.png";
+  static const String without_fire_logo = "assets/images/without_fire_logo.png";
   static const String trendsee_logo_transparent =
       "assets/images/trendsee_logo_transparent.png";
   static const String ic_password = "assets/images/ic_password.png";

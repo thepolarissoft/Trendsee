@@ -175,13 +175,13 @@ class _TimelineScreenState extends State<TimelineScreen> {
                   decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       color: Colors.green,
-                      gradient: LinearGradient(colors: [BaseColor.btn_gradient_start_color1, BaseColor.btn_gradient_end_color1]),
+                      gradient: LinearGradient(colors: [BaseColor.pure_white_color, BaseColor.pure_white_color]),
                       boxShadow: [BoxShadow(color: BaseColor.shadow_color, blurRadius: 5)]),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Image.asset(
-                        AppImages.app_logo,
+                        AppImages.without_fire_logo,
                         height: 35,
                       ),
                     ],

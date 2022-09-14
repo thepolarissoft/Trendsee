@@ -10,6 +10,7 @@ import 'package:trendoapp/constants/device_size.dart';
 import 'package:trendoapp/data/models/profile_response.dart';
 import 'package:trendoapp/global/view/business_selection_view.dart';
 import 'package:trendoapp/global/view/common_gradient_button.dart';
+import 'package:trendoapp/global/view/filter/open_filter_bottom_sheet.dart';
 import 'package:trendoapp/global/view/global_view.dart';
 import 'package:trendoapp/presentation/screens/businessUser/category_selection_screen.dart';
 import 'package:trendoapp/presentation/screens/online_business_check_in_screen.dart';
@@ -19,33 +20,33 @@ import 'package:trendoapp/utils/preference_utils.dart';
 import 'package:trendoapp/utils/storage_utils.dart';
 
 class SelectBusinessForAddNewCheckInPage extends StatefulWidget {
+  String route;
+  SelectBusinessForAddNewCheckInPage({required this.route});
   @override
-  _SelectBusinessForAddNewCheckInPageState createState() =>
-      _SelectBusinessForAddNewCheckInPageState();
+  _SelectBusinessForAddNewCheckInPageState createState() => _SelectBusinessForAddNewCheckInPageState();
 }
 
-class _SelectBusinessForAddNewCheckInPageState
-    extends State<SelectBusinessForAddNewCheckInPage> {
-  TextEditingController searchLocationTextEditingController =
-      new TextEditingController();
-  TextEditingController businessNameTextEditingController =
-      new TextEditingController();
+class _SelectBusinessForAddNewCheckInPageState extends State<SelectBusinessForAddNewCheckInPage> {
+  TextEditingController searchLocationTextEditingController = new TextEditingController();
+  TextEditingController businessNameTextEditingController = new TextEditingController();
   List<String> listLocation = [];
   ScrollController scrollController = new ScrollController();
   ProfileResponse? profileResponse;
   // VerifiedUserResponse verifiedUserResponse = new VerifiedUserResponse();
+  String? distanceRadius = "5";
+  int selectedFilterValue = 0;
+  FilterProvider? filterProvider;
+
+
 
   @override
   void initState() {
     super.initState();
-    String model =
-        PreferenceUtils.getObject(PreferenceUtils.keyStandardUserProfileObject);
+    String model = PreferenceUtils.getObject(PreferenceUtils.keyStandardUserProfileObject);
     // log("Prefs model data--==> $model");
     profileResponse = ProfileResponse.fromJson(json.decode(model));
-    print(
-        "RADIUS-> ${Provider.of<FilterProvider>(context, listen: false).distanceRadius}");
-    var businessListProvider =
-        Provider.of<BusinessListProvider>(context, listen: false);
+    print("RADIUS-> ${Provider.of<FilterProvider>(context, listen: false).distanceRadius}");
+    var businessListProvider = Provider.of<BusinessListProvider>(context, listen: false);
     businessListProvider.businessListResponse = null;
     businessListProvider.getBusinessList(
       context,
@@ -55,14 +56,18 @@ class _SelectBusinessForAddNewCheckInPageState
       // Provider.of<FilterProvider>(context, listen: false).distanceRadius,
       // "100000000000000000000",
     );
-    print(
-        "RADIUS==-> ${Provider.of<FilterProvider>(context, listen: false).distanceRadius}");
+    selectedFilterValue = widget.route == "search" ? 0 : 1;
+     Future.delayed(Duration.zero, () {
+      Provider.of<FilterProvider>(context, listen: false)
+          .changeSegmentValue(route: AppMessages.city_text);
+      Provider.of<FilterProvider>(context, listen: false)
+          .setDistanceRadius(distanceRadius);
+    });
+    print("RADIUS==-> ${Provider.of<FilterProvider>(context, listen: false).distanceRadius}");
     businessListProvider.isChecked = false;
     scrollController.addListener(() {
-      if (scrollController.position.pixels ==
-          scrollController.position.maxScrollExtent) {
-        if (businessListProvider.businessListResponse!.business!.currentPage! <
-            businessListProvider.businessListResponse!.business!.lastPage!) {
+      if (scrollController.position.pixels == scrollController.position.maxScrollExtent) {
+        if (businessListProvider.businessListResponse!.business!.currentPage! < businessListProvider.businessListResponse!.business!.lastPage!) {
           businessListProvider.getBusinessList(
             context,
             StorageUtils.readStringValue(StorageUtils.keyLatitude),
@@ -106,61 +111,38 @@ class _SelectBusinessForAddNewCheckInPageState
                       padding: EdgeInsets.all(16),
                       child: Padding(
                         padding: EdgeInsets.symmetric(horizontal: 30),
-                        child: Consumer<BusinessListProvider>(
-                            builder: (_, location, child) {
+                        child: Consumer<BusinessListProvider>(builder: (_, location, child) {
                           return Column(
                             // crossAxisAlignment: CrossAxisAlignment.stretch,
                             mainAxisSize: MainAxisSize.max,
                             children: [
-                              GlobalView().sizedBoxView(
-                                  DeviceSize().deviceHeight(context) * 0.052),
+                              GlobalView().sizedBoxView(DeviceSize().deviceHeight(context) * 0.052),
                               Container(
                                 alignment: Alignment.topCenter,
-                                child: GlobalView().textViewWithCenterAlign(
-                                    AppMessages.which_business_are_you_at,
-                                    AppTextStyle.inter_font_family,
-                                    AppTextStyle.bold_font_weight,
-                                    BaseColor.black_color,
-                                    18),
+                                child: GlobalView()
+                                    .textViewWithCenterAlign(AppMessages.which_business_are_you_at, AppTextStyle.inter_font_family, AppTextStyle.bold_font_weight, BaseColor.black_color, 18),
                               ),
-                              GlobalView().sizedBoxView(
-                                  DeviceSize().deviceHeight(context) * 0.02),
+                              GlobalView().sizedBoxView(DeviceSize().deviceHeight(context) * 0.02),
                               Expanded(
                                 child: Padding(
                                   padding: EdgeInsets.symmetric(horizontal: 8),
                                   child: Container(
-                                    height: DeviceSize().deviceHeight(context) -
-                                        300,
+                                    height: DeviceSize().deviceHeight(context) - 300,
                                     child: locationsList(context),
                                   ),
                                 ),
                               ),
                               Padding(
-                                padding: EdgeInsets.only(
-                                    left: 5,
-                                    right: 5,
-                                    bottom: DeviceSize().deviceHeight(context) *
-                                        0.01,
-                                    top: DeviceSize().deviceHeight(context) *
-                                        0.02),
-                                child: Provider.of<BusinessListProvider>(
-                                            context)
-                                        .listBusinessLiked
-                                        .isNotEmpty
-                                    ? Provider.of<BusinessListProvider>(context)
-                                            .isChecked!
+                                padding: EdgeInsets.only(left: 5, right: 5, bottom: DeviceSize().deviceHeight(context) * 0.01, top: DeviceSize().deviceHeight(context) * 0.02),
+                                child: Provider.of<BusinessListProvider>(context).listBusinessLiked.isNotEmpty
+                                    ? Provider.of<BusinessListProvider>(context).isChecked!
                                         ? GestureDetector(
                                             onTap: () {
-                                              Navigator.pushNamed(
-                                                  context,
-                                                  AppRoutes
-                                                      .add_new_checkin_route_name);
+                                              Navigator.pushNamed(context, AppRoutes.add_new_checkin_route_name);
                                             },
-                                            child: GlobalView().buttonFilled(
-                                                context, AppMessages.next_text),
+                                            child: GlobalView().buttonFilled(context, AppMessages.next_text),
                                           )
-                                        : GlobalView().buttonFilledDisabled(
-                                            context, AppMessages.next_text)
+                                        : GlobalView().buttonFilledDisabled(context, AppMessages.next_text)
                                     : Container(),
                               ),
                               // GlobalView().sizedBoxView(
@@ -173,19 +155,23 @@ class _SelectBusinessForAddNewCheckInPageState
                   ),
                   CommonGradientButton(
                       onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (_) => OnlineBusinessCheckInScreen()));
+                        openFilterBottomSheet(
+                          context: context,
+                          distanceRadius: distanceRadius,
+                          filterProvider: filterProvider,
+                          route: widget.route,
+                          selectedFilterValue: selectedFilterValue,
+                        );
+
+                        // Navigator.push(
+                        //     context,
+                        //     MaterialPageRoute(
+                        //         builder: (_) => OnlineBusinessCheckInScreen()));
                       },
                       title: AppMessages.do_not_see_your_location),
                   GlobalView().sizedBoxView(5),
                   Visibility(
-                    visible: profileResponse != null &&
-                            profileResponse!.user != null &&
-                            profileResponse!.user!.isAdmin == 1
-                        ? true
-                        : false,
+                    visible: profileResponse != null && profileResponse!.user != null && profileResponse!.user!.isAdmin == 1 ? true : false,
                     child: Column(
                       children: [
                         GlobalView().dividerView(),
@@ -236,12 +222,7 @@ class _SelectBusinessForAddNewCheckInPageState
     );
   }
 
-  Widget textfieldViewForSearchLocation(
-          String image,
-          TextEditingController controller,
-          String hintText,
-          TextAlign textAlign) =>
-      Material(
+  Widget textfieldViewForSearchLocation(String image, TextEditingController controller, String hintText, TextAlign textAlign) => Material(
         shadowColor: BaseColor.shadow_color,
         elevation: 4,
         borderRadius: BorderRadius.circular(25),
@@ -262,8 +243,7 @@ class _SelectBusinessForAddNewCheckInPageState
               // height: 50,
               // width: 58,
               child: Padding(
-                padding:
-                    EdgeInsets.only(top: 13, bottom: 13, left: 13, right: 13),
+                padding: EdgeInsets.only(top: 13, bottom: 13, left: 13, right: 13),
                 child: Image.asset(
                   image,
                   height: 24,
@@ -276,15 +256,9 @@ class _SelectBusinessForAddNewCheckInPageState
               borderRadius: BorderRadius.circular(25),
               borderSide: BorderSide(color: BaseColor.border_txtfield_color),
             ),
-            disabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(25),
-                borderSide: BorderSide(color: BaseColor.border_txtfield_color)),
-            border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(25),
-                borderSide: BorderSide(color: BaseColor.border_txtfield_color)),
-            focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(25),
-                borderSide: BorderSide(color: BaseColor.border_txtfield_color)),
+            disabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(25), borderSide: BorderSide(color: BaseColor.border_txtfield_color)),
+            border: OutlineInputBorder(borderRadius: BorderRadius.circular(25), borderSide: BorderSide(color: BaseColor.border_txtfield_color)),
+            focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(25), borderSide: BorderSide(color: BaseColor.border_txtfield_color)),
             hintText: hintText,
             hintStyle: TextStyle(
               color: BaseColor.hint_color.withOpacity(0.6),
@@ -314,7 +288,6 @@ class _SelectBusinessForAddNewCheckInPageState
                   verifiedUserResponse: provider.listBusinessLiked[index],
                   index: index,
                   // checkBoxView:
-
                   // onClickCheckbox: () {},
                 ),
                 // Padding(
@@ -393,13 +366,10 @@ class _SelectBusinessForAddNewCheckInPageState
                 child: Container(
                     // color: Colors.red,
                     child: Center(
-                  child: GlobalView().textViewWithCenterAlign(
-                      AppMessages.no_nearby_locations_available_text,
-                      AppTextStyle.inter_font_family,
-                      AppTextStyle.semi_bold_font_weight,
-                      BaseColor.black_color,
-                      18),
-                )),
+                  child: GlobalView()
+                      .textViewWithCenterAlign(AppMessages.no_nearby_locations_available_text, AppTextStyle.inter_font_family, AppTextStyle.semi_bold_font_weight, BaseColor.black_color, 18),
+                ),
+                ),
               );
             }
           },

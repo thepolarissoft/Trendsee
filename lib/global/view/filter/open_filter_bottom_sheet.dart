@@ -37,7 +37,7 @@ void openFilterBottomSheet({
                 padding: EdgeInsets.only(
                     bottom: MediaQuery.of(context).viewInsets.bottom),
                 child: Container(
-                    // height: ScreenSize().screenHeight(context) - 600,
+                     //height: ScreenSize().screenHeight(context) - 600,
                     decoration: BoxDecoration(
                       color: BaseColor.pure_white_color,
                       borderRadius: BorderRadius.only(
