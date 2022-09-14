@@ -14,30 +14,22 @@ class OnlineBusinessCheckInScreen extends StatefulWidget {
   OnlineBusinessCheckInScreen({Key? key}) : super(key: key);
 
   @override
-  State<OnlineBusinessCheckInScreen> createState() =>
-      _OnlineBusinessCheckInScreenState();
+  State<OnlineBusinessCheckInScreen> createState() => _OnlineBusinessCheckInScreenState();
 }
 
-class _OnlineBusinessCheckInScreenState
-    extends State<OnlineBusinessCheckInScreen> {
-  TextEditingController searchTextEditingController =
-      new TextEditingController();
+class _OnlineBusinessCheckInScreenState extends State<OnlineBusinessCheckInScreen> {
+  TextEditingController searchTextEditingController = new TextEditingController();
   ScrollController scrollController = new ScrollController();
 
   void initOnlineData() {
-    var businessListProvider =
-        Provider.of<BusinessListProvider>(context, listen: false);
+    var businessListProvider = Provider.of<BusinessListProvider>(context, listen: false);
     businessListProvider.businessListResponse = null;
-    businessListProvider.getBusinessListByName(
-        context, searchTextEditingController.text);
+    businessListProvider.getBusinessListByName(context, searchTextEditingController.text);
     businessListProvider.isChecked = false;
     scrollController.addListener(() {
-      if (scrollController.position.pixels ==
-          scrollController.position.maxScrollExtent) {
-        if (businessListProvider.businessListResponse!.business!.currentPage! <
-            businessListProvider.businessListResponse!.business!.lastPage!) {
-          businessListProvider.getBusinessListByName(
-              context, searchTextEditingController.text);
+      if (scrollController.position.pixels == scrollController.position.maxScrollExtent) {
+        if (businessListProvider.businessListResponse!.business!.currentPage! < businessListProvider.businessListResponse!.business!.lastPage!) {
+          businessListProvider.getBusinessListByName(context, searchTextEditingController.text);
         } else {
           // GlobalView().showToast(AppMessages.no_more_data_text);
         }
@@ -77,31 +69,19 @@ class _OnlineBusinessCheckInScreenState
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
                   children: [
-                    GlobalView().sizedBoxView(
-                        DeviceSize().deviceHeight(context) * 0.052),
+                    GlobalView().sizedBoxView(DeviceSize().deviceHeight(context) * 0.052),
                     Container(
                       alignment: Alignment.topCenter,
-                      child: GlobalView().textViewWithCenterAlign(
-                          AppMessages.online_business_check_in_text,
-                          AppTextStyle.inter_font_family,
-                          AppTextStyle.bold_font_weight,
-                          BaseColor.black_color,
-                          18),
+                      child: GlobalView().textViewWithCenterAlign(AppMessages.do_not_see_your_location, AppTextStyle.inter_font_family, AppTextStyle.bold_font_weight, BaseColor.black_color, 18),
                     ),
-                    GlobalView().sizedBoxView(
-                        DeviceSize().deviceHeight(context) * 0.02),
+                    GlobalView().sizedBoxView(DeviceSize().deviceHeight(context) * 0.02),
                     searchTextFieldView(),
-                    GlobalView().sizedBoxView(
-                        DeviceSize().deviceHeight(context) * 0.02),
+                    GlobalView().sizedBoxView(DeviceSize().deviceHeight(context) * 0.02),
                     Expanded(
                       child: autoCompleteListView(),
                     ),
                     Padding(
-                      padding: EdgeInsets.only(
-                          left: 5,
-                          right: 5,
-                          bottom: DeviceSize().deviceHeight(context) * 0.02,
-                          top: DeviceSize().deviceHeight(context) * 0.02),
+                      padding: EdgeInsets.only(left: 5, right: 5, bottom: DeviceSize().deviceHeight(context) * 0.02, top: DeviceSize().deviceHeight(context) * 0.02),
                       child:
                           // Provider.of<BusinessListProvider>(context)
                           //         .businessListResponse
@@ -110,14 +90,11 @@ class _OnlineBusinessCheckInScreenState
                           Provider.of<BusinessListProvider>(context).isChecked!
                               ? GestureDetector(
                                   onTap: () {
-                                    Navigator.pushNamed(context,
-                                        AppRoutes.add_new_checkin_route_name);
+                                    Navigator.pushNamed(context, AppRoutes.add_new_checkin_route_name);
                                   },
-                                  child: GlobalView().buttonFilled(
-                                      context, AppMessages.next_text),
+                                  child: GlobalView().buttonFilled(context, AppMessages.next_text),
                                 )
-                              : GlobalView().buttonFilledDisabled(
-                                  context, AppMessages.next_text),
+                              : GlobalView().buttonFilledDisabled(context, AppMessages.next_text),
                       // : Container(),
                     ),
                   ],
@@ -143,10 +120,7 @@ class _OnlineBusinessCheckInScreenState
                   width: 25,
                   child: GestureDetector(
                       onTap: () {
-                        Provider.of<BusinessListProvider>(context,
-                                listen: false)
-                            .listBusinessLikedByName
-                            .clear();
+                        Provider.of<BusinessListProvider>(context, listen: false).listBusinessLikedByName.clear();
                         Navigator.pop(context);
                       },
                       child: GlobalView().assetImageView(AppImages.ic_back)),
@@ -167,18 +141,12 @@ class _OnlineBusinessCheckInScreenState
       child: TextField(
         controller: searchTextEditingController,
         cursorColor: BaseColor.border_txtfield_color,
-        onChanged: (String value) { 
-          Provider.of<BusinessListProvider>(context, listen: false).isChecked =
-              false;
-          Provider.of<BusinessListProvider>(context, listen: false)
-              .businessListResponse = null;
-          Provider.of<BusinessListProvider>(context, listen: false)
-              .listBusinessLikedByName
-              .clear();
-          print(
-              "Screen listBusinessLikedByName length-> ${Provider.of<BusinessListProvider>(context, listen: false).listBusinessLikedByName.length}");
-          Provider.of<BusinessListProvider>(context, listen: false)
-              .getBusinessListByName(context, searchTextEditingController.text);
+        onChanged: (String value) {
+          Provider.of<BusinessListProvider>(context, listen: false).isChecked = false;
+          Provider.of<BusinessListProvider>(context, listen: false).businessListResponse = null;
+          Provider.of<BusinessListProvider>(context, listen: false).listBusinessLikedByName.clear();
+          print("Screen listBusinessLikedByName length-> ${Provider.of<BusinessListProvider>(context, listen: false).listBusinessLikedByName.length}");
+          Provider.of<BusinessListProvider>(context, listen: false).getBusinessListByName(context, searchTextEditingController.text);
         },
         style: TextStyle(
           color: BaseColor.hint_color,
@@ -196,15 +164,9 @@ class _OnlineBusinessCheckInScreenState
             borderRadius: BorderRadius.circular(25),
             borderSide: BorderSide(color: BaseColor.border_txtfield_color),
           ),
-          disabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(25),
-              borderSide: BorderSide(color: BaseColor.border_txtfield_color)),
-          border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(25),
-              borderSide: BorderSide(color: BaseColor.border_txtfield_color)),
-          focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(25),
-              borderSide: BorderSide(color: BaseColor.border_txtfield_color)),
+          disabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(25), borderSide: BorderSide(color: BaseColor.border_txtfield_color)),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(25), borderSide: BorderSide(color: BaseColor.border_txtfield_color)),
+          focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(25), borderSide: BorderSide(color: BaseColor.border_txtfield_color)),
           hintText: AppMessages.online_business_hint_text,
           hintStyle: TextStyle(
             color: BaseColor.hint_color.withOpacity(0.6),
@@ -233,8 +195,7 @@ class _OnlineBusinessCheckInScreenState
                     controller: scrollController,
                     physics: AlwaysScrollableScrollPhysics(),
                     itemBuilder: (_, index) => BusinessSelectionView(
-                      verifiedUserResponse:
-                          provider.listBusinessLikedByName[index],
+                      verifiedUserResponse: provider.listBusinessLikedByName[index],
                       index: index,
                       // checkBoxView:
                       // onClickCheckbox: () {},
@@ -245,12 +206,8 @@ class _OnlineBusinessCheckInScreenState
                     visible: !provider.isAvailableOnlineData,
                     child: Container(
                       child: Center(
-                        child: GlobalView().textViewWithCenterAlign(
-                            AppMessages.no_business_available_text,
-                            AppTextStyle.inter_font_family,
-                            AppTextStyle.semi_bold_font_weight,
-                            BaseColor.black_color,
-                            18),
+                        child:
+                            GlobalView().textViewWithCenterAlign(AppMessages.no_business_available_text, AppTextStyle.inter_font_family, AppTextStyle.semi_bold_font_weight, BaseColor.black_color, 18),
                       ),
                     ),
                   ),

@@ -31,8 +31,7 @@ class _TimelineScreenState extends State<TimelineScreen> {
   @override
   void initState() {
     NotificationUtils().saveUserTokenForNotification(context);
-    Provider.of<FilterProvider>(context, listen: false)
-        .selectedMetropolitanCityInfo = "";
+    Provider.of<FilterProvider>(context, listen: false).selectedMetropolitanCityInfo = "";
     super.initState();
   }
 
@@ -107,9 +106,7 @@ class _TimelineScreenState extends State<TimelineScreen> {
                     items: [
                       BottomNavigationBarItem(
                         icon: Image.asset(
-                          selectedIndex == 0
-                              ? AppImages.ic_tab_home_filled
-                              : AppImages.ic_tab_home,
+                          selectedIndex == 0 ? AppImages.ic_tab_home_filled : AppImages.ic_tab_home,
                           height: 24,
                           width: 24,
                         ),
@@ -121,9 +118,7 @@ class _TimelineScreenState extends State<TimelineScreen> {
                         icon: Container(
                           margin: EdgeInsets.only(right: 30),
                           child: Image.asset(
-                            selectedIndex == 1
-                                ? AppImages.ic_tab_search_filled
-                                : AppImages.ic_tab_search,
+                            selectedIndex == 1 ? AppImages.ic_tab_search_filled : AppImages.ic_tab_search,
                             height: 24,
                             width: 24,
                           ),
@@ -136,9 +131,7 @@ class _TimelineScreenState extends State<TimelineScreen> {
                         icon: Container(
                           margin: EdgeInsets.only(left: 30),
                           child: Image.asset(
-                            selectedIndex == 2
-                                ? AppImages.thumbs_up_filled
-                                : AppImages.thumbs_up,
+                            selectedIndex == 2 ? AppImages.thumbs_up_filled : AppImages.thumbs_up,
                             height: 24,
                             width: 24,
                           ),
@@ -149,9 +142,7 @@ class _TimelineScreenState extends State<TimelineScreen> {
                       ),
                       BottomNavigationBarItem(
                         icon: Image.asset(
-                          selectedIndex == 3
-                              ? AppImages.ic_tab_more_filled
-                              : AppImages.ic_tab_more,
+                          selectedIndex == 3 ? AppImages.ic_tab_more_filled : AppImages.ic_tab_more,
                           height: 24,
                           width: 24,
                         ),
@@ -166,40 +157,36 @@ class _TimelineScreenState extends State<TimelineScreen> {
                     onTap: _onItemTapped,
                     elevation: 0,
                     backgroundColor: BaseColor.pure_white_color,
-                    selectedIconTheme:
-                        IconThemeData(color: BaseColor.pure_white_color),
+                    selectedIconTheme: IconThemeData(color: BaseColor.pure_white_color),
                   ),
                 ),
               ),
               resizeToAvoidBottomInset: false,
-              floatingActionButtonLocation:
-                  FloatingActionButtonLocation.centerDocked,
+              floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
               floatingActionButton: GestureDetector(
                 onTap: () {
                   // Navigator.pushNamed(
                   //     context, AppRoutes.add_new_checkin_route_name);
-                  Navigator.pushNamed(context,
-                      AppRoutes.select_location_for_add_new_checkin_route_name);
+                  Navigator.pushNamed(context, AppRoutes.select_location_for_add_new_checkin_route_name);
                 },
                 child: Container(
-                    height: 52,
-                    width: 52,
-                    decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Colors.green,
-                        gradient: LinearGradient(colors: [
-                          BaseColor.btn_gradient_start_color1,
-                          BaseColor.btn_gradient_end_color1
-                        ]),
-                        boxShadow: [
-                          BoxShadow(
-                              color: BaseColor.shadow_color, blurRadius: 5)
-                        ]),
-                    child: Icon(
-                      Icons.add,
-                      color: BaseColor.pure_white_color,
-                      size: 32,
-                    )),
+                  height: 52,
+                  width: 52,
+                  decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Colors.green,
+                      gradient: LinearGradient(colors: [BaseColor.btn_gradient_start_color1, BaseColor.btn_gradient_end_color1]),
+                      boxShadow: [BoxShadow(color: BaseColor.shadow_color, blurRadius: 5)]),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset(
+                        AppImages.app_logo,
+                        height: 35,
+                      ),
+                    ],
+                  ),
+                ),
               ),
               body: listofWidgets.elementAt(selectedIndex)),
         ),

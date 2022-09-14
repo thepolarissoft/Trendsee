@@ -117,7 +117,7 @@ class _SelectBusinessForAddNewCheckInPageState
                               Container(
                                 alignment: Alignment.topCenter,
                                 child: GlobalView().textViewWithCenterAlign(
-                                    AppMessages.select_location_title,
+                                    AppMessages.which_business_are_you_at,
                                     AppTextStyle.inter_font_family,
                                     AppTextStyle.bold_font_weight,
                                     BaseColor.black_color,
@@ -178,7 +178,7 @@ class _SelectBusinessForAddNewCheckInPageState
                             MaterialPageRoute(
                                 builder: (_) => OnlineBusinessCheckInScreen()));
                       },
-                      title: AppMessages.online_business_check_in_text),
+                      title: AppMessages.do_not_see_your_location),
                   GlobalView().sizedBoxView(5),
                   Visibility(
                     visible: profileResponse != null &&

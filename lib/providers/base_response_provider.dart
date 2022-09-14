@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:trendoapp/api/api_manager.dart';
 import 'package:trendoapp/api/common/access_token.dart';
@@ -91,35 +92,40 @@ class BaseResponseProvider extends ChangeNotifier {
     });
   }
 
-  void createFeed(BuildContext context, String description, String businessUserId, String categoryId, String? latitude, String? longitude, String? locationName,{String isSupport = '0' }) async {
+  void createFeed(BuildContext context, String description, String businessUserId, String categoryId, String? latitude, String? longitude, String? locationName, {String isSupport = '0'}) async {
     isLoading = true;
     notifyListeners();
-    ApiManager(context).createFeed(description, businessUserId, categoryId, latitude, longitude, locationName,isSupport ).then((response) {
+    ApiManager(context).createFeed(description, businessUserId, categoryId, latitude, longitude, locationName, isSupport).then((response) {
       baseresponse = response;
       print("STATUS CODE-> ${baseresponse!.statuscode}");
       print("Msg-> ${baseresponse!.msg}");
-      // if (baseresponse!.statuscode == 200) {
-      //   if (baseresponse != null) {
-      //     isLoading = false;
-      //     print("baseresponse--->>== ${baseresponse!.msg}");
-      //     print(
-      //         "EMAIL-->> ${PreferenceUtils.getStringValue(PreferenceUtils.keyEmail)}");
-      //     Navigator.pushNamed(context, AppRoutes.timeline_route_name);
-      //   }
-      // } else if (baseresponse!.statuscode == 400) {
-      DialogUtils.displayDialogCallBack(context, "", AppMessages.sorry_text, baseresponse!.msg, "", "", AppMessages.support_text, onTap: () {
-        // ADD HERE,
-        print('SUPPORT----------------------------------------------------------------');
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => BusinessDetailsScreen(
-              businessId: int.parse(businessUserId),
-            ),
-          ),
-        );
-      });
-      // }
+      if (baseresponse!.statuscode == 200) {
+        if (baseresponse != null) {
+          isLoading = false;
+          print("baseresponse--->>== ${baseresponse!.msg}");
+          print("EMAIL-->> ${PreferenceUtils.getStringValue(PreferenceUtils.keyEmail)}");
+          Navigator.pushNamed(context, AppRoutes.timeline_route_name);
+          Fluttertoast.showToast(msg: baseresponse!.msg!);
+        }
+      } else if (baseresponse!.statuscode == 400) {
+        DialogUtils.displayDialogCallBack(context, "", AppMessages.sorry_text, baseresponse!.msg, "", "", AppMessages.close_text, onTap: () {
+          // ADD HERE,
+          print('SUPPORT----------------------------------------------------------------');
+          Navigator.pushNamed(
+            context,
+            AppRoutes.timeline_route_name,
+          );
+          // Navigator.push(
+          //   context,
+          //   MaterialPageRoute(
+          //     builder: (context) =>
+          //     BusinessDetailsScreen(
+          //       businessId: int.parse(businessUserId),
+          //     ),
+          //   ),
+          // );
+        });
+      }
       isLoading = false;
       notifyListeners();
     }).catchError((onError) {
@@ -128,7 +134,15 @@ class BaseResponseProvider extends ChangeNotifier {
       ShowAlertView(
               context: context,
               onCallBack: () {
-                createFeed(context, description, businessUserId, categoryId, latitude, longitude, locationName);
+                createFeed(
+                  context,
+                  description,
+                  businessUserId,
+                  categoryId,
+                  latitude,
+                  longitude,
+                  locationName,
+                );
               },
               exception: onError)
           .showAlertDialog();

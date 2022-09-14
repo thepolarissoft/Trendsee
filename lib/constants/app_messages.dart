@@ -96,6 +96,7 @@ class AppMessages {
   static const String notification_settings_title = "Notification settings";
   static const String account_de_active_message = "De-activate My Account";
   static const String account_delete_message = "Delete My Account";
+  static const String which_business_are_you_at = "Which business are you at?";
   static const String reset_password_title = "Reset Password";
   static const String my_checkins = "My Check-ins";
   static const String business_checkins_title = "Here is what people are saying";
@@ -204,7 +205,7 @@ class AppMessages {
   // static const String temp_locations_text = "Temp Locations";
   static const String online_text = "Online";
   static const String physical_text = "Physical";
-    static const String editBusinessInfo = "Edit Business Info";
+  static const String editBusinessInfo = "Edit Business Info";
   static const String mobile_text = "Mobile";
   static const String http_text = "http://";
   static const String https_text = "https://";
@@ -219,7 +220,8 @@ class AppMessages {
   static const String dislike_msg_text = "Dislike Messages";
   static const String visit_site_text = "Visit Site";
   static const String supportText = "Support";
-  static const String online_business_check_in_text = "Online Business Check-In";
+  static const String do_not_see_your_location = "Don’t see your location?";
+  //static const String do_not_see_your_location = "Don’t see your location?";
   static const String no_business_available_text = "No Businesses Available!";
   static const String continue_text = "Continue";
   static const String change_category_text = "Change Category";
@@ -284,8 +286,7 @@ class AppMessages {
   static const String reEnterNewPasscode = "Re-enter Passcode";
   static const String set_passcode_title = "Set Passcode";
   static const String registrationSuccessfullyText = "Registration Successfully";
-  static const String registerAnotherBusinessTitle =
-      "You registered another business with same email, so please login again to verify this new added business.";
+  static const String registerAnotherBusinessTitle = "You registered another business with same email, so please login again to verify this new added business.";
   static const String hintEmailAddress = "Enter Email Address";
   static const String passcodeText = "Passcode";
   static const String createPasscodeText = "Create a 5 Digit Passcode";
