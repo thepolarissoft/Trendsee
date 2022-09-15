@@ -24,14 +24,15 @@ class CityFilterView extends StatelessWidget {
   // TextEditingController citySearchController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(child: cityAutoCompleteTextFieldView(context)),
-      ],
-    );
+    return  Column(
+          children: [
+            Container(child: cityAutoCompleteTextFieldView(context,filterProvider)),
+          ],
+        ); 
   }
 
-  Widget cityAutoCompleteTextFieldView(BuildContext context) {
+  Widget cityAutoCompleteTextFieldView(BuildContext context, FilterProvider? filterProvider) {
+    //TextEditingController txt = TextEditingController();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.max,
@@ -39,9 +40,7 @@ class CityFilterView extends StatelessWidget {
         GlobalView().textViewWithStartAlign(
             AppMessages.search_city_title, AppTextStyle.inter_font_family, AppTextStyle.normal_font_weight, BaseColor.forgot_pass_txt_color, 18),
         GlobalView().sizedBoxView(10),
-        Consumer<FilterProvider>(builder: (ctx, provider, child) {
-          print("list City length->> ${provider.listCities}");
-          return Theme(
+       Theme(
             data: ThemeData(
               textSelectionTheme: TextSelectionThemeData(
                 cursorColor: BaseColor.border_txtfield_color,
@@ -87,7 +86,7 @@ class CityFilterView extends StatelessWidget {
                   ),
                   suggestionsCallback: (pattern) async {
                     if (pattern.length >= 2) {
-                      return provider.searchByCity(context, pattern);
+                      return filterProvider.searchByCity(context, pattern);
                     } else {
                       return [''];
                     }
@@ -98,17 +97,17 @@ class CityFilterView extends StatelessWidget {
                   },
                   onSuggestionSelected: (item) {
                     print("ITEM NAME-> $item");
-                    filterProvider!.citySearchController.text = item;
-                    provider.selectedCity(item);
-                    provider.setDistanceRadius("0");
-                    print("AREA TEXT->${filterProvider!.citySearchController.text}");
+                    filterProvider.citySearchController.text = item;
+                    filterProvider.selectedCity(item);
+                    filterProvider.setDistanceRadius("0");
+                    print("AREA TEXT->${filterProvider.citySearchController.text}");
                     // provider.searchByCity(context);
                     // provider.changeEditableCityValue();
                     print("Suggestion-> $item");
                   },
                 )),
-          );
-        }),
+          )
+  
       ],
     );
   }
@@ -151,6 +150,7 @@ class CityFilterView extends StatelessWidget {
           ),
           Image.asset(AppImages.ic_back_search2, height: 15, width: 15, color: BaseColor.black_color),
           SizedBox(width: 10),
+       
         ],
       ),
     );

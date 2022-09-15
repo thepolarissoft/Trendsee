@@ -111,10 +111,10 @@ class _FilterViewState extends State<FilterView> {
           selectedFilterValue: selectedFilterValue,
         );
 
-        print("=========================${distanceRadius}");
-        print(filterProvider);
-        print(widget.route);
-        print("________________________${selectedFilterValue}");
+        // print("=========================${distanceRadius}");
+        // print(filterProvider);
+        // print(widget.route);
+        // print("________________________${selectedFilterValue}");
       },
       child: Container(
         // height: 40,

@@ -35,9 +35,7 @@ class _SelectBusinessForAddNewCheckInPageState extends State<SelectBusinessForAd
   // VerifiedUserResponse verifiedUserResponse = new VerifiedUserResponse();
   String? distanceRadius = "5";
   int selectedFilterValue = 0;
-  FilterProvider? filterProvider;
-
-
+  // FilterProvider? filterProvider;
 
   @override
   void initState() {
@@ -57,11 +55,9 @@ class _SelectBusinessForAddNewCheckInPageState extends State<SelectBusinessForAd
       // "100000000000000000000",
     );
     selectedFilterValue = widget.route == "search" ? 0 : 1;
-     Future.delayed(Duration.zero, () {
-      Provider.of<FilterProvider>(context, listen: false)
-          .changeSegmentValue(route: AppMessages.city_text);
-      Provider.of<FilterProvider>(context, listen: false)
-          .setDistanceRadius(distanceRadius);
+    Future.delayed(Duration.zero, () {
+      Provider.of<FilterProvider>(context, listen: false).changeSegmentValue(route: AppMessages.city_text);
+      Provider.of<FilterProvider>(context, listen: false).setDistanceRadius(distanceRadius);
     });
     print("RADIUS==-> ${Provider.of<FilterProvider>(context, listen: false).distanceRadius}");
     businessListProvider.isChecked = false;
@@ -86,139 +82,141 @@ class _SelectBusinessForAddNewCheckInPageState extends State<SelectBusinessForAd
     return SafeArea(
       top: false,
       bottom: true,
-      child: GestureDetector(
-        onTap: () {
-          FocusScope.of(context).unfocus();
-        },
-        child: Container(
-          width: double.infinity,
-          height: double.infinity,
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage(
-                AppImages.background_image1,
+      child: Consumer<FilterProvider>(builder: (context, provider, child) {
+        return GestureDetector(
+          onTap: () {
+            FocusScope.of(context).unfocus();
+          },
+          child: Container(
+            width: double.infinity,
+            height: double.infinity,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage(
+                  AppImages.background_image1,
+                ),
+                fit: BoxFit.cover,
+                // alignment: Alignment.topCenter,
               ),
-              fit: BoxFit.cover,
-              // alignment: Alignment.topCenter,
             ),
-          ),
-          child: Stack(
-            children: [
-              Column(
-                children: [
-                  Expanded(
-                    child: Padding(
-                      padding: EdgeInsets.all(16),
+            child: Stack(
+              children: [
+                Column(
+                  children: [
+                    Expanded(
                       child: Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 30),
-                        child: Consumer<BusinessListProvider>(builder: (_, location, child) {
-                          return Column(
-                            // crossAxisAlignment: CrossAxisAlignment.stretch,
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              GlobalView().sizedBoxView(DeviceSize().deviceHeight(context) * 0.052),
-                              Container(
-                                alignment: Alignment.topCenter,
-                                child: GlobalView()
-                                    .textViewWithCenterAlign(AppMessages.which_business_are_you_at, AppTextStyle.inter_font_family, AppTextStyle.bold_font_weight, BaseColor.black_color, 18),
-                              ),
-                              GlobalView().sizedBoxView(DeviceSize().deviceHeight(context) * 0.02),
-                              Expanded(
-                                child: Padding(
-                                  padding: EdgeInsets.symmetric(horizontal: 8),
-                                  child: Container(
-                                    height: DeviceSize().deviceHeight(context) - 300,
-                                    child: locationsList(context),
+                        padding: EdgeInsets.all(16),
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 30),
+                          child: Consumer<BusinessListProvider>(builder: (_, location, child) {
+                            return Column(
+                              // crossAxisAlignment: CrossAxisAlignment.stretch,
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                GlobalView().sizedBoxView(DeviceSize().deviceHeight(context) * 0.052),
+                                Container(
+                                  alignment: Alignment.topCenter,
+                                  child: GlobalView()
+                                      .textViewWithCenterAlign(AppMessages.which_business_are_you_at, AppTextStyle.inter_font_family, AppTextStyle.bold_font_weight, BaseColor.black_color, 18),
+                                ),
+                                GlobalView().sizedBoxView(DeviceSize().deviceHeight(context) * 0.02),
+                                Expanded(
+                                  child: Padding(
+                                    padding: EdgeInsets.symmetric(horizontal: 8),
+                                    child: Container(
+                                      height: DeviceSize().deviceHeight(context) - 300,
+                                      child: locationsList(context),
+                                    ),
                                   ),
                                 ),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.only(left: 5, right: 5, bottom: DeviceSize().deviceHeight(context) * 0.01, top: DeviceSize().deviceHeight(context) * 0.02),
-                                child: Provider.of<BusinessListProvider>(context).listBusinessLiked.isNotEmpty
-                                    ? Provider.of<BusinessListProvider>(context).isChecked!
-                                        ? GestureDetector(
-                                            onTap: () {
-                                              Navigator.pushNamed(context, AppRoutes.add_new_checkin_route_name);
-                                            },
-                                            child: GlobalView().buttonFilled(context, AppMessages.next_text),
-                                          )
-                                        : GlobalView().buttonFilledDisabled(context, AppMessages.next_text)
-                                    : Container(),
-                              ),
-                              // GlobalView().sizedBoxView(
-                              //     DeviceSize().deviceHeight(context) * 0.02),
-                            ],
-                          );
-                        }),
+                                Padding(
+                                  padding: EdgeInsets.only(left: 5, right: 5, bottom: DeviceSize().deviceHeight(context) * 0.01, top: DeviceSize().deviceHeight(context) * 0.02),
+                                  child: Provider.of<BusinessListProvider>(context).listBusinessLiked.isNotEmpty
+                                      ? Provider.of<BusinessListProvider>(context).isChecked!
+                                          ? GestureDetector(
+                                              onTap: () {
+                                                Navigator.pushNamed(context, AppRoutes.add_new_checkin_route_name);
+                                              },
+                                              child: GlobalView().buttonFilled(context, AppMessages.next_text),
+                                            )
+                                          : GlobalView().buttonFilledDisabled(context, AppMessages.next_text)
+                                      : Container(),
+                                ),
+                                // GlobalView().sizedBoxView(
+                                //     DeviceSize().deviceHeight(context) * 0.02),
+                              ],
+                            );
+                          }),
+                        ),
                       ),
                     ),
-                  ),
-                  CommonGradientButton(
-                      onPressed: () {
-                        openFilterBottomSheet(
-                          context: context,
-                          distanceRadius: distanceRadius,
-                          filterProvider: filterProvider,
-                          route: widget.route,
-                          selectedFilterValue: selectedFilterValue,
-                        );
+                    CommonGradientButton(
+                        onPressed: () {
+                          openFilterBottomSheet(
+                            context: context,
+                            distanceRadius: distanceRadius,
+                            filterProvider: provider,
+                            route: "search", //widget.route,
+                            selectedFilterValue: selectedFilterValue == "search" ? 0 : 1,
+                          );
 
-                        // Navigator.push(
-                        //     context,
-                        //     MaterialPageRoute(
-                        //         builder: (_) => OnlineBusinessCheckInScreen()));
-                      },
-                      title: AppMessages.do_not_see_your_location),
-                  GlobalView().sizedBoxView(5),
-                  Visibility(
-                    visible: profileResponse != null && profileResponse!.user != null && profileResponse!.user!.isAdmin == 1 ? true : false,
-                    child: Column(
-                      children: [
-                        GlobalView().dividerView(),
-                        GlobalView().sizedBoxView(5),
-                        CommonGradientButton(
-                            onPressed: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (_) => CategorySelectionScreen(
-                                            userType: 0,
-                                          )));
-                            },
-                            title: AppMessages.add_unregistered_business_title),
-                      ],
+                          // Navigator.push(
+                          //     context,
+                          //     MaterialPageRoute(
+                          //         builder: (_) => OnlineBusinessCheckInScreen()));
+                        },
+                        title: AppMessages.do_not_see_your_location),
+                    GlobalView().sizedBoxView(5),
+                    Visibility(
+                      visible: profileResponse != null && profileResponse!.user != null && profileResponse!.user!.isAdmin == 1 ? true : false,
+                      child: Column(
+                        children: [
+                          GlobalView().dividerView(),
+                          GlobalView().sizedBoxView(5),
+                          CommonGradientButton(
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (_) => CategorySelectionScreen(
+                                              userType: 0,
+                                            )));
+                              },
+                              title: AppMessages.add_unregistered_business_title),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+                Positioned(
+                  child: Visibility(
+                    visible: Provider.of<BusinessListProvider>(context).isLoading,
+                    child: Container(
+                      // color: BaseColor.loader_bg_color,
+                      child: GlobalView().loaderView(),
                     ),
-                  )
-                ],
-              ),
-              Positioned(
-                child: Visibility(
-                  visible: Provider.of<BusinessListProvider>(context).isLoading,
-                  child: Container(
-                    // color: BaseColor.loader_bg_color,
-                    child: GlobalView().loaderView(),
                   ),
                 ),
-              ),
-              Positioned(
-                top: 57,
-                left: 21,
-                child: Container(
-                  height: 25,
-                  width: 25,
-                  child: GestureDetector(
-                      onTap: () {
-                        Navigator.pop(context);
-                      },
-                      child: GlobalView().assetImageView(AppImages.ic_back)),
+                Positioned(
+                  top: 57,
+                  left: 21,
+                  child: Container(
+                    height: 25,
+                    width: 25,
+                    child: GestureDetector(
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
+                        child: GlobalView().assetImageView(AppImages.ic_back)),
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
+            // );
+            // }
           ),
-          // );
-          // }
-        ),
-      ),
+        );
+      }),
     );
   }
 
@@ -364,11 +362,11 @@ class _SelectBusinessForAddNewCheckInPageState extends State<SelectBusinessForAd
               return Visibility(
                 visible: !provider.isAvailableData,
                 child: Container(
-                    // color: Colors.red,
-                    child: Center(
-                  child: GlobalView()
-                      .textViewWithCenterAlign(AppMessages.no_nearby_locations_available_text, AppTextStyle.inter_font_family, AppTextStyle.semi_bold_font_weight, BaseColor.black_color, 18),
-                ),
+                  // color: Colors.red,
+                  child: Center(
+                    child: GlobalView()
+                        .textViewWithCenterAlign(AppMessages.no_nearby_locations_available_text, AppTextStyle.inter_font_family, AppTextStyle.semi_bold_font_weight, BaseColor.black_color, 18),
+                  ),
                 ),
               );
             }
