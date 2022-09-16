@@ -5,31 +5,33 @@ import 'package:trendoapp/constants/app_images.dart';
 import 'package:trendoapp/constants/app_messages.dart';
 import 'package:trendoapp/constants/app_routes.dart';
 import 'package:trendoapp/constants/app_text_style.dart';
-import 'package:trendoapp/constants/app_toast_messages.dart';
 import 'package:trendoapp/constants/base_color.dart';
-import 'package:trendoapp/data/models/verified_user_response.dart';
 import 'package:trendoapp/global/view/global_view.dart';
 import 'package:trendoapp/providers/base_response_provider.dart';
 import 'package:trendoapp/providers/business_list_provider.dart';
-import 'package:trendoapp/utils/category_utils.dart';
 
 // ignore: must_be_immutable
 class AddNewCheckSupportScreen extends StatefulWidget {
-  final int businessId;
-  final int categoriesId;
-  final String businessLatitude;
-  final String businessLongitude;
-  final String businessLocationName;
-  final String businessName;
+  final int? businessId;
+  final int? categoriesId;
+  final String? categoriesName;
+  final String? businessLatitude;
+  final String? businessLongitude;
+  final String? businessLocationName;
+  final String? businessName;
+   bool isScreenChange = false;
 
-  const AddNewCheckSupportScreen(
-      {super.key,
-      required this.businessId,
-      required this.categoriesId,
-      required this.businessLatitude,
-      required this.businessLongitude,
-      required this.businessName,
-      required this.businessLocationName});
+   AddNewCheckSupportScreen({
+    super.key,
+    this.businessId,
+    this.categoriesName,
+    this.categoriesId,
+    this.businessLatitude,
+    this.businessLongitude,
+    this.businessName,
+    this.businessLocationName,
+  required this.isScreenChange,
+  });
 
   @override
   State<AddNewCheckSupportScreen> createState() => _AddNewCheckSupportScreenState();
@@ -45,8 +47,8 @@ class _AddNewCheckSupportScreenState extends State<AddNewCheckSupportScreen> {
   @override
   void initState() {
     super.initState();
-    locationTextEditingController.text = widget.businessLocationName;
-    businessNameTextEditingController.text = widget.businessName;
+    locationTextEditingController.text = widget.businessLocationName ?? '';
+    businessNameTextEditingController.text = widget.businessName ?? '';
   }
 
   @override
@@ -185,7 +187,7 @@ class _AddNewCheckSupportScreenState extends State<AddNewCheckSupportScreen> {
                               child: GestureDetector(
                                   onTap: () {
                                     Provider.of<BusinessListProvider>(context, listen: false).isChecked = false;
-                                    Navigator.pushNamed(context, AppRoutes.timeline_route_name);
+                                    widget.isScreenChange == true ? Navigator.pushNamed(context, AppRoutes.timeline_route_name) : Navigator.pop(context);
                                   },
                                   child: GlobalView().assetImageView(AppImages.ic_back)),
                             ),
@@ -252,7 +254,8 @@ class _AddNewCheckSupportScreenState extends State<AddNewCheckSupportScreen> {
                   child: Container(
                     alignment: Alignment.centerLeft,
                     child: GlobalView().textViewWithStartAlign(
-                        provider.verifiedUserResponse != null && provider.verifiedUserResponse.categories != null ? CategoryUtils().getCategoryName(provider.verifiedUserResponse.categories!) : "Cafe",
+                        //   provider.verifiedUserResponse != null && provider.verifiedUserResponse.categories != null ? //CategoryUtils().getCategoryName(provider.verifiedUserResponse.categories!) :
+                        widget.categoriesName ?? "Cafe",
                         AppTextStyle.inter_font_family,
                         AppTextStyle.normal_font_weight,
                         BaseColor.hint_color,

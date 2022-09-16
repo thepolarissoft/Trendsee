@@ -109,6 +109,7 @@ class _FilterViewState extends State<FilterView> {
           filterProvider: filterProvider,
           route: widget.route,
           selectedFilterValue: selectedFilterValue,
+          isChangeScreen: true
         );
 
         // print("=========================${distanceRadius}");

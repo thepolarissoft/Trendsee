@@ -6,12 +6,13 @@ import 'package:trendoapp/global/view/show_alert_view.dart';
 
 class BusinessListProvider extends ChangeNotifier {
   BusinessListResponse? businessListResponse;
-  bool isLoading = false;
   bool? isChecked = false;
+  bool isLoading = false;
   VerifiedUserResponse verifiedUserResponse = new VerifiedUserResponse();
   // BusinessLikedListResponse businessLikedListResponse =
   //     new BusinessLikedListResponse();
   List<VerifiedUserResponse> listBusinessLiked = [];
+  List<VerifiedUserResponse> newListBusinessLiked = [];
   List<VerifiedUserResponse> listBusinessLikedByName = [];
 
   bool isAvailableData = true;
@@ -77,7 +78,48 @@ class BusinessListProvider extends ChangeNotifier {
       notifyListeners();
     });
   }
-
+ void newGetBusinessList(BuildContext context, String latitude, String longitude,
+      String? distance) async {
+        print('==============================');
+    int page = businessListResponse == null
+        ? 1
+        : businessListResponse!.business!.currentPage! + 1;
+    
+    isLoading = true;
+    isAvailableData = true;
+    ApiManager(context)
+        .getBusinessList(page, latitude, longitude, distance)
+        .then((response) {
+      businessListResponse = response;
+      if (businessListResponse!.statuscode == 200) {
+        if (businessListResponse != null &&
+            businessListResponse!.business != null &&
+            businessListResponse!.business!.data!.isNotEmpty) {
+          if (page == 1) {
+            newListBusinessLiked.clear();
+          }
+          newListBusinessLiked.addAll(businessListResponse!.business!.data!);
+          print(newListBusinessLiked.length);
+          isAvailableData = true;
+        } else {
+          isAvailableData = false;
+        }
+      }
+      isLoading = false;
+      notifyListeners();
+    }).catchError((onError) {
+      isLoading = false;
+      print("ONERROR->> ${onError.toString()}");
+      ShowAlertView(
+        context: context,
+        onCallBack: () {
+          getBusinessList(context, latitude, longitude, distance);
+        },
+        exception: onError,
+      ).showAlertDialog();
+      notifyListeners();
+    });
+  }
   void changeCheckBoxValue(int index, bool? value) {
     isChecked = value;
     if (businessListResponse != null &&

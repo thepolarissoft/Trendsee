@@ -1,5 +1,5 @@
 // ignore_for_file: missing_return
-
+// encodeWork change Search
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
@@ -213,6 +213,7 @@ class _SearchByBusinessScreenState extends State<SearchByBusinessScreen> with Ti
                                         filterProvider: filterProvider,
                                         selectedFilterValue: 0,
                                         distanceRadius: "5",
+                                        isChangeScreen: true,
                                       );
                                     },
                                   )),
@@ -279,22 +280,22 @@ class _SearchByBusinessScreenState extends State<SearchByBusinessScreen> with Ti
 
   // void onClickLikedButton(){}
 
-  void getSearchData() {
-    print("Distance radius provider value From UI--> ${Provider.of<FilterProvider>(context, listen: false).distanceRadius}");
-    page = 1;
-    Provider.of<SearchByBusinessProvider>(context, listen: false).listBusiness.clear();
-    Provider.of<SearchByBusinessProvider>(context, listen: false).getSearchByBusinessList(
-      context,
-      page,
-      searchEditingController.text,
-      Provider.of<CategoriesListProvider>(context, listen: false).selectedCategoryResponse!.id.toString(),
-      // filterModel.categoryId,
-      StorageUtils.readStringValue(StorageUtils.keyLatitude),
-      StorageUtils.readStringValue(StorageUtils.keyLongitude),
-      Provider.of<FilterProvider>(context, listen: false).distanceRadius,
-      Provider.of<FilterProvider>(context, listen: false).selectedMetropolitanCityInfo,
-    );
-  }
+  // void getSearchData() {
+  //   print("Distance radius provider value From UI--> ${Provider.of<FilterProvider>(context, listen: false).distanceRadius}");
+  //   page = 1;
+  //   Provider.of<SearchByBusinessProvider>(context, listen: false).listBusiness.clear();
+  //   Provider.of<SearchByBusinessProvider>(context, listen: false).getSearchByBusinessList(
+  //     context,
+  //     page,
+  //     searchEditingController.text,
+  //     Provider.of<CategoriesListProvider>(context, listen: false).selectedCategoryResponse!.id.toString(),
+  //     // filterModel.categoryId,
+  //     StorageUtils.readStringValue(StorageUtils.keyLatitude),
+  //     StorageUtils.readStringValue(StorageUtils.keyLongitude),
+  //     Provider.of<FilterProvider>(context, listen: false).distanceRadius,
+  //     Provider.of<FilterProvider>(context, listen: false).selectedMetropolitanCityInfo,
+  //   );
+  // }
 
   Widget searchItemView(
     String data,
@@ -460,97 +461,97 @@ class _SearchByBusinessScreenState extends State<SearchByBusinessScreen> with Ti
         );
       });
 
-  Widget textfieldViewForSearchPeople(String image, TextEditingController controller, String hintText, TextAlign textAlign) => Material(
-        shadowColor: BaseColor.shadow_color,
-        elevation: 4,
-        borderRadius: BorderRadius.circular(25),
-        child: TextField(
-          // focusNode: focusNode,
-          controller: controller,
-          cursorColor: BaseColor.border_txtfield_color,
-          style: TextStyle(
-            color: BaseColor.hint_color,
-            fontFamily: AppTextStyle.inter_font_family,
-            fontSize: 14,
-          ),
-          textDirection: TextDirection.ltr,
-          textAlign: textAlign,
-          onChanged: (String value) {
-            // controller.text = value.trim();
-            if (controller.text.indexOf(' ') >= 1) {
-              print("contains spaces");
-              controller.text = controller.text.replaceAll('  ', '');
-            } else {
-              if (controller.text.startsWith(' ')) {
-                print("start called");
-                controller.text = controller.text.trimLeft();
-                controller.text = controller.text.replaceAll('  ', '');
-              } else if (controller.text.endsWith(' ')) {
-                print("end called");
-                controller.text = controller.text.trimRight();
-                controller.text = controller.text.replaceAll('  ', '');
-              }
-            }
-            controller.selection = TextSelection.fromPosition(TextPosition(offset: controller.text.length));
-            print(" controller.text-> ${controller.text}");
-            Provider.of<SearchByBusinessProvider>(context, listen: false).listBusiness.clear();
-            // if (controller.text.length > 0) {
-            Provider.of<FilterProvider>(context, listen: false).setSearchValue(controller.text);
+//   Widget textfieldViewForSearchPeople(String image, TextEditingController controller, String hintText, TextAlign textAlign) => Material(
+//         shadowColor: BaseColor.shadow_color,
+//         elevation: 4,
+//         borderRadius: BorderRadius.circular(25),
+//         child: TextField(
+//           // focusNode: focusNode,
+//           controller: controller,
+//           cursorColor: BaseColor.border_txtfield_color,
+//           style: TextStyle(
+//             color: BaseColor.hint_color,
+//             fontFamily: AppTextStyle.inter_font_family,
+//             fontSize: 14,
+//           ),
+//           textDirection: TextDirection.ltr,
+//           textAlign: textAlign,
+//           onChanged: (String value) {
+//             // controller.text = value.trim();
+//             if (controller.text.indexOf(' ') >= 1) {
+//               print("contains spaces");
+//               controller.text = controller.text.replaceAll('  ', '');
+//             } else {
+//               if (controller.text.startsWith(' ')) {
+//                 print("start called");
+//                 controller.text = controller.text.trimLeft();
+//                 controller.text = controller.text.replaceAll('  ', '');
+//               } else if (controller.text.endsWith(' ')) {
+//                 print("end called");
+//                 controller.text = controller.text.trimRight();
+//                 controller.text = controller.text.replaceAll('  ', '');
+//               }
+//             }
+//             controller.selection = TextSelection.fromPosition(TextPosition(offset: controller.text.length));
+//             print(" controller.text-> ${controller.text}");
+//             Provider.of<SearchByBusinessProvider>(context, listen: false).listBusiness.clear();
+//             // if (controller.text.length > 0) {
+//             Provider.of<FilterProvider>(context, listen: false).setSearchValue(controller.text);
 
-            Provider.of<SearchByBusinessProvider>(context, listen: false).getSearchByBusinessList(
-              context,
-              page,
-              controller.text,
-              Provider.of<CategoriesListProvider>(context, listen: false).selectedCategoryResponse!.id.toString(),
-              StorageUtils.readStringValue(StorageUtils.keyLatitude),
-              StorageUtils.readStringValue(StorageUtils.keyLongitude),
-              Provider.of<FilterProvider>(context, listen: false).distanceRadius,
-              Provider.of<FilterProvider>(context, listen: false).selectedMetropolitanCityInfo,
-            );
-            // }
-          },
-          keyboardType: TextInputType.name,
-          inputFormatters: <TextInputFormatter>[
-            // FilteringTextInputFormatter.allow(RegExp(r'^[a-zA-Z0-9 ]+$')),
-            // FilteringTextInputFormatter(RegExp(r'^[a-zA-Z0-9 ]+$'), allow: true)
-            FilteringTextInputFormatter(RegExp("[a-zA-Z0-9 ]"), allow: true),
-          ],
-          decoration: InputDecoration(
-            isDense: true,
-            focusColor: BaseColor.pure_white_color,
-            contentPadding: EdgeInsets.only(left: 60, right: -30),
-            prefixIcon: Container(
-              // height: 50,
-              // width: 58,
-              child: Padding(
-                padding: EdgeInsets.only(top: 13, bottom: 13, left: 13, right: 13),
-                child: Image.asset(
-                  image,
-                  height: 24,
-                  width: 24,
-                ),
-              ),
-            ),
-            //  prefixIconConstraints:BoxConstraints(minWidth: 23, maxHeight: 20),
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(25),
-              borderSide: BorderSide(color: BaseColor.border_txtfield_color),
-            ),
-            disabledBorder:
-                OutlineInputBorder(borderRadius: BorderRadius.circular(25), borderSide: BorderSide(color: BaseColor.border_txtfield_color)),
-            border: OutlineInputBorder(borderRadius: BorderRadius.circular(25), borderSide: BorderSide(color: BaseColor.border_txtfield_color)),
-            focusedBorder:
-                OutlineInputBorder(borderRadius: BorderRadius.circular(25), borderSide: BorderSide(color: BaseColor.border_txtfield_color)),
-            hintText: hintText,
-            hintStyle: TextStyle(
-              color: BaseColor.hint_color.withOpacity(0.6),
-              fontFamily: AppTextStyle.inter_font_family,
-              fontSize: 14,
-            ),
-          ),
-        ),
-      );
-}
+//             Provider.of<SearchByBusinessProvider>(context, listen: false).getSearchByBusinessList(
+//               context,
+//               page,
+//               controller.text,
+//               Provider.of<CategoriesListProvider>(context, listen: false).selectedCategoryResponse!.id.toString(),
+//               StorageUtils.readStringValue(StorageUtils.keyLatitude),
+//               StorageUtils.readStringValue(StorageUtils.keyLongitude),
+//               Provider.of<FilterProvider>(context, listen: false).distanceRadius,
+//               Provider.of<FilterProvider>(context, listen: false).selectedMetropolitanCityInfo,
+//             );
+//             // }
+//           },
+//           keyboardType: TextInputType.name,
+//           inputFormatters: <TextInputFormatter>[
+//             // FilteringTextInputFormatter.allow(RegExp(r'^[a-zA-Z0-9 ]+$')),
+//             // FilteringTextInputFormatter(RegExp(r'^[a-zA-Z0-9 ]+$'), allow: true)
+//             FilteringTextInputFormatter(RegExp("[a-zA-Z0-9 ]"), allow: true),
+//           ],
+//           decoration: InputDecoration(
+//             isDense: true,
+//             focusColor: BaseColor.pure_white_color,
+//             contentPadding: EdgeInsets.only(left: 60, right: -30),
+//             prefixIcon: Container(
+//               // height: 50,
+//               // width: 58,
+//               child: Padding(
+//                 padding: EdgeInsets.only(top: 13, bottom: 13, left: 13, right: 13),
+//                 child: Image.asset(
+//                   image,
+//                   height: 24,
+//                   width: 24,
+//                 ),
+//               ),
+//             ),
+//             //  prefixIconConstraints:BoxConstraints(minWidth: 23, maxHeight: 20),
+//             enabledBorder: OutlineInputBorder(
+//               borderRadius: BorderRadius.circular(25),
+//               borderSide: BorderSide(color: BaseColor.border_txtfield_color),
+//             ),
+//             disabledBorder:
+//                 OutlineInputBorder(borderRadius: BorderRadius.circular(25), borderSide: BorderSide(color: BaseColor.border_txtfield_color)),
+//             border: OutlineInputBorder(borderRadius: BorderRadius.circular(25), borderSide: BorderSide(color: BaseColor.border_txtfield_color)),
+//             focusedBorder:
+//                 OutlineInputBorder(borderRadius: BorderRadius.circular(25), borderSide: BorderSide(color: BaseColor.border_txtfield_color)),
+//             hintText: hintText,
+//             hintStyle: TextStyle(
+//               color: BaseColor.hint_color.withOpacity(0.6),
+//               fontFamily: AppTextStyle.inter_font_family,
+//               fontSize: 14,
+//             ),
+//           ),
+//         ),
+//       );
+ }
 
 class NoLeadingSpaceFormatter extends TextInputFormatter {
   @override

@@ -19,6 +19,8 @@ void openFilterBottomSheet({
   required FilterProvider? filterProvider,
   required int? selectedFilterValue,
   required String? distanceRadius,
+  required bool? isChangeScreen,
+ 
 }) {
   showModalBottomSheet<void>(
     shape: RoundedRectangleBorder(
@@ -27,6 +29,7 @@ void openFilterBottomSheet({
     context: context,
     isScrollControlled: true,
     builder: (BuildContext context) {
+      print("____________++++++++++++==$selectedFilterValue");
       return StatefulBuilder(builder:
           (BuildContext context, void Function(void Function()) setState) {
         return GestureDetector(
@@ -144,6 +147,7 @@ void openFilterBottomSheet({
                             ResetApplyView(
                               distanceRadius: distanceRadius,
                               route: route,
+                              isChangeScreen: isChangeScreen,
                             ),
                             GlobalView().sizedBoxView(20),
                           ],

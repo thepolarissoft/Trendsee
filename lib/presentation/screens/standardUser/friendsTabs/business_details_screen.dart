@@ -451,6 +451,8 @@ class _BusinessDetailsScreenState extends State<BusinessDetailsScreen> {
                                             businessLongitude: provider.businessDetailsResponse!.business!.longitude!,
                                             businessLocationName: provider.businessDetailsResponse!.business!.locationName ?? '',
                                             businessName: provider.businessDetailsResponse!.business!.businessName ?? '',
+                                            categoriesName:CategoryUtils().getCategoryName(provider.businessDetailsResponse!.business!.categories!) ,
+                                            isScreenChange: true,
                                           ),
                                         ),
                                       );

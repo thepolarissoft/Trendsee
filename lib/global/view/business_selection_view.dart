@@ -27,7 +27,8 @@ class BusinessSelectionView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(bottom: 10, top: 10),
-      child: Row(
+      child: 
+      Row(
         children: [
           Expanded(
             child: Column(
@@ -79,7 +80,7 @@ class BusinessSelectionView extends StatelessWidget {
                   checkColor: BaseColor.pure_white_color,
                   activeColor: BaseColor.btn_gradient_end_color1,
                   onChanged: (bool? value) {
-                    // onClickCheckbox();
+                     //onClickCheckbox();
                     // provider.changeCheckBoxValue(index, value);
                     Provider.of<BusinessListProvider>(context, listen: false)
                         .changeCheckBoxValue(index, value);
@@ -97,6 +98,7 @@ class BusinessSelectionView extends StatelessWidget {
           ),
         ],
       ),
+    
     );
   }
 }

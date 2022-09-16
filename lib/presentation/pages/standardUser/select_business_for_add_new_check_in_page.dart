@@ -13,7 +13,6 @@ import 'package:trendoapp/global/view/common_gradient_button.dart';
 import 'package:trendoapp/global/view/filter/open_filter_bottom_sheet.dart';
 import 'package:trendoapp/global/view/global_view.dart';
 import 'package:trendoapp/presentation/screens/businessUser/category_selection_screen.dart';
-import 'package:trendoapp/presentation/screens/online_business_check_in_screen.dart';
 import 'package:trendoapp/providers/business_list_provider.dart';
 import 'package:trendoapp/providers/filter_provider.dart';
 import 'package:trendoapp/utils/preference_utils.dart';
@@ -54,7 +53,8 @@ class _SelectBusinessForAddNewCheckInPageState extends State<SelectBusinessForAd
       // Provider.of<FilterProvider>(context, listen: false).distanceRadius,
       // "100000000000000000000",
     );
-    selectedFilterValue = widget.route == "search" ? 0 : 1;
+    //Change By Vimesh
+    // selectedFilterValue = widget.route == "search" ? 0 : 1;
     Future.delayed(Duration.zero, () {
       Provider.of<FilterProvider>(context, listen: false).changeSegmentValue(route: AppMessages.city_text);
       Provider.of<FilterProvider>(context, listen: false).setDistanceRadius(distanceRadius);
@@ -152,12 +152,22 @@ class _SelectBusinessForAddNewCheckInPageState extends State<SelectBusinessForAd
                     ),
                     CommonGradientButton(
                         onPressed: () {
+                          // businessOpenFilterBottomSheet(
+                          //   context: context,
+                          //   distanceRadius: distanceRadius,
+                          //   filterProvider: provider,
+                          //   route: "search", //widget.route,
+                          //   selectedFilterValue: selectedFilterValue == "search" ? 0 : 1,
+                          // );
+      print("____________++++++++++++==$selectedFilterValue");
+
                           openFilterBottomSheet(
                             context: context,
                             distanceRadius: distanceRadius,
                             filterProvider: provider,
                             route: "search", //widget.route,
-                            selectedFilterValue: selectedFilterValue == "search" ? 0 : 1,
+                            selectedFilterValue: selectedFilterValue ,
+                            isChangeScreen: false
                           );
 
                           // Navigator.push(
