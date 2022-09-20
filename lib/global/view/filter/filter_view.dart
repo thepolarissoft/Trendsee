@@ -127,7 +127,7 @@ class _FilterViewState extends State<FilterView> {
         // ),
         // color: Colors.red,
         child:
-            // widget.route.toLowerCase() == "search"
+             widget.route.toLowerCase() == "search" ?
             //     ? Container(
             //         child: Container(
             //         padding: EdgeInsets.only(
@@ -169,7 +169,8 @@ class _FilterViewState extends State<FilterView> {
             //       ))
             //     :
             GlobalView().wrappedButtonFilledView(
-                context, AppMessages.change_search_text),
+                context, AppMessages.change_search_text):GlobalView().wrappedButtonFilledView(
+                context, AppMessages.filter_text) ,
       ),
     );
   }

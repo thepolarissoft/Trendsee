@@ -27,6 +27,14 @@ PODS:
     - GoogleMaps/Base
   - image_picker (0.0.1):
     - Flutter
+  - libphonenumber (0.0.1):
+    - Flutter
+    - libPhoneNumber-iOS
+  - libPhoneNumber-iOS (0.9.15)
+  - libphonenumber_plugin (0.0.1):
+    - Flutter
+    - libphonenumber
+    - libPhoneNumber-iOS
   - onesignal_flutter (3.3.2):
     - Flutter
     - OneSignalXCFramework (= 3.11.2)
@@ -64,6 +72,8 @@ DEPENDENCIES:
   - geolocator_apple (from `.symlinks/plugins/geolocator_apple/ios`)
   - google_maps_flutter (from `.symlinks/plugins/google_maps_flutter/ios`)
   - image_picker (from `.symlinks/plugins/image_picker/ios`)
+  - libphonenumber (from `.symlinks/plugins/libphonenumber/ios`)
+  - libphonenumber_plugin (from `.symlinks/plugins/libphonenumber_plugin/ios`)
   - onesignal_flutter (from `.symlinks/plugins/onesignal_flutter/ios`)
   - OneSignalXCFramework (< 4.0, >= 3.4.3)
   - path_provider_ios (from `.symlinks/plugins/path_provider_ios/ios`)
@@ -76,6 +86,7 @@ SPEC REPOS:
   trunk:
     - FMDB
     - GoogleMaps
+    - libPhoneNumber-iOS
     - OneSignalXCFramework
     - ReachabilitySwift
     - Toast
@@ -99,6 +110,10 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/google_maps_flutter/ios"
   image_picker:
     :path: ".symlinks/plugins/image_picker/ios"
+  libphonenumber:
+    :path: ".symlinks/plugins/libphonenumber/ios"
+  libphonenumber_plugin:
+    :path: ".symlinks/plugins/libphonenumber_plugin/ios"
   onesignal_flutter:
     :path: ".symlinks/plugins/onesignal_flutter/ios"
   path_provider_ios:
@@ -124,6 +139,9 @@ SPEC CHECKSUMS:
   google_maps_flutter: c59fc576c0d0c7f4dc4bd63832c862d22d5a7c6d
   GoogleMaps: 025272d5876d3b32604e5c080dc25eaf68764693
   image_picker: 50e7c7ff960e5f58faa4d1f4af84a771c671bc4a
+  libphonenumber: bd14d5abfc5939ab0b0767234e2d8e2593af258e
+  libPhoneNumber-iOS: 0a32a9525cf8744fe02c5206eb30d571e38f7d75
+  libphonenumber_plugin: 7cf755ad1656145935d6c208173a476bd3f12898
   onesignal_flutter: f3ff66c97498f9131481441a362ef5f0e6cb6d16
   OneSignalXCFramework: 81ceac017a290f23793443323090cfbe888f74ea
   path_provider_ios: 14f3d2fd28c4fdb42f44e0f751d12861c43cee02

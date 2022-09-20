@@ -131,6 +131,7 @@ void openFilterBottomSheet({
                                 : Container(),
                             // categoriesView(),
                             GlobalView().sizedBoxView(20),
+                            //Text('Seearch'),
                             selectedFilterValue == 0
                                 ? CityFilterView(
                                     filterProvider: filterProvider,

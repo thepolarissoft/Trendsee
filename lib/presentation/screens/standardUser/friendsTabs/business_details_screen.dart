@@ -1,8 +1,11 @@
+// ignore_for_file: deprecated_member_use
+
 import 'dart:io';
 
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sticky_header/flutter_sticky_header.dart';
+import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:provider/provider.dart';
 import 'package:trendoapp/constants/app_images.dart';
 import 'package:trendoapp/constants/app_messages.dart';
@@ -451,7 +454,7 @@ class _BusinessDetailsScreenState extends State<BusinessDetailsScreen> {
                                             businessLongitude: provider.businessDetailsResponse!.business!.longitude!,
                                             businessLocationName: provider.businessDetailsResponse!.business!.locationName ?? '',
                                             businessName: provider.businessDetailsResponse!.business!.businessName ?? '',
-                                            categoriesName:CategoryUtils().getCategoryName(provider.businessDetailsResponse!.business!.categories!) ,
+                                            categoriesName: CategoryUtils().getCategoryName(provider.businessDetailsResponse!.business!.categories!),
                                             isScreenChange: true,
                                           ),
                                         ),
@@ -575,14 +578,15 @@ class _BusinessDetailsScreenState extends State<BusinessDetailsScreen> {
                                     child: Align(
                                       alignment: Alignment.centerLeft,
                                       child: GlobalView().textViewWithStartAlign(
-                                          provider.businessDetailsResponse!.business!.businessPhone.toString() != null
-                                              ? provider.businessDetailsResponse!.business!.businessPhone.toString()
+                                          provider.businessDetailsResponse!.business!.businessPhone != null
+                                              ? provider.businessDetailsResponse!.business!.businessPhone!.replaceAll("-", "")
                                               : "+1 (525) 6564 8914",
                                           // "+1 (525) 6564 8914",
                                           AppTextStyle.inter_font_family,
                                           AppTextStyle.medium_font_weight,
                                           BaseColor.black_color,
                                           14),
+                                  
                                     ),
                                   ),
                                   GlobalView().sizedBoxView(10),
@@ -592,7 +596,15 @@ class _BusinessDetailsScreenState extends State<BusinessDetailsScreen> {
                                         DialogUtils.displayDialogCallBack(context, "", "", AppMessages.featureNotAvailableMsg, "", AppMessages.ok_text, "");
                                       } else {
                                         print("Call now called");
-                                        String url = 'tel:${provider.businessDetailsResponse!.business!.businessPhone}';
+                                        // =-=-=-=-=-=-=-=-=-=
+                                        // String phoneNumber = '${provider.businessDetailsResponse!.business!.businessPhone}';
+                                        // PhoneNumber number = await PhoneNumber.getRegionInfoFromPhoneNumber(phoneNumber,'US');
+                                        // String parsableNumber = number.parseNumber();
+                                        //`controller reference`.text = parsableNumber
+                                        // =-=-=-=-=-=-=-=-=-==-=
+
+                                        String url = 'tel:' + provider.businessDetailsResponse!.business!.businessPhone!.replaceAll("-", "");
+                                        //print("_+_+_+_+_+==-=-=-=-=-=-=-=-=-=.,.,.,.,.,${provider.businessDetailsResponse!.business!.businessPhone }");
                                         if (await canLaunch(url)) {
                                           await launch(url);
                                         } else {
@@ -604,7 +616,10 @@ class _BusinessDetailsScreenState extends State<BusinessDetailsScreen> {
                                       alignment: Alignment.centerLeft,
                                       child: Padding(
                                         padding: const EdgeInsets.symmetric(horizontal: 20),
-                                        child: GlobalView().wrappedButtonFilledView(context, AppMessages.call_now_text),
+                                        child: GlobalView().wrappedButtonFilledView(
+                                          context,
+                                          AppMessages.call_now_text,
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -613,8 +628,13 @@ class _BusinessDetailsScreenState extends State<BusinessDetailsScreen> {
                                     padding: EdgeInsets.symmetric(horizontal: 20),
                                     child: Align(
                                       alignment: Alignment.centerLeft,
-                                      child: GlobalView()
-                                          .textViewWithStartAlign(AppMessages.hint_business_address, AppTextStyle.inter_font_family, AppTextStyle.semi_bold_font_weight, BaseColor.black_color, 16),
+                                      child: GlobalView().textViewWithStartAlign(
+                                        AppMessages.hint_business_address,
+                                        AppTextStyle.inter_font_family,
+                                        AppTextStyle.semi_bold_font_weight,
+                                        BaseColor.black_color,
+                                        16,
+                                      ),
                                     ),
                                   ),
                                   GlobalView().sizedBoxView(10),
