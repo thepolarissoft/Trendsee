@@ -745,7 +745,7 @@ class _BusinessDetailsScreenState extends State<BusinessDetailsScreen> {
                                             //   provider.selectedBusinessResponse.longitude);
                                             String? lat = provider.businessDetailsResponse!.business!.latitude;
                                             String? long = provider.businessDetailsResponse!.business!.longitude;
-                                            String googleUrl = Platform.isAndroid ? "https://www.google.com/maps/search/?api=1&query=" : "https://maps.apple.com/?q=" + lat! + "," + long!;
+                                            String googleUrl = Platform.isAndroid ? "https://www.google.com/maps/search/?api=1&query=" + lat! + "," + long! : "https://maps.apple.com/?q=" + lat! + "," + long!;
                                             if (await canLaunch(googleUrl)) {
                                               await launch(googleUrl);
                                             }

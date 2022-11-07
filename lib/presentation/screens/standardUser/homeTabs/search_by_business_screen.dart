@@ -414,6 +414,7 @@ class _SearchByBusinessScreenState extends State<SearchByBusinessScreen> with Ti
                                     verifiedUserResponse: provider.listBusiness[index],
                                     onClickLikeButton: () {
                                       if (provider.listBusiness[index].isLiked == 0) {
+                                        print("=-=-=-=-=${provider.listBusiness[index].totalLikes}");
                                         provider.likeBusiness(context, provider.listBusiness[index]);
                                       } else {
                                         // DialogUtils().onClickLikedBusiness(

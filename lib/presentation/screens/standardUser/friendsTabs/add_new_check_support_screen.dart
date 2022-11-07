@@ -19,9 +19,9 @@ class AddNewCheckSupportScreen extends StatefulWidget {
   final String? businessLongitude;
   final String? businessLocationName;
   final String? businessName;
-   bool isScreenChange = false;
+  bool isScreenChange = false;
 
-   AddNewCheckSupportScreen({
+  AddNewCheckSupportScreen({
     super.key,
     this.businessId,
     this.categoriesName,
@@ -30,7 +30,7 @@ class AddNewCheckSupportScreen extends StatefulWidget {
     this.businessLongitude,
     this.businessName,
     this.businessLocationName,
-  required this.isScreenChange,
+    required this.isScreenChange,
   });
 
   @override
@@ -95,20 +95,25 @@ class _AddNewCheckSupportScreenState extends State<AddNewCheckSupportScreen> {
                                         return businessNameView(context, provider);
                                       },
                                     ),
-                                    GlobalView().sizedBoxView(10),
+                                    GlobalView().sizedBoxView(20),
                                     Padding(
-                                      padding: const EdgeInsets.symmetric(horizontal: 30),
+                                      padding: const EdgeInsets.only(left: 30,top: 5),
                                       child: Container(
-                                        padding: EdgeInsets.symmetric(vertical: 5),
+                                        padding: EdgeInsets.symmetric(vertical: 0),
                                         alignment: Alignment.centerLeft,
                                         child: GlobalView().textViewWithStartAlign(
-                                            AppMessages.title_your_review + " (optional)", AppTextStyle.inter_font_family, AppTextStyle.normal_font_weight, BaseColor.black_color.withOpacity(0.5), 11),
+                                          AppMessages.title_your_review + " (optional)",
+                                          AppTextStyle.inter_font_family,
+                                          AppTextStyle.normal_font_weight,
+                                          BaseColor.black_color.withOpacity(0.5),
+                                          11,
+                                        ),
                                       ),
                                     ),
-                                    GlobalView().sizedBoxView(5),
+                                   // GlobalView().sizedBoxView(5),
                                     Padding(
                                       padding: const EdgeInsets.symmetric(
-                                        horizontal: 30,
+                                        horizontal: 25,
                                       ),
                                       child: Container(
                                         height: 135,
@@ -116,7 +121,12 @@ class _AddNewCheckSupportScreenState extends State<AddNewCheckSupportScreen> {
                                           image: DecorationImage(image: AssetImage(AppImages.rect), fit: BoxFit.contain),
                                         ),
                                         child: Container(
-                                          padding: const EdgeInsets.only(top: 5, bottom: 12),
+                                          padding: const EdgeInsets.only(
+                                            top: 8,
+                                            bottom: 12,
+                                            left: 20,
+                                            right: 20,
+                                          ),
                                           child: TextField(
                                             controller: commentTextEditingController,
                                             expands: true,
@@ -127,15 +137,20 @@ class _AddNewCheckSupportScreenState extends State<AddNewCheckSupportScreen> {
                                               fontSize: 14,
                                             ),
                                             inputFormatters: [
-                                              LengthLimitingTextInputFormatter(60),
+                                              LengthLimitingTextInputFormatter(100),
                                             ],
                                             cursorColor: BaseColor.black_color.withOpacity(0.5),
                                             decoration: InputDecoration(
                                               isDense: true,
                                               focusColor: BaseColor.pure_white_color,
-                                              contentPadding: EdgeInsets.only(left: 25, right: 25, top: 10, bottom: 10),
+                                              contentPadding: EdgeInsets.only(
+                                                left: 10,
+                                                right: 20,
+                                                top: 18,
+                                                bottom: 10,
+                                              ),
                                               border: InputBorder.none,
-                                              focusedBorder: InputBorder.none,
+                                              focusedBorder:InputBorder.none,
                                               enabledBorder: InputBorder.none,
                                               errorBorder: InputBorder.none,
                                               disabledBorder: InputBorder.none,
@@ -211,13 +226,23 @@ class _AddNewCheckSupportScreenState extends State<AddNewCheckSupportScreen> {
               child: Container(
                 padding: EdgeInsets.symmetric(vertical: 5),
                 alignment: Alignment.centerLeft,
-                child:
-                    GlobalView().textViewWithCenterAlign(AppMessages.title_business_name, AppTextStyle.inter_font_family, AppTextStyle.normal_font_weight, BaseColor.black_color.withOpacity(0.5), 11),
+                child: GlobalView().textViewWithCenterAlign(
+                  AppMessages.title_business_name,
+                  AppTextStyle.inter_font_family,
+                  AppTextStyle.normal_font_weight,
+                  BaseColor.black_color.withOpacity(0.5),
+                  11,
+                ),
               ),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 30),
-              child: GlobalView().textFieldViewReadOnly(AppImages.ic_business, businessNameTextEditingController, AppMessages.hint_business_name, AppTextStyle.start_text_align),
+              child: GlobalView().textFieldViewReadOnly(
+                AppImages.ic_business,
+                businessNameTextEditingController,
+                AppMessages.hint_business_name,
+                AppTextStyle.start_text_align,
+              ),
             ),
             GlobalView().sizedBoxView(20),
             Padding(
@@ -225,7 +250,13 @@ class _AddNewCheckSupportScreenState extends State<AddNewCheckSupportScreen> {
               child: Container(
                 padding: EdgeInsets.symmetric(vertical: 5),
                 alignment: Alignment.centerLeft,
-                child: GlobalView().textViewWithCenterAlign(AppMessages.title_category, AppTextStyle.inter_font_family, AppTextStyle.normal_font_weight, BaseColor.black_color.withOpacity(0.5), 11),
+                child: GlobalView().textViewWithCenterAlign(
+                  AppMessages.title_category,
+                  AppTextStyle.inter_font_family,
+                  AppTextStyle.normal_font_weight,
+                  BaseColor.black_color.withOpacity(0.5),
+                  11,
+                ),
               ),
             ),
             categoryView(provider),
@@ -254,7 +285,7 @@ class _AddNewCheckSupportScreenState extends State<AddNewCheckSupportScreen> {
                   child: Container(
                     alignment: Alignment.centerLeft,
                     child: GlobalView().textViewWithStartAlign(
-                        //   provider.verifiedUserResponse != null && provider.verifiedUserResponse.categories != null ? //CategoryUtils().getCategoryName(provider.verifiedUserResponse.categories!) :
+                        //   provider.verifiedUserResponse != null && provider.verifiedUserResponse.categories != null ? //CategoryUtils().getCategoryName(provider.verifiedUserResponse.categories!,) :
                         widget.categoriesName ?? "Cafe",
                         AppTextStyle.inter_font_family,
                         AppTextStyle.normal_font_weight,
@@ -268,12 +299,25 @@ class _AddNewCheckSupportScreenState extends State<AddNewCheckSupportScreen> {
         ),
       );
 
-  Widget textFieldViewForSelectLocation(String image, TextEditingController controller, String hintText, TextAlign textAlign, BuildContext context) => Column(
+  Widget textFieldViewForSelectLocation(
+    String image,
+    TextEditingController controller,
+    String hintText,
+    TextAlign textAlign,
+    BuildContext context,
+  ) =>
+      Column(
         children: [
           GlobalView().sizedBoxView(20),
           Container(
             alignment: Alignment.centerLeft,
-            child: GlobalView().textViewWithStartAlign(AppMessages.title_location, AppTextStyle.inter_font_family, AppTextStyle.normal_font_weight, BaseColor.black_color.withOpacity(0.5), 11),
+            child: GlobalView().textViewWithStartAlign(
+              AppMessages.title_location,
+              AppTextStyle.inter_font_family,
+              AppTextStyle.normal_font_weight,
+              BaseColor.black_color.withOpacity(0.5),
+              11,
+            ),
           ),
           GlobalView().sizedBoxView(5),
           Material(
@@ -314,9 +358,24 @@ class _AddNewCheckSupportScreenState extends State<AddNewCheckSupportScreen> {
                     borderRadius: BorderRadius.circular(25),
                     borderSide: BorderSide(color: BaseColor.border_txtfield_color),
                   ),
-                  disabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(25), borderSide: BorderSide(color: BaseColor.border_txtfield_color)),
-                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(25), borderSide: BorderSide(color: BaseColor.border_txtfield_color)),
-                  focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(25), borderSide: BorderSide(color: BaseColor.border_txtfield_color)),
+                  disabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(25),
+                    borderSide: BorderSide(
+                      color: BaseColor.border_txtfield_color,
+                    ),
+                  ),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(25),
+                    borderSide: BorderSide(
+                      color: BaseColor.border_txtfield_color,
+                    ),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(25),
+                    borderSide: BorderSide(
+                      color: BaseColor.border_txtfield_color,
+                    ),
+                  ),
                   hintText: hintText,
                   hintStyle: TextStyle(
                     color: BaseColor.hint_color.withOpacity(0.6),

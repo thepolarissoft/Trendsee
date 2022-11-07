@@ -129,7 +129,7 @@ class AppMessages {
   static const String followers_text = "Followers";
   static const String following_text = "Following";
   static const String call_now_text = "Call Now";
-  static const String get_direction_text = "Get the Direction";
+  static const String get_direction_text = "Get Direction";
   static const String add_friend_text = "Add Friend";
   static const String edit_business_profile_title = "Edit Business Profile";
   static const String no_locations_available_text = "No Location Available!";
